@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --primaryFont: "Inter", sans-serif;
+  --headingFont: "Oswald", sans-serif;
+  --subheadingFont: "Roboto Mono", monospace;
+  --primaryColor: #28364e;
+  --bgColor: #f2f2f2;
+  --text-color-light: #fffbfb;
+  --text-color-dark: #0a0d14;
+}
+
+body {
+  font-family: var(--primaryFont);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--text-color-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primaryColor);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color-dark);
+}
+
+.heading {
+  font-family: var(--headingFont);
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.subheading {
+  font-family: var(--subheadingFont);
+  font-size: 1.4rem;
+  font-weight: bolder;
+}
+
+.btn {
+  font-family: var(--subheadingFont);
+  background-color: var(--primaryColor);
+  color: var(--text-color-light);
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: var(--primaryColor);
+  border-color: var(--primaryColor);
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2.5rem;
+  }
+
+  .subheading {
+    font-size: 1.5rem;
+  }
+}
