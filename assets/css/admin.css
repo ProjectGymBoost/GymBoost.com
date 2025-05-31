@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --primaryFont: "Inter", sans-serif;
+  --headingFont: "Oswald", sans-serif;
+  --subheadingFont: "Roboto Mono", monospace;
+  --primaryColor: #28364e;
+  --bgColor: #f2f2f2;
+  --text-color-light: #fffbfb;
+  --text-color-dark: #0a0d14;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--primaryFont);
+  width: 100%;
+  position: relative;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.navbar {
+  display: none;
+}
+
+.main {
+  min-height: 100vh;
+  width: calc(100% - 70px);
+  transition: all 0.35s ease-in-out;
+  background-color: var(--bgColor);
+  margin-left: 70px;
+  padding: 20px;
+}
+
+#sidebar.expand ~ .main {
+  margin-left: 260px;
+}
+
+#sidebar {
+  width: 70px;
+  min-width: 70px;
+  height: 100vh;
+  background-color: var(--primaryColor);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease-in-out;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+}
+
+#sidebar.expand {
+  width: 260px;
+  min-width: 260px;
+}
+
+.sidebar-logo {
+  margin: auto 0;
+  padding: 1.15rem 1.15rem 1.15rem 0;
+}
+
+.sidebar-logo a {
+  color: var(--text-color-light);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+  display: none;
+}
+
+.toggle-logo {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  margin: 1rem 0.5rem 1rem 1rem;
+}
+
+.sidebar-nav {
+  padding: 1rem 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0;
+}
+
+.sidebar-item.mt-auto {
+  position: relative;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.sidebar-item.mt-auto::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background-color: var(--bgColor);
+}
+
+a.sidebar-link {
+  padding: 0.825rem 1.625rem;
+  color: var(--text-color-light);
+  display: block;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+  transition: all 0.25s ease-in-out;
+}
+
+.sidebar-link i {
+  font-size: 1.2rem;
+  margin-right: 0.75rem;
+  width: 20px;
+  text-align: center;
+}
+
+a.sidebar-link:hover,
+a.sidebar-link:active,
+a.sidebar-link.active,
+.sidebar-item:target a.sidebar-link {
+  background-color: var(--bgColor);
+  border-left: 3px solid var(--text-color-light);
+  color: var(--text-color-dark);
+}
+
+.offcanvas {
+  max-width: 260px;
+  background-color: var(--primaryColor);
+}
+
+.offcanvas-header,
+.offcanvas-title {
+  color: var(--text-color-light);
+}
+
+.btn-close {
+  background-color: var(--bgColor);
+}
+
+.offcanvas .list-unstyled a {
+  color: var(--text-color-light);
+  padding: 0.825rem 1.625rem;
+  display: block;
+  font-size: 0.9rem;
+  border-left: 3px solid transparent;
+  transition: all 0.25s ease-in-out;
+}
+
+.offcanvas .list-unstyled a:hover {
+  background-color: var(--bgColor);
+  border-left: 3px solid var(--primaryColor);
+  color: var(--text-color-dark);
+}
+
+@media (max-width: 1050px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bgColor);
+    border-bottom: 1px solid var(--text-color-light);
+    padding: 0.5rem 1rem;
+  }
+
+  #sidebar {
+    display: none !important;
+  }
+
+  .main {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  #h2 {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-link {
+    font-size: 0.9rem;
+  }
+
+  .sidebar-logo a {
+    font-size: 1rem;
+  }
+  .navbar {
+    background-color: var(--primaryColor);
+  }
+  .navbar-toggler {
+    border-color: var(--bgColor);
+  }
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+}
