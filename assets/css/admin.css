@@ -178,6 +178,21 @@ a.sidebar-link.active,
   color: var(--text-color-dark);
 }
 
+th {
+  background-color: var(--primaryColor) !important;
+  color: var(--text-color-light) !important;
+  white-space: nowrap;
+}
+
+.pagination .page-link {
+  color: var(--text-color-dark);
+}
+
+.pagination .page-link:hover,
+.pagination .page-link:focus {
+  color: var(--text-color-dark);
+}
+
 @media (max-width: 1050px) {
   .navbar {
     display: flex;
