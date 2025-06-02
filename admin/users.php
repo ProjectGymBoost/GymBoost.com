@@ -54,7 +54,7 @@
 
                 <!-- Apply Button -->
                 <div>
-                    <button id="applyBtn" class="btn">APPLY</button>
+                    <button id="applyBtn" class="btn subheading">APPLY</button>
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
 
                 <!-- Add New Button -->
                 <div>
-                    <button id="applyBtn" class="btn">ADD NEW</button>
+                    <button id="applyBtn" class="btn subheading">ADD NEW</button>
                 </div>
             </div>
 

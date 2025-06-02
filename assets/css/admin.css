@@ -1,15 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap");
-
-:root {
-  --primaryFont: "Inter", sans-serif;
-  --headingFont: "Oswald", sans-serif;
-  --subheadingFont: "Roboto Mono", monospace;
-  --primaryColor: #28364e;
-  --bgColor: #f2f2f2;
-  --text-color-light: #fffbfb;
-  --text-color-dark: #0a0d14;
-}
-
 *,
 ::after,
 ::before {
@@ -190,9 +178,12 @@ th {
   color: var(--text-color-dark);
 }
 
-.pagination .page-link:hover,
-.pagination .page-link:focus {
-  color: var(--text-color-dark);
+.form-select:focus,
+.form-control:focus,
+.page-link:focus {
+  border-color: var(--primaryColor);
+  border-width: 2px;
+  box-shadow: none;
 }
 
 @media (max-width: 1050px) {
