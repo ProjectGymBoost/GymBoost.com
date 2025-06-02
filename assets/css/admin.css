@@ -172,7 +172,9 @@ a.sidebar-link.active,
   transition: all 0.25s ease-in-out;
 }
 
-.offcanvas .list-unstyled a:hover {
+.offcanvas .list-unstyled a:focus,
+.offcanvas .list-unstyled a:active,
+.offcanvas .list-unstyled a.active {
   background-color: var(--bgColor);
   border-left: 3px solid var(--primaryColor);
   color: var(--text-color-dark);
