@@ -13,7 +13,6 @@
 </head>
 
 <style>
-  .form-select:focus,
 .form-control:focus {
   border-color: var(--primaryColor);
   border-width: 2px;
