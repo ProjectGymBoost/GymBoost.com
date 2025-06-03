@@ -43,7 +43,7 @@
   <div class="container-fluid p-0" style="height: calc(100vh - 56px);">
     <div class="row m-0" style="height: 100%;">
       <!-- First Column -->
-      <div class="col-md-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
+      <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
         style="height: 100%; margin-top: -2rem;">
         <div class="heading mb-5">LOGIN</div>
         <input type="email" placeholder="Email" class="form-control mb-4" style="max-width: 400px;">
@@ -66,7 +66,7 @@
         </div>
 
       <!-- Second Column -->
-      <div class="col-md-6 d-none d-lg-block p-0" style="height: 100%;">
+      <div class="col-12 col-xl-6 d-none d-lg-block p-0" style="height: 100%;">
         <!-- Sample Image -->
         <img src="assets/img/logo/backupLogo.png" alt="Display Image"
           style="width: 100%; height: 100%; object-fit: fill; display: block;">
