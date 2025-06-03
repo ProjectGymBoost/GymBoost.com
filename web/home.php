@@ -37,7 +37,7 @@
     <div class="heading text-center mb-2">COACHES</div>
 
     <div class="col-md-3 col-sm-6 px-5 p-md-2">
-      <div class="card card-animation p-2">
+      <div class="card card-animation p-2 mb-3">
         <img src="assets/img/logo/backupLogo.png" class="rounded-4">
         <div class="card-body">
           <div class="subheading">COACH</div>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="col-md-3 col-sm-6 px-5 p-md-2">
-      <div class="card card-animation p-2">
+      <div class="card card-animation p-2 mb-3">
         <img src="assets/img/logo/backupLogo.png" class="rounded-4">
         <div class="card-body">
           <div class="subheading">COACH</div>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="col-md-3 col-sm-6 px-5 p-md-2">
-      <div class="card card-animation p-2">
+      <div class="card card-animation p-2 mb-3">
         <img src="assets/img/logo/backupLogo.png" class="rounded-4">
         <div class="card-body">
           <div class="subheading">COACH</div>
@@ -67,7 +67,7 @@
     </div>
 
     <div class="col-md-3 col-sm-6 px-5 p-md-2">
-      <div class="card card-animation p-2">
+      <div class="card card-animation p-2 mb-3">
         <img src="assets/img/logo/backupLogo.png" class="rounded-4">
         <div class="card-body">
           <div class="subheading">COACH</div>
