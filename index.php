@@ -67,7 +67,7 @@ if (isset($_GET['page'])) {
       </div>
       <div class="d-none d-lg-block">
         <a href="login.php">
-          <div class="btn px-3 me-2 py-0">Login</div>
+          <div class="btn px-3 me-2">Login</div>
         </a>
       </div>
       <span class="d-block d-lg-none me-2" style="font-size:18px;cursor:pointer" onclick="openNav()">&#9776;</span>
