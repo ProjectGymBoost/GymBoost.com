@@ -29,7 +29,8 @@ if (isset($_GET['page'])) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GymBoost</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/img/logo/officialLogo.png">
   <link href="assets/css/styles.css" rel="stylesheet" />
@@ -48,49 +49,55 @@ if (isset($_GET['page'])) {
   }
 
   .card-animation:hover {
-    transform: scale(1.02) rotate(1deg); 
+    transform: scale(1.02) rotate(1deg);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
   }
 </style>
 
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar sticky-top position-absolute w-100 z-3">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
-      <a href="?page=home" class="d-flex align-items-center">
-        <img src="assets/img/logo/officialLogo.png" class="logo"/>
-      </a>
-      <div class="d-none d-lg-flex justify-content-center flex-grow-1">
-        <a class="nav-link mx-2 px-3" href="?page=home">HOME</a>
-        <a class="nav-link mx-2 px-3" href="?page=membership-plans">MEMBERSHIP PLANS</a>
-        <a class="nav-link mx-2 px-3" href="?page=faqs">FAQs</a>
-      </div>
-      <div class="d-none d-lg-block">
-        <a href="login.php">
-          <div class="btn px-3 me-2">Login</div>
-        </a>
-      </div>
-      <span class="d-block d-lg-none me-2" style="font-size:18px;cursor:pointer" onclick="openNav()">&#9776;</span>
-    </div>
-  </nav>
 
-  <!-- Overlay nav -->
-  <div id="myNav" class="overlay">
-    <div class="d-flex justify-content-between align-items-center p-3 mt-2">
-      <a href="?page=home">
-        <img src="assets/img/logo/officialLogo.png" style="height: 50px;">
-      </a>
-      <a href="javascript:void(0)" class="closebtn fs-1 text-decoration-none" onclick="closeNav()">&times;</a>
-    </div>
+  <!-- Navbar -->
+  <div class="container-fluid px-0 fixed-top">
+    <nav class="navbar navbar-expand-lg px-3 custom-navbar">
 
-    <div class="overlay-content">
-      <a class="nav-link mx-1" href="?page=home">Home</a>
-      <a class="nav-link mx-1" href="?page=membership-plans">Membership Plans</a>
-      <a class="nav-link mx-1" href="?page=faqs">FAQs</a>
-      <a href="login.php" class="p-0">
-        <div class="btn px-4 mt-5 mx-1 end-1 rounded-5">Login</div>
+      <!-- Logo -->
+      <a class="navbar-brand" href="?page=home">
+        <img src="./assets/img/logo/officialLogo.png" width="40" height="40" alt="Logo">
       </a>
-    </div>
+
+      <!-- Navbar Toggler (for mobile view) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav text-center" style="font-weight:bold;">
+          <li class="nav-item py-1 mx-2">
+            <a class="nav-link px-4 py-1 <?php if ($page == 'home')
+              echo 'active'; ?>" href="?page=home">HOME</a>
+          </li>
+          <li class="nav-item py-1 mx-2">
+            <a class="nav-link px-4 py-1 <?php if ($page == 'membership-plans')
+              echo 'active'; ?>" href="?page=membership-plans">MEMBERSHIP PLANS</a>
+          </li>
+          <li class="nav-item py-1 mx-2">
+            <a class="nav-link px-4 py-1 <?php if ($page == 'faqs')
+              echo 'active'; ?>" href="?page=faqs">FAQs</a>
+          </li>
+          <li class="nav-item d-lg-none py-1">
+            <a class="btn mt-2" href="login.php">LOGIN</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Login Button -->
+      <div class="d-none d-lg-flex align-items-center ms-auto">
+        <a class="btn ms-3" href="login.php" style="font-family: var(--primaryFont);">LOGIN</a>
+      </div>
+
+    </nav>
   </div>
 
   <!-- Pages -->
@@ -110,7 +117,7 @@ if (isset($_GET['page'])) {
       <div class="row mb-3 text-center text-md-start">
         <div class="col-12 col-md-4 mb-1">
           <ul class="list-unstyled mb-1">
-            <li class="subheading"><a href="" class="text-white text-decoration-none">Join Us</a></li>
+            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">Membership</a></li>
           </ul>
           <ul class="list-unstyled">
             <li><a href="" class="text-white text-decoration-none">Terms & Conditions</a></li>
@@ -121,7 +128,7 @@ if (isset($_GET['page'])) {
 
         <div class="col-12 col-md-4 mb-1">
           <ul class="list-unstyled mb-1">
-            <li class="subheading"><a href="" class="text-white text-decoration-none">About GymBoost</a></li>
+            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">About GymBoost</a></li>
           </ul>
           <ul class="list-unstyled">
             <li><a href="" class="text-white text-decoration-none">About Us</a></li>
@@ -131,7 +138,7 @@ if (isset($_GET['page'])) {
 
         <div class="col-12 col-md-4 text-center text-md-start">
           <ul class="list-unstyled mb-1">
-            <li class="subheading "><a href="" class="text-white text-decoration-none">Join Us</a></li>
+            <li class="subheading "><a href="" class="text-white text-decoration-none text-uppercase">Connect With Us</a></li>
           </ul>
           <ul class="list-unstyled d-flex justify-content-center justify-content-md-start">
 
@@ -168,11 +175,21 @@ if (isset($_GET['page'])) {
     </div>
   </footer>
 
+  <script>
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(el => el.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
 
-  <script src="assets/js/web.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
