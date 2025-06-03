@@ -96,6 +96,20 @@
   cursor: pointer;
 }
 
+.membership-bg-img {
+    background-image: url("/assets/img/web/gymbg2.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.web-subheading {
+    font-family: var(--subheadingFont);
+    font-size: 3rem; 
+    font-weight: bolder;
+    color: var(--primaryColor);
+}
+
 /* Footer */
 .footer {
   background-color: #28364e;
@@ -180,6 +194,10 @@ ul li a i {
   .navbar .input-group {
     width: 100%;
   }
+
+  .web-subheading {
+        font-size: 1.8rem;
+    }
 
   .footer .row {
     text-align: center;
