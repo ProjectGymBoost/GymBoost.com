@@ -63,6 +63,10 @@ body {
   border-color: var(--primaryColor);
 }
 
+.card-bg-color{
+  background: #7386A6;
+}
+
 /* @media (max-width: 768px) {
   .heading {
     font-size: 2.5rem;

@@ -31,6 +31,7 @@ if (isset($_GET['page'])) {
   <title>GymBoost</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/img/logo/officialLogo.png">
   <link href="assets/css/styles.css" rel="stylesheet" />
   <link href="assets/css/web.css" rel="stylesheet" />
 </head>
@@ -41,6 +42,15 @@ if (isset($_GET['page'])) {
     background-position: center;
     height: 100vh;
   }
+
+  .card-animation {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-animation:hover {
+    transform: scale(1.02) rotate(1deg); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  }
 </style>
 
 <body>
@@ -48,16 +58,16 @@ if (isset($_GET['page'])) {
   <nav class="navbar sticky-top position-absolute w-100 z-3">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <a href="?page=home" class="d-flex align-items-center">
-        <img src="assets/img/logo/officialLogo.png" class="logo" />
+        <img src="assets/img/logo/officialLogo.png" class="logo"/>
       </a>
       <div class="d-none d-lg-flex justify-content-center flex-grow-1">
-        <a class="nav-link mx-2" href="?page=home">Home</a>
-        <a class="nav-link mx-2" href="?page=membership-plans">Membership Plans</a>
-        <a class="nav-link mx-2" href="?page=faqs">FAQs</a>
+        <a class="nav-link mx-2 px-3" href="?page=home">HOME</a>
+        <a class="nav-link mx-2 px-3" href="?page=membership-plans">MEMBERSHIP PLANS</a>
+        <a class="nav-link mx-2 px-3" href="?page=faqs">FAQs</a>
       </div>
       <div class="d-none d-lg-block">
         <a href="login.php">
-          <div class="btn px-3 me-2">Login</div>
+          <div class="btn px-3 me-2 py-0">Login</div>
         </a>
       </div>
       <span class="d-block d-lg-none me-2" style="font-size:18px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -78,23 +88,13 @@ if (isset($_GET['page'])) {
       <a class="nav-link mx-1" href="?page=membership-plans">Membership Plans</a>
       <a class="nav-link mx-1" href="?page=faqs">FAQs</a>
       <a href="login.php" class="p-0">
-        <div class="btn px-4 mt-5 mx-1 end-1" style="font-size: 20px; border-radius: 9999px;">Login</div>
+        <div class="btn px-4 mt-5 mx-1 end-1 rounded-5">Login</div>
       </a>
     </div>
   </div>
 
-
-
-
-
-
   <!-- Pages -->
   <?php include("web/" . $page . ".php"); ?>
-
-
-
-
-
 
   <!-- Footer -->
   <footer class="footer mt-5 py-5 text-white">

@@ -73,7 +73,7 @@
 
                 <!-- Add New Button -->
                 <div>
-                    <button id="applyBtn" class="btn subheading">ADD NEW</button>
+                    <button id="applyBtn" class="btn subheading" onclick="window.location.href='register.php'">ADD NEW</button>
                 </div>
             </div>
 
