@@ -10,8 +10,26 @@
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet" />
-  <link href="assets/css/web.css" rel="stylesheet" />
 </head>
+
+<style>
+  .form-select:focus,
+.form-control:focus {
+  border-color: var(--primaryColor);
+  border-width: 2px;
+  box-shadow: none;
+}
+
+.forgot-link {
+  text-decoration: none;
+  color: var(--bs-secondary);
+  transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: var(--primaryColor);
+}
+</style>
 
 <body style="background-color: var(--bgColor); height: 100vh; margin: 0; overflow: hidden;">
 
