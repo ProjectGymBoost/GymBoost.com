@@ -19,11 +19,199 @@
 
     <!-- Main Content -->
     <div class="main px-2 px-md-0" style="margin-left: 70px; transition: margin-left 0.25s ease-in-out;">
-
         <div class="container-fluid py-4 px-4">
 
-            <!-- Insert Content Here -->
+            <!-- Heading -->
+            <div class="col-12 mb-4">
+                <div class="heading text-center text-sm-start">USERS</div>
+            </div>
 
+            <!-- Controls: Search, Sort By, Order By, Apply Button -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+
+                <!-- Search -->
+                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
+                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+                </div>
+
+                <!-- Sort By -->
+                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
+                    <select id="sortBy" class="form-select">
+                        <option selected disabled>Sort By</option>
+                        <option value="first_name">First Name</option>
+                        <option value="last_name">Last Name</option>
+                    </select>
+                </div>
+
+                <!-- Order By -->
+                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
+                    <select id="orderBy" class="form-select">
+                        <option selected disabled>Order</option>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+
+                <!-- Apply Button -->
+                <div>
+                    <button id="applyBtn" class="btn subheading">APPLY</button>
+                </div>
+            </div>
+
+            <!-- Pagination and Add New Button -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="small text-muted">
+                    Show
+                    <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    entries
+                </div>
+
+                <!-- Add New Button -->
+                <div>
+                    <button id="applyBtn" class="btn subheading">ADD NEW</button>
+                </div>
+            </div>
+
+
+            <!-- User Table -->
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped table-borderless">
+                        <thead class="align-middle">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">FIRST NAME</th>
+                                <th scope="col">LAST NAME</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">ROLE</th>
+                                <th class="text-center" scope="col">ACTION</th>
+                            </tr>
+                        </thead>
+
+                        <!-- User Data -->
+                        <tbody>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>Jon</td>
+                                <td>Doe</td>
+                                <td>johndoe@gmail.com</td>
+                                <td>User</td>
+                                <td>
+                                    <li style="display: flex; justify-content: center;">
+                                        <a style="color: red; text-decoration: none;" href="#">
+                                            <i class="bi bi-trash3 px-1"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">2</td>
+                                <td>Jenna Miles</td>
+                                <td>Reyes</td>
+                                <td>atienzajennamiles@gmail.com</td>
+                                <td>User</td>
+                                <td>
+                                    <li style="display: flex; justify-content: center;">
+                                        <a style="color: red; text-decoration: none;" href="#">
+                                            <i class="bi bi-trash3 px-1"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">3</td>
+                                <td>John</td>
+                                <td>Smith</td>
+                                <td>johnsmith@gmail.com</td>
+                                <td>Admin</td>
+                                <td>
+                                    <li style="display: flex; justify-content: center;">
+                                        <a style="color: red; text-decoration: none;" href="#">
+                                            <i class="bi bi-trash3 px-1"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">4</td>
+                                <td>Emily</td>
+                                <td>Brown</td>
+                                <td>emilybrown@yahoo.com</td>
+                                <td>User</td>
+                                <td>
+                                    <li style="display: flex; justify-content: center;">
+                                        <a style="color: red; text-decoration: none;" href="#">
+                                            <i class="bi bi-trash3 px-1"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">5</td>
+                                <td>Michael</td>
+                                <td>Johnson</td>
+                                <td>mjohnson@outlook.com</td>
+                                <td>User</td>
+                                <td>
+                                    <li style="display: flex; justify-content: center;">
+                                        <a style="color: red; text-decoration: none;" href="#">
+                                            <i class="bi bi-trash3 px-1"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">6</td>
+                                <td>Sarah</td>
+                                <td>Williams</td>
+                                <td>sarahwilliams@gmail.com</td>
+                                <td>User</td>
+                                <td>
+                                    <li style="display: flex; justify-content: center;">
+                                        <a style="color: red; text-decoration: none;" href="#">
+                                            <i class="bi bi-trash3 px-1"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bottom Pagination Info -->
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="small text-muted">
+                    Showing 2 of 2 entries
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mt-3">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 
