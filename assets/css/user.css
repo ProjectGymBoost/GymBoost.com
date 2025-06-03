@@ -68,38 +68,3 @@
     border-radius: 10px;
     text-align: center;
 }
-
-#chat-tab {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 15px;
-    width: 320px;
-    height: 400px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-#chat-tab.open {
-    display: block;
-}
-
-#aichat-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    cursor: pointer;
-}
-
-#aichat-button img {
-    width: 50px;
-    height: 50px;
-}
-
-@media (max-width: 768px) {
-    #chat-tab {
-        width: 260px;
-        height: 350px;
-    }
-}
