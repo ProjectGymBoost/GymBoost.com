@@ -1,5 +1,6 @@
 .custom-navbar {
     border-bottom: 2px solid var(--primaryColor);
+    background-color: var(--bgColor);
 }
 
 .navbar-toggler,
@@ -16,7 +17,7 @@
 .dropdown-item {
     color: var(--text-color-dark);
     transition: background-color 0.3s ease, color 0.3s ease;
-    padding: 4px 4px;
+    padding: 2px 2px;
 }
 
 .dropdown-item:hover {
@@ -34,7 +35,6 @@
 }
 
 .navbar-nav .nav-link {
-    font-family: var(--subheadingFont);
     color: var(--text-color-dark);
     border-radius: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -64,9 +64,42 @@
 .rounded-box {
     background-color: #7386A6;
     color: white;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-family: var(--primaryFont);
-    font-size: clamp(1rem, 5vw, 1.5rem);;
+    padding: 7px 5px;
+    border-radius: 10px;
     text-align: center;
+}
+
+#chat-tab {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 15px;
+    width: 320px;
+    height: 400px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#chat-tab.open {
+    display: block;
+}
+
+#aichat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+#aichat-button img {
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 768px) {
+    #chat-tab {
+        width: 260px;
+        height: 350px;
+    }
 }

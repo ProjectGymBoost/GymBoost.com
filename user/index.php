@@ -42,13 +42,13 @@ if (isset($_GET['page'])) {
 
 </head>
 
-<body style="var(--bgColor)">
+<body style="background-color: var(--bgColor);">
     <!-- Navbar -->
     <div class="container-fluid px-0 fixed-top">
-        <nav class="navbar navbar-expand-lg px-3 bg-light custom-navbar">
+        <nav class="navbar navbar-expand-lg px-3 custom-navbar">
             <!-- Logo -->
             <a class="navbar-brand">
-                <img src="../assets/img/logo/officialLogo.png" width="60" height="60" alt="Logo">
+                <img src="../assets/img/logo/officialLogo.png" width="40" height="40" alt="Logo">
             </a>
 
             <!-- Navbar Toggler -->
@@ -59,17 +59,17 @@ if (isset($_GET['page'])) {
 
             <!-- Navbar Links & Profile -->
             <div class="collapse navbar-collapse justify-content-between align-items-center" id="navbarNav">
-                <ul class="navbar-nav mx-auto text-start text-lg-center" style="font-weight:bold">
+                <ul class="navbar-nav mx-auto text-start text-lg-center" style="font-weight:bold;">
                     <li class="nav-item py-1">
-                        <a class="nav-link px-4 py-2 <?php if ($page == 'dashboard')
+                        <a class="nav-link px-4 py-1 <?php if ($page == 'dashboard')
                             echo 'active'; ?>" href="?page=dashboard">MEMBERSHIP DASHBOARD</a>
                     </li>
                     <li class="nav-item py-1">
-                        <a class="nav-link px-4 py-2 <?php if ($page == 'workout')
+                        <a class="nav-link px-4 py-1 <?php if ($page == 'workout')
                             echo 'active'; ?>" href="?page=workout">WORKOUT CENTRAL</a>
                     </li>
                     <li class="nav-item py-1 pb-2">
-                        <a class="nav-link px-4 py-2 <?php if ($page == 'rewards')
+                        <a class="nav-link px-4 py-1 <?php if ($page == 'rewards')
                             echo 'active'; ?>" href="?page=rewards">ACHIEVEMENTS</a>
                     </li>
                 </ul>
@@ -82,20 +82,18 @@ if (isset($_GET['page'])) {
                             style="display: flex; align-items: center; gap: 8px; padding: 0; cursor: pointer;">
                             <img src="../assets/img/logo/officialLogo.png" alt="Profile" width="40" height="40"
                                 class="rounded-circle d-none d-lg-block" style="object-fit: cover; outline: none;" />
-                            <span class="profile-text d-block d-lg-none px-4 py-2 <?php if ($page == 'profile')
+                            <span class="profile-text d-block d-lg-none px-4 py-1 <?php if ($page == 'profile')
                                 echo 'active'; ?>" style="font-weight: bold;">
                                 PROFILE
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="?page=profile"
-                                    style="font-family: var( --subheadingFont)"><i class="bi bi-gear px-1"></i>
+                            <li><a class="dropdown-item" href="?page=profile"><i class="bi bi-gear px-1"></i>
                                     Account</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-danger" href="../index.php"
-                                    style="font-family: var( --subheadingFont)"><i
+                            <li><a class="dropdown-item text-danger" href="../index.php"><i
                                         class="bi bi-box-arrow-right px-1"></i>
                                     Log Out</a></li>
                         </ul>
@@ -107,7 +105,7 @@ if (isset($_GET['page'])) {
 
     <!-- Main Content -->
     <div id="mainContent" class="flex-grow-1" style="margin-top: 87px;">
-        <div style="height: 100vh; max-height: 100vh; overflow-y: auto; overflow-x: hidden;">
+        <div style="overflow-x: hidden;">
             <?php include("views/" . $page . ".php"); ?>
         </div>
     </div>
