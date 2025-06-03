@@ -22,74 +22,78 @@
 
         <!-- Heading -->
         <div class="container-fluid py-4 px-4">
-            <div class="col-12 mb-4">
-                <div class="heading text-center text-sm-start">CREATE ACCOUNT</div>
-            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 mb-4">
+                    <div class="heading text-center">CREATE ACCOUNT</div>
+                </div>
 
-            <!-- Wrapper for horizontal centering -->
-            <div class="d-flex justify-content-center">
-                <div class="d-flex flex-column align-items-center gap-3 p-5 card-bg-color"
-                    style="width: 100%; max-width: 800px; border-radius: 10px;">
-                    <div class="d-flex gap-3 w-100">
-                        <!-- First Name -->
-                        <div class="w-100 mb-2">
-                            <input type="text" placeholder="First Name" class="form-control"
-                                style="border-radius: 5px;">
+                <!-- Wrapper for horizontal centering -->
+                <div class="d-flex justify-content-center align">
+                    <div class="d-flex flex-column align-items-center gap-3 p-5 card-bg-color"
+                        style="width: 100%; max-width: 800px; border-radius: 10px;">
+                        <div class="d-flex gap-3 w-100">
+                            <!-- First Name -->
+                            <div class="w-100 mb-2">
+                                <input type="text" placeholder="First Name" class="form-control"
+                                    style="border-radius: 5px;">
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="w-100 mb-2">
+                                <input type="text" placeholder="Last Name" class="form-control"
+                                    style="border-radius: 5px;">
+                            </div>
                         </div>
 
-                        <!-- Last Name -->
+                        <!-- Email -->
                         <div class="w-100 mb-2">
-                            <input type="text" placeholder="Last Name" class="form-control" style="border-radius: 5px;">
+                            <input type="email" placeholder="Email" class="form-control" style="border-radius: 5px;">
                         </div>
-                    </div>
 
-                    <!-- Email -->
-                    <div class="w-100 mb-2">
-                        <input type="email" placeholder="Email" class="form-control" style="border-radius: 5px;">
-                    </div>
+                        <!-- Membership Plan -->
+                        <select class="form-select">
+                            <option selected disabled>Membership Plan</option>
+                            <option value="HalfMonth">Half Month</option>
+                            <option value="1Month">1 Month</option>
+                            <option value="2Months">2 Months</option>
+                            <option value="3Months">3 Months</option>
+                            <option value="semiannual">Semi Annual</option>
+                            <option value="annual">Annual</option>
+                        </select>
 
-                    <!-- Membership Plan -->
-                    <select class="form-select">
-                        <option selected disabled>Membership Plan</option>
-                        <option value="HalfMonth">Half Month</option>
-                        <option value="1Month">1 Month</option>
-                        <option value="2Months">2 Months</option>
-                        <option value="3Months">3 Months</option>
-                        <option value="semiannual">Semi Annual</option>
-                        <option value="annual">Annual</option>
-                    </select>
+                        <hr style="border-top: 3px solid var(--primaryColor); opacity: 1; width: 100%; margin: 2rem 0;">
 
-                    <hr style="border-top: 3px solid var(--primaryColor); opacity: 1; width: 100%; margin: 2rem 0;">
-
-                    <!-- Create Password -->
-                    <div class="position-relative w-100 mb-2">
-                        <input type="password" id="createPassword" placeholder="Create a Password" class="form-control"
-                            style="border-radius: 5px;">
-                        <i class="bi bi-eye-slash position-absolute toggle-password" data-target="createPassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
+                        <!-- Create Password -->
+                        <div class="position-relative w-100 mb-2">
+                            <input type="password" id="createPassword" placeholder="Create a Password"
+                                class="form-control" style="border-radius: 5px;">
+                            <i class="bi bi-eye-slash position-absolute toggle-password" data-target="createPassword"
+                                style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
      text-shadow: 0 0 1px var(--primaryColor);"></i>
-                    </div>
+                        </div>
 
-                    <!-- Confirm Password -->
-                    <div class="position-relative w-100 mb-2">
-                        <input type="password" id="confirmPassword" placeholder="Confirm Password" class="form-control"
-                            style="border-radius: 5px;">
-                        <i class="bi bi-eye-slash position-absolute toggle-password" data-target="confirmPassword"
-                            style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
+                        <!-- Confirm Password -->
+                        <div class="position-relative w-100 mb-2">
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password"
+                                class="form-control" style="border-radius: 5px;">
+                            <i class="bi bi-eye-slash position-absolute toggle-password" data-target="confirmPassword"
+                                style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
      text-shadow: 0 0 1px var(--primaryColor);"></i>
-                    </div>
+                        </div>
 
-                    <!-- Create Button -->
-                    <div class="w-100 text-center">
-                        <button type="submit" class="btn">
-                            CREATE
-                        </button>
-                    </div>
+                        <!-- Create Button -->
+                        <div class="w-100 text-center mt-3">
+                            <button type="submit" class="btn">
+                                CREATE
+                            </button>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <script>
         document.querySelectorAll('.toggle-password').forEach(toggle => {
             toggle.addEventListener('click', function () {
