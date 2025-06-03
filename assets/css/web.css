@@ -96,8 +96,26 @@
   cursor: pointer;
 }
 
+/* Style of home.php */
+.bg-img {
+  background-image: url('..//img/web/gymbg1.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.card-animation {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-animation:hover {
+  transform: scale(1.02) rotate(1deg);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+/* Style of membership-plans.php */
 .membership-bg-img {
-    background-image: url("/assets/img/web/gymbg2.png");
+    background-image: url("../img/web/gymbg2.png");
     background-size: cover;
     background-position: center;
     height: 100vh;

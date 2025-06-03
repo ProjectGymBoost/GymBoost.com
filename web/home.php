@@ -9,7 +9,7 @@
    <div class="row">
       <div class="col-12 col-lg-6 p-4">
          <div class="card-animation rounded-4 border-0">
-            <img src="assets/img/gym-img/gym-img-small.png" class="img-fluid w-100 rounded-4">
+            <img src="assets/img/web/gym-img-small.png" class="img-fluid w-100 rounded-4">
          </div>
       </div>
 
