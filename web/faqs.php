@@ -1,0 +1,1 @@
+<div class="h1 mt-5 p-5">faqs page</div>
