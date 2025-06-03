@@ -21,7 +21,7 @@
     <div class="main px-2 px-md-0" style="margin-left: 70px; transition: margin-left 0.25s ease-in-out;">
 
         <!-- Heading -->
-        <div class="container-fluid py-4 px-4">
+        <div class="container-fluid py-3 px-4">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 col-lg-8 mb-4">
                     <div class="heading text-center">CREATE ACCOUNT</div>
@@ -29,7 +29,7 @@
 
                 <!-- Wrapper for horizontal centering -->
                 <div class="d-flex justify-content-center align">
-                    <div class="d-flex flex-column align-items-center gap-3 p-5 card-bg-color"
+                    <div class="d-flex flex-column align-items-center gap-3 p-3 p-lg-5 card-bg-color"
                         style="width: 100%; max-width: 800px; border-radius: 10px;">
                         <div class="d-flex gap-3 w-100">
                             <!-- First Name -->
