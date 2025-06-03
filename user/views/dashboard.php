@@ -7,21 +7,21 @@
         <div class="container">
           <div class="row justify-content-center mt-2">
             <div class="col-12 col-md-8 mx-4 my-2">
-              <div class="rounded-box">
+              <div class="rounded-box card-bg-color">
                 “Gym closed on April 20 for maintenance.”
               </div>
             </div>
           </div>
           <div class="row justify-content-center">
             <div class="col-12 col-md-8 mx-4 my-2">
-              <div class="rounded-box">
+              <div class="rounded-box card-bg-color">
                 “New Yoga Class starts April 15.”
               </div>
             </div>
           </div>
           <div class="row justify-content-center">
             <div class="col-12 col-md-8  mx-4 my-2">
-              <div class="rounded-box">
+              <div class="rounded-box card-bg-color">
                 “Gym closed on April 24 for maintenance.”
               </div>
             </div>
