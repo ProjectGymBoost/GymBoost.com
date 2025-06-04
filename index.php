@@ -36,23 +36,6 @@ if (isset($_GET['page'])) {
   <link href="assets/css/styles.css" rel="stylesheet" />
   <link href="assets/css/web.css" rel="stylesheet" />
 </head>
-<style>
-  .bg-img {
-    background-image: url('assets/img/gym-img/gymbg1.png');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-  }
-
-  .card-animation {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .card-animation:hover {
-    transform: scale(1.02) rotate(1deg);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
-  }
-</style>
 
 <body>
 
@@ -73,7 +56,7 @@ if (isset($_GET['page'])) {
 
       <!-- Navigation Links -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav text-center" style="font-weight:bold;">
+        <ul class="navbar-nav text-start" style="font-weight:bold;">
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'home')
               echo 'active'; ?>" href="?page=home">HOME</a>
@@ -86,7 +69,7 @@ if (isset($_GET['page'])) {
             <a class="nav-link px-4 py-1 <?php if ($page == 'faqs')
               echo 'active'; ?>" href="?page=faqs">FAQs</a>
           </li>
-          <li class="nav-item d-lg-none py-1">
+          <li class="nav-item d-lg-none py-1 mx-2">
             <a class="btn mt-2" href="login.php">LOGIN</a>
           </li>
         </ul>

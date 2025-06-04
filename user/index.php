@@ -42,7 +42,7 @@ if (isset($_GET['page'])) {
 
 </head>
 
-<body style="background-color: var(--bgColor);">
+<body class="bg-light">
     <!-- Navbar -->
     <div class="container-fluid px-0 fixed-top">
         <nav class="navbar navbar-expand-lg px-3 custom-navbar">

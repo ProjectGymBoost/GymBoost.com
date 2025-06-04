@@ -9,20 +9,20 @@
    <div class="row">
       <div class="col-12 col-lg-6 p-4">
          <div class="card-animation rounded-4 border-0">
-            <img src="assets/img/gym-img/gym-img-small.png" class="img-fluid w-100 rounded-4">
+            <img src="assets/img/web/gym-img-small.png" class="img-fluid w-100 rounded-4">
          </div>
       </div>
 
       <div class="col-12 col-lg-6 d-flex align-items-center p-4">
          <div class="w-100 ps-2 ps-md-4">
-            <div class="heading">ABOUT US</div>
+            <div class="heading" style="color: var(--primaryColor);">ABOUT US</div>
             <div class="subheading">HARD BODY FITNESS GYM</div>
-            <div>
+            <div style="text-align: justify">
                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
             </div>
             <div>
                <div class="subheading mt-3">BACKGROUND</div>
-               <div>
+               <div style="text-align: justify">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
                </div>
             </div>
@@ -34,7 +34,7 @@
 <div class="container my-5 py-5">
   <div class="row">
 
-    <div class="heading text-center mb-2">COACHES</div>
+    <div class="heading text-center mb-2" style="color: var(--primaryColor);">COACHES</div>
 
     <div class="col-md-3 col-sm-6 px-5 p-md-2">
       <div class="card card-animation p-2 mb-3">
@@ -82,7 +82,7 @@
 
 <div class="container-fluid mb-5 p-0">
    <!-- <div class="container border-bottom border-dark mt-2"></div> -->
-   <div class="heading text-center mb-3">SUCCESS STORIES</div>
+   <div class="heading text-center mb-3" style="color: var(--primaryColor);">SUCCESS STORIES</div>
    <div id="textCarousel" class="carousel slide text-white p-5" style="background-color: var(--primaryColor); height: 50vh;" data-bs-ride="carousel">
       <div class="carousel-inner text-center d-flex align-items-center justify-content-center" style="height: 100%;">
 
