@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dialogflow Chatbot</title>
+    <style>
+      df-messenger {
+        --df-messenger-button-titlebar-color: #28364e;
+        --df-messenger-chat-background-color: #ffffff;
+        --df-messenger-font-color: #ffffff;
+        --df-messenger-user-message: #28364e;
+        --df-messenger-bot-message: #bebebe;
+        --df-messenger-height: 600px;
+        width: 350px; 
+      }
+
+      .chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        max-height: 600px;
+        max-width: 350px;
+        width: 100%;
+        z-index: 9999;
+      }
+
+      @media (max-width: 600px) {
+        .chat-container {
+          max-height: 400px;
+          max-width: 90vw;
+          bottom: 10px;
+          right: 5vw;
+        }
+        df-messenger {
+          --df-messenger-height: 400px;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <df-messenger
+        intent="WELCOME"
+        chat-title="GymBoost"
+        agent-id="43c59ce1-7cfb-48bd-b6a8-ae447a9504fd"
+        language-code="en"
+        chat-icon="https://i.imgur.com/LelZPGm.png"
+      >
+      </df-messenger>
+    </div>
+
+     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  </body>
+</html>
