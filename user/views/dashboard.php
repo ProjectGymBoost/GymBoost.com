@@ -68,3 +68,6 @@
     </div>
   </div>
 </div>
+
+<!-- Dialogflow Chatbot  -->
+<?php include("views/chatbot.html"); ?>
