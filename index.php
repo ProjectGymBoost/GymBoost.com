@@ -69,7 +69,7 @@ if (isset($_GET['page'])) {
             <a class="nav-link px-4 py-1 <?php if ($page == 'faqs')
               echo 'active'; ?>" href="?page=faqs">FAQs</a>
           </li>
-          <li class="nav-item d-lg-none py-1">
+          <li class="nav-item d-lg-none py-1 mx-2">
             <a class="btn mt-2" href="login.php">LOGIN</a>
           </li>
         </ul>
