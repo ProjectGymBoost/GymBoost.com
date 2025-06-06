@@ -201,38 +201,34 @@
             <div class="modal fade" id="deleteUser1Modal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px; background-color: white;">
-                        <div style="position: relative; padding: 1rem;">
-                            <!-- Title -->
-                            <h4 class="modal-title text-center heading text-black" id="deleteUserModalLabel"
-                                style="margin: 0.5rem; font-size: 26px;">
-                                DELETE THIS USER'S ACCOUNT
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <!-- Header -->
+                        <div
+                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                            <h4 class="modal-title text-center subheading" id="deleteUserModalLabel"
+                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                DELETE USER ACCOUNT
                             </h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close" style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1;"></button>
+                        </div>
 
-                            <!-- Close button -->
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                style="position: absolute; top: 26px; right: 40px; transform: translateX(26px);"></button>
+                        <!-- Body -->
+                        <div class="modal-body text-center" style="padding: 1.5rem;">
+                            <p style="margin: 0; font-size: 16px; color: black;">
+                                Are you sure you want to delete <strong>John Doe's</strong> account? <br><br>If you decided to delete this user's account, all data related to it will also be deleted.
+                            </p>
+                        </div>
 
-                            <!-- Card content -->
-                            <div class="card"
-                                style="border: 2px solid red; background-color: rgba(255, 0, 0, 0.1); padding: 1rem; margin-top: 1rem;">
-                                <p class="paragraph" style="color: red; margin: 0.5rem 0 0 0;">
-                                    Are you sure you want to delete <strong>John Doe</strong>'s account?
-                                    <br /><br />If you decide to delete this user's account, all data
-                                    related to it will also be deleted.
-                                </p>
-                            </div>
-
-                            <!-- Footer buttons -->
-                            <div class="modal-footer d-flex justify-content-end" style="border: none;">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    CANCEL
-                                </button>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#confirmDeleteUser1Modal" style="margin-left: 0.5rem;">
-                                    DELETE
-                                </button>
-                            </div>
+                        <!-- Footer -->
+                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"">
+                                CANCEL
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                style="margin-left: 0.5rem;" data-bs-toggle="modal" data-bs-target="#confirmDeleteUser1Modal">
+                                DELETE
+                            </button>
                         </div>
                     </div>
                 </div>

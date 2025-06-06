@@ -47,30 +47,31 @@ body {
 
 .btn-primary {
   font-family: var(--subheadingFont);
-  background-color: var(--primaryColor);
-  color: var(--text-color-light);
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 600;
   padding: 0.3rem 1.5rem;
   border: 2px solid transparent;
   border-radius: 20px;
-}
-
-.btn-primary:hover {
-  background-color: transparent;
-  color: var(--primaryColor);
-  border-color: var(--primaryColor);
+  --bs-btn-bg: var(--primaryColor);
+  --bs-btn-color: var(--text-color-light);
+  --bs-btn-border-color: var(--primaryColor);
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-color: var(--primaryColor);
+  --bs-btn-hover-border-color: var(--primaryColor);
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-color: var(--text-color-dark);
+  --bs-btn-active-border-color: var(--primaryColor);
 }
 
 .btn-secondary {
   font-family: var(--subheadingFont);
-  background-color: transparent;          
-  color: var(--primaryColor);    
+  background-color: transparent;
+  color: var(--primaryColor);
   font-weight: 600;
   text-transform: uppercase;
   padding: 0.3rem 1.5rem;
-  border: 2px solid var(--primaryColor); 
+  border: 2px solid var(--primaryColor);
   border-radius: 20px;
 }
 
