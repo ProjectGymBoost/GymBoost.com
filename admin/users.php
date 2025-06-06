@@ -205,7 +205,7 @@
                         <div style="position: relative; padding: 1rem;">
                             <!-- Title -->
                             <h4 class="modal-title text-center heading text-black" id="deleteUserModalLabel"
-                                style="margin: 0; font-size: 26px;">
+                                style="margin: 0.5rem; font-size: 26px;">
                                 DELETE THIS USER'S ACCOUNT
                             </h4>
 
@@ -252,8 +252,8 @@
                         <div class="modal-body text-center text-black">
                             <strong>John Doe's</strong> account has been successfully deleted.
                         </div>
-                        <div class="modal-footer d-flex justify-content-center" style="border: none;">
-                            <button type="button" class="btn" data-bs-dismiss="modal">
+                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                                 CLOSE
                             </button>
                         </div>
