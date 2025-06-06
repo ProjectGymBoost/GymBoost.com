@@ -5,7 +5,7 @@
   --headingFont: "Oswald", sans-serif;
   --subheadingFont: "Roboto Mono", monospace;
   --primaryColor: #28364e;
-  --secondaryColor: #E8E6E6;
+  --secondaryColor: #e8e6e6;
   --bgColor: #f2f2f2;
   --text-color-light: #fffbfb;
   --text-color-dark: #0a0d14;
@@ -45,35 +45,35 @@ body {
   font-weight: bolder;
 }
 
-.btn {
+.btn-primary {
   font-family: var(--subheadingFont);
   background-color: var(--primaryColor);
   color: var(--text-color-light);
+  text-transform: uppercase;
   font-size: 1rem;
   font-weight: 600;
   padding: 0.3rem 1.5rem;
   border: 2px solid transparent;
   border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.btn:hover {
+.btn-primary:hover {
   background-color: transparent;
   color: var(--primaryColor);
   border-color: var(--primaryColor);
 }
 
-.card-bg-color{
-  background: #7386A6;
+.btn-secondary {
+  font-family: var(--subheadingFont);
+  background-color: transparent;          
+  color: var(--primaryColor);    
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.3rem 1.5rem;
+  border: 2px solid var(--primaryColor); 
+  border-radius: 20px;
 }
 
-/* @media (max-width: 768px) {
-  .heading {
-    font-size: 2.5rem;
-  }
-
-  .subheading {
-    font-size: 1.5rem;
-  }
-} */
+.card-bg-color {
+  background: #7386a6;
+}
