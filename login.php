@@ -55,8 +55,8 @@
           text-shadow: 0 0 1px var(--primaryColor);"></i>
           </div>
 
-          <a href="user/index.php" class="btn w-100 mt-2 mb-2"
-            style="max-width: 400px; display: inline-block; text-align: center;">
+          <a href="user/index.php" class="btn btn-primary w-100 mt-2 mb-2"
+            style="max-width: 400px; display: inline-block; text-align: center; font-family: var(--primaryFont);">
             LOGIN
           </a>
 

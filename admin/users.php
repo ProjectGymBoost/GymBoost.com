@@ -54,7 +54,7 @@
 
                 <!-- Apply Button -->
                 <div>
-                    <button id="applyBtn" class="btn subheading">APPLY</button>
+                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
                 </div>
             </div>
 
@@ -73,7 +73,9 @@
 
                 <!-- Add New Button -->
                 <div>
-                    <button id="applyBtn" class="btn subheading" onclick="window.location.href='register.php'">ADD NEW</button>
+                    <button id="applyBtn" class="btn btn-primary subheading"
+                        onclick="window.location.href='register.php'">ADD
+                        NEW</button>
                 </div>
             </div>
 
@@ -103,7 +105,8 @@
                                 <td>User</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#">
+                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteUser1Modal">
                                             <i class="bi bi-trash3 px-1"></i>
                                         </a>
                                     </li>
@@ -118,7 +121,8 @@
                                 <td>User</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#">
+                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteUser1Modal">
                                             <i class="bi bi-trash3 px-1"></i>
                                         </a>
                                     </li>
@@ -133,7 +137,8 @@
                                 <td>Admin</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#">
+                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteUser1Modal">
                                             <i class="bi bi-trash3 px-1"></i>
                                         </a>
                                     </li>
@@ -148,7 +153,8 @@
                                 <td>User</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#">
+                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteUser1Modal">
                                             <i class="bi bi-trash3 px-1"></i>
                                         </a>
                                     </li>
@@ -163,7 +169,8 @@
                                 <td>User</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#">
+                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteUser1Modal">
                                             <i class="bi bi-trash3 px-1"></i>
                                         </a>
                                     </li>
@@ -178,7 +185,8 @@
                                 <td>User</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#">
+                                        <a style="color: red; text-decoration: none;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteUser1Modal">
                                             <i class="bi bi-trash3 px-1"></i>
                                         </a>
                                     </li>
@@ -186,6 +194,66 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- Delete Account Modal -->
+            <div class="modal fade" id="deleteUser1Modal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <!-- Header -->
+                        <div
+                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                            <h4 class="modal-title text-center subheading" id="deleteUserModalLabel"
+                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                DELETE USER ACCOUNT
+                            </h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close" style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1;"></button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body text-center" style="padding: 1.5rem;">
+                            <p style="margin: 0; font-size: 16px; color: black;">
+                                Are you sure you want to delete <strong>John Doe's</strong> account? <br><br>If you decided to delete this user's account, all data related to it will also be deleted.
+                            </p>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"">
+                                CANCEL
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                style="margin-left: 0.5rem;" data-bs-toggle="modal" data-bs-target="#confirmDeleteUser1Modal">
+                                DELETE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Delete Account Modal -->
+            <div class="modal fade" id="confirmDeleteUser1Modal" tabindex="-1"
+                aria-labelledby="confirmDeleteUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px;  color: white; border: none;">
+                        <div class="modal-header" style="border: none;">
+                            <h4 class="modal-title heading text-center w-100 text-black"
+                                id="confirmDeleteUserModalLabel" style="margin: 0;">
+                                USER DELETED
+                            </h4>
+                        </div>
+                        <div class="modal-body text-center text-black">
+                            <strong>John Doe's</strong> account has been successfully deleted.
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                CLOSE
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -217,12 +285,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
-        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
         crossorigin="anonymous"></script>
 </body>
 

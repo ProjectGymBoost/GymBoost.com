@@ -83,7 +83,7 @@
 
                         <!-- Create Button -->
                         <div class="w-100 text-center mt-3">
-                            <button type="submit" class="btn">
+                            <button type="submit" class="btn btn-primary">
                                 CREATE
                             </button>
                         </div>
