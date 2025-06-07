@@ -72,13 +72,8 @@
                 </div>
 
                 <!-- Add New Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading"
-                        onclick="window.location.href='register.php'">ADD
-                        NEW</button>
-                </div>
+                <a href="register.php" class="btn btn-primary subheading">ADD NEW</a>
             </div>
-
 
             <!-- User Table -->
             <div class="row">
@@ -210,13 +205,15 @@
                                 DELETE USER ACCOUNT
                             </h4>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close" style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1;"></button>
+                                aria-label="Close"
+                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1;"></button>
                         </div>
 
                         <!-- Body -->
                         <div class="modal-body text-center" style="padding: 1.5rem;">
                             <p style="margin: 0; font-size: 16px; color: black;">
-                                Are you sure you want to delete <strong>John Doe's</strong> account? <br><br>If you decided to delete this user's account, all data related to it will also be deleted.
+                                Are you sure you want to delete <strong>John Doe's</strong> account? <br><br>If you
+                                decided to delete this user's account, all data related to it will also be deleted.
                             </p>
                         </div>
 
@@ -225,8 +222,8 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"">
                                 CANCEL
                             </button>
-                            <button type="button" class="btn btn-primary"
-                                style="margin-left: 0.5rem;" data-bs-toggle="modal" data-bs-target="#confirmDeleteUser1Modal">
+                            <button type=" button" class="btn btn-primary" style="margin-left: 0.5rem;"
+                                data-bs-toggle="modal" data-bs-target="#confirmDeleteUser1Modal">
                                 DELETE
                             </button>
                         </div>
