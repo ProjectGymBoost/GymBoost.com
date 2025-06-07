@@ -1,6 +1,7 @@
 <!-- FAQs Cover Page -->
+<div class="cover-overlay"></div>
 <div class="cover d-flex align-items-center">
-    <div class="text-white ps-4 ps-md-5 ms-md-5">
+    <div class="text-white ps-4 ps-md-5 ms-md-5" style="position: relative; z-index: 1;">
         <div class="subheading">FREQUENTLY ASKED QUESTIONS</div>
         <div class="heading" style="font-size: clamp(2.5rem, 4vw, 5.2rem)">
             WE'VE GOT ANSWERS!

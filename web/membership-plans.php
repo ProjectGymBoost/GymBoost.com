@@ -1,5 +1,6 @@
+<div class="cover-overlay"></div>
 <div class="membership-bg-img d-flex align-items-center">
-    <div class="text-white ps-4 ps-md-5 ms-md-5">
+    <div class="text-white ps-4 ps-md-5 ms-md-5" style="position: relative; z-index: 1;">
         <div class="subheading">MEMBERSHIP</div>
         <div class="heading" style="font-size: clamp(2.5rem, 4vw, 5.2rem)">
             THE ULTIMATE <br />
