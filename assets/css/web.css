@@ -200,6 +200,84 @@ ul li a i {
   color: #8a8a8a;
 }
 
+/* gym.php */
+.gym-bg-img {
+    background-image: url("../img/web/gymfacilitybg.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.carousel {
+  text-align: center;
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.main-image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 800px;
+}
+
+#main-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Arrow styles */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 1;
+    user-select: none;
+}
+
+.arrow.left {
+    left: 10px;
+}
+
+.arrow.right {
+    right: 10px;
+}
+
+.arrow:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Thumbnails */
+.thumbnails {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.thumbnails img {
+    width: 190px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;
+    border: 3px solid transparent;
+}
+
+.thumbnails img:hover,
+.thumbnails img.active {
+    transform: scale(1.05);
+    border: 3px solid #ffffff;
+}
+
 @media (max-width: 767px) {
   .footer .col-md-4 {
     display: flex;
