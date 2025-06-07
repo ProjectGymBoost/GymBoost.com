@@ -67,3 +67,27 @@
     border-radius: 10px;
     text-align: center;
 }
+
+.form-control:focus {
+    border-color: var(--primaryColor);
+    border-width: 2px;
+    box-shadow: none;
+}
+
+@media (max-width: 767.98px) {
+    .qr-img {
+        width: 320px !important;
+        height: 320px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 380px) {
+    .qr-img {
+        width: 250px !important;
+        height: 250px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

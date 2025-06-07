@@ -16,15 +16,15 @@
             <div class="text-center mb-4 mt-4"><img id="profilePreview" src="../assets/img/logo/backupLogo.png"
                 alt="Profile Picture" class="rounded-circle mb-3"
                 style="width: 230px; height: 230px; object-fit: cover; border: 2px solid #000;">
-              <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-4 mb-4 px-3">
-                <button class="btn btn-primary">Update Profile Picture</button>
-                <button class="btn btn-primary">Remove Profile Picture</button>
+              <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 mb-4">
+                <button class="btn btn-primary btn-sm px-3 px-md-4 px-lg-3">Update Profile Picture</button>
+                <button class="btn btn-primary btn-sm px-3 px-md-4 px-lg-3">Remove Profile Picture</button>
               </div>
             </div>
 
             <div class="container px-5 mb-4">
               <div class="row">
-                
+
                 <div class="col-12 mb-3">
                   <div><b>Full Name:</b> John Doe</div>
                 </div>
@@ -52,6 +52,7 @@
         </div>
       </div>
 
+
       <!-- Right Column - Account Settings -->
       <div class="col-12 col-lg-6">
         <div class="card-body p-0 mt-2 d-flex flex-column">
@@ -68,8 +69,7 @@
                 <p class="mb-2 ps-2"><b>End Date:</b></p>
                 <button class="btn btn-primary mt-2">Download QR</button>
               </div>
-              <img src="img/qr.png" alt="QR Code" class="rounded-4 border border-dark"
-                style="width: 160px; height: 160px; object-fit: cover;">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fgithub.com%2FProjectGymBoost%2FGymBoost.com.git&size=160x160" alt="QR Code" class="qr-img rounded-4 border border-dark">
             </div>
           </div>
 
