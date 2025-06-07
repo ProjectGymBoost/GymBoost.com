@@ -84,8 +84,7 @@
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
                                 <th scope="col">DATE</th>
-                                <th class="text-center" scope="col">EDIT</th>
-                                <th class="text-center" scope="col">DELETE</th>
+                                <th class="text-center" scope="col">ACTION</th>
                             </tr>
                         </thead>
 
@@ -96,19 +95,16 @@
                                 <td>Jon</td>
                                 <td>Doe</td>
                                 <td>2025-07-01</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: black; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editAttendanceModal">
-                                            <i class="bi bi-pencil px-1"></i>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
-                                </td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendanceModal">
-                                            <i class="bi bi-trash3 px-1"></i>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteAnnouncement1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
                                         </a>
                                     </li>
                                 </td>
@@ -119,19 +115,16 @@
                                 <td>Jenna Miles</td>
                                 <td>Reyes</td>
                                 <td>2025-07-01</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: black; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editAttendanceModal">
-                                            <i class="bi bi-pencil px-1"></i>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
-                                </td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendanceModal">
-                                            <i class="bi bi-trash3 px-1"></i>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteAnnouncement1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
                                         </a>
                                     </li>
                                 </td>
@@ -142,19 +135,16 @@
                                 <td>Jose</td>
                                 <td>Rizal</td>
                                 <td>2025-07-02</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: black; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editAttendanceModal">
-                                            <i class="bi bi-pencil px-1"></i>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
-                                </td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendanceModal">
-                                            <i class="bi bi-trash3 px-1"></i>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteAnnouncement1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
                                         </a>
                                     </li>
                                 </td>
@@ -165,19 +155,16 @@
                                 <td>Emily</td>
                                 <td>Brown</td>
                                 <td>2025-07-02</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: black; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editAttendanceModal">
-                                            <i class="bi bi-pencil px-1"></i>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
-                                </td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendanceModal">
-                                            <i class="bi bi-trash3 px-1"></i>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteAnnouncement1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
                                         </a>
                                     </li>
                                 </td>
@@ -188,19 +175,16 @@
                                 <td>Michael</td>
                                 <td>Johnson</td>
                                 <td>2025-07-03</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: black; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editAttendanceModal">
-                                            <i class="bi bi-pencil px-1"></i>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
-                                </td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendanceModal">
-                                            <i class="bi bi-trash3 px-1"></i>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteAnnouncement1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
                                         </a>
                                     </li>
                                 </td>
