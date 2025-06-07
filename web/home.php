@@ -1,5 +1,6 @@
+<div class="cover-overlay"></div>
 <div class="bg-img d-flex align-items-center">
-   <div class="text-white ps-4 ps-md-5 ms-md-5">
+   <div class="text-white ps-4 ps-md-5 ms-md-5" style="position: relative; z-index: 1;">
       <div class="subheading m-0">SINCE 2013</div>
       <div class="heading" style="font-size: clamp(2.5rem, 4.5vw, 5.2rem);">HARD BODY <br> FITNESS GYM</div>
       <div style="font-size: clamp(.8rem, 1vw, 3rem);">Purok 3, Maharlika Highway, Brgy. San Rafael, <br> Sto. Tomas City, Batangas</div>

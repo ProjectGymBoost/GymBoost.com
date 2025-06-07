@@ -162,6 +162,13 @@
   color: var(--text-color-dark);
 }
 
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #0000009e;
+  z-index: 0;
+}
+
 /* Footer */
 .footer {
   background-color: var(--primaryColor);
