@@ -206,7 +206,7 @@
                             </h4>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                 aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1;"></button>
+                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
                         </div>
 
                         <!-- Body -->
