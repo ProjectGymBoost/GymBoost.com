@@ -40,9 +40,10 @@
                 </div>
 
                 <!-- Add New Button -->
-                <div>
-                    <a class="btn btn-primary subheading">ADD NEW</a>
-                </div>
+                <a class="btn btn-primary subheading" data-bs-toggle="modal" data-bs-target="#addAnnouncementModal">
+                    ADD NEW
+                </a>
+
             </div>
 
             <!-- User Table -->
@@ -63,7 +64,7 @@
                             <tr>
                                 <td scope="row">1</td>
                                 <td>Gym Closed</td>
-                                <td> April 17-18 (Holiday)</td>
+                                <td>The gym will be closed for maintenance until further notice.</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
@@ -140,6 +141,214 @@
                 </div>
             </div>
 
+            <!-- Add Announcement Modal -->
+            <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <!-- Header -->
+                        <div
+                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                            <h4 class="modal-title text-center subheading" id="addAnnouncementModalLabel"
+                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                ADD ANNOUNCEMENT
+                            </h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"
+                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                            </button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body" style="padding: 1.5rem;">
+                            <form id="addAnnouncementForm">
+                                <div class="mb-3 text-start">
+                                    <label for="newAnnouncementTitle" class="form-label fw-bold">Title</label>
+                                    <input type="text" class="form-control" id="newAnnouncementTitle"
+                                        placeholder="Enter title">
+                                </div>
+                                <div class="text-start">
+                                    <label for="newAnnouncementDescription" class="form-label fw-bold">Message</label>
+                                    <textarea class="form-control" id="newAnnouncementDescription" rows="3"
+                                        placeholder="Enter message"></textarea>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                CANCEL
+                            </button>
+                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
+                                data-bs-toggle="modal" data-bs-target="#confirmAddAnnouncementModal"
+                                data-bs-dismiss="modal">
+                                ADD
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Add Announcement Modal -->
+            <div class="modal fade" id="confirmAddAnnouncementModal" tabindex="-1"
+                aria-labelledby="confirmAddAnnouncementModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+                        <div class="modal-header" style="border: none;">
+                            <h4 class="modal-title heading text-center w-100 text-black"
+                                id="confirmAddAnnouncementModalLabel" style="margin: 0;">
+                                ANNOUNCEMENT ADDED
+                            </h4>
+                        </div>
+                        <div class="modal-body text-center text-black">
+                            The new announcement has been successfully added.
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                CLOSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Announcement Modal -->
+            <div class="modal fade" id="editAnnouncement1Modal" tabindex="-1"
+                aria-labelledby="editAnnouncement1ModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <!-- Header -->
+                        <div
+                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                            <h4 class="modal-title text-center subheading" id="editAnnouncement1ModalLabel"
+                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                EDIT ANNOUNCEMENT
+                            </h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"
+                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                            </button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body" style="padding: 1.5rem;">
+                            <form id="editAnnouncementForm">
+                                <div class="mb-3 text-start">
+                                    <label for="announcementTitle" class="form-label fw-bold">Title</label>
+                                    <input type="text" class="form-control" id="announcementTitle" value="GYM CLOSED">
+                                </div>
+                                <div class="text-start">
+                                    <label for="announcementDescription" class="form-label fw-bold">Message</label>
+                                    <textarea class="form-control" id="announcementDescription"
+                                        rows="3">The gym will be closed for maintenance until further notice.</textarea>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                CANCEL
+                            </button>
+                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
+                                data-bs-toggle="modal" data-bs-target="#confirmEditAnnouncement1Modal">
+                                SAVE CHANGES
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Edit Announcement Modal -->
+            <div class="modal fade" id="confirmEditAnnouncement1Modal" tabindex="-1"
+                aria-labelledby="confirmEditAnnouncementModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+                        <div class="modal-header" style="border: none;">
+                            <h4 class="modal-title heading text-center w-100 text-black"
+                                id="confirmEditAnnouncementModalLabel" style="margin: 0;">
+                                ANNOUNCEMENT UPDATED
+                            </h4>
+                        </div>
+                        <div class="modal-body text-center text-black">
+                            The <strong>GYM CLOSED</strong> announcement has been successfully updated.
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                CLOSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Announcement Modal -->
+            <div class="modal fade" id="deleteAnnouncement1Modal" tabindex="-1"
+                aria-labelledby="deleteAnnouncement1ModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <!-- Header -->
+                        <div
+                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                            <h4 class="modal-title text-center subheading" id="deleteAnnouncement1ModalLabel"
+                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                DELETE ANNOUNCEMENT
+                            </h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"
+                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body text-center" style="padding: 1.5rem;">
+                            <p style="margin: 0; font-size: 16px; color: black;">
+                                Are you sure you want to delete this <strong>GYM CLOSED</strong> announcement? <br><br>
+                                Once deleted, this announcement will no longer be visible to others and cannot be
+                                recovered.
+                            </p>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                CANCEL
+                            </button>
+                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
+                                data-bs-toggle="modal" data-bs-target="#confirmDeleteAnnouncement1Modal"
+                                data-bs-dismiss="modal">
+                                DELETE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Delete Announcement Modal -->
+            <div class="modal fade" id="confirmDeleteAnnouncement1Modal" tabindex="-1"
+                aria-labelledby="confirmDeleteAnnouncementModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+                        <div class="modal-header" style="border: none;">
+                            <h4 class="modal-title heading text-center w-100 text-black"
+                                id="confirmDeleteAnnouncementModalLabel" style="margin: 0;">
+                                ANNOUNCEMENT DELETED
+                            </h4>
+                        </div>
+                        <div class="modal-body text-center text-black">
+                            The <strong>GYM CLOSED</strong> announcement has been successfully deleted.
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                CLOSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Bottom Pagination Info -->
             <div class="d-flex justify-content-between align-items-center">
                 <div class="small text-muted">
@@ -168,12 +377,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
-        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
         crossorigin="anonymous"></script>
 </body>
 
