@@ -87,7 +87,7 @@ if (isset($_GET['page'])) {
   <?php include("web/" . $page . ".php"); ?>
 
   <!-- Footer -->
-  <footer class="footer mt-5 py-5 text-white">
+  <footer class="footer py-5 text-white">
     <div class="container">
       <div class="row align-items-center mb-2">
         <div class="col-12 col-md-3 text-center text-md-start">
