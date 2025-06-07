@@ -25,21 +25,21 @@
             <div class="container px-5 mb-4">
               <div class="row">
 
-                <div class="col-12 mb-3">
+                <div class="col-12 mb-3 ps-md-4">
                   <div><b>Full Name:</b> John Doe</div>
                 </div>
 
-                <div class="col-6 mb-3">
+                <div class="col-6 mb-3 ps-md-4">
                   <div><b>Age:</b>21</div>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 mb-3 ps-md-4">
                   <div><b>Gender:</b>Male</div>
                 </div>
 
-                <div class="col-6 mb-3">
+                <div class="col-6 mb-3 ps-md-4">
                   <div><b>Weight:</b>85kg</div>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 mb-3 ps-md-4">
                   <div><b>Height:</b>170cm</div>
                 </div>
               </div>
