@@ -1,3 +1,4 @@
+/* Navigation Bar */
 .custom-navbar {
   border-bottom: 2px solid var(--primaryColor);
   background-color: var(--bgColor);
@@ -56,7 +57,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #f2f2f2;
+  background-color: var(--bgColor);
   overflow-x: hidden;
   transition: 0.5s;
   z-index: 2000;
@@ -78,7 +79,7 @@
   padding: 8px;
   text-decoration: none;
   font-size: 1.4rem;
-  color: black;
+  color: var(--text-color-dark);
   display: block;
   transition: 0.5s;
   letter-spacing: -1px;
@@ -91,14 +92,14 @@
   top: 1rem;
   right: 1.5rem;
   font-size: 3rem;
-  color: black;
+  color: var(--text-color-dark);
   text-decoration: none;
   cursor: pointer;
 }
 
 /* Style of home.php */
 .bg-img {
-  background-image: url('..//img/web/gymbg1.png');
+  background-image: url("..//img/web/gymbg1.png");
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -115,31 +116,64 @@
 
 /* Style of membership-plans.php */
 .membership-bg-img {
-    background-image: url("../img/web/gymbg2.png");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+  background-image: url("../img/web/gymbg2.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }
 
 .web-subheading {
-    font-family: var(--subheadingFont);
-    font-size: 3rem; 
-    font-weight: bolder;
-    color: var(--primaryColor);
+  font-family: var(--subheadingFont);
+  font-size: 3rem;
+  font-weight: bolder;
+  color: var(--primaryColor);
+}
+
+/* Style of faqs.php */
+.cover {
+  background-image: url("../img/web/gymbg3.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.custom-accordion .accordion-item {
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.custom-accordion .accordion-item:hover {
+  transform: translateY(-4px);
+}
+
+.custom-accordion .accordion-button {
+  background-color: var(--secondaryColor);
+  color: var(--text-color-dark);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.custom-accordion .accordion-body {
+  background-color: var(--text-color-light);
+  color: var(--text-color-dark);
 }
 
 /* Footer */
 .footer {
-  background-color: #28364e;
+  background-color: var(--primaryColor);
   padding: 40px 0;
-  color: #ffffff;
+  color: var(--text-color-light);
   position: relative;
   width: 100%;
   margin-top: auto;
 }
 
 .footer .list-unstyled li a {
-  color: #ffffff;
+  color: var(--text-color-light);
   text-decoration: none;
   font-size: 16px;
 }
@@ -159,7 +193,7 @@
 }
 
 .footer .text-end a {
-  color: #ffffff;
+  color: var(--text-color-light);
   text-decoration: none;
 }
 
@@ -177,7 +211,7 @@
 }
 
 ul li a i {
-  color: white;
+  color: var(--text-color-light);
 }
 
 .my-icon.bi-search {
@@ -202,9 +236,9 @@ ul li a i {
 
 /* gym page part in home.php */
 .gym-bg-img {
-    background-image: url("../img/web/gymfacilitybg.png");
-    background-size: cover;
-    background-position: center;
+  background-image: url("../img/web/gymfacilitybg.png");
+  background-size: cover;
+  background-position: center;
 }
 
 .carousel {
@@ -213,70 +247,69 @@ ul li a i {
 }
 
 .main-image-container {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    max-width: 800px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 800px;
 }
 
 #main-image {
-    width: 100%;
-    max-height: 450px;
-    object-fit: cover;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Arrow styles */
 .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2.5rem;
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    padding: 10px 15px;
-    cursor: pointer;
-    z-index: 1;
-    user-select: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 50%;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 1;
+  user-select: none;
 }
 
 .arrow.left {
-    left: 10px;
+  left: 10px;
 }
 
 .arrow.right {
-    right: 10px;
+  right: 10px;
 }
 
 .arrow:hover {
-    background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 /* Thumbnails */
 .thumbnails {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .thumbnails img {
-    width: 190px;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.3s, border 0.3s;
-    border: 3px solid transparent;
+  width: 190px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s, border 0.3s;
+  border: 3px solid transparent;
 }
 
 .thumbnails img:hover,
 .thumbnails img.active {
-    transform: scale(1.05);
-    border: 3px solid #ffffff;
+  transform: scale(1.05);
+  border: 3px solid var(--text-color-light);
 }
-
 
 @media (max-width: 767px) {
   .navbar .input-group {
