@@ -13,9 +13,6 @@ if (isset($_GET['page'])) {
     case "membership-plans":
       $page = "membership-plans";
       break;
-    case "gym":
-      $page = "gym";
-      break;
     default:
       header("Location: ?page=home");
       break;
@@ -72,10 +69,6 @@ if (isset($_GET['page'])) {
             <a class="nav-link px-4 py-1 <?php if ($page == 'faqs')
               echo 'active'; ?>" href="?page=faqs">FAQs</a>
           </li>
-          <li class="nav-item py-1 mx-2">
-            <a class="nav-link px-4 py-1 <?php if ($page == 'gym')
-              echo 'active'; ?>" href="?page=gym">GYM</a>
-          </li>
           <li class="nav-item d-lg-none py-1 mx-2">
             <a class="btn btn-primary mt-2" href="login.php">LOGIN</a>
           </li>
@@ -94,7 +87,7 @@ if (isset($_GET['page'])) {
   <?php include("web/" . $page . ".php"); ?>
 
   <!-- Footer -->
-  <footer class="footer mt-5 py-5 text-white">
+  <footer class="footer py-5 text-white">
     <div class="container">
       <div class="row align-items-center mb-2">
         <div class="col-12 col-md-3 text-center text-md-start">
