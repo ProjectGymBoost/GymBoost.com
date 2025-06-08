@@ -49,8 +49,8 @@
                           <!-- Profile Preview -->
                           <div class="text-center">
                             <div class="rounded-circle overflow-hidden bg-black" style="width: 120px; height: 120px;">
-                              <img id="profilePreview2" src="../assets/img/profile/defaultProfile.png" alt="Current Photo"
-                                class="w-100 h-100" style="object-fit: cover;">
+                              <img id="profilePreview2" src="../assets/img/profile/defaultProfile.png"
+                                alt="Current Photo" class="w-100 h-100" style="object-fit: cover;">
                             </div>
                           </div>
 
@@ -75,9 +75,32 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         CANCEL
                       </button>
-                      <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                        name="btnUploadProfile" data-bs-dismiss="modal">
+                      <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;" data-bs-toggle="modal"
+                        data-bs-target="#confirmUpdateProfilePicModal">
                         SAVE CHANGES
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Confirm Update Profile Pic Modal -->
+              <div class="modal fade" id="confirmUpdateProfilePicModal" tabindex="-1"
+                aria-labelledby="confirmUpdateProfilePicLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+                    <div class="modal-header" style="border: none;">
+                      <h4 class="modal-title heading text-center w-100 text-black"
+                        id="confirmUpdateProfilePicModalLabel" style="margin: 0;">
+                        PROFILE PICTURE UPDATED
+                      </h4>
+                    </div>
+                    <div class="modal-body text-center text-black">
+                      Your profile picture has been successfully updated.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        CLOSE
                       </button>
                     </div>
                   </div>
@@ -171,11 +194,11 @@
             </div>
 
             <div class="text-center mt-3 mb-5">
-              <button class="btn btn-primary mt-3 mb-2" data-bs-toggle="modal"
-                data-bs-target="#editProfileModal">EDIT PROFILE</button>
+              <button class="btn btn-primary mt-3 mb-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">EDIT
+                PROFILE</button>
             </div>
 
-              <!-- Edit Profile Modal -->
+            <!-- Edit Profile Modal -->
             <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
               aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
               <div class="modal-dialog modal-dialog-centered">
@@ -201,28 +224,28 @@
                           <input type="text" class="form-control" id="FirstName" value="John">
                         </div>
                         <div class="col-md-6 mb-3 text-start">
-                          <label for="Weight" class="form-label fw-bold">Weight</label>
-                          <input type="text" class="form-control" id="Weight" value="80kg">
+                          <label for="LastName" class="form-label fw-bold">Last Name</label>
+                          <input type="text" class="form-control" id="LastName" value="Doe">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6 mb-3 text-start">
-                          <label for="LastName" class="form-label fw-bold">Last Name</label>
-                          <input type="text" class="form-control" id="LastName" value="Doe">
+                          <label for="Age" class="form-label fw-bold">Age</label>
+                          <input type="text" class="form-control" id="Age" value="21">
+                        </div>
+                        <div class="col-md-6 mb-3 text-start">
+                          <label for="Gender" class="form-label fw-bold">Gender</label>
+                          <input type="text" class="form-control" id="Gender" value="male">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-3 text-start">
+                          <label for="Weight" class="form-label fw-bold">Weight</label>
+                          <input type="text" class="form-control" id="Weight" value="85kg">
                         </div>
                         <div class="col-md-6 mb-3 text-start">
                           <label for="Height" class="form-label fw-bold">Height</label>
                           <input type="text" class="form-control" id="Height" value="170">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 mb-3 text-start">
-                          <label for="Email" class="form-label fw-bold">Email</label>
-                          <input type="text" class="form-control" id="Email" value="john@example.com">
-                        </div>
-                        <div class="col-md-6 mb-3 text-start">
-                          <label for="Gender" class="form-label fw-bold">Gender</label>
-                          <input type="text" class="form-control" id="Gender" value="Male">
                         </div>
                       </div>
                     </form>
@@ -466,14 +489,13 @@
                   login page.
                 </div>
                 <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                  <a href="../login.php" class="btn btn-primary" role="button">
                     CLOSE
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
