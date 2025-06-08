@@ -386,8 +386,13 @@
                 </nav>
             </div>
 
+            <!-- Heading -->
+            <div class="col-12 mt-4">
+                <div class="heading text-center text-sm-start">USER REWARDS</div>
+            </div>
+
             <!-- Pagination and Add New Button (Second Block) -->
-            <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3 mt-4">
                 <div class="small text-muted">
                     Show
                     <select id="entriesCountExpired" class="form-select d-inline-block w-auto mx-1 small text-muted">
@@ -398,90 +403,6 @@
                     </select>
                     entries
                 </div>
-
-                <div>
-                    <a class="btn btn-primary subheading" data-bs-toggle="modal"
-                        data-bs-target="#addUserRewardsModal">ADD NEW</a>
-                </div>
-
-                <!-- Add Reward Modal -->
-                <div class="modal fade" id="addUserRewardsModal" tabindex="-1"
-                    aria-labelledby="addUserRewardsModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                    data-bs-keyboard="false">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content" style="border-radius: 15px;">
-                            <!-- Header -->
-                            <div
-                                style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                                <h4 class="modal-title text-center subheading" id="addUserRewardsModalLabel"
-                                    style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                    ADD NEW USER REWARD
-                                </h4>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                    style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
-                                </button>
-                            </div>
-
-                            <!-- Body -->
-                            <div class="modal-body" style="padding: 1.5rem;">
-                                <form id="addUserRewardsForm">
-                                    <div class="mb-3 text-start">
-                                        <label for="RewardId" class="form-label fw-bold">Reward_ID</label>
-                                        <input type="text" class="form-control" id="AddUserRewardName" value="">
-                                    </div>
-                                    <div class="mb-3 text-start">
-                                        <label for="Username" class="form-label fw-bold">Username</label>
-                                        <input type="text" class="form-control" id="AddUserRewardUsername" value="">
-                                    </div>
-                                    <div class="mb-3 text-start">
-                                        <label for="ClaimedDate" class="form-label fw-bold">Claimed Date</label>
-                                        <input type="text" class="form-control" id="AddUserRewardDate" value="">
-                                    </div>
-                                    <div class="mb-3 text-start">
-                                        <label for="RewardStatus" class="form-label fw-bold">Status</label>
-                                        <input type="text" class="form-control" id="AddUserRequirementStatus" value="">
-                                    </div>
-                                </form>
-                            </div>
-
-                            <!-- Footer -->
-                            <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    CANCEL
-                                </button>
-                                <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                    data-bs-toggle="modal" data-bs-target="#confirmAddUserRewardsModal">
-                                    SAVE CHANGES
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Confirm Edit Attendance Modal -->
-                <div class="modal fade" id="confirmAddUserRewardsModal" tabindex="-1"
-                    aria-labelledby="confirmAddUserRewardsLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-                            <div class="modal-header" style="border: none;">
-                                <h4 class="modal-title heading text-center w-100 text-black"
-                                    id="confirmAddUserRewardsModalLabel" style="margin: 0;">
-                                    USER REWARD ADDED
-                                </h4>
-                            </div>
-                            <div class="modal-body text-center text-black">
-                                This user reward has been successfully added.
-                            </div>
-                            <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                    CLOSE
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <!-- Second Table -->
