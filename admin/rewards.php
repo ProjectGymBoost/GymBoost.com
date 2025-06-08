@@ -55,7 +55,7 @@
                                 style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
                                 <h4 class="modal-title text-center subheading" id="addRewardsModalLabel"
                                     style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                    ADD REWARD
+                                    ADD NEW REWARD
                                 </h4>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                     aria-label="Close"
