@@ -69,7 +69,7 @@
                 <p class="mb-2 ps-2"><b>End Date:</b></p>
                 <button class="btn btn-primary mt-2">Download QR</button>
               </div>
-              <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fgithub.com%2FProjectGymBoost%2FGymBoost.com.git&size=160x160" alt="QR Code" class="qr-img rounded-4 border border-dark">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fgithub.com%2FProjectGymBoost%2FGymBoost.com.git&size=160x160" alt="QR Code" class="qr-img rounded-4 border border-dark p-2">
             </div>
           </div>
 
