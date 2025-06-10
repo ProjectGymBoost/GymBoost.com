@@ -68,7 +68,7 @@
       <!-- Second Column -->
       <div class="col-12 col-xl-6 d-none d-lg-block p-0" style="height: 100%;">
         <!-- Sample Image -->
-        <img src="assets/img/logo/backupLogo.png" alt="Display Image"
+        <img src="assets/img/logo/backupLogo2.png" alt="Display Image"
           style="width: 100%; height: 100%; object-fit: fill; display: block;">
       </div>
     </div>
