@@ -26,13 +26,8 @@
                 <div class="heading text-center text-sm-start">MEMBERSHIP PLANS</div>
             </div>
 
-            <!-- Controls: Search, Sort By, Order By, Apply Button -->
+            <!-- Controls: Sort By, Order By, Apply Button -->
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-
-                <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
-                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
-                </div>
 
                 <!-- Sort By -->
                 <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
