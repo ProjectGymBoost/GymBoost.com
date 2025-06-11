@@ -428,7 +428,7 @@
                                 <td>Claimed</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardsModal">
+                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardModal">
                                             <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
@@ -448,7 +448,7 @@
                                 <td>Claimed</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardsModal">
+                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardModal">
                                             <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
@@ -468,7 +468,7 @@
                                 <td>Claimed</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardsModal">
+                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardModal">
                                             <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
@@ -488,7 +488,7 @@
                                 <td>Claimed</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardsModal">
+                                        <a data-bs-toggle="modal" data-bs-target="#editUserRewardModal">
                                             <i class="bi bi-pencil-square px-2"></i>
                                         </a>
                                     </li>
@@ -502,6 +502,90 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- Edit User Rewards Modal -->
+            <div class="modal fade" id="editUserRewardModal" tabindex="-1"
+                aria-labelledby="editRewardModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <!-- Header -->
+                        <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                            <h4 class="modal-title text-center subheading" id="editRewardModalLabel"
+                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                EDIT USER REWARD
+                            </h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"
+                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                            </button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body" style="padding: 1.5rem;">
+                            <form id="editRewardForm">
+                                <!-- Reward ID -->
+                                <div class="mb-3 text-start">
+                                    <label class="form-label fw-bold">Reward ID</label>
+                                    <div class="form-control-plaintext">1</div>
+                                </div>
+                                <!-- Username -->
+                                <div class="mb-3 text-start">
+                                    <label class="form-label fw-bold">Username</label>
+                                    <div class="form-control-plaintext">John Doe</div>
+                                </div>
+                                <!-- Claimed Date -->
+                                <div class="mb-3 text-start">
+                                    <label for="rewardExpiry" class="form-label fw-bold">Claimed Date</label>
+                                    <input type="date" class="form-control" id="rewardExpiry" value="2025-09-25">
+                                </div>
+                                <!-- Status -->
+                                <div class="mb-3 text-start">
+                                    <label for="membershipStatus" class="form-label fw-bold">Status</label>
+                                    <select class="form-select" id="membershipStatus">
+                                        <option value="present">Claimed</option>
+                                        <option value="present">Unclaimed</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                CANCEL
+                            </button>
+                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
+                                data-bs-toggle="modal" data-bs-target="#confirmEditRewardModal">
+                                SAVE CHANGES
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Edit Reward Modal -->
+            <div class="modal fade" id="confirmEditRewardModal" tabindex="-1"
+                aria-labelledby="confirmEditRewardModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+                        <div class="modal-header" style="border: none;">
+                            <h4 class="modal-title heading text-center w-100 text-black"
+                                id="confirmEditRewardModalLabel" style="margin: 0;">
+                                REWARD UPDATED
+                            </h4>
+                        </div>
+                        <div class="modal-body text-center text-black">
+                            User reward has been successfully updated.
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                CLOSE
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
