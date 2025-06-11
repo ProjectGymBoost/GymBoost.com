@@ -1,3 +1,70 @@
+<?php
+include("../assets/shared/connect.php");
+
+// RETRIEVE SEARCH, SORT, AND ORDER PARAMETERS
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$sort = isset($_GET['sort']) ? $_GET['sort'] : '';
+$order = isset($_GET['order']) ? $_GET['order'] : '';
+
+// PAGINATION
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 5;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Count total users for pagination
+$countQuery = "SELECT COUNT(*) AS total FROM users";
+if (!empty($userSearch)) {
+    $countQuery .= " WHERE CONCAT(firstName, ' ', lastName) LIKE '%$userSearch%' 
+        OR firstName LIKE '%$userSearch%' 
+        OR lastName LIKE '%$userSearch%' 
+        OR email LIKE '%$userSearch%' 
+        OR role LIKE '%$userSearch%'";
+}
+$countResult = executeQuery($countQuery);
+$countRow = mysqli_fetch_assoc($countResult);
+$totalUsers = (int) $countRow['total'];
+$totalPages = ceil($totalUsers / $limit);
+
+// USERS TABLE QUERY
+$usersQuery = "SELECT * FROM users";
+
+// Filter users by search keyword
+if (!empty($search)) {
+    $userSearch = mysqli_real_escape_string($conn, $search);
+    $usersQuery .= " WHERE CONCAT(firstName, ' ', lastName) LIKE '%$userSearch%' 
+        OR firstName LIKE '%$userSearch%' 
+        OR lastName LIKE '%$userSearch%' 
+        OR email LIKE '%$userSearch%' 
+        OR role LIKE '%$userSearch%'";
+}
+
+// Apply sorting by column (First name / Last name)
+if ($sort != '') {
+    $usersQuery = $usersQuery . " ORDER BY $sort";
+
+    // Apply sort direction (ASC / DESC)
+    if ($order != '') {
+        $usersQuery = $usersQuery . " $order";
+    }
+}
+
+$usersQuery .= " LIMIT $limit OFFSET $offset";
+$usersResult = executeQuery($usersQuery);
+
+// DELETE QUERY - Delete User Data
+if (isset($_POST['btnDelete'])) {
+    $deleteUserId = $_POST['deleteUserId'];
+    $deleteFirstName = $_POST['deleteFirstName'];
+    $deleteLastName = $_POST['deleteLastName'];
+
+    $deleteQuery = "DELETE FROM users WHERE userID = $deleteUserId";
+    executeQuery($deleteQuery);
+
+    header("Location: " . $_SERVER['PHP_SELF'] . "?deleted=1&name=" . urlencode($deleteFirstName . ' ' . $deleteLastName));
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
