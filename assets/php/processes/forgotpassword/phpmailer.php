@@ -12,7 +12,7 @@ include('../../../shared/phpmailer/src/SMTP.php');
 $errors = array();
 
 // Step 1: User submits email for password reset
-if (isset($_POST['btnContinue'])) {
+if (isset($_POST['btnContinue']) && !empty($_POST['email'])) {
     $email = $_POST['email'];
     $checkEmailQuery = "SELECT * FROM users WHERE email='$email'";
     $checkEmailResult = executeQuery($checkEmailQuery);
@@ -80,34 +80,42 @@ if (isset($_POST['btnReset'])) {
 }
 
 // Step 3: User submits new password
-if (isset($_POST['btnChangePassword'])) {
-    $_SESSION['info'] = "";
+if (isset($_POST['btnChange'])) {
     $password = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
+    $cpassword = $_POST['confirmPassword'];
 
-    if ($password !== $cpassword) {
-        $_SESSION['info'] = "";
-        $errors['password'] = "Confirm password not matched!";
-    } else {
-        $email = $_SESSION['email'];
-        $code = 0;
+    if ($password === $cpassword) {
+        $email = $_SESSION['email'] ?? null;
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("UPDATE users SET code = ?, password = ? WHERE email = ?");
-        if ($stmt) {
-            $stmt->bind_param("iss", $code, $hashedPassword, $email);
-            if ($stmt->execute()) {
-                $_SESSION['info'] = "Your password has been changed. You can now log in with your new password.";
-                header('Location: password-changed.php');
-                exit();
+        if ($email) {
+            $code = 0;
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE users SET code = ?, password = ? WHERE email = ?");
+
+            if ($stmt) {
+                $stmt->bind_param("iss", $code, $hashedPassword, $email);
+                if ($stmt->execute()) {
+                    if ($stmt->execute()) {
+                        header('Location: password-changed.php'); // Redirect first
+                        session_destroy(); // Destroy session after redirection
+                        exit();
+                    }
+                } else {
+                    $errors['db-error'] = "Failed to change your password!";
+                }
+                $stmt->close();
             } else {
-                $errors['db-error'] = "Failed to change your password!";
+                $errors['db-error'] = "Something went wrong with the statement.";
             }
-            $stmt->close();
         } else {
-            $errors['db-error'] = "Something went wrong with the statement.";
+            echo "Error: Email session variable is missing.";
+            exit();
         }
+    } else {
+        echo "Error: Passwords do not match.";
+        exit();
     }
 }
+
 
 ?>

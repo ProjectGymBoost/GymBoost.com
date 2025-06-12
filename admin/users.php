@@ -4,6 +4,13 @@ if (isset($_SESSION['userCreated'])) {
     $userCreated = true;  
     unset($_SESSION['userCreated']);  
 }
+if (empty($_SESSION['userID'])) {
+    header("Location: ../login.php");
+    exit();
+} if ($_SESSION['role'] === 'user') {
+    header("Location: ../user/index.php"); 
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +103,7 @@ if (isset($_SESSION['userCreated'])) {
 
                 <!-- Add New Button -->
                 <div>
-                    <button id="applyBtn" class="btn subheading" onclick="window.location.href='register.php'">ADD
+                    <button id="applyBtn" class="btn btn-primary subheading" onclick="window.location.href='register.php'">ADD
                         NEW</button>
                 </div>
             </div>

@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (empty($_SESSION['userID'])) {
+    header("Location: ../login.php");
+    exit();
+} if ($_SESSION['role'] === 'user') {
+    header("Location: ../user/index.php"); 
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

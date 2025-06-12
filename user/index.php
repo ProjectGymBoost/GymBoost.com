@@ -1,13 +1,16 @@
 <?php
 session_start();
 if (empty($_SESSION['userID'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
-} else 
-if ($_GET["logout"] === "true") {
+} else if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
     session_destroy();
     header("Location: ../login.php");
-    exit(); 
+    exit();
+}
+if ($_SESSION['role'] === 'admin') {
+    header("Location: ../admin/index.php"); 
+    exit();
 }
 
 

@@ -22,8 +22,6 @@ include("assets/php/processes/login-process.php");
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet" />
-</head>
-
 <style>
   .form-control:focus {
     border-color: var(--primaryColor);
@@ -68,6 +66,7 @@ include("assets/php/processes/login-process.php");
     background-position: right 10px center !important;
   }
 </style>
+</head>
 
 <body style="background-color: var(--bgColor); height: 100vh; margin: 0; overflow: hidden;">
 
@@ -105,7 +104,7 @@ include("assets/php/processes/login-process.php");
           </div>
 
 
-          <button name="btnLogin" type="submit" class="btn w-100 mt-2 mb-2"
+          <button name="btnLogin" type="submit" class="btn btn-primary w-100 mt-2 mb-2"
             style="max-width: 400px; display: inline-block; text-align: center;">
             LOGIN
           </button>

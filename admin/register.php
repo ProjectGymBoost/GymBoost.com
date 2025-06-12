@@ -2,6 +2,13 @@
 include("../assets/shared/connect.php");
 include("../assets/php/classes/classes.php");
 include("../assets/php/processes/register-process.php");
+if (empty($_SESSION['userID'])) {
+    header("Location: ../login.php");
+    exit();
+} if ($_SESSION['role'] === 'user') {
+    header("Location: ../user/index.php"); 
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -143,7 +150,7 @@ include("../assets/php/processes/register-process.php");
 
                             <!-- Create Button -->
                             <div class="w-100 text-center mt-3">
-                                <button type="submit" name="btnRegister" class="btn">
+                                <button type="submit" name="btnRegister" class="btn btn-primary">
                                     CREATE
                                 </button>
                             </div>                            
