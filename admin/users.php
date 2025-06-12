@@ -340,7 +340,7 @@ if (isset($_POST['btnDelete'])) {
                         <?php endfor; ?>
 
                         <!-- Next Button -->
-                        <li class="page-item <?php echo $page >= $totalPages ? 'disabled' : ''; ?>">>
+                        <li class="page-item <?php echo $page >= $totalPages ? 'disabled' : ''; ?>">
                             <a class="page-link"
                                 href="<?php echo '?page=' . ($page + 1) . '&limit=' . $limit . '&search=' . urlencode($search); ?>"
                                 aria-label="Next">
