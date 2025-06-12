@@ -15,10 +15,10 @@ $offset = ($page - 1) * $limit;
 $countQuery = "SELECT COUNT(*) AS total FROM users";
 if (!empty($userSearch)) {
     $countQuery .= " WHERE CONCAT(firstName, ' ', lastName) LIKE '%$userSearch%' 
-        OR firstName LIKE '%$userSearch%' 
-        OR lastName LIKE '%$userSearch%' 
-        OR email LIKE '%$userSearch%' 
-        OR role LIKE '%$userSearch%'";
+                        OR firstName LIKE '%$userSearch%' 
+                        OR lastName LIKE '%$userSearch%' 
+                        OR email LIKE '%$userSearch%' 
+                        OR role LIKE '%$userSearch%'";
 }
 $countResult = executeQuery($countQuery);
 $countRow = mysqli_fetch_assoc($countResult);
@@ -32,10 +32,10 @@ $usersQuery = "SELECT * FROM users";
 if (!empty($search)) {
     $userSearch = mysqli_real_escape_string($conn, $search);
     $usersQuery .= " WHERE CONCAT(firstName, ' ', lastName) LIKE '%$userSearch%' 
-        OR firstName LIKE '%$userSearch%' 
-        OR lastName LIKE '%$userSearch%' 
-        OR email LIKE '%$userSearch%' 
-        OR role LIKE '%$userSearch%'";
+                        OR firstName LIKE '%$userSearch%' 
+                        OR lastName LIKE '%$userSearch%' 
+                        OR email LIKE '%$userSearch%' 
+                        OR role LIKE '%$userSearch%'";
 }
 
 // Apply sorting by column (First name / Last name)
@@ -64,7 +64,6 @@ if (isset($_POST['btnDelete'])) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,6 +79,14 @@ if (isset($_POST['btnDelete'])) {
     <link href="../assets/css/admin.css" rel="stylesheet" />
 </head>
 
+<style>
+    .page-item.active .page-link {
+        background-color: #28364e;
+        border-color: #28364e;
+        color: white;
+    }
+</style>
+
 <body>
 
     <?php include('../assets/shared/sidebar.php'); ?>
@@ -94,52 +101,77 @@ if (isset($_POST['btnDelete'])) {
             </div>
 
             <!-- Controls: Search, Sort By, Order By, Apply Button -->
-            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+            <form method="get">
+                <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
 
-                <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
-                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
-                </div>
+                    <!-- Search-BE Functionality -->
+                    <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
+                        <input type="search" name="search" id="searchInput" class="form-control"
+                            placeholder="Search users..."
+                            value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                    </div>
 
-                <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
-                    <select id="sortBy" class="form-select">
-                        <option selected disabled>Sort By</option>
-                        <option value="first_name">First Name</option>
-                        <option value="last_name">Last Name</option>
-                    </select>
-                </div>
+                    <!-- Sort By-BE Functionality -->
+                    <div class=" flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
+                        <select id="sort" name="sort" class="form-control">
+                            <option <?php if ($sort == '')
+                                echo "selected"; ?> value="">Default Sort</option>
 
-                <!-- Order By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
-                    <select id="orderBy" class="form-select">
-                        <option selected disabled>Order</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
-                </div>
+                            <option <?php if ($sort == "firstName") {
+                                echo "selected";
+                            } ?> value="firstName">First Name
+                            </option>
 
-                <!-- Apply Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
+                            <option <?php if ($sort == "lastName") {
+                                echo "selected";
+                            } ?> value="lastName">Last Name
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Order By-BE Functionality -->
+                    <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
+                        <select id="order" name="order" class="form-control">
+                            <option <?php if ($order == '')
+                                echo "selected"; ?> value="">Default Order</option>
+                            <option <?php if ($order == "ASC") {
+                                echo "selected";
+                            } ?> value="ASC">Ascending</option>
+                            <option <?php if ($order == "DESC") {
+                                echo "selected";
+                            } ?> value="DESC">Descending</option>
+                        </select>
+                    </div>
+
+                    <!-- Apply Button -->
+                    <div>
+                        <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <!-- Pagination and Add New Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- Entries Count Dropdown-BE Functionality -->
                 <div class="small text-muted">
                     Show
-                    <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    entries
+                    <form method="get" id="entriesForm" class="d-inline">
+                        <select name="limit" id="entriesCount"
+                            class="form-select d-inline-block w-auto mx-1 small text-muted"
+                            onchange="document.getElementById('entriesForm').submit()">
+                            <option value="5" <?php echo $limit == 5 ? 'selected' : ''; ?>>5</option>
+                            <option value="10" <?php echo $limit == 10 ? 'selected' : ''; ?>>10</option>
+                            <option value="25" <?php echo $limit == 25 ? 'selected' : ''; ?>>25</option>
+                            <option value="50" <?php echo $limit == 50 ? 'selected' : ''; ?>>50</option>
+                        </select>
+                        entries
+                        <!-- Keep current search in form -->
+                        <input type="hidden" name="search" value="<?php echo $search; ?>">
+                    </form>
                 </div>
 
                 <!-- Add New Button -->
-                <a href="register.php" class="btn btn-primary subheading">ADD NEW</a>
+                <a href=" register.php" class="btn btn-primary subheading">ADD NEW</a>
             </div>
 
             <!-- User Table -->
@@ -157,187 +189,161 @@ if (isset($_POST['btnDelete'])) {
                             </tr>
                         </thead>
 
-                        <!-- User Data -->
+                        <!-- BE Data Retrieval - User Data -->
                         <tbody>
-                            <tr>
-                                <td scope="row">1</td>
-                                <td>Jon</td>
-                                <td>Doe</td>
-                                <td>johndoe@gmail.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                            <?php
+                            if (mysqli_num_rows($usersResult) > 0) {
+                                while ($userData = mysqli_fetch_assoc($usersResult)) {
+                                    ?>
+                                    <tr>
+                                        <td scope="row">
+                                            <?php echo ($userData['userID']); ?>
+                                        </td>
+                                        <td>
+                                            <?php echo ($userData['firstName']); ?>
+                                        </td>
+                                        <td><?php echo ($userData['lastName']); ?></td>
+                                        <td><?php echo ($userData['email']); ?>
+                                        </td>
+                                        <td>
+                                            <?php echo ucfirst($userData['role']); ?>
+                                        </td>
+                                        <td>
+                                            <li style="display: flex; justify-content: center;">
+                                                <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteUserModal<?php echo $userData['userID']; ?>">
+                                                    <i class="bi bi-trash3 px-1"></i>
+                                                </a>
+                                            </li>
+                                        </td>
+                                    </tr>
 
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>Jenna Miles</td>
-                                <td>Reyes</td>
-                                <td>atienzajennamiles@gmail.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                                    <!-- Delete Functionality - Delete Account Modal -->
+                                    <div class="modal fade" id="deleteUserModal<?php echo $userData['userID']; ?>" tabindex="-1"
+                                        aria-labelledby=" deleteUserModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                                        data-bs-keyboard="false">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content" style="border-radius: 15px;">
+                                                <!-- Header -->
+                                                <div
+                                                    style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                                                    <h4 class="modal-title text-center subheading" id="deleteUserModalLabel"
+                                                        style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                                                        DELETE USER ACCOUNT
+                                                    </h4>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal" aria-label="Close"
+                                                        style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
+                                                </div>
 
-                            <tr>
-                                <td scope="row">3</td>
-                                <td>John</td>
-                                <td>Smith</td>
-                                <td>johnsmith@gmail.com</td>
-                                <td>Admin</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                                                <!-- Body -->
+                                                <div class="modal-body text-center" style="padding: 1.5rem;">
+                                                    <p style="margin: 0; font-size: 16px; color: black;">
+                                                        Are you sure you want to delete
+                                                        <?php echo '<span style="color: #D2042D; font-weight: bold;">' . strtoupper($userData['firstName'] . ' ' . $userData['lastName'] . "'s") . '</span>'; ?>
+                                                        account? <br><br>If you
+                                                        decided to delete this user's account, all data related to it will also
+                                                        be deleted.
+                                                    </p>
+                                                </div>
 
-                            <tr>
-                                <td scope="row">4</td>
-                                <td>Emily</td>
-                                <td>Brown</td>
-                                <td>emilybrown@yahoo.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">5</td>
-                                <td>Michael</td>
-                                <td>Johnson</td>
-                                <td>mjohnson@outlook.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">6</td>
-                                <td>Sarah</td>
-                                <td>Williams</td>
-                                <td>sarahwilliams@gmail.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                                                <!-- Footer -->
+                                                <div class="modal-footer d-flex justify-content-end"
+                                                    style="border: none; padding: 1rem;">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                        CANCEL
+                                                    </button>
+                                                    <!-- Delete-BE Functionality-->
+                                                    <form method="post">
+                                                        <input type="hidden" name="deleteUserId"
+                                                            value="<?php echo $userData['userID']; ?>">
+                                                        <input type="hidden" name="deleteFirstName"
+                                                            value="<?php echo $userData['firstName']; ?>">
+                                                        <input type="hidden" name="deleteLastName"
+                                                            value="<?php echo $userData['lastName']; ?>">
+                                                        <button type="submit" class="btn btn-primary" name="btnDelete"
+                                                            style="margin-left: 0.5rem;">
+                                                            DELETE
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Delete Account Modal -->
-            <div class="modal fade" id="deleteUser1Modal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
-                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <!-- Delete-BE Functionality - Delete Confirmation Modal -->
+            <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1' && isset($_GET['name'])): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var confirmModal = new bootstrap.Modal(document.getElementById('confirmDeleteUserModal'));
+                        confirmModal.show();
+                    });
+                </script>
+            <?php endif; ?>
+
+            <div class="modal fade" id="confirmDeleteUserModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content" style="border-radius: 15px;">
-                        <!-- Header -->
-                        <div
-                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                            <h4 class="modal-title text-center subheading" id="deleteUserModalLabel"
-                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                DELETE USER ACCOUNT
-                            </h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body text-center" style="padding: 1.5rem;">
-                            <p style="margin: 0; font-size: 16px; color: black;">
-                                Are you sure you want to delete <strong>John Doe's</strong> account? <br><br>If you
-                                decided to delete this user's account, all data related to it will also be deleted.
-                            </p>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"">
-                                CANCEL
-                            </button>
-                            <button type=" button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                data-bs-toggle="modal" data-bs-target="#confirmDeleteUser1Modal">
-                                DELETE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Confirm Delete Account Modal -->
-            <div class="modal fade" id="confirmDeleteUser1Modal" tabindex="-1"
-                aria-labelledby="confirmDeleteUserModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;  color: white; border: none;">
-                        <div class="modal-header" style="border: none;">
-                            <h4 class="modal-title heading text-center w-100 text-black"
-                                id="confirmDeleteUserModalLabel" style="margin: 0;">
-                                USER DELETED
-                            </h4>
+                        <div class="modal-header border-0">
+                            <h4 class="modal-title heading text-center w-100 text-black">USER DELETED</h4>
                         </div>
                         <div class="modal-body text-center text-black">
-                            <strong>John Doe's</strong> account has been successfully deleted.
+                            <strong>
+                                <span style="color: #D2042D; font-weight: bold;">
+                                    <?php echo strtoupper($_GET['name']) . "'s"; ?>
+                                </span>
+                            </strong>
+                            account has been successfully deleted.
                         </div>
-                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                CLOSE
-                            </button>
+                        <div class="modal-footer d-flex justify-content-center pb-4 border-0">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Pagination Info -->
+            <!-- Pagination-BE Functionality - Bottom Pagination Info -->
             <div class="d-flex justify-content-between align-items-center">
                 <div class="small text-muted">
-                    Showing 2 of 2 entries
+                    Showing <?php echo min($offset + 1, $totalUsers); ?> to
+                    <?php echo min($offset + $limit, $totalUsers); ?> of
+                    <?php echo $totalUsers; ?> entries
                 </div>
-                <nav aria-label="Page navigation example">
+
+                <nav aria-label="Page navigation">
                     <ul class="pagination mt-3">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                        <!-- Previous Button -->
+                        <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+                            <a class="page-link"
+                                href="<?php echo '?page=' . ($page - 1) . '&limit=' . $limit . '&search=' . urlencode($search); ?>"
+                                aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+
+                        <!-- Page Numbers -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?php echo $page == $i ? 'active' : ''; ?>">
+                                <a class="page-link"
+                                    href="<?php echo '?page=' . $i . '&limit=' . $limit . '&search=' . urlencode($search); ?>">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- Next Button -->
+                        <li class="page-item <?php echo $page >= $totalPages ? 'disabled' : ''; ?>">>
+                            <a class="page-link"
+                                href="<?php echo '?page=' . ($page + 1) . '&limit=' . $limit . '&search=' . urlencode($search); ?>"
+                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
