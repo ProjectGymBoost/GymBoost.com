@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!empty($_SESSION['userID'])) {
+    header("Location: user/index.php");
+    exit();
+}
+include("assets/shared/connect.php");
+include("assets/php/classes/classes.php");
+include("assets/php/processes/login-process.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,55 +25,93 @@
 </head>
 
 <style>
-.form-control:focus {
-  border-color: var(--primaryColor);
-  border-width: 2px;
-  box-shadow: none;
-}
+  .form-control:focus {
+    border-color: var(--primaryColor);
+    border-width: 2px;
+    box-shadow: none;
+  }
 
-.forgot-link {
-  text-decoration: none;
-  color: var(--bs-secondary);
-  transition: color 0.3s ease;
-}
+  .forgot-link {
+    text-decoration: none;
+    color: var(--bs-secondary);
+    transition: color 0.3s ease;
+  }
 
-.forgot-link:hover {
-  color: var(--primaryColor);
-}
+  .forgot-link:hover {
+    color: var(--primaryColor);
+  }
+
+  input.is-valid {
+    border-color: #28a745;
+    border-width: 2px !important;
+  }
+
+  input.is-invalid {
+    border-color: #dc3545;
+    border-width: 2px !important;
+  }
+
+  .invalid-feedback {
+    position: absolute;
+  }
+
+  #password.is-valid {
+    background-position: right 40px center !important;
+  }
+
+  #password.is-invalid {
+    background-position: right 40px center !important;
+  }
+
+  .toggle-password {
+    position: absolute !important;
+    background-position: right 10px center !important;
+  }
 </style>
 
 <body style="background-color: var(--bgColor); height: 100vh; margin: 0; overflow: hidden;">
 
-  <nav class="navbar" style="background-color: var(--primaryColor);">
-    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
-      <a class="navbar-brand m-0">
-        <img src="assets/img/logo/officialLogo.png" alt="logo" width="40" height="40" style="display: block;">
-      </a>
-    </div>
-  </nav>
+  <form method="POST">
+    <?php if (isset($loginError)): ?>
+      <input type="hidden" id="loginError" value="<?php echo htmlspecialchars($loginError); ?>">
+    <?php endif; ?>
 
-  <div class="container-fluid p-0" style="height: calc(100vh - 56px);">
-    <div class="row m-0" style="height: 100%;">
-      <!-- First Column -->
-      <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
-        style="height: 100%; margin-top: -2rem;">
-        <div class="heading mb-5">LOGIN</div>
-        <input type="email" placeholder="Email" class="form-control mb-4" style="max-width: 400px;">
+    <nav class="navbar" style="background-color: var(--primaryColor);">
+      <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+        <a class="navbar-brand m-0">
+          <img src="assets/img/logo/officialLogo.png" alt="logo" width="40" height="40" style="display: block;">
+        </a>
+      </div>
+    </nav>
 
-          <div class="position-relative mb-5" style="max-width: 400px; width: 100%;">
-            <input type="password" id="password" placeholder="Password" class="form-control"
-              style="border-radius: 5px;">
-            <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
+    <div class="container-fluid p-0" style="height: calc(100vh - 56px);">
+      <div class="row m-0" style="height: 100%;">
+        <!-- First Column -->
+        <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
+          style="height: 100%; margin-top: -2rem;">
+          <div class="heading mb-5">LOGIN</div>
+          <div style="max-width: 400px; width: 100%;" class="mb-4 position-relative">
+            <input type="email" placeholder="Email" name="email" id="email" class="form-control" required>
+            <div id="emailError" class="invalid-feedback text-start"></div>
+          </div>
+
+
+          <div class="position-relative mt-2 mb-5" style="max-width: 400px; width: 100%;">
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+            <div id="passwordError" class="invalid-feedback text-start">
+            </div>
+          <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
           text-shadow: 0 0 1px var(--primaryColor);"></i>
           </div>
 
-          <a href="user/index.php" class="btn btn-primary w-100 mt-2 mb-2"
-            style="max-width: 400px; display: inline-block; text-align: center; font-family: var(--primaryFont);">
+
+          <button name="btnLogin" type="submit" class="btn w-100 mt-2 mb-2"
+            style="max-width: 400px; display: inline-block; text-align: center;">
             LOGIN
-          </a>
+          </button>
 
           <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
-            <a href="#" class="forgot-link">Forgot your password?</a>
+            <a href="assets/php/processes/forgotpassword/forgot-password.php" class="forgot-link">Forgot your password?</a>
           </div>
         </div>
 
@@ -86,6 +136,8 @@
       this.classList.toggle('bi-eye-slash');
     });
   </script>
+
+  <script src="assets/js/login.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
