@@ -32,7 +32,7 @@
 
                     <!-- Users -->
                     <div class="col-md-4">
-                        <div class="card-dashboard p-2" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="subheading">100</div>
@@ -47,7 +47,7 @@
 
                     <!-- Active Members -->
                     <div class="col-md-4">
-                        <div class="card-dashboard p-2" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="subheading">86</div>
@@ -62,7 +62,7 @@
 
                     <!-- New Members -->
                     <div class="col-md-4">
-                        <div class="card-dashboard p-2" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="subheading">4</div>
@@ -77,7 +77,7 @@
 
                     <!-- Attendance Today -->
                     <div class="col-md-4">
-                        <div class="card-dashboard p-2" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="subheading">8</div>
@@ -92,7 +92,7 @@
 
                     <!-- Pending Rewards -->
                     <div class="col-md-4">
-                        <div class="card-dashboard p-2" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="subheading">5</div>
@@ -107,7 +107,7 @@
 
                     <!-- Total Plans -->
                     <div class="col-md-4">
-                        <div class="card-dashboard p-2" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="subheading">4</div>
