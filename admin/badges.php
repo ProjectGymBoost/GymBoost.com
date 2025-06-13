@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="mb-3 text-start">
                                     <label for="badgeIcon" class="form-label fw-bold">Icon</label>
-                                    <input type="text" class="form-control" id="badgeIcon" value="starter.png">
+                                    <input type="file" class="form-control" id="badgeIcon" accept="image/*">
                                 </div>
                             </form>
                         </div>
@@ -285,8 +285,8 @@
                                     <input type="text" class="form-control" id="price">
                                 </div>
                                 <div class="mb-3 text-start">
-                                    <label for="price" class="form-label fw-bold">Icon</label>
-                                    <input type="text" class="form-control" id="price">
+                                    <label for="badgeIcon" class="form-label fw-bold">Icon</label>
+                                    <input type="file" class="form-control" id="badgeIcon" accept="image/*">
                                 </div>
                             </form>
                         </div>
