@@ -187,11 +187,11 @@
                             <form id="editBadgesForm">
                                 <div class="mb-3 text-start">
                                     <label for="badgeName" class="form-label fw-bold">Badge</label>
-                                    <input type="text" class="form-control" id="badgeName" value="Half-month">
+                                    <input type="text" class="form-control" id="badgeName" value="Fresh Starter">
                                 </div>
                                 <div class="mb-3 text-start">
                                     <label for="badgeDescription" class="form-label fw-bold">Description</label>
-                                    <input type="text" class="form-control" id="badgeDescription" value="15 days">
+                                    <input type="text" class="form-control" id="badgeDescription" value="First gym check-in">
                                 </div>
                                 <div class="mb-3 text-start">
                                     <label for="badgeType" class="form-label fw-bold">Type</label>
