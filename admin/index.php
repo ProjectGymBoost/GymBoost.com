@@ -127,7 +127,7 @@
             <div class="row justify-content-center g-2 m-5">
                 <!-- Chart 1 Column -->
                 <div class="col-md-6 col-12 d-flex flex-column align-items-center">
-                    <div class="subheading text-center mt-3 w-100 p-1 card-title w-100">Attendance Report</div>
+                    <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">Attendance Report</div>
                     <div class="card" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="barChart" style="width: 100%; height: 300px;"></canvas>
@@ -137,7 +137,7 @@
 
                 <!-- Chart 2 Column -->
                 <div class="col-md-6 col-12 d-flex flex-column align-items-center">
-                    <div class="subheading text-center mt-3 w-100 p-1 card-title">Member Distribution</div>
+                    <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">Member Distribution</div>
                     <div class="card" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="pieChart" style="width: 100%; height: 280px;"></canvas>

@@ -190,12 +190,6 @@ td {
   box-shadow: none;
 }
 
-/* styling of card for Admin Dashboard Graph for Attendance Report and Member Distribution */
-.card-title {
-  background-color: var(--primaryColor);
-  color: var(--text-color-light);
-}
-
 @media (max-width: 1050px) {
   .navbar {
     display: flex;
