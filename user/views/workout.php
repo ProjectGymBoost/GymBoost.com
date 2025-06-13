@@ -5,32 +5,39 @@
         <div class="heading">WORKOUT CALENDAR</div>
         <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
 
-        <div
-          class="d-flex flex-column flex-sm-row justify-content-center justify-content-sm-end align-items-center gap-3 mt-3 mb-3">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mt-5 mb-3">
 
-          <!-- Search -->
-          <div class="w-100 flex-sm-grow-0" style="max-width: 300px;">
-            <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+          <!-- Entries Count first -->
+          <div class="small text-muted text-start w-100 flex-sm-grow-0" style="max-width: 200px">
+            Show
+            <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+            entries
           </div>
 
-          <div class="d-flex gap-2 w-100 flex-sm-grow-0 justify-content-center justify-content-sm-start"
-            style="max-width: 300px;">
-            <!-- Filter -->
-            <div class="flex-grow-1">
-              <select id="sortBy" class="form-select">
-                <option selected disabled>Filter</option>
-                <option value="first_name">Status</option>
-                <option value="last_name">Workout Type</option>
-              </select>
-            </div>
+          <!-- Search, Filter, and Add -->
+          <div
+            class="navigation-wrapper d-flex gap-2 align-items-center w-100 flex-sm-grow-0 justify-content-center justify-sm-end"
+            style="max-width: 600px">
+            <input id="searchInput" type="search" class="form-control w-100 w-sm-auto" placeholder="Search month…"
+              style="max-width: 300px">
+            <select id="orderBy" class="form-select" style="max-width: 200px">
+              <option selected disabled>Order</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
 
-            <!-- Add New Button -->
-            <div>
-              <a class="btn btn-primary subheading" data-bs-toggle="modal" data-bs-target="#addWorkoutModal">ADD NEW</a>
-            </div>
+            <a class="btn btn-primary subheading text-nowrap" data-bs-toggle="modal" data-bs-target="#addWorkoutModal">
+              ADD NEW
+            </a>
           </div>
 
         </div>
+
 
         <!-- Add Workout Modal -->
         <div class="modal fade" id="addWorkoutModal" tabindex="-1" aria-labelledby="addWorkoutModalLabel"
@@ -54,15 +61,32 @@
                 <form id="AddWorkoutForm">
                   <div class="mb-3 text-start">
                     <label for="WorkoutDate" class="form-label fw-bold">Date</label>
-                    <input type="text" class="form-control" id="AddWorkoutDate" value="">
+                    <input type="date" class="form-control" id="AddWorkoutDate" name="AddWorkoutDate" value="">
                   </div>
                   <div class="mb-3 text-start">
                     <label for="WorkoutType" class="form-label fw-bold">Workout Type</label>
-                    <input type="text" class="form-control" id="AddWorkoutType" value="">
+                    <select id="AddWorkoutType" name="AddWorkoutType" class="form-select" multiple>
+                      <option disabled selected>Workout</option>
+                      <option value="Cardio">Cardio</option>
+                      <option value="ChestDay">Chest Day</option>
+                      <option value="BackDay">Back Day</option>
+                      <option value="LegDay">Leg Day</option>
+                      <option value="ShoulderDay">Shoulder Day</option>
+                      <option value="ArmDay">Arm Day</option>
+                      <option value="AbsDay">Abs Day</option>
+                      <option value="FullBody">Full Body</option>
+                      <option value="RestDay">Rest Day</option>
+                    </select>
                   </div>
                   <div class="mb-3 text-start">
                     <label for="WorkoutStatus" class="form-label fw-bold">Status</label>
-                    <input type="text" class="form-control" id="AddWorkoutStatus" value="">
+                    <select id="AddWorkoutStatus" name="AddWorkoutStatus" class="form-select">
+                      <option disabled selected>Status</option>
+                      <option value="Scheduled">Planned</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Cancelled">Skipped</option>
+                      <option value="Cancelled">Scheduled</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -81,7 +105,7 @@
           </div>
         </div>
 
-        <!-- Confirm Add Attendance Modal -->
+        <!-- Confirm Add Workout Modal -->
         <div class="modal fade" id="confirmAddWorkoutModal" tabindex="-1" aria-labelledby="confirmAddWorkoutLabel"
           aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
@@ -236,15 +260,32 @@
                   <form id="EditWorkoutForm">
                     <div class="mb-3 text-start">
                       <label for="WorkoutDate" class="form-label fw-bold">Date</label>
-                      <input type="text" class="form-control" id="EditWorkoutDate" value="2025-05-01">
+                      <input type="date" class="form-control" id="AddWorkoutDate" name="EditWorkoutDate" value="">
                     </div>
                     <div class="mb-3 text-start">
                       <label for="WorkoutType" class="form-label fw-bold">Workout Type</label>
-                      <input type="text" class="form-control" id="EditWorkoutType" value="Cardio">
+                      <select id="EditWorkoutType" name="EditWorkoutType" class="form-select" multiple>
+                        <option disabled selected>Workout</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="ChestDay">Chest Day</option>
+                        <option value="BackDay">Back Day</option>
+                        <option value="LegDay">Leg Day</option>
+                        <option value="ShoulderDay">Shoulder Day</option>
+                        <option value="ArmDay">Arm Day</option>
+                        <option value="AbsDay">Abs Day</option>
+                        <option value="FullBody">Full Body</option>
+                        <option value="RestDay">Rest Day</option>
+                      </select>
                     </div>
                     <div class="mb-3 text-start">
                       <label for="WorkoutStatus" class="form-label fw-bold">Status</label>
-                      <input type="text" class="form-control" id="EditWorkoutStatus" value="Scheduled">
+                      <select id="EditWorkoutStatus" name="EditWorkoutStatus" class="form-select">
+                        <option disabled selected>Status</option>
+                        <option value="Scheduled">Planned</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Skipped</option>
+                        <option value="Cancelled">Scheduled</option>
+                      </select>
                     </div>
                   </form>
                 </div>
@@ -324,7 +365,7 @@
             </div>
           </div>
 
-          <!-- Confirm Delete Rewards Modal -->
+          <!-- Confirm Delete Workout Modal -->
           <div class="modal fade" id="confirmdeleteWorkoutModal" tabindex="-1"
             aria-labelledby="confirmDeleteWorkoutModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -386,7 +427,7 @@
           <div class="col-md-6 col-12 d-flex justify-content-center">
             <div class="card border-0 bg-transparent" style="width: 100%; max-width: 400px;">
               <div class="card-body d-flex flex-column align-items-center">
-                <div class="subheading w-100 text-lg-start">Workout Type Tracker</div>
+                <div class="subheading w-100 text-lg-start">WORKOUT TYPE TRACKER</div>
                 <canvas id="pieChart"></canvas>
               </div>
             </div>
@@ -396,7 +437,7 @@
           <div class="col-md-6 col-12 d-flex justify-content-center">
             <div class="card border-0 bg-transparent" style="width: 100%; max-width: 500px;">
               <div class="card-body d-flex flex-column align-items-center">
-                <div class="subheading mb-5 w-100 text-md-center text-lg-center">Weekly Workout Frequency</div>
+                <div class="subheading mb-5 w-100 text-md-center text-lg-center">WEEKLY WORKOUT FREQUENCY</div>
                 <canvas id="barChart"></canvas>
               </div>
             </div>
@@ -413,7 +454,7 @@
   // Pie Chart Data
   var pieLabels = ["Cardio", "Strength", "Flexibility"];
   var pieData = [55, 49, 44];
-  var pieColors = ["#28364E", "#4CA1AF", "#F38181"];
+  var pieColors = ["#1f2a3c", "#334566", "#60779c"];
 
   new Chart("pieChart", {
     type: "pie",
@@ -433,7 +474,7 @@
             usePointStyle: true,
             pointStyle: 'circle',
             font: { size: 14 },
-            pointStyleWidth: 18, 
+            pointStyleWidth: 18,
             padding: 20
           }
         }
@@ -444,7 +485,7 @@
   // Bar Chart Data
   var barLabels = ["Week 1", "Week 2", "Week 3"];
   var barData = [2, 4, 3, 5, 6, 7];
-  var barColors = ["#FF8C42", "#2D728F ", "#E84855"];
+  var barColors = ["#b0b0b0", "#1f2a3c ", "#60779c"];
 
   new Chart("barChart", {
     type: "bar",

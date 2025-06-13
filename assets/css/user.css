@@ -111,3 +111,14 @@ th {
         margin-right: auto;
     }
 }
+
+@media (max-width: 575.98px) {
+  .navigation-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .navigation-wrapper {
+    flex-grow: 1;
+    max-width: 100% !important;
+  }
+}
