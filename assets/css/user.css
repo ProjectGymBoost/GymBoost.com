@@ -68,7 +68,27 @@
     text-align: center;
 }
 
-.form-control:focus {
+li {
+    list-style: none;
+}
+
+td {
+    white-space: nowrap;
+}
+
+th {
+    background-color: var(--primaryColor) !important;
+    color: var(--text-color-light) !important;
+    white-space: nowrap;
+}
+
+.pagination .page-link {
+    color: var(--text-color-dark);
+}
+
+.form-select:focus,
+.form-control:focus,
+.page-link:focus {
     border-color: var(--primaryColor);
     border-width: 2px;
     box-shadow: none;
