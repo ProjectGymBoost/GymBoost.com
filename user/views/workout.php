@@ -7,7 +7,6 @@
 
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mt-5 mb-3">
 
-
           <!-- Entries Count first -->
           <div class="small text-muted text-start w-100 flex-sm-grow-0" style="max-width: 200px">
             Show
