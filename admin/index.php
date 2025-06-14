@@ -27,8 +27,8 @@
                 <div class="heading text-center text-sm-start">DASHBOARD</div>
             </div>
 
-            <div class="container my-4">
-                <div class="row g-3">
+            <!-- <div class="container my-4 px-0"> -->
+                <div class="row g-4 my-4">
 
                     <!-- Users -->
                     <div class="col-md-4">
@@ -121,10 +121,10 @@
                     </div>
 
                 </div>
-            </div>
+            <!-- </div> -->
 
             <!-- Dashboard Graph for Attendance Report and Member Distribution -->
-            <div class="row justify-content-center g-4 my-5"> 
+            <div class="row justify-content-center g-2 g-md-4 my-5">
                 <!-- Chart 1 Column -->
                 <div class="col-md-6 col-12 d-flex flex-column align-items-center">
                     <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">ATTENDANCE REPORT</div>
