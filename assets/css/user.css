@@ -181,3 +181,12 @@ th {
 .bg-orange {
     background-color: #D87D1F
 }
+
+.locked .badge-image {
+    filter: grayscale(100%) brightness(60%);
+    opacity: 0.5;
+}
+
+.locked .fw-semibold {
+    opacity: 0.6;
+}
