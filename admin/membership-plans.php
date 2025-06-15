@@ -89,7 +89,7 @@
                         <tbody>
                             <tr>
                                 <td scope="row">1</td>
-                                <td>Hlaf-month</td>
+                                <td>Half-month</td>
                                 <td>15 day</td>
                                 <td>Php 350</td>
                                 <td class="d-flex flex-row justify-content-center">
