@@ -35,13 +35,15 @@ body {
 
 .heading {
   font-family: var(--headingFont);
-  font-size: clamp(1rem, 2.6rem, 3.2rem);
+  /* font-size: clamp(1rem, 2.6rem, 3.2rem); */
+  font-size: 2.6rem;
   font-weight: bolder;
 }
 
 .subheading {
   font-family: var(--subheadingFont);
-  font-size: clamp(1rem, 1.4rem, 1.8rem);
+  /* font-size: clamp(1rem, 1.4rem, 1.8rem); */
+  font-size: 1.4rem;
   font-weight: bolder;
 }
 
@@ -78,3 +80,19 @@ body {
 .card-bg-color {
   background: #7386a6;
 }
+
+@media (max-width: 575.98px) {
+  body {
+    font-size: 1rem;
+  }
+  .heading {
+    font-size: 1.6rem;
+  }
+  .subheading {
+    font-size: 1.2rem;
+  }
+  .btn-primary {
+    font-size: 0.8rem;
+  }
+}
+
