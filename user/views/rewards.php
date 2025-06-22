@@ -26,14 +26,14 @@
                             <!-- Locked Achievement -->
                             <a data-bs-toggle="modal" data-bs-target="#rewardLockedModal">
                                 <div class="card text-center px-3 py-2 rounded-4 card-locked">
-                                    <span class="badge bg-dark text-white mb-2 w-50 d-flex justify-content-center mx-auto px-5">0/6</span>
+                                    <span class="badge bg-dark text-white mb-2 w-50 d-flex justify-content-center mx-auto px-5">0/6 Months</span>
                                     <img src="../assets/img/badges/medal-locked.png" class="img-fluid mx-auto medal-unlocked">
                                 </div>
                             </a>
 
                             <a data-bs-toggle="modal" data-bs-target="#rewardLocked2Modal">
                                 <div class="card text-center px-3 py-2 rounded-4 card-locked">
-                                    <span class="badge bg-dark text-white mb-2 w-50 d-flex justify-content-center mx-auto px-5">0/8</span>
+                                    <span class="badge bg-dark text-white mb-2 w-50 d-flex justify-content-center mx-auto px-5">0/8 Months</span>
                                     <img src="../assets/img/badges/medal-locked.png" class="img-fluid mx-auto medal-unlocked">
                                 </div>
                             </a>
@@ -57,46 +57,46 @@
                         <!-- Unlocked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card">
                             <img src="../assets/img/badges/starter.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">First gym<br>check-in</div>
+                            <div class="fw-semibold">First gym<br>check-in</div>
                         </div>
 
                         <!-- Unlocked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card">
                             <img src="../assets/img/badges/weekly.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">Checked-in for<br>7 days in total</div>
+                            <div class="fw-bold">Checked-in for<br>7 days in total</div>
                         </div>
 
                         <!-- Unlocked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card">
                             <img src="../assets/img/badges/monthly.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">Attended<br>20 sessions</div>
+                            <div class="fw-bold">Attended<br>20 sessions</div>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/3months.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">Active for<br>3 months straight</div>
+                            <div class="fw-bold">Active for<br>3 months straight</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/6month.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">Active for<br>6 months straight</div>
+                            <div class="fw-bold">Active for<br>6 months straight</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/loyalty.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">Logged<br>50 workouts</div>
+                            <div class="fw-bold">Logged<br>50 workouts</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/master.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold fs-5">Member for<br>1 year</div>
+                            <div class="fw-bold">Member for<br>1 year</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
@@ -126,48 +126,48 @@
             </div>
 
             <!-- Leaderboard Header -->
-            <div class="d-flex subheading fs-6 bg-secondary text-white px-2 py-3 rounded-3 mb-2 mx-0">
-                <div class="col-3 col-sm-2 fw-bold ps-1">Rank</div>
-                <div class="col fw-bold ps-2">Name</div>
-                <div class="col-3 col-sm-2 fw-bold text-end pe-1">Points</div>
+            <div class="d-flex fs-6 bg-secondary text-white px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
+                <div class="col-3 col-sm-2 fw-bold ps-1">RANK</div>
+                <div class="col fw-bold ps-2">NAME</div>
+                <div class="col-3 col-sm-2 fw-bold text-end pe-1">POINTS</div>
             </div>
 
             <!-- Leaderboard Items -->
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-4 rounded-3 mb-2 mx-0">
+            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge bg-warning p-2 px-sm-3 fw-bold">1</span>
+                    <span class="badge bg-warning py-2 py-lg-3 px-3 fw-bold">1</span>
                 </div>
                 <div class="col fw-semibold ps-2 text-truncate">John Doe</div>
                 <div class="col-3 col-sm-2 text-end fw-bold pe-1">1500</div>
             </div>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-4 rounded-3 mb-2 mx-0">
+            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge bg-secondary p-2 px-sm-3 fw-bold">2</span>
+                    <span class="badge bg-secondary py-2 py-lg-3 px-3 fw-bold">2</span>
                 </div>
                 <div class="col fw-semibold ps-2 text-truncate">Jane Smith</div>
                 <div class="col-3 col-sm-2 text-end fw-bold pe-1">1400</div>
             </div>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-4 rounded-3 mb-2 mx-0">
+            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge bg-orange text-white p-2 px-sm-3 fw-bold">4</span>
+                    <span class="badge bg-orange text-white py-2 py-lg-3 px-3 fw-bold">3</span>
                 </div>
                 <div class="col fw-semibold ps-2 text-truncate">John Lloyd Cruz</div>
                 <div class="col-3 col-sm-2 text-end fw-bold pe-1">1300</div>
             </div>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-4 rounded-3 mb-2 mx-0">
+            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark p-2 px-sm-3 fw-bold text-dark">5</span>
+                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">4</span>
                 </div>
                 <div class="col fw-semibold ps-2 text-truncate">LeBron James</div>
                 <div class="col-3 col-sm-2 text-end fw-bold pe-1">1200</div>
             </div>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-4 rounded-3 mb-4 mx-0">
+            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-4 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark p-2 px-sm-3 fw-bold text-dark">6</span>
+                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">5</span>
                 </div>
                 <div class="col fw-semibold ps-2 text-truncate">You</div>
                 <div class="col-3 col-sm-2 text-end fw-bold pe-1">1100</div>
@@ -175,9 +175,9 @@
 
             <!-- Your Rank -->
             <div class="text-center text-white fw-bold text-uppercase mt-4 mt-md-5 mb-3 mb-md-4">Your Current Ranking</div>
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-4 rounded-3 mb-3 mx-0">
+            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-3 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark p-2 px-sm-3 fw-bold text-dark">6</span>
+                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">5</span>
                 </div>
                 <div class="col fw-semibold ps-2 text-truncate">You</div>
                 <div class="col-3 col-sm-2 text-end fw-bold pe-1">1100</div>
