@@ -137,50 +137,50 @@
                 <div class="col-3 col-sm-2">
                     <span class="badge bg-warning py-2 py-lg-3 px-3 fw-bold">1</span>
                 </div>
-                <div class="col fw-semibold ps-2 text-truncate">John Doe</div>
-                <div class="col-3 col-sm-2 text-end fw-bold pe-1">1500</div>
+                <div class="col ps-2 fw-semibold text-truncate">John Doe</div>
+                <div class="col-3 col-sm-2 fw-bold text-end pe-1">1500</div>
             </div>
 
             <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
                     <span class="badge bg-secondary py-2 py-lg-3 px-3 fw-bold">2</span>
                 </div>
-                <div class="col fw-semibold ps-2 text-truncate">Jane Smith</div>
-                <div class="col-3 col-sm-2 text-end fw-bold pe-1">1400</div>
+                <div class="col ps-2 fw-semibold text-truncate">Jane Smith</div>
+                <div class="col-3 col-sm-2 fw-bold text-end pe-1">1400</div>
             </div>
 
             <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
                     <span class="badge bg-orange text-white py-2 py-lg-3 px-3 fw-bold">3</span>
                 </div>
-                <div class="col fw-semibold ps-2 text-truncate">John Lloyd Cruz</div>
-                <div class="col-3 col-sm-2 text-end fw-bold pe-1">1300</div>
+                <div class="col ps-2 fw-semibold text-truncate">John Lloyd Cruz</div>
+                <div class="col-3 col-sm-2 fw-bold text-end pe-1">1300</div>
             </div>
 
             <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                 <div class="col-3 col-sm-2">
                     <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">4</span>
                 </div>
-                <div class="col fw-semibold ps-2 text-truncate">LeBron James</div>
-                <div class="col-3 col-sm-2 text-end fw-bold pe-1">1200</div>
+                <div class="col ps-2 text-truncate">LeBron James</div>
+                <div class="col-3 col-sm-2 text-end pe-1">1200</div>
             </div>
 
             <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-4 mx-0">
                 <div class="col-3 col-sm-2">
                     <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">5</span>
                 </div>
-                <div class="col fw-semibold ps-2 text-truncate">You</div>
-                <div class="col-3 col-sm-2 text-end fw-bold pe-1">1100</div>
+                <div class="col ps-2 text-truncate">Jasmine Air</div>
+                <div class="col-3 col-sm-2 text-end pe-1">1100</div>
             </div>
 
             <!-- Your Rank -->
             <div class="text-center text-white fw-bold text-uppercase mt-4 mt-md-5 mb-3 mb-md-4">Your Current Ranking</div>
             <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-3 mx-0">
                 <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">5</span>
+                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">6</span>
                 </div>
-                <div class="col fw-semibold ps-2 text-truncate">You</div>
-                <div class="col-3 col-sm-2 text-end fw-bold pe-1">1100</div>
+                <div class="col ps-2 fw-semibold text-truncate">You</div>
+                <div class="col-3 col-sm-2 text-end pe-1 fw-bold">1000</div>
             </div>
         </div>
     </div>
