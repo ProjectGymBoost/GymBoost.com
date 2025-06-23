@@ -75,28 +75,28 @@
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/3months.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold">Active for<br>3 months straight</div>
+                            <div class="fw-bold text-muted">Active for<br>3 months straight</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/6month.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold">Active for<br>6 months straight</div>
+                            <div class="fw-bold text-muted">Active for<br>6 months straight</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/loyalty.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold">Logged<br>50 workouts</div>
+                            <div class="fw-bold text-muted">Logged<br>50 workouts</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
                         <!-- Locked Badge -->
                         <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
                             <img src="../assets/img/badges/master.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold">Member for<br>1 year</div>
+                            <div class="fw-bold text-muted">Member for<br>1 year</div>
                             <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
                         </div>
 
