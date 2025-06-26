@@ -166,7 +166,7 @@
                                     Workouts this Month</th>
                                 <th scope="col"
                                     style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Streak</th>
+                                    Points</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -176,7 +176,7 @@
                                 </td>
                                 <td><strong>Jon Doe</strong></td>
                                 <td><strong>20</strong></td>
-                                <td><strong>12 Days</strong></td>
+                                <td><strong>1500</strong></td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center fw-bold">
@@ -184,7 +184,7 @@
                                 </td>
                                 <td><strong>Jenna Miles</strong></td>
                                 <td><strong>18</strong></td>
-                                <td><strong>9 Days</strong></td>
+                                <td><strong>1400</strong></td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center fw-bold">
@@ -192,49 +192,49 @@
                                 </td>
                                 <td><strong>Jose Rizal</strong></td>
                                 <td><strong>16</strong></td>
-                                <td><strong>6 Days</strong></td>
+                                <td><strong>1300</strong></td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">4</td>
                                 <td>Emily Brown</td>
                                 <td>14</td>
-                                <td>6 Days</td>
+                                <td>1200</td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">5</td>
                                 <td>Michael Johhnson</td>
                                 <td>12</td>
-                                <td>6 Days</td>
+                                <td>1100</td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">6</td>
                                 <td>Sponge Bob</td>
                                 <td>11</td>
-                                <td>5 Days</td>
+                                <td>1000</td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">7</td>
                                 <td>Emily Brown</td>
                                 <td>10</td>
-                                <td>5 Days</td>
+                                <td>900</td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">8</td>
                                 <td>Michael Johhnson</td>
                                 <td>9</td>
-                                <td>5 Days</td>
+                                <td>800</td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">9</td>
                                 <td>Sponge Bob</td>
                                 <td>8</td>
-                                <td>4 Days</td>
+                                <td>700</td>
                             </tr>
                             <tr>
                                 <td class="d-flex align-items-center">10</td>
                                 <td>Sponge Bob</td>
                                 <td>7</td>
-                                <td>3 Days</td>
+                                <td>600</td>
                             </tr>
                         </tbody>
                     </table>
@@ -251,13 +251,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
-        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
-        crossorigin="anonymous"></script>
-
 </body>
 
 </html>
