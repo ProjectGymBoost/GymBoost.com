@@ -91,7 +91,7 @@
                                 <td scope="row">1</td>
                                 <td>Half-month</td>
                                 <td>15 day</td>
-                                <td>Php 350</td>
+                                <td>₱350</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -111,7 +111,7 @@
                                 <td scope="row">2</td>
                                 <td>1 month</td>
                                 <td>30 days</td>
-                                <td>Php 600</td>
+                                <td>₱600</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -131,7 +131,7 @@
                                 <td scope="row">3</td>
                                 <td>2 months</td>
                                 <td>60 days</td>
-                                <td>Php 1000</td>
+                                <td>₱1000</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -151,7 +151,7 @@
                                 <td scope="row">4</td>
                                 <td>3 months</td>
                                 <td>90 days</td>
-                                <td>Php 1500</td>
+                                <td>₱1500</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -171,7 +171,7 @@
                                 <td scope="row">5</td>
                                 <td>Semi-annual</td>
                                 <td>180 days</td>
-                                <td>Php 2850</td>
+                                <td>₱2850</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -191,7 +191,7 @@
                                 <td scope="row">6</td>
                                 <td>Annual</td>
                                 <td>365 days</td>
-                                <td>Php 5500</td>
+                                <td>₱5500</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
