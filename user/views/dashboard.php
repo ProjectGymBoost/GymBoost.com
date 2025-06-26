@@ -58,11 +58,11 @@
           </div>
           <div class="mx-4 mb-2">
             23</div>
-          <div class="mt-1 mx-4" style="font-weight:bold">
+          <!-- <div class="mt-1 mx-4" style="font-weight:bold">
             Streak
           </div>
           <div class="mx-4 mb-2">
-            5</div>
+            5</div> -->
         </div>
       </div>
     </div>
