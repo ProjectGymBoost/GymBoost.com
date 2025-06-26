@@ -93,7 +93,7 @@ if (isset($_GET['page'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-danger" href="../login.php"><i
+                            <li><a class="dropdown-item text-danger" href="../index.php"><i
                                         class="bi bi-box-arrow-right px-1"></i>
                                     Log Out</a></li>
                         </ul>
