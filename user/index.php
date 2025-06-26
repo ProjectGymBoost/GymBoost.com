@@ -76,7 +76,7 @@ if (isset($_GET['page'])) {
 
                 <!-- Profile Dropdown -->
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown px-1">
                         <a class="nav-link <?php echo $profileActive; ?>" href="?page=profile" id="profileDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false"
                             style="display: flex; align-items: center; gap: 8px; padding: 0; cursor: pointer;">
