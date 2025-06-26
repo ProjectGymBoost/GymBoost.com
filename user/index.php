@@ -60,15 +60,15 @@ if (isset($_GET['page'])) {
             <!-- Navbar Links & Profile -->
             <div class="collapse navbar-collapse justify-content-between align-items-center" id="navbarNav">
                 <ul class="navbar-nav mx-auto text-start text-lg-center" style="font-weight:bold;">
-                    <li class="nav-item py-1">
+                    <li class="nav-item py-1 px-1">
                         <a class="nav-link px-4 py-1 <?php if ($page == 'dashboard')
                             echo 'active'; ?>" href="?page=dashboard">MEMBERSHIP DASHBOARD</a>
                     </li>
-                    <li class="nav-item py-1">
+                    <li class="nav-item py-1 px-1">
                         <a class="nav-link px-4 py-1 <?php if ($page == 'workout')
                             echo 'active'; ?>" href="?page=workout">WORKOUT CENTRAL</a>
                     </li>
-                    <li class="nav-item py-1 pb-2">
+                    <li class="nav-item py-1 pb-2 px-1">
                         <a class="nav-link px-4 py-1 <?php if ($page == 'rewards')
                             echo 'active'; ?>" href="?page=rewards">ACHIEVEMENTS</a>
                     </li>
