@@ -69,6 +69,12 @@
                     <span>Announcements</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="camera.php" class="sidebar-link">
+                    <i class="bi bi-camera"></i> 
+                    <span>Scan</span>
+                </a>
+            </li>
             <li class="sidebar-item mt-auto">
                 <a href="../login.php" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
@@ -94,6 +100,7 @@
                 <li><a href="rewards.php" class="sidebar-link"><i class="bi bi-gift"></i> Rewards</a></li>
                 <li><a href="badges.php" class="sidebar-link"><i class="bi bi-patch-check"></i> Badges</a></li>
                 <li><a href="announcements.php" class="sidebar-link"><i class="bi bi-bell"></i> Announcements</a></li>
+                <li><a href="camera.php" class="sidebar-link"><i class="bi bi-camera"></i> Scan</a></li>
                 <li><a href="../login.php" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
             </ul>
         </div>
