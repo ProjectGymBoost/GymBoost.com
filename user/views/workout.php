@@ -2,7 +2,7 @@
   <div id="calendar" class="container px-0 py-4 mb-3 mt-2">
     <div class="row">
       <div class="col-12">
-        <div class="heading">WORKOUT CALENDAR</div>
+        <div class="heading">WORKOUT LOGS</div>
         <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
 
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mt-5 mb-3">
