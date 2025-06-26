@@ -70,14 +70,14 @@ if (isset($_GET['page'])) {
               echo 'active'; ?>" href="?page=faqs">FAQs</a>
           </li>
           <li class="nav-item d-lg-none py-1 mx-2">
-            <a class="btn btn-primary mt-2" href="login.php">LOGIN</a>
+            <a class="btn btn-login mt-2" href="login.php">LOGIN</a>
           </li>
         </ul>
       </div>
 
       <!-- Login Button -->
       <div class="d-none d-lg-flex align-items-center ms-auto">
-        <a class="btn btn-primary ms-3" href="login.php" style="font-family: var(--primaryFont);">LOGIN</a>
+        <a class="btn btn-login ms-3" href="login.php">LOGIN</a>
       </div>
 
     </nav>
