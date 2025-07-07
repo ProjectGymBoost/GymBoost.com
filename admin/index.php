@@ -26,108 +26,118 @@
             <div class="col-12 mb-4">
                 <div class="heading text-center text-sm-start">DASHBOARD</div>
             </div>
+            <div class="row g-4 mt-4 mb-5">
 
-            <!-- <div class="container my-4 px-0"> -->
-                <div class="row g-4 my-4">
-
-                    <!-- Users -->
-                    <div class="col-md-4">
-                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="subheading">100</div>
-                                    <div>Users</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-end align-items-center">
-                                    <i class="bi bi-people-fill icon-dashboard" style="font-size: 2rem;"></i>
-                                </div>
+                <!-- Users -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading">100</div>
+                                <div>Users</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-people-fill icon-dashboard" style="font-size: 2rem;"></i>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Active Members -->
-                    <div class="col-md-4">
-                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="subheading">86</div>
-                                    <div>Active Members</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-end align-items-center">
-                                    <i class="bi bi-person-bounding-box icon-dashboard" style="font-size: 2rem;"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- New Members -->
-                    <div class="col-md-4">
-                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="subheading">4</div>
-                                    <div>New Members</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-end align-items-center">
-                                    <i class="bi bi-person-plus-fill icon-dashboard" style="font-size: 2rem;"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Attendance Today -->
-                    <div class="col-md-4">
-                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="subheading">8</div>
-                                    <div>Attendance Today</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-end align-items-center">
-                                    <i class="bi bi-clipboard-check-fill icon-dashboard" style="font-size: 2rem;"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pending Rewards -->
-                    <div class="col-md-4">
-                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="subheading">5</div>
-                                    <div>Pending Rewards</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-end align-items-center">
-                                    <i class="bi bi-award-fill icon-dashboard" style="font-size: 2rem;"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Total Plans -->
-                    <div class="col-md-4">
-                        <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="subheading">4</div>
-                                    <div>Total Plans</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-end align-items-center">
-                                    <i class="bi bi-journal-bookmark-fill icon-dashboard" style="font-size: 2rem;"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-            <!-- </div> -->
+
+                <!-- Active Members -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading">86</div>
+                                <div>Active Members</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-person-bounding-box icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Members -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading">4</div>
+                                <div>New Members</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-person-plus-fill icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Today -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading">8</div>
+                                <div>Attendance Today</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-clipboard-check-fill icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Rewards -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading">5</div>
+                                <div>Pending Rewards</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-award-fill icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Plans -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading">4</div>
+                                <div>Total Plans</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-journal-bookmark-fill icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Dashboard Graph for Attendance Report and Member Distribution -->
+            <div class="row">
+                <div class="col-auto">
+                    <select class="form-select"
+                        style="min-width: 150px; background-color: var(--primaryColor); color: var(--text-color-light); background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27white%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1.5 5.5l6 6 6-6%27/%3E%3C/svg%3E');">
+                        <option selected disabled>Select Year</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row justify-content-center g-2 g-md-4 mb-5">
                 <!-- Chart 1 Column -->
                 <div class="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-center">
-                    <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">ATTENDANCE REPORT</div>
+                    <div class="subheading text-center mt-3 w-100 p-1 card-title"
+                        style="background-color: var(--primaryColor); color: var(--text-color-light);">ATTENDANCE REPORT
+                    </div>
                     <div class="card rounded-0" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="barChart" style="width: 100%; height: 300px;"></canvas>
@@ -137,7 +147,9 @@
 
                 <!-- Chart 2 Column -->
                 <div class="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-center">
-                    <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">MEMBER DISTRIBUTION</div>
+                    <div class="subheading text-center mt-3 w-100 p-1 card-title"
+                        style="background-color: var(--primaryColor); color: var(--text-color-light);">MEMBER
+                        DISTRIBUTION</div>
                     <div class="card rounded-0" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="pieChart" style="width: 100%; height: 280px;"></canvas>
@@ -147,7 +159,9 @@
 
                 <!-- Chart 3 Column -->
                 <div class="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-center">
-                    <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">AGE DEMOGRAPHICS</div>
+                    <div class="subheading text-center mt-3 w-100 p-1 card-title"
+                        style="background-color: var(--primaryColor); color: var(--text-color-light);">AGE DEMOGRAPHICS
+                    </div>
                     <div class="card rounded-0" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="doughnutChart" style="width: 100%; height: 280px;"></canvas>
@@ -249,7 +263,7 @@
                     </table>
                 </div>
             </div>
-            
+
         </div>
     </div>
 

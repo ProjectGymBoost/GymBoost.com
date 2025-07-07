@@ -423,8 +423,9 @@
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
 
                 <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
-                    <input type="search" id="searchInput" class="form-control" placeholder="Search">
+                <div class="flex-grow-1 flex-sm-grow-0 input-group" style="min-width: 220px; max-width: 300px;">
+                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
                 <!-- Sort By -->
@@ -444,11 +445,6 @@
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                </div>
-
-                <!-- Apply Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
                 </div>
             </div>
 

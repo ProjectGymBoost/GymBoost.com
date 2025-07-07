@@ -4,11 +4,36 @@
       <div class="col-12">
         <div class="heading">WORKOUT LOGS</div>
         <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
+        <!-- Controls: Search, Sort By, Order By, Button -->
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
 
-        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mt-5 mb-3">
+          <!-- Search -->
+          <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
+            <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+            <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+          </div>
+          <!-- Sort By -->
+          <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
+            <select id="sortBy" class="form-select">
+              <option selected disabled>Sort By</option>
+              <option value="completed">Completed</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="skipped">Skipped</option>
+            </select>
+          </div>
+          <!-- Order By -->
+          <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
+            <select id="orderBy" class="form-select">
+              <option selected disabled>Order</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+        </div>
 
-          <!-- Entries Count first -->
-          <div class="small text-muted text-start w-100 flex-sm-grow-0" style="max-width: 200px">
+        <!-- Pagination and Add New Button -->
+        <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
+          <div class="small text-muted ms-2">
             Show
             <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
               <option value="5" selected>5</option>
@@ -19,26 +44,10 @@
             entries
           </div>
 
-          <!-- Search, Filter, and Add -->
-          <div
-            class="navigation-wrapper d-flex gap-2 align-items-center w-100 flex-sm-grow-0 justify-content-center justify-sm-end"
-            style="max-width: 600px">
-            <input id="searchInput" type="search" class="form-control w-100 w-sm-auto" placeholder="Search month…"
-              style="max-width: 300px">
-            <select id="orderBy" class="form-select" style="max-width: 150px">
-              <option selected disabled>Order</option>
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
-            </select>
-
-            <!-- Add NEW (always shown) -->
-            <a class="btn btn-primary subheading text-nowrap" data-bs-toggle="modal" data-bs-target="#addWorkoutModal">
-              ADD NEW
-            </a>
-          </div>
-
+          <a class="btn btn-primary subheading text-nowrap" data-bs-toggle="modal" data-bs-target="#addWorkoutModal">
+            ADD NEW
+          </a>
         </div>
-
 
         <!-- Add Workout Modal -->
         <div class="modal fade" id="addWorkoutModal" tabindex="-1" aria-labelledby="addWorkoutModalLabel"
@@ -423,7 +432,18 @@
       <div class="col-12">
         <div class="heading">WORKOUT STATISTICS</div>
         <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
-        <div class="row justify-content-center mt-3">
+        <div class="row mt-5">
+          <div class="col-auto">
+            <select class="form-select"
+              style="min-width: 150px; background-color: var(--primaryColor); color: var(--text-color-light); background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27white%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1.5 5.5l6 6 6-6%27/%3E%3C/svg%3E');">
+              <option selected disabled>Select Year</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-2">
           <!-- Chart 1 Column -->
           <div class="col-lg-6 col-md-10 col-12 d-flex flex-column align-items-center">
             <div class="subheading text-center mt-3 w-100 p-1 card-title"
