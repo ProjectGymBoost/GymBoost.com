@@ -170,18 +170,18 @@
               </div>
             </div>
 
-            <div class="container px-5 mb-md-4 text-center text-md-start">
+            <div class="container px-5 mb-md-4">
               <div class="row px-0 px-lg-1">
 
-                <div class="col-md-6 col-12 mb-3 ps-md-5 ps-lg-4">
+                <div class="col-md-6 col-6 mb-3 px-0 px-md-5 px-lg-4">
                   <div><b>First Name:</b> John</div>
                 </div>
 
-                <div class="col-md-6 col-12 mb-3 ps-md-3">
-                  <div><b>Last Name:</b> Doe</div>
+                <div class="col-md-6 col-6 mb-3 px-0 px-md-3 text-end text-md-start">
+                  <div><b>Last Name:</b>Doe</div>
                 </div>
 
-                <div class="col-md-6 col-12 mb-3 ps-md-5 ps-lg-4">
+                <div class="col-md-6 col-6 mb-3 px-0 px-md-5 px-lg-4">
                   <div><b>Age:</b>21</div>
                 </div>
               </div>
@@ -277,7 +277,7 @@
         <div class="card-body p-0 mt-2 d-flex flex-column">
 
           <!-- RFID Section -->
-          <div class="mb-1 mb-md-4">
+          <div class="mb-1 mb-md-3">
             <div class="subheading">RFID CARD</div>
             <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 2rem 0;">
             <div
@@ -286,19 +286,29 @@
                 <p class="mb-2 ps-2"><b>Membership Plan:</b></p>
                 <p class="mb-2 ps-2"><b>Start Date:</b></p>
                 <p class="mb-2 ps-2"><b>End Date:</b></p>
-                <button class="btn btn-primary mt-2">Download RFID</button>
               </div>
-              <div class="rfid-card border border-dark rounded-4 shadow-sm p-2"
-                style="width: 290px; height: 170px; display: flex; justify-content: center; align-items: center; background: white;">
-                <img
-                  src="https://bwipjs-api.metafloor.com/?bcid=code128&text=https%3A%2F%2Fgithub.com%2FProjectGymBoost%2FGymBoost.com.git&scale=2&height=50"
-                  alt="Barcode" style="max-width: 90%; height: auto;">
+              <!-- RFID Card -->
+              <div class="rfid-card border border-dark rounded-4 shadow-sm"
+                style="width: 290px; height: 200px; display: flex; justify-content: center; align-items: center; background: white; overflow: hidden; cursor: pointer;"
+                data-bs-toggle="modal" data-bs-target="#rfidModal">
+                <img src="../assets/img/profile/rfid.png" alt="RFID"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <!-- RFID Modal -->
+              <div class="modal fade" id="rfidModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body p-0">
+                      <img src="../assets/img/profile/rfid.png" alt="RFID Full" class="img-fluid rounded-4">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Account Information Section -->
-          <div class="mb-4">
+          <div class="mb-4 mb-md-3 ">
             <div class="subheading">ACCOUNT INFORMATION</div>
             <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 1rem 0;">
 
@@ -406,7 +416,7 @@
           </div>
 
           <!-- Delete Account Section -->
-          <div class="mb-4">
+          <div class="mb-3">
             <div class="subheading">ACCOUNT DELETION</div>
             <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 1rem 0;">
             <div
