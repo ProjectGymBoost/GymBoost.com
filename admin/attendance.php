@@ -21,21 +21,23 @@
     <div class="main px-2 px-md-0" style="margin-left: 70px; transition: margin-left 0.25s ease-in-out;">
         <div class="container-fluid py-4 px-4">
 
-            <!-- Heading -->
-            <div class="col-12 mb-4">
+            <!-- Heading and Check-in Button -->
+            <div class="col-12 mb-4 d-flex align-items-center justify-content-between">
                 <div class="heading text-center text-sm-start">ATTENDANCE</div>
+                <a href="../checkin.php"><button class="btn btn-primary">Check-in</button></a>
             </div>
 
             <!-- Controls: Search, Sort By, Order By, Apply Button -->
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
 
                 <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
+                <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
                     <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
                 <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="sortBy" class="form-select">
                         <option selected disabled>Sort By</option>
                         <option value="first_name">First Name</option>
@@ -45,17 +47,12 @@
                 </div>
 
                 <!-- Order By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="orderBy" class="form-select">
                         <option selected disabled>Order</option>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                </div>
-
-                <!-- Apply Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
                 </div>
             </div>
 
@@ -97,11 +94,6 @@
                                 <td>2025-07-01</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAttendance1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a style="color: red;" data-bs-toggle="modal"
                                             data-bs-target="#deleteAttendance1Modal">
                                             <i class="bi bi-trash3 px-2"></i>
@@ -116,11 +108,6 @@
                                 <td>Reyes</td>
                                 <td>2025-07-01</td>
                                 <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAttendance1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a style="color: red;" data-bs-toggle="modal"
                                             data-bs-target="#deleteAttendance1Modal">
@@ -137,11 +124,6 @@
                                 <td>2025-07-02</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAttendance1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a style="color: red;" data-bs-toggle="modal"
                                             data-bs-target="#deleteAttendance1Modal">
                                             <i class="bi bi-trash3 px-2"></i>
@@ -156,11 +138,6 @@
                                 <td>Brown</td>
                                 <td>2025-07-02</td>
                                 <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAttendance1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a style="color: red;" data-bs-toggle="modal"
                                             data-bs-target="#deleteAttendance1Modal">
@@ -177,11 +154,6 @@
                                 <td>2025-07-03</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAttendance1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a style="color: red;" data-bs-toggle="modal"
                                             data-bs-target="#deleteAttendance1Modal">
                                             <i class="bi bi-trash3 px-2"></i>
@@ -191,80 +163,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- Edit Attendance Modal -->
-            <div class="modal fade" id="editAttendance1Modal" tabindex="-1"
-                aria-labelledby="editAttendance1ModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;">
-                        <!-- Header -->
-                        <div
-                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                            <h4 class="modal-title text-center subheading" id="editAttendance1ModalLabel"
-                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                EDIT ATTENDANCE
-                            </h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
-                            </button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body" style="padding: 1.5rem;">
-                            <form id="editAttendanceForm">
-                                <div class="mb-3 text-start">
-                                    <label for="AttendanceFirstName" class="form-label fw-bold">First Name</label>
-                                    <input type="text" class="form-control" id="AttendanceFirstName" value="Jon">
-                                </div>
-                                <div class="mb-3 text-start">
-                                    <label for="AttendanceLastName" class="form-label fw-bold">Last Name</label>
-                                    <input type="text" class="form-control" id="AttendanceLastName" value="Doe">
-                                </div>
-                                <div class="mb-3 text-start">
-                                    <label for="AttendanceDate" class="form-label fw-bold">Date</label>
-                                    <input type="date" class="form-control" id="AttendanceDate" value="2025-07-01">
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                CANCEL
-                            </button>
-                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                data-bs-toggle="modal" data-bs-target="#confirmEditAttendance1Modal">
-                                SAVE CHANGES
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Confirm Edit Attendance Modal -->
-            <div class="modal fade" id="confirmEditAttendance1Modal" tabindex="-1"
-                aria-labelledby="confirmEditAttendanceModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-                        <div class="modal-header" style="border: none;">
-                            <h4 class="modal-title heading text-center w-100 text-black"
-                                id="confirmEditAttendanceModalLabel" style="margin: 0;">
-                                ATTENDANCE UPDATED
-                            </h4>
-                        </div>
-                        <div class="modal-body text-center text-black">
-                            <strong>Jon Doe's</strong> attendance has been successfully edited.
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                CLOSE
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
 

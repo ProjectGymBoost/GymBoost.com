@@ -13,21 +13,21 @@
 </head>
 
 <style>
-.form-control:focus {
-  border-color: var(--primaryColor);
-  border-width: 2px;
-  box-shadow: none;
-}
+  .form-control:focus {
+    border-color: var(--primaryColor);
+    border-width: 2px;
+    box-shadow: none;
+  }
 
-.forgot-link {
-  text-decoration: none;
-  color: var(--bs-secondary);
-  transition: color 0.3s ease;
-}
+  .forgot-link {
+    text-decoration: none;
+    color: var(--bs-secondary);
+    transition: color 0.3s ease;
+  }
 
-.forgot-link:hover {
-  color: var(--primaryColor);
-}
+  .forgot-link:hover {
+    color: var(--primaryColor);
+  }
 </style>
 
 <body style="background-color: var(--bgColor); height: 100vh; margin: 0; overflow: hidden;">
@@ -46,24 +46,29 @@
       <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
         style="height: 100%; margin-top: -2rem;">
         <div class="heading mb-5">LOGIN</div>
-        <input type="email" placeholder="Email" class="form-control mb-4" style="max-width: 400px;">
+        <div class="form-floating" style="max-width: 400px; width: 100%;">
+          <input type="email" class="form-control mb-4" id="floatingInput" placeholder="name@example.com">
+          <label for="floatingInput">Email address</label>
+        </div>
 
-          <div class="position-relative mb-5" style="max-width: 400px; width: 100%;">
-            <input type="password" id="password" placeholder="Password" class="form-control"
-              style="border-radius: 5px;">
+        <div class="position-relative mb-5" style="max-width: 400px; width: 100%;">
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
             <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
           text-shadow: 0 0 1px var(--primaryColor);"></i>
           </div>
-
-          <a href="user/index.php" class="btn btn-primary w-100 mt-2 mb-2"
-            style="max-width: 400px; display: inline-block; text-align: center; font-family: var(--primaryFont);">
-            LOGIN
-          </a>
-
-          <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
-            <a href="#" class="forgot-link">Forgot your password?</a>
-          </div>
         </div>
+
+        <a href="user/index.php" class="btn btn-primary w-100 mt-2 mb-2"
+          style="max-width: 400px; display: inline-block; text-align: center; font-family: var(--primaryFont);">
+          LOGIN
+        </a>
+
+        <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
+          <a href="#" class="forgot-link">Forgot your password?</a>
+        </div>
+      </div>
 
       <!-- Second Column -->
       <div class="col-12 col-xl-6 d-none d-lg-block p-0" style="height: 100%;">
@@ -76,7 +81,7 @@
 
   <script>
     const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+    const password = document.querySelector('#floatingPassword');
 
     togglePassword.addEventListener('click', function () {
       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
