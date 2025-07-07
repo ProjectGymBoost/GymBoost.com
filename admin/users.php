@@ -41,6 +41,7 @@
                         <option selected disabled>Sort By</option>
                         <option value="first_name">First Name</option>
                         <option value="last_name">Last Name</option>
+                        <option value="last_name">Points</option>
                     </select>
                 </div>
 
@@ -80,8 +81,7 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
-                                <th scope="col">EMAIL</th>
-                                <th scope="col">ROLE</th>
+                                <th scope="col">Points</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
                         </thead>
@@ -90,10 +90,9 @@
                         <tbody>
                             <tr>
                                 <td scope="row">1</td>
-                                <td>Jon</td>
+                                <td>John</td>
                                 <td>Doe</td>
-                                <td>johndoe@gmail.com</td>
-                                <td>User</td>
+                                <td>1500</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -108,8 +107,7 @@
                                 <td scope="row">2</td>
                                 <td>Jenna Miles</td>
                                 <td>Reyes</td>
-                                <td>atienzajennamiles@gmail.com</td>
-                                <td>User</td>
+                                <td>1400</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -124,8 +122,7 @@
                                 <td scope="row">3</td>
                                 <td>John</td>
                                 <td>Smith</td>
-                                <td>johnsmith@gmail.com</td>
-                                <td>Admin</td>
+                                <td>1300</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -140,8 +137,7 @@
                                 <td scope="row">4</td>
                                 <td>Emily</td>
                                 <td>Brown</td>
-                                <td>emilybrown@yahoo.com</td>
-                                <td>User</td>
+                                <td>1200</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -156,8 +152,7 @@
                                 <td scope="row">5</td>
                                 <td>Michael</td>
                                 <td>Johnson</td>
-                                <td>mjohnson@outlook.com</td>
-                                <td>User</td>
+                                <td>1100</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -167,22 +162,7 @@
                                     </li>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td scope="row">6</td>
-                                <td>Sarah</td>
-                                <td>Williams</td>
-                                <td>sarahwilliams@gmail.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                 </div>

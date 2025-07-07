@@ -89,7 +89,7 @@
                 </div>
 
                 <!-- Pending Rewards -->
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Total Plans -->
                 <div class="col-md-4">
