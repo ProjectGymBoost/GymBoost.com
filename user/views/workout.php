@@ -20,8 +20,11 @@
           </div>
 
           <!-- Search, Filter, and Add -->
-          <div class="navigation-wrapper d-flex gap-2 align-items-center w-100 flex-sm-grow-0 justify-content-center justify-sm-end" style="max-width: 600px">
-            <input id="searchInput" type="search" class="form-control w-100 w-sm-auto" placeholder="Search month…" style="max-width: 300px">
+          <div
+            class="navigation-wrapper d-flex gap-2 align-items-center w-100 flex-sm-grow-0 justify-content-center justify-sm-end"
+            style="max-width: 600px">
+            <input id="searchInput" type="search" class="form-control w-100 w-sm-auto" placeholder="Search month…"
+              style="max-width: 300px">
             <select id="orderBy" class="form-select" style="max-width: 150px">
               <option selected disabled>Order</option>
               <option value="asc">Ascending</option>
@@ -421,22 +424,25 @@
         <div class="heading">WORKOUT STATISTICS</div>
         <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
         <div class="row justify-content-center mt-3">
-          <!-- Chart 1 Card -->
-          <div class="col-md-6 col-12 d-flex justify-content-center">
-            <div class="card border-0 bg-transparent" style="width: 100%; max-width: 400px;">
+          <!-- Chart 1 Column -->
+          <div class="col-lg-6 col-md-10 col-12 d-flex flex-column align-items-center">
+            <div class="subheading text-center mt-3 w-100 p-1 card-title"
+              style="background-color: var(--primaryColor); color: var(--text-color-light);">WORKOUT TYPE TRACKER</div>
+            <div class="card rounded-0" style="width: 100%; height: 320px;">
               <div class="card-body d-flex flex-column align-items-center">
-                <div class="subheading w-100 text-lg-start">WORKOUT TYPE TRACKER</div>
-                <canvas id="pieChart"></canvas>
+                <canvas id="pieChart" style="width: 100%; height: 280px;"></canvas>
               </div>
             </div>
           </div>
 
-          <!-- Chart 2 Card -->
-          <div class="col-md-6 col-12 d-flex justify-content-center">
-            <div class="card border-0 bg-transparent" style="width: 100%; max-width: 500px;">
+          <!-- Chart 2 Column -->
+          <div class="col-lg-6 col-md-10 col-12 d-flex flex-column align-items-center">
+            <div class="subheading text-center mt-3 w-100 p-1 card-title"
+              style="background-color: var(--primaryColor); color: var(--text-color-light);">MONTHLY WORKOUT FREQUENCY
+            </div>
+            <div class="card rounded-0" style="width: 100%; height: 320px;">
               <div class="card-body d-flex flex-column align-items-center">
-                <div class="subheading mb-5 w-100 text-md-center text-lg-center">WEEKLY WORKOUT FREQUENCY</div>
-                <canvas id="barChart"></canvas>
+                <canvas id="barChart" style="width: 100%; height: 300px;"></canvas>
               </div>
             </div>
           </div>
@@ -447,64 +453,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../assets/js/user.js"></script>
 
-<script>
-  // Pie Chart Data
-  var pieLabels = ["Cardio", "Strength", "Flexibility"];
-  var pieData = [55, 49, 44];
-  var pieColors = ["#1f2a3c", "#334566", "#60779c"];
-
-  new Chart("pieChart", {
-    type: "pie",
-    data: {
-      labels: pieLabels,
-      datasets: [{
-        backgroundColor: pieColors,
-        data: pieData
-      }]
-    },
-    options: {
-      plugins: {
-        title: { display: false },
-        legend: {
-          position: 'right',
-          labels: {
-            usePointStyle: true,
-            pointStyle: 'circle',
-            font: { size: 14 },
-            pointStyleWidth: 18,
-            padding: 20
-          }
-        }
-      }
-    }
-  });
-
-  // Bar Chart Data
-  var barLabels = ["Week 1", "Week 2", "Week 3"];
-  var barData = [2, 4, 3, 5, 6, 7];
-  var barColors = ["#b0b0b0", "#1f2a3c ", "#60779c"];
-
-  new Chart("barChart", {
-    type: "bar",
-    data: {
-      labels: barLabels,
-      datasets: [{
-        backgroundColor: barColors,
-        data: barData
-      }]
-    },
-    options: {
-      plugins: {
-        legend: { display: false },
-        title: { display: false }
-      },
-      scales: {
-        x: { grid: { display: false } },
-        y: { grid: { display: false }, suggestedMin: 0, suggestedMax: 7 }
-      }
-    }
-  });
-</script>
 <!-- Dialogflow Chatbot  -->
 <?php include("views/chatbot.html"); ?>

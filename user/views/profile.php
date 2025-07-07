@@ -13,7 +13,7 @@
       <div class="col-12 col-lg-6">
         <div class="card profile-card" style="border: 3px solid #000;">
           <div class="card-body p-0 d-flex flex-column">
-            <div class="text-center mb-4 mt-4"><img id="profilePreview" src="../assets/img/profile/defaultProfile.png"
+            <div class="text-center mb-4 mt-5"><img id="profilePreview" src="../assets/img/profile/defaultProfile.png"
                 alt="Profile Picture" class="rounded-circle mb-3"
                 style="width: 230px; height: 230px; object-fit: cover; border: 2px solid #000;">
               <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 mb-4">
@@ -55,14 +55,14 @@
                           </div>
 
                           <!-- File Input -->
-                          <div class="d-flex align-items-center justify-content-center">
+                          <div class="d-flex align-items-center justify-content-center"
+                            style="max-width: 350px; width: 100%;">
                             <input type="text" id="fileNameDisplay"
-                              class="form-control text-black bg-transparent rounded-2" value="" readonly
-                              style="max-width: 350px; width: 100%;">
+                              class="form-control text-black bg-transparent rounded-0 rounded-start" value="" readonly>
                             <label
-                              class="btn btn-primary rounded-2 d-inline-flex align-items-center justify-content-center"
-                              for="fileInput">
-                              Browse<i class="bi-upload ms-2"></i>
+                              class="btn btn-primary rounded-0 rounded-end d-inline-flex align-items-center justify-content-center mb-0"
+                              for="fileInput" style="height: 100%;">
+                              Browse <i class="bi bi-upload ms-2"></i>
                             </label>
                             <input type="file" class="d-none" id="fileInput" accept="image/*" name="profilePic">
                           </div>
@@ -170,25 +170,19 @@
               </div>
             </div>
 
-            <div class="container px-5 mb-4">
-              <div class="row">
+            <div class="container px-5 mb-md-4 text-center text-md-start">
+              <div class="row px-0 px-lg-1">
 
-                <div class="col-12 mb-3 ps-md-4">
-                  <div><b>Full Name:</b> John Doe</div>
+                <div class="col-md-6 col-12 mb-3 ps-md-5 ps-lg-4">
+                  <div><b>First Name:</b> John</div>
                 </div>
 
-                <div class="col-6 mb-3 ps-md-4">
+                <div class="col-md-6 col-12 mb-3 ps-md-3">
+                  <div><b>Last Name:</b> Doe</div>
+                </div>
+
+                <div class="col-md-6 col-12 mb-3 ps-md-5 ps-lg-4">
                   <div><b>Age:</b>21</div>
-                </div>
-                <div class="col-6 mb-3 ps-md-4">
-                  <div><b>Gender:</b>Male</div>
-                </div>
-
-                <div class="col-6 mb-3 ps-md-4">
-                  <div><b>Weight:</b>85kg</div>
-                </div>
-                <div class="col-6 mb-3 ps-md-4">
-                  <div><b>Height:</b>170cm</div>
                 </div>
               </div>
             </div>
@@ -232,20 +226,6 @@
                         <div class="col-md-6 mb-3 text-start">
                           <label for="Age" class="form-label fw-bold">Age</label>
                           <input type="text" class="form-control" id="Age" value="21">
-                        </div>
-                        <div class="col-md-6 mb-3 text-start">
-                          <label for="Gender" class="form-label fw-bold">Gender</label>
-                          <input type="text" class="form-control" id="Gender" value="male">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 mb-3 text-start">
-                          <label for="Weight" class="form-label fw-bold">Weight</label>
-                          <input type="text" class="form-control" id="Weight" value="85kg">
-                        </div>
-                        <div class="col-md-6 mb-3 text-start">
-                          <label for="Height" class="form-label fw-bold">Height</label>
-                          <input type="text" class="form-control" id="Height" value="170">
                         </div>
                       </div>
                     </form>
@@ -296,9 +276,9 @@
       <div class="col-12 col-lg-6">
         <div class="card-body p-0 mt-2 d-flex flex-column">
 
-          <!-- QR Code Section -->
-          <div class="mb-4">
-            <div class="subheading">QR CODE</div>
+          <!-- RFID Section -->
+          <div class="mb-1 mb-md-4">
+            <div class="subheading">RFID CARD</div>
             <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 2rem 0;">
             <div
               class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mt-4 mb-4">
@@ -306,11 +286,14 @@
                 <p class="mb-2 ps-2"><b>Membership Plan:</b></p>
                 <p class="mb-2 ps-2"><b>Start Date:</b></p>
                 <p class="mb-2 ps-2"><b>End Date:</b></p>
-                <button class="btn btn-primary mt-2">Download QR</button>
+                <button class="btn btn-primary mt-2">Download RFID</button>
               </div>
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fgithub.com%2FProjectGymBoost%2FGymBoost.com.git&size=160x160"
-                alt="QR Code" class="qr-img rounded-4 border border-dark p-2">
+              <div class="rfid-card border border-dark rounded-4 shadow-sm p-2"
+                style="width: 290px; height: 170px; display: flex; justify-content: center; align-items: center; background: white;">
+                <img
+                  src="https://bwipjs-api.metafloor.com/?bcid=code128&text=https%3A%2F%2Fgithub.com%2FProjectGymBoost%2FGymBoost.com.git&scale=2&height=50"
+                  alt="Barcode" style="max-width: 90%; height: auto;">
+              </div>
             </div>
           </div>
 

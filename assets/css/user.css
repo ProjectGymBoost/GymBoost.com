@@ -95,18 +95,18 @@ th {
 }
 
 @media (max-width: 767.98px) {
-    .qr-img {
+    .rfid-card {
         width: 320px !important;
-        height: 320px !important;
+        height: 190px !important;
         margin-left: auto;
         margin-right: auto;
     }
 }
 
 @media (max-width: 380px) {
-    .qr-img {
-        width: 250px !important;
-        height: 250px !important;
+    .rfid-card {
+        width: 280px !important;
+        height: 160px !important;
         margin-left: auto;
         margin-right: auto;
     }
