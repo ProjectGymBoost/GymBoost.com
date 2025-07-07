@@ -27,84 +27,73 @@
                     <div class="heading text-center">CREATE ACCOUNT</div>
                 </div>
 
-                <form class="needs-validation" novalidate>
-                    <!-- Wrapper for horizontal centering -->
-                    <div class="d-flex justify-content-center align">
-                        <div class="d-flex flex-column align-items-center gap-3 p-3 p-lg-5 card-bg-color"
-                            style="width: 100%; max-width: 800px; border-radius: 10px;">
-
-                            <div class="d-flex gap-3 w-100">
-                                <!-- First Name -->
-                                <div class="w-100 mb-2">
-                                    <input type="text" placeholder="First Name" class="form-control" required
-                                        style="border-radius: 5px;">
-                                    <div class="invalid-feedback">First name is required.</div>
-                                </div>
-
-                                <!-- Last Name -->
-                                <div class="w-100 mb-2">
-                                    <input type="text" placeholder="Last Name" class="form-control" required
-                                        style="border-radius: 5px;">
-                                    <div class="invalid-feedback">Last name is required.</div>
-                                </div>
-                            </div>
-
-                            <!-- Email -->
+                <!-- Wrapper for horizontal centering -->
+                <div class="d-flex justify-content-center align">
+                    <div class="d-flex flex-column align-items-center gap-3 p-3 p-lg-5 card-bg-color"
+                        style="width: 100%; max-width: 800px; border-radius: 10px;">
+                        <div class="d-flex gap-3 w-100">
+                            <!-- First Name -->
                             <div class="w-100 mb-2">
-                                <input type="email" placeholder="Email" class="form-control" required
+                                <input type="text" placeholder="First Name" class="form-control"
                                     style="border-radius: 5px;">
-                                <div class="invalid-feedback">Please provide a valid email.</div>
                             </div>
 
-                            <!-- Membership Plan -->
+                            <!-- Last Name -->
                             <div class="w-100 mb-2">
-                                <select class="form-select" required>
-                                    <option selected disabled value="">Membership Plan</option>
-                                    <option value="HalfMonth">Half Month</option>
-                                    <option value="1Month">1 Month</option>
-                                    <option value="2Months">2 Months</option>
-                                    <option value="3Months">3 Months</option>
-                                    <option value="semiannual">Semi Annual</option>
-                                    <option value="annual">Annual</option>
-                                </select>
-                                <div class="invalid-feedback">Please select a membership plan.</div>
-                            </div>
-
-                            <hr
-                                style="border-top: 3px solid var(--primaryColor); opacity: 1; width: 100%; margin: 2rem 0;">
-
-                            <!-- Create Password -->
-                            <div class="position-relative w-100 mb-2">
-                                <input type="password" id="createPassword" placeholder="Create a Password"
-                                    class="form-control" required style="border-radius: 5px;">
-                                <div class="invalid-feedback">Please create a password.</div>
-                                <i class="bi bi-eye-slash position-absolute toggle-password"
-                                    data-target="createPassword"
-                                    style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor); text-shadow: 0 0 1px var(--primaryColor);"></i>
-                            </div>
-
-                            <!-- Confirm Password -->
-                            <div class="position-relative w-100 mb-2">
-                                <input type="password" id="confirmPassword" placeholder="Confirm Password"
-                                    class="form-control" required style="border-radius: 5px;">
-                                <div class="invalid-feedback">Please confirm your password.</div>
-                                <i class="bi bi-eye-slash position-absolute toggle-password"
-                                    data-target="confirmPassword"
-                                    style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor); text-shadow: 0 0 1px var(--primaryColor);"></i>
-                            </div>
-
-                            <!-- Create Button -->
-                            <div class="w-100 text-center mt-3">
-                                <button type="submit" class="btn btn-primary">CREATE</button>
+                                <input type="text" placeholder="Last Name" class="form-control"
+                                    style="border-radius: 5px;">
                             </div>
                         </div>
-                    </div>
-                </form>
 
+                        <!-- Email -->
+                        <div class="w-100 mb-2">
+                            <input type="email" placeholder="Email" class="form-control" style="border-radius: 5px;">
+                        </div>
+
+                        <!-- Membership Plan -->
+                        <select class="form-select">
+                            <option selected disabled>Membership Plan</option>
+                            <option value="HalfMonth">Half Month</option>
+                            <option value="1Month">1 Month</option>
+                            <option value="2Months">2 Months</option>
+                            <option value="3Months">3 Months</option>
+                            <option value="semiannual">Semi Annual</option>
+                            <option value="annual">Annual</option>
+                        </select>
+
+                        <hr style="border-top: 3px solid var(--primaryColor); opacity: 1; width: 100%; margin: 2rem 0;">
+
+                        <!-- Create Password -->
+                        <div class="position-relative w-100 mb-2">
+                            <input type="password" id="createPassword" placeholder="Create a Password"
+                                class="form-control" style="border-radius: 5px;">
+                            <i class="bi bi-eye-slash position-absolute toggle-password" data-target="createPassword"
+                                style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
+     text-shadow: 0 0 1px var(--primaryColor);"></i>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="position-relative w-100 mb-2">
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password"
+                                class="form-control" style="border-radius: 5px;">
+                            <i class="bi bi-eye-slash position-absolute toggle-password" data-target="confirmPassword"
+                                style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
+     text-shadow: 0 0 1px var(--primaryColor);"></i>
+                        </div>
+
+                        <!-- Create Button -->
+                        <div class="w-100 text-center mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                CREATE
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
+    
     <script>
         document.querySelectorAll('.toggle-password').forEach(toggle => {
             toggle.addEventListener('click', function () {

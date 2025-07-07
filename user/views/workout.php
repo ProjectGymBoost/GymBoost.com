@@ -16,6 +16,7 @@
           <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
             <select id="sortBy" class="form-select">
               <option selected disabled>Sort By</option>
+              <option value="date">Date</option>
               <option value="completed">Completed</option>
               <option value="scheduled">Scheduled</option>
               <option value="skipped">Skipped</option>
