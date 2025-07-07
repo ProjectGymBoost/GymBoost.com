@@ -124,11 +124,11 @@
             <!-- </div> -->
 
             <!-- Dashboard Graph for Attendance Report and Member Distribution -->
-            <div class="row justify-content-center g-2 g-md-4 my-5">
+            <div class="row justify-content-center g-2 g-md-4 mb-5">
                 <!-- Chart 1 Column -->
-                <div class="col-md-6 col-12 d-flex flex-column align-items-center">
+                <div class="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-center">
                     <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">ATTENDANCE REPORT</div>
-                    <div class="card" style="width: 100%; height: 320px;">
+                    <div class="card rounded-0" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="barChart" style="width: 100%; height: 300px;"></canvas>
                         </div>
@@ -136,16 +136,25 @@
                 </div>
 
                 <!-- Chart 2 Column -->
-                <div class="col-md-6 col-12 d-flex flex-column align-items-center">
+                <div class="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-center">
                     <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">MEMBER DISTRIBUTION</div>
-                    <div class="card" style="width: 100%; height: 320px;">
+                    <div class="card rounded-0" style="width: 100%; height: 320px;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <canvas id="pieChart" style="width: 100%; height: 280px;"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <!-- Chart 3 Column -->
+                <div class="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-center">
+                    <div class="subheading text-center mt-3 w-100 p-1 card-title" style="background-color: var(--primaryColor); color: var(--text-color-light);">AGE DEMOGRAPHICS</div>
+                    <div class="card rounded-0" style="width: 100%; height: 320px;">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <canvas id="doughnutChart" style="width: 100%; height: 280px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="table-responsive">
