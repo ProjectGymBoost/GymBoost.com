@@ -50,6 +50,16 @@
                             <input type="email" placeholder="Email" class="form-control" style="border-radius: 5px;">
                         </div>
 
+                        <!-- RFID -->
+                        <div class="w-100 mb-2">
+                            <input type="text" placeholder="RFID Number" class="form-control" style="border-radius: 5px;">
+                        </div>
+
+                        <!-- Birthday -->
+                        <div class="w-100 mb-2">
+                            <input type="date" placeholder="Birthday" class="form-control" style="border-radius: 5px;">
+                        </div>
+
                         <!-- Membership Plan -->
                         <select class="form-select">
                             <option selected disabled>Membership Plan</option>
@@ -93,10 +103,10 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         document.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.addEventListener('click', function () {
+            toggle.addEventListener('click', function() {
                 const input = document.getElementById(this.getAttribute('data-target'));
                 const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
                 input.setAttribute('type', type);

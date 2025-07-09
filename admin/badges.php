@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>GymBoost | Membership Plans</title>
+    <title>GymBoost | Badges</title>
     <link rel="icon" href="../assets/img/logo/officialLogo.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
@@ -40,7 +40,6 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Badge</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Type</th>
                                 <th scope="col">Value</th>
                                 <th scope="col">Icon</th>
                                 <th class="text-center" scope="col">ACTION</th>
@@ -53,8 +52,7 @@
                                 <td scope="row">1</td>
                                 <td>Fresh Starter</td>
                                 <td>First gym check-in</td>
-                                <td>Attendance</td>
-                                <td>1</td>
+                                <td>5</td>
                                 <td>starter.png</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
@@ -74,9 +72,8 @@
                             <tr>
                                 <td scope="row">2</td>
                                 <td>Weekly Warrior</td>
-                                <td>Checked-in for 7 days</td>
-                                <td>Attendance</td>
-                                <td>7</td>
+                                <td>Checked in for 5 days straight</td>
+                                <td>25</td>
                                 <td>weekly.png</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
@@ -96,9 +93,8 @@
                             <tr>
                                 <td scope="row">3</td>
                                 <td>Monthly Grinder</td>
-                                <td>Attended 20 sessions</td>
-                                <td>Attendance</td>
-                                <td>20</td>
+                                <td>Checked in for a total of 20 days</td>
+                                <td>100</td>
                                 <td>monthly.png</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
@@ -118,9 +114,8 @@
                             <tr>
                                 <td scope="row">4</td>
                                 <td>Commitment Champ</td>
-                                <td>Active for 3 months straight</td>
-                                <td>Monthly Streak</td>
-                                <td>20</td>
+                                <td>Checked in for a total of 60 days</td>
+                                <td>300</td>
                                 <td>3months.png</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
@@ -140,10 +135,51 @@
                             <tr>
                                 <td scope="row">5</td>
                                 <td>Half-year Beast</td>
-                                <td>Active for 6 months</td>
-                                <td>Monthly Streak</td>
-                                <td>6</td>
+                                <td>Checked in for a total of 120 days</td>
+                                <td>600</td>
                                 <td>6month.png</td>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editBadges1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteBadge1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                             <tr>
+                                <td scope="row">5</td>
+                                <td>Wourkout Master</td>
+                                <td>Checked in for a total of 200 days</td>
+                                <td>1000</td>
+                                <td>master.png</td>
+                                <td class="d-flex flex-row justify-content-center">
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#editBadges1Modal">
+                                            <i class="bi bi-pencil-square px-2"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a style="color: red;" data-bs-toggle="modal"
+                                            data-bs-target="#deleteBadge1Modal">
+                                            <i class="bi bi-trash3 px-2"></i>
+                                        </a>
+                                    </li>
+                                </td>
+                            </tr>
+
+                             <tr>
+                                <td scope="row">5</td>
+                                <td>Loyalty Legend</td>
+                                <td>Checked in for a total of 240 days</td>
+                                <td>1200</td>
+                                <td>loyalty.png</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editBadges1Modal">
