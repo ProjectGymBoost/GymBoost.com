@@ -50,16 +50,25 @@
                             <input type="email" placeholder="Email" class="form-control" style="border-radius: 5px;">
                         </div>
 
-                        <!-- Membership Plan -->
-                        <select class="form-select">
-                            <option selected disabled>Membership Plan</option>
-                            <option value="HalfMonth">Half Month</option>
-                            <option value="1Month">1 Month</option>
-                            <option value="2Months">2 Months</option>
-                            <option value="3Months">3 Months</option>
-                            <option value="semiannual">Semi Annual</option>
-                            <option value="annual">Annual</option>
-                        </select>
+                        <div class="d-flex flex-column flex-md-row gap-3 mb-3 w-100">
+                            <div class="flex-grow-1">
+                                <input type="text" placeholder="RFID Number" class="form-control w-100" style="border-radius: 5px;">
+                            </div>
+                            <div class="flex-grow">
+                                <input type="date" class="form-control w-100" style="border-radius: 5px;">
+                            </div>
+                            <div class="flex-grow-1">
+                                <select class="form-select w-100">
+                                    <option selected disabled>Membership Plan</option>
+                                    <option value="HalfMonth">Half Month</option>
+                                    <option value="1Month">1 Month</option>
+                                    <option value="2Months">2 Months</option>
+                                    <option value="3Months">3 Months</option>
+                                    <option value="semiannual">Semi Annual</option>
+                                    <option value="annual">Annual</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <hr style="border-top: 3px solid var(--primaryColor); opacity: 1; width: 100%; margin: 2rem 0;">
 
@@ -93,10 +102,10 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         document.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.addEventListener('click', function () {
+            toggle.addEventListener('click', function() {
                 const input = document.getElementById(this.getAttribute('data-target'));
                 const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
                 input.setAttribute('type', type);
