@@ -69,7 +69,7 @@ if ($email == false) {
     <form method="POST">
         <nav class="navbar" style="background-color: var(--primaryColor);">
             <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
-                <a class="navbar-brand m-0">
+                <a class="navbar-brand m-0" href="../../../../login.php">
                     <img src="../../../img/logo/officialLogo.png" alt="logo" width="40" height="40"
                         style="display: block;">
                 </a>
