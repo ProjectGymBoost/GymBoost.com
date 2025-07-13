@@ -29,7 +29,17 @@ include("assets/php/processes/login.php");
     border-width: 2px;
     box-shadow: none;
   }
+  .form-control:focus {
+    border-color: var(--primaryColor);
+    border-width: 2px;
+    box-shadow: none;
+  }
 
+  .forgot-link {
+    text-decoration: none;
+    color: var(--bs-secondary);
+    transition: color 0.3s ease;
+  }
   .forgot-link {
     text-decoration: none;
     color: var(--bs-secondary);
@@ -104,6 +114,8 @@ include("assets/php/processes/login.php");
           text-shadow: 0 0 1px var(--primaryColor);"></i>
           </div>
         </div>
+          </div>
+        </div>
 
           <button name="btnLogin" type="submit" class="btn btn-primary w-100 mt-2 mb-2"
             style="max-width: 400px; display: inline-block; text-align: center; font-family: var(--primaryFont);">
@@ -127,7 +139,7 @@ include("assets/php/processes/login.php");
 
   <script>
     const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+    const password = document.querySelector('#floatingPassword');
 
     togglePassword.addEventListener('click', function () {
       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
