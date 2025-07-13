@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
         showError("email", "Email already exists.");
     }
 
+    const rfidExistsError = document.getElementById("rfidExistsError").value;
+    if (rfidExistsError === "rfidExists") {
+        showError("rfid", "This RFID is already linked to another account.");
+    }
+
     const form = document.querySelector("form");
     form.addEventListener("submit", function (event) {
         let valid = true;

@@ -11,6 +11,7 @@ function sanitize($data)
 }
 
 $emailExistsError = "";
+$rfidExistsError = "";
 
 if (isset($_POST['btnRegister'])) {
     $firstName = sanitize($_POST['firstName']);
@@ -36,18 +37,24 @@ if (isset($_POST['btnRegister'])) {
     $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
     $checkEmailResult = executeQuery($checkEmailQuery);
 
+    // Check if RFID already exists.
+    $checkRfidQuery = "SELECT * FROM users WHERE rfidNumber = '$rfid'";
+    $checkRfidResult = executeQuery($checkRfidQuery);
+
     if (mysqli_num_rows($checkEmailResult) > 0) {
         $emailExistsError = "emailExists";
+    } elseif (mysqli_num_rows($checkRfidResult) > 0) {
+        $rfidExistsError = "rfidExists"; 
     } else {
-          $user = new User(null, $firstName, $lastName, $email, $password, $rfid, $birthday);
+        $user = new User(null, $firstName, $lastName, $email, $password, $rfid, $birthday);
 
         // Register the new user.
         if ($user->RegisterUser($membershipID, $startDate, $endDate)) {
             $lastInsertedID = mysqli_insert_id($conn);
-               $_SESSION['userCreated'] = true;
-            header("Location: users.php");
+            $_SESSION['userCreated'] = true;
+            header("Location: users.php?register=success");
             exit();
-        } 
+        }
     }
 }
 ?>

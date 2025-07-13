@@ -118,9 +118,13 @@ if ($_SESSION['role'] === 'user') {
                             <div class="d-flex flex-column flex-md-row gap-3 mb-3 w-100">
                                 <!-- RFID Number -->
                                 <div class="flex-grow-1 position-relative">
-                                    <input type="text" placeholder="RFID Number" class="form-control w-100" id="rfid"
-                                        name="rfid" style="border-radius: 5px;" required>
+                                    <input type="text" placeholder="RFID Number" class="form-control" name="rfid"
+                                        id="rfid" style="border-radius: 5px;"
+                                        value="<?php echo isset($_POST['rfid']) ? htmlspecialchars($_POST['rfid']) : ''; ?>"
+                                        required>
                                     <div id="rfidError" class="invalid-feedback text-start"></div>
+                                    <input type="hidden" id="rfidExistsError" class="text-start"
+                                        value="<?php echo $rfidExistsError?>">
                                 </div>
 
                                 <!-- Birthday -->
