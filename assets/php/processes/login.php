@@ -1,7 +1,7 @@
 <?php
-date_default_timezone_set('Asia/Manila'); 
+date_default_timezone_set('Asia/Manila');
 if (!empty($_SESSION['userID'])) {
-    header("Location: user/index.php");
+    header("Location: /user/index.php");
     exit();
 }
 //Sanitize user inputs
@@ -54,7 +54,11 @@ if (isset($_POST['btnLogin'])) {
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['role'] = $user['role'];
 
-                    header("Location: " . ($user['role'] === 'admin' ? 'admin/' : 'user/'));
+                    if ($user['role'] === 'admin') {
+                        header("Location: admin/index.php?login=success");
+                    } else {
+                        header("Location: user/index.php?page=dashboard&login=success");
+                    }
                     exit();
                 } else {
                     $updateQuery = "UPDATE users SET loginAttempts = loginAttempts + 1, lastAttempt = NOW() WHERE email = ?";

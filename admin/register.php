@@ -1,12 +1,13 @@
 <?php
 include("../assets/shared/connect.php");
 include("../assets/php/classes/classes.php");
-include("../assets/php/processes/register-process.php");
+include("../assets/php/processes/admin/register.php");
 if (empty($_SESSION['userID'])) {
     header("Location: ../login.php");
     exit();
-} if ($_SESSION['role'] === 'user') {
-    header("Location: ../user/index.php"); 
+}
+if ($_SESSION['role'] === 'user') {
+    header("Location: ../user/index.php");
     exit();
 }
 ?>
@@ -38,7 +39,7 @@ if (empty($_SESSION['userID'])) {
 
         .invalid-feedback {
             position: absolute;
-            color: var(--text-color-light);
+            color: var(--text-color-light) !important;
         }
 
         select.is-valid {
@@ -114,17 +115,35 @@ if (empty($_SESSION['userID'])) {
                                     value="<?php echo $emailExistsError; ?>">
                             </div>
 
-                            <!-- Membership Plan -->
-                            <select class="form-select" name="membershipID" id="membership" required>
-                                <option value="" selected disabled>Membership Plan</option>
-                                <option value="2">Half Month</option>
-                                <option value="3">1 Month</option>
-                                <option value="4">2 Months</option>
-                                <option value="5">3 Months</option>
-                                <option value="6">Semi Annual</option>
-                                <option value="7">Annual</option>
-                            </select>
-                            <div id="membershipError" class="invalid-feedback text-start"></div>
+                            <div class="d-flex flex-column flex-md-row gap-3 mb-3 w-100">
+                                <!-- RFID Number -->
+                                <div class="flex-grow-1 position-relative">
+                                    <input type="text" placeholder="RFID Number" class="form-control w-100" id="rfid"
+                                        name="rfid" style="border-radius: 5px;" required>
+                                    <div id="rfidError" class="invalid-feedback text-start"></div>
+                                </div>
+
+                                <!-- Birthday -->
+                                <div class="flex-grow position-relative">
+                                    <input type="date" class="form-control w-100" id="birthday" name="birthday"
+                                        style="border-radius: 5px;" required>
+                                    <div id="birthdayError" class="invalid-feedback text-start"></div>
+                                </div>
+
+                                <!-- Membership -->
+                                <div class="flex-grow-1">
+                                    <select class="form-select w-100" name="membershipID" id="membership" required>
+                                        <option selected disabled>Membership Plan</option>
+                                        <option value="2">Half Month</option>
+                                        <option value="3">1 Month</option>
+                                        <option value="4">2 Months</option>
+                                        <option value="5">3 Months</option>
+                                        <option value="6">Semi Annual</option>
+                                        <option value="7">Annual</option>
+                                    </select>
+                                    <div id="membershipError" class="invalid-feedback text-start"></div>
+                                </div>
+                            </div>
 
                             <hr
                                 style="border-top: 3px solid var(--primaryColor); opacity: 1; width: 100%; margin: 2rem 0;">
@@ -153,37 +172,37 @@ if (empty($_SESSION['userID'])) {
                                 <button type="submit" name="btnRegister" class="btn btn-primary">
                                     CREATE
                                 </button>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+        </div>
 
-    <script>
-        document.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.addEventListener('click', function () {
-                const input = document.getElementById(this.getAttribute('data-target'));
-                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                input.setAttribute('type', type);
-                this.classList.toggle('bi-eye');
-                this.classList.toggle('bi-eye-slash');
+        <script>
+            document.querySelectorAll('.toggle-password').forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    const input = document.getElementById(this.getAttribute('data-target'));
+                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                    input.setAttribute('type', type);
+                    this.classList.toggle('bi-eye');
+                    this.classList.toggle('bi-eye-slash');
+                });
             });
-        });
-    </script>
+        </script>
 
-    <script src="../assets/js/register.js"></script>
+        <script src="../assets/js/register.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
-        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
+            integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

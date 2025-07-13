@@ -41,12 +41,13 @@ if (empty($_SESSION['userID'])) {
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
 
                 <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
+                <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
                     <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
                 <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="sortBy" class="form-select">
                         <option selected disabled>Sort By</option>
                         <option value="first_name">First Name</option>
@@ -56,17 +57,12 @@ if (empty($_SESSION['userID'])) {
                 </div>
 
                 <!-- Order By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="orderBy" class="form-select">
                         <option selected disabled>Order</option>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                </div>
-
-                <!-- Apply Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
                 </div>
             </div>
 
@@ -91,7 +87,7 @@ if (empty($_SESSION['userID'])) {
                     <table class="table table-striped table-borderless">
                         <thead class="align-middle">
                             <tr>
-                                <th scope="col">ID</th>
+                                <th scope="col">RFID NUMBER</th>
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
                                 <th scope="col">Start Date</th>
@@ -103,8 +99,8 @@ if (empty($_SESSION['userID'])) {
                         <!-- User Data -->
                         <tbody>
                             <tr>
-                                <td scope="row">1</td>
-                                <td>Jon</td>
+                                <td scope="row">439783475934769</td>
+                                <td>John</td>
                                 <td>Doe</td>
                                 <td>2025-07-01</td>
                                 <td>2025-08-01</td>
@@ -124,7 +120,7 @@ if (empty($_SESSION['userID'])) {
                             </tr>
 
                             <tr>
-                                <td scope="row">2</td>
+                                <td scope="row">758294617305284</td>
                                 <td>Jenna Miles</td>
                                 <td>Reyes</td>
                                 <td>2025-07-01</td>
@@ -145,7 +141,7 @@ if (empty($_SESSION['userID'])) {
                             </tr>
 
                             <tr>
-                                <td scope="row">3</td>
+                                <td scope="row">624983157209473</td>
                                 <td>Jose</td>
                                 <td>Rizal</td>
                                 <td>2025-07-02</td>
@@ -166,7 +162,7 @@ if (empty($_SESSION['userID'])) {
                             </tr>
 
                             <tr>
-                                <td scope="row">4</td>
+                                <td scope="row">839471625083194</td>
                                 <td>Emily</td>
                                 <td>Brown</td>
                                 <td>2025-07-02</td>
@@ -187,7 +183,7 @@ if (empty($_SESSION['userID'])) {
                             </tr>
 
                             <tr>
-                                <td scope="row">5</td>
+                                <td scope="row">195738420671385</td>
                                 <td>Michael</td>
                                 <td>Johnson</td>
                                 <td>2025-07-03</td>

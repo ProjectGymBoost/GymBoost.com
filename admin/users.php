@@ -19,7 +19,7 @@ if (empty($_SESSION['userID'])) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>GymBoost | Dashboard</title>
+    <title>GymBoost | Users</title>
     <link rel="icon" href="../assets/img/logo/officialLogo.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
@@ -60,31 +60,28 @@ if (empty($_SESSION['userID'])) {
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
 
                 <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 220px; max-width: 300px;">
+                <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
                     <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
+                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
                 <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="sortBy" class="form-select">
                         <option selected disabled>Sort By</option>
                         <option value="first_name">First Name</option>
                         <option value="last_name">Last Name</option>
+                        <option value="last_name">Points</option>
                     </select>
                 </div>
 
                 <!-- Order By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="orderBy" class="form-select">
                         <option selected disabled>Order</option>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                </div>
-
-                <!-- Apply Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
                 </div>
             </div>
 
@@ -117,8 +114,7 @@ if (empty($_SESSION['userID'])) {
                                 <th scope="col">ID</th>
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
-                                <th scope="col">EMAIL</th>
-                                <th scope="col">ROLE</th>
+                                <th scope="col">Points</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
                         </thead>
@@ -127,10 +123,9 @@ if (empty($_SESSION['userID'])) {
                         <tbody>
                             <tr>
                                 <td scope="row">1</td>
-                                <td>Jon</td>
+                                <td>John</td>
                                 <td>Doe</td>
-                                <td>johndoe@gmail.com</td>
-                                <td>User</td>
+                                <td>1500</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -145,8 +140,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">2</td>
                                 <td>Jenna Miles</td>
                                 <td>Reyes</td>
-                                <td>atienzajennamiles@gmail.com</td>
-                                <td>User</td>
+                                <td>1400</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -161,8 +155,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">3</td>
                                 <td>John</td>
                                 <td>Smith</td>
-                                <td>johnsmith@gmail.com</td>
-                                <td>Admin</td>
+                                <td>1300</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -177,8 +170,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">4</td>
                                 <td>Emily</td>
                                 <td>Brown</td>
-                                <td>emilybrown@yahoo.com</td>
-                                <td>User</td>
+                                <td>1200</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -193,8 +185,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">5</td>
                                 <td>Michael</td>
                                 <td>Johnson</td>
-                                <td>mjohnson@outlook.com</td>
-                                <td>User</td>
+                                <td>1100</td>
                                 <td>
                                     <li style="display: flex; justify-content: center;">
                                         <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
@@ -205,21 +196,6 @@ if (empty($_SESSION['userID'])) {
                                 </td>
                             </tr>
 
-                            <tr>
-                                <td scope="row">6</td>
-                                <td>Sarah</td>
-                                <td>Williams</td>
-                                <td>sarahwilliams@gmail.com</td>
-                                <td>User</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

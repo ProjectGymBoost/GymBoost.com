@@ -190,6 +190,10 @@ td {
   box-shadow: none;
 }
 
+.invalid-feedback {
+  color: black !important;
+}
+
 @media (max-width: 1050px) {
   .navbar {
     display: flex;

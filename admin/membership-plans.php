@@ -41,7 +41,7 @@ if (empty($_SESSION['userID'])) {
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
 
                 <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 160px; max-width: 220px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="sortBy" class="form-select">
                         <option selected disabled>Sort By</option>
                         <option value="first_name">Plan Type</option>
@@ -51,17 +51,12 @@ if (empty($_SESSION['userID'])) {
                 </div>
 
                 <!-- Order By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 140px; max-width: 180px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select id="orderBy" class="form-select">
                         <option selected disabled>Order</option>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                </div>
-
-                <!-- Apply Button -->
-                <div>
-                    <button id="applyBtn" class="btn btn-primary subheading">APPLY</button>
                 </div>
             </div>
 
@@ -100,9 +95,9 @@ if (empty($_SESSION['userID'])) {
                         <tbody>
                             <tr>
                                 <td scope="row">1</td>
-                                <td>Hlaf-month</td>
+                                <td>Half-month</td>
                                 <td>15 day</td>
-                                <td>Php 350</td>
+                                <td>₱350</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -122,7 +117,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">2</td>
                                 <td>1 month</td>
                                 <td>30 days</td>
-                                <td>Php 600</td>
+                                <td>₱600</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -142,7 +137,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">3</td>
                                 <td>2 months</td>
                                 <td>60 days</td>
-                                <td>Php 1000</td>
+                                <td>₱1000</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -162,7 +157,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">4</td>
                                 <td>3 months</td>
                                 <td>90 days</td>
-                                <td>Php 1500</td>
+                                <td>₱1500</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -182,7 +177,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">5</td>
                                 <td>Semi-annual</td>
                                 <td>180 days</td>
-                                <td>Php 2850</td>
+                                <td>₱2850</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">
@@ -202,7 +197,7 @@ if (empty($_SESSION['userID'])) {
                                 <td scope="row">6</td>
                                 <td>Annual</td>
                                 <td>365 days</td>
-                                <td>Php 5500</td>
+                                <td>₱5500</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <li>
                                         <a data-bs-toggle="modal" data-bs-target="#editMembershipPlan1Modal">

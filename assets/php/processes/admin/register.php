@@ -19,6 +19,8 @@ if (isset($_POST['btnRegister'])) {
     $password = sanitize($_POST['password']);
     $confirmPassword = sanitize($_POST['confirmPassword']);
     $membershipID = sanitize($_POST['membershipID']);
+    $rfid = sanitize($_POST['rfid']);
+    $birthday = sanitize($_POST['birthday']);
 
     // Check membership requirement.
     $membershipQuery = "SELECT requirement FROM memberships WHERE membershipID = '$membershipID'";
@@ -37,7 +39,7 @@ if (isset($_POST['btnRegister'])) {
     if (mysqli_num_rows($checkEmailResult) > 0) {
         $emailExistsError = "emailExists";
     } else {
-        $user = new User(null, $firstName, $lastName, $email, $password);
+          $user = new User(null, $firstName, $lastName, $email, $password, $rfid, $birthday);
 
         // Register the new user.
         if ($user->RegisterUser($membershipID, $startDate, $endDate)) {

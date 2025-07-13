@@ -43,7 +43,7 @@
           <div class="mt-1 mx-4" style="font-weight:bold">
             Membership Plan
           </div>
-          <div class="mx-4 mb-2">Gold
+          <div class="mx-4 mb-2">Monthly
           </div>
           <div class="mt-1 mx-4" style="font-weight:bold">
             Expiry Date
@@ -59,10 +59,10 @@
           <div class="mx-4 mb-2">
             23</div>
           <div class="mt-1 mx-4" style="font-weight:bold">
-            Streak
+            Points
           </div>
           <div class="mx-4 mb-2">
-            5</div>
+            85</div>
         </div>
       </div>
     </div>

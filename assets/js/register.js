@@ -43,6 +43,39 @@ document.addEventListener("DOMContentLoaded", function () {
             showValid("email");
         }
 
+        // Validate RFID Number (numeric and 6-12 digits)
+        const rfid = document.getElementById("rfid").value.trim();
+        if (!/^\d{15}$/.test(rfid)) {
+            showError("rfid", "RFID must be 15 digits.");
+            valid = false;
+        } else {
+            showValid("rfid");
+        }
+
+        // Validate Birthday (must be in the past and at least 12 years old)
+        const birthday = document.getElementById("birthday").value;
+        if (!birthday) {
+            showError("birthday", "Please enter your birthday.");
+            valid = false;
+        } else {
+            const birthDate = new Date(birthday);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            const isBirthdayPassed = m > 0 || (m === 0 && today.getDate() >= birthDate.getDate());
+            const actualAge = isBirthdayPassed ? age : age - 1;
+
+            if (birthDate >= today) {
+                showError("birthday", "Birthday must be in the past.");
+                valid = false;
+            } else if (actualAge < 12) {
+                showError("birthday", "Member must be at least 12 years old.");
+                valid = false;
+            } else {
+                showValid("birthday");
+            }
+        }
+
         // Validate Membership Selection
         const membership = document.getElementById("membership").value;
         if (!membership || membership === "Membership Plan") {

@@ -6,9 +6,8 @@ if (!empty($_SESSION['userID'])) {
 }
 include("assets/shared/connect.php");
 include("assets/php/classes/classes.php");
-include("assets/php/processes/login-process.php");
+include("assets/php/processes/login.php");
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +21,8 @@ include("assets/php/processes/login-process.php");
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet" />
+</head>
+
 <style>
   .form-control:focus {
     border-color: var(--primaryColor);
@@ -66,53 +67,54 @@ include("assets/php/processes/login-process.php");
     background-position: right 10px center !important;
   }
 </style>
-</head>
 
 <body style="background-color: var(--bgColor); height: 100vh; margin: 0; overflow: hidden;">
 
   <form method="POST">
-    <?php if (isset($loginError)): ?>
+    <?php if (!empty($loginError)): ?>
       <input type="hidden" id="loginError" value="<?php echo htmlspecialchars($loginError); ?>">
     <?php endif; ?>
 
-    <nav class="navbar" style="background-color: var(--primaryColor);">
-      <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
-        <a class="navbar-brand m-0">
-          <img src="assets/img/logo/officialLogo.png" alt="logo" width="40" height="40" style="display: block;">
-        </a>
-      </div>
-    </nav>
+  <nav class="navbar" style="background-color: var(--primaryColor);">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+      <a class="navbar-brand m-0" href="index.php">
+        <img src="assets/img/logo/officialLogo.png" alt="logo" width="40" height="40" style="display: block;">
+      </a>
+    </div>
+  </nav>
 
-    <div class="container-fluid p-0" style="height: calc(100vh - 56px);">
-      <div class="row m-0" style="height: 100%;">
-        <!-- First Column -->
-        <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
-          style="height: 100%; margin-top: -2rem;">
-          <div class="heading mb-5">LOGIN</div>
-          <div style="max-width: 400px; width: 100%;" class="mb-4 position-relative">
-            <input type="email" placeholder="Email" name="email" id="email" class="form-control" required>
-            <div id="emailError" class="invalid-feedback text-start"></div>
-          </div>
+  <div class="container-fluid p-0" style="height: calc(100vh - 56px);">
+    <div class="row m-0" style="height: 100%;">
+      <!-- First Column -->
+      <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
+        style="height: 100%; margin-top: -2rem;">
+        <div class="heading mb-5">LOGIN</div>
+        <div class="form-floating" style="max-width: 400px; width: 100%;">
+          <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
+          <label for="email">Email address</label>
+          <div id="emailError" class="invalid-feedback text-start"></div>
+        </div>
 
-
-          <div class="position-relative mt-2 mb-5" style="max-width: 400px; width: 100%;">
-            <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
-            <div id="passwordError" class="invalid-feedback text-start">
-            </div>
-          <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
+        <div class="position-relative mt-4 mb-5" style="max-width: 400px; width: 100%;">
+          <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            <label for="password">Password</label>
+            <div id="passwordError" class="invalid-feedback text-start"></div>
+            <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
           text-shadow: 0 0 1px var(--primaryColor);"></i>
           </div>
-
+        </div>
 
           <button name="btnLogin" type="submit" class="btn btn-primary w-100 mt-2 mb-2"
-            style="max-width: 400px; display: inline-block; text-align: center;">
+            style="max-width: 400px; display: inline-block; text-align: center; font-family: var(--primaryFont);">
             LOGIN
           </button>
 
-          <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
-            <a href="assets/php/processes/forgotpassword/forgot-password.php" class="forgot-link">Forgot your password?</a>
-          </div>
+        <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
+          <a href="assets/php/processes/forgotpassword/forgot-password.php" class="forgot-link">Forgot your password?</a>
         </div>
+      </div>
+    </form>
 
       <!-- Second Column -->
       <div class="col-12 col-xl-6 d-none d-lg-block p-0" style="height: 100%;">
