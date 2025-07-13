@@ -59,87 +59,23 @@
                             </tr>
                         </thead>
 
-                        <!-- User Data -->
-                        <tbody>
+                        <tbody id="announcementTableBody">
                             <tr>
-                                <td scope="row">1</td>
-                                <td>Gym Closed</td>
-                                <td>The gym will be closed for maintenance until further notice.</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAnnouncement1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>2nd Branch</td>
-                                <td> 2nd Branch in Brgy. Sta. Anastacia</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAnnouncement1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">3</td>
-                                <td>New Equipment</td>
-                                <td>New Gym Bike Equipment</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAnnouncement1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">4</td>
-                                <td>Summer Promo</td>
-                                <td>20% off on all promos</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editAnnouncement1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAnnouncement1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
+                                <td colspan="4" class="text-center text-muted">Loading announcements...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="small text-muted" id="paginationInfo">Showing 0 to 0 of 0 entries</div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mt-3"></ul>
+                </nav>
+            </div>
+
 
             <!-- Add Announcement Modal -->
             <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-labelledby="addAnnouncementModalLabel"
@@ -348,32 +284,11 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Bottom Pagination Info -->
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="small text-muted">
-                    Showing 2 of 2 entries
-                </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination mt-3">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            
         </div>
     </div>
+
+    <script src="../assets/js/announcements.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
