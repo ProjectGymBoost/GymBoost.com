@@ -83,7 +83,6 @@ include("assets/php/processes/login.php");
         <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
           style="height: 100%; margin-top: -2rem;">
           <div class="heading mb-5">LOGIN</div>
-          <div id="countdownTimer" class="text-start mb-2" style="color: #dc3545;"></div>
 
           <!-- Email -->
           <div class="form-floating" style="max-width: 400px; width: 100%;">
@@ -93,10 +92,6 @@ include("assets/php/processes/login.php");
           </div>
 
           <!-- Password -->
-          <?php if (!empty($unlockTime)): ?>
-            <input type="hidden" id="unlockTimestamp" value="<?php echo $unlockTime; ?>">
-          <?php endif; ?>
-
           <div class="position-relative mt-4 mb-4" style="max-width: 400px; width: 100%;">
             <div class="form-floating">
               <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
@@ -143,12 +138,6 @@ include("assets/php/processes/login.php");
         this.classList.toggle('bi-eye-slash');
       });
     }
-  </script>
-
-  <!-- Define loginError and unlockTimestamp BEFORE the external JS -->
-  <script>
-    const loginError = "<?php echo $loginError; ?>";
-    const unlockTimestamp = <?php echo $unlockTime ? $unlockTime : 'null'; ?>;
   </script>
   <script src="assets/js/login.js"></script>
 

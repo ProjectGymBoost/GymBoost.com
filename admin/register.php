@@ -2,17 +2,7 @@
 include("../assets/shared/connect.php");
 include("../assets/php/classes/classes.php");
 include("../assets/php/processes/admin/register.php");
-if (empty($_SESSION['userID'])) {
-    header("Location: ../login.php");
-    exit();
-}
-if ($_SESSION['role'] === 'user') {
-    header("Location: ../user/index.php");
-    exit();
-}
-if (!empty($_SESSION['userID'])) {
-    $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
-}
+include("../assets/shared/auth.php");
 ?>
 
 <!DOCTYPE html>
