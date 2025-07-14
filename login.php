@@ -83,7 +83,6 @@ include("assets/php/processes/login.php");
         <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center p-4"
           style="height: 100%; margin-top: -2rem;">
           <div class="heading mb-5">LOGIN</div>
-          <div id="countdownTimer" class="text-start mb-2" style="color: #dc3545;"></div>
 
           <!-- Email -->
           <div class="form-floating" style="max-width: 400px; width: 100%;">
