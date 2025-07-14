@@ -47,11 +47,10 @@ if (isset($_POST['btnLogin'])) {
                 exit();
             }
         } else {
+            mysqli_stmt_close($stmt);
             $_SESSION['loginError'] = "userNotFound";
             header("Location: login.php");
             exit();
         }
-
-        mysqli_stmt_close($stmt);
     }
 }
