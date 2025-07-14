@@ -42,22 +42,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Real-time validation
     document.getElementById("email").addEventListener("input", () => {
         const value = document.getElementById("email").value.trim();
-        if (!lockedOut) {
-            if (value === "") clearFieldState("email");
-            else validateEmail();
-        }
+        if (value === "") clearFieldState("email");
     });
 
     document.getElementById("password").addEventListener("input", () => {
         const value = document.getElementById("password").value.trim();
-        if (!lockedOut) {
-            if (value === "") clearFieldState("password");
-            else validatePassword();
-        }
+        if (value === "") clearFieldState("password");
     });
+
 
     // Form submission
     document.querySelector("form").addEventListener("submit", function (event) {

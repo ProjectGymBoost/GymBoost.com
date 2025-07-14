@@ -22,30 +22,26 @@ if (isset($_POST['btnContinue']) && !empty($_POST['email'])) {
     $checkEmailResult = executeQuery($checkEmailQuery);
 
     if (mysqli_num_rows($checkEmailResult) > 0) {
+        $user = mysqli_fetch_assoc($checkEmailResult);
+        $fullName = $user['firstName'] . ' ' . $user['lastName'];
         $code = rand(111111, 999999);
         $insertCodeQuery = "UPDATE users SET code = $code WHERE email = '$email'";
         $insertCodeResult = executeQuery($insertCodeQuery);
 
         if ($insertCodeResult) {
-            $subject = "Password Reset Code";
+            $subject = "Your One-Time Password (OTP)";
             $message = "
- <div style='font-family: Arial, sans-serif; margin: auto; color: #333; max-width: 500px'>
-    <h2 style='color: #fffbfb; padding: 20px; background-color: #28364e;'>GymBoost Password Reset</h2>
-    <p>Hello,</p>
-    <p>You requested to reset your password. Please use the code below to proceed:</p>
-    <div style='font-size: 16px; font-weight: bold; color: #28364e; margin: 20px 0;'>
-      $code
-    </div>
-    <p style='color: #888;'>For your protection, please do not share this code with anyone.</p>
-    <hr style='margin: 30px 0;'>
+                        <p>Hi " . htmlspecialchars($fullName) . ",</p>
 
-    <!-- Footer -->
-    <p style='font-size: 12px; color: #aaa; text-align: center;'>
-      If you did not request this reset, please ignore this email.<br>
-      &copy; " . date('Y') . " GymBoost. All rights reserved.
-    </p>
-  </div>
-  ";
+                        <p>Your one-time password (OTP) is:</p>
+
+                        <p><strong>$code</strong></p>
+
+                        <p>Please enter this OTP to proceed. If you did not request this, please ignore this message or contact support immediately.</p>
+
+                        <p>Thanks,<br>Hard Body Fitness Gym</p>
+
+                        ";
 
 
             $mail = new PHPMailer(true);

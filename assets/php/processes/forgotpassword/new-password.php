@@ -38,6 +38,7 @@ if ($email == false) {
         input.is-valid {
             border-color: #28a745;
             border-width: 2px !important;
+            background-position: right 2.5rem center !important;
         }
 
         input.is-invalid {

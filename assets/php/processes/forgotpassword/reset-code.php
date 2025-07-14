@@ -12,7 +12,7 @@ if ($email == false) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Code Verification</title>
+    <title>OTP Verification</title>
     <link rel="icon" href="../../../img/logo/officialLogo.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
@@ -81,8 +81,8 @@ if ($email == false) {
             <div class="row m-0" style="height: 100%;">
                 <div class="col-12 d-flex flex-column justify-content-center align-items-center text-center p-4"
                     style="height: 100%; margin-top: -2rem;">
-                    <div class="heading mb-2">CODE VERIFICATION</div>
-                    <div class="enter-email mb-3">Enter the code sent to your email.</div>
+                    <div class="heading mb-2">OTP VERIFICATION</div>
+                    <div class="enter-email mb-3">Enter the OTP sent to your email.</div>
                     <div style="max-width: 400px; width: 100%;" class="mb-4 position-relative">
                         <input type="text" placeholder="Enter OTP" name="otp" id="otp"
                             class="form-control <?php echo !empty($errors['otp']) ? 'is-invalid' : ''; ?>"
