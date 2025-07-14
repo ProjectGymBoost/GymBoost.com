@@ -34,7 +34,7 @@ if (isset($_POST['btnLogin'])) {
             if ($user['loginAttempts'] >= 3) {
                 $lastAttempt = strtotime($user['lastAttempt']);
                 $currentTime = time();
-                $lockoutDuration = 1 * 60;
+                $lockoutDuration = 3 * 60;
 
                 if ($currentTime - $lastAttempt < $lockoutDuration) {
                     $_SESSION['loginError'] = "tooManyAttempts";
