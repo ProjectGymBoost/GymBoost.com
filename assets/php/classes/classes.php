@@ -67,27 +67,22 @@ class ChartData
 
     public function loadYearDropdown()
     {
-        $options = '';
-
         if (!empty($this->distinctYears)) {
+            $options = '';
             foreach ($this->distinctYears as $year) {
-                $options .= '
-                    <li>
-                        <a class="dropdown-item" href="?year=' . $year . '">' . $year . '</a>
-                    </li>';
+                $selected = ($year == $this->year) ? 'selected' : '';
+                $options .= "<option value=\"$year\" $selected>$year</option>";
             }
-        } else {
-            $options = '
-                <li><a class="dropdown-item text-muted">No recorded years available</a></li>';
-        }
 
-        return '
-            <button type="button" class="btn btn-primary dropdown-toggle" style="border-radius: 2px" data-bs-toggle="dropdown" aria-expanded="false">
-                YEAR
-            </button>
-            <ul class="dropdown-menu">
-                ' . $options . '
-            </ul>';
+            return '
+                <form method="GET" class="d-inline">
+                    <select name="year" class="form-select d-inline" style="width: auto; display: inline-block; border: 3px solid var(--primaryColor);" onchange="this.form.submit()">
+                        ' . $options . '
+                    </select>
+                </form>';
+        } else {
+            return '<span class="text-muted">No recorded years available</span>';
+        }
     }
 
     public function loadAttendanceData()
@@ -119,9 +114,14 @@ class ChartData
                   GROUP BY memberships.planType";
         $result = executeQuery($query);
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $this->membershipLabels[] = $row['planType'];
-            $this->membershipData[] = $row['total'];
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $this->membershipLabels[] = $row['planType'];
+                $this->membershipData[] = $row['total'];
+            }
+        } else {
+            $this->membershipLabels = ["No Data"];
+            $this->membershipData = [0];
         }
     }
 
