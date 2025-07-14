@@ -43,10 +43,26 @@ if ($email == false) {
         input.is-invalid {
             border-color: #dc3545;
             border-width: 2px !important;
+            background-position: right 2.5rem center !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--primaryColor);
+            text-shadow: 0 0 1px var(--primaryColor);
+            z-index: 3;
+            pointer-events: auto;
         }
 
         .invalid-feedback {
             position: absolute;
+            left: 0;
+            bottom: -25px;
+            font-size: 0.875em;
         }
 
         #password.is-valid {
@@ -55,11 +71,6 @@ if ($email == false) {
 
         #password.is-invalid {
             background-position: right 40px center !important;
-        }
-
-        .toggle-password {
-            position: absolute !important;
-            background-position: right 10px center !important;
         }
     </style>
 </head>
@@ -93,15 +104,12 @@ if ($email == false) {
                         </div>
 
                         <!-- Confirm Password -->
-                        <div class="position-relative w-100 mb-4">
-                            <input type="password" placeholder="Confirm Password" name="confirmPassword"
-                                id="confirmPassword" class="form-control" required class="form-control"
-                                style="border-radius: 5px;">
-                            <i class="bi bi-eye-slash  toggle-password" data-target="confirmPassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
-     text-shadow: 0 0 1px var(--primaryColor);"></i>
+                        <div class="position-relative w-100 mb-4 mt-1">
+                            <input type="password" id="confirmPassword" class="form-control" name="confirmPassword"
+                                placeholder="Confirm Password" required style="border-radius: 5px;">
+                            <i class="bi bi-eye-slash toggle-password" data-target="confirmPassword"></i>
                             <div id="confirmPasswordError" class="invalid-feedback text-start"></div>
                         </div>
-
                     </div>
 
                     <button name="btnChange" type="submit" class="btn btn-primary w-100  mb-2"

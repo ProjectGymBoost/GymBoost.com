@@ -1,144 +1,189 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
 
-    const emailExistsError = document.getElementById("emailExistsError").value;
+    const emailExistsError = document.getElementById("emailExistsError")?.value;
+    const rfidExistsError = document.getElementById("rfidExistsError")?.value;
 
-    // Show emailExistsError if present.
     if (emailExistsError === "emailExists") {
         showError("email", "Email already exists.");
     }
 
-    const rfidExistsError = document.getElementById("rfidExistsError").value;
     if (rfidExistsError === "rfidExists") {
         showError("rfid", "This RFID is already linked to another account.");
     }
 
-    const form = document.querySelector("form");
+    // Mapping field IDs 
+    const fieldsToValidate = {
+        firstName: validateFirstName,
+        lastName: validateLastName,
+        email: validateEmail,
+        rfid: validateRFID,
+        birthday: validateBirthday,
+        membership: validateMembership,
+        password: validatePassword,
+        confirmPassword: validateConfirmPassword
+    };
+
+    // Real-time input validation
+    for (const [fieldId, validator] of Object.entries(fieldsToValidate)) {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener("input", () => {
+                if (field.value.trim() === "") {
+                    clearFieldState(fieldId);
+                } else {
+                    validator();
+                }
+            });
+        }
+    }
+
+    // On form submission
     form.addEventListener("submit", function (event) {
         let valid = true;
-
-        // Clear previous error messages.
         clearErrors();
 
-        // Validate First Name.
-        const firstName = document.getElementById("firstName").value;
-        if (!/^[a-zA-Z-' ]*$/.test(firstName)) {
-            showError("firstName", "Only letters and white space allowed.");
-            valid = false;
-        } else {
-            showValid("firstName");
-        }
-
-        // Validate Last Name.
-        const lastName = document.getElementById("lastName").value;
-        if (!/^[a-zA-Z-' ]*$/.test(lastName)) {
-            showError("lastName", "Only letters and white space allowed.");
-            valid = false;
-        } else {
-            showValid("lastName");
-        }
-
-        //Validate Email
-        const email = document.getElementById("email").value;
-        const validEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!validEmailPattern.test(email)) {
-            showError("email", "Invalid email format. Please include a valid domain.");
-            valid = false;
-        } else {
-            showValid("email");
-        }
-
-        // Validate RFID Number (numeric and 6-12 digits)
-        const rfid = document.getElementById("rfid").value.trim();
-        if (!/^\d{15}$/.test(rfid)) {
-            showError("rfid", "RFID must be 15 digits.");
-            valid = false;
-        } else {
-            showValid("rfid");
-        }
-
-        // Validate Birthday (must be in the past and at least 12 years old)
-        const birthday = document.getElementById("birthday").value;
-        if (!birthday) {
-            showError("birthday", "Please enter your birthday.");
-            valid = false;
-        } else {
-            const birthDate = new Date(birthday);
-            const today = new Date();
-            const age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
-            const isBirthdayPassed = m > 0 || (m === 0 && today.getDate() >= birthDate.getDate());
-            const actualAge = isBirthdayPassed ? age : age - 1;
-
-            if (birthDate >= today) {
-                showError("birthday", "Birthday must be in the past.");
+        for (const validate of Object.values(fieldsToValidate)) {
+            if (!validate()) {
                 valid = false;
-            } else if (actualAge < 12) {
-                showError("birthday", "Member must be at least 12 years old.");
-                valid = false;
-            } else {
-                showValid("birthday");
             }
         }
 
-        // Validate Membership Selection
-        const membership = document.getElementById("membership").value;
-        if (!membership || membership === "Membership Plan") {
-            showError("membership", "Please select a membership plan.");
-            valid = false;
-        } else {
-            showValid("membership");
-        }
-
-        // Validate Password Length.
-        const password = document.getElementById("password").value;
-        if (password.length < 8) {
-            showError("password", "Password must be at least 8 characters long.");
-            valid = false;
-        } else {
-            showValid("password");
-        }
-
-        // Validate Password Confirmation.
-        const confirmPassword = document.getElementById("confirmPassword").value;
-        if (password !== confirmPassword) {
-            showError("confirmPassword", "Passwords do not match.");
-            valid = false;
-        } else {
-            showValid("confirmPassword");
-        }
-
-        // If not valid, prevent form submission.
         if (!valid) {
             event.preventDefault();
         }
     });
-    // Function to show error message (turns field red).
-    function showError(field, message) {
-        const inputField = document.getElementById(field);
-        const errorMessage = document.getElementById(field + "Error");
-        inputField.classList.add("is-invalid");
-        errorMessage.textContent = message;
+
+    // Validation Functions
+
+    function validateFirstName() {
+        const field = "firstName";
+        const value = document.getElementById(field).value.trim();
+        const pattern = /^[a-zA-Z-' ]*$/;
+        return validatePattern(field, pattern, "Only letters and white space allowed.");
     }
 
-    // Function to show valid input (turns field green).
-    function showValid(field) {
-        const inputField = document.getElementById(field);
-        const errorMessage = document.getElementById(field + "Error");
-        inputField.classList.remove("is-invalid");
-        inputField.classList.add("is-valid");
-        errorMessage.textContent = "";
+    function validateLastName() {
+        const field = "lastName";
+        const value = document.getElementById(field).value.trim();
+        const pattern = /^[a-zA-Z-' ]*$/;
+        return validatePattern(field, pattern, "Only letters and white space allowed.");
     }
 
-    // Function to clear previous error messages.
+    function validateEmail() {
+        const field = "email";
+        const value = document.getElementById(field).value.trim();
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return validatePattern(field, pattern, "Invalid email format. Please include a valid domain.");
+    }
+
+    function validateRFID() {
+        const field = "rfid";
+        const value = document.getElementById(field).value.trim();
+        const pattern = /^\d{10}$/;
+        return validatePattern(field, pattern, "RFID must be 10 digits.");
+    }
+
+    function validateBirthday() {
+        const field = "birthday";
+        const value = document.getElementById(field).value;
+        if (!value) {
+            showError(field, "Please enter your birthday.");
+            return false;
+        }
+
+        const birthDate = new Date(value);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        const isBirthdayPassed = m > 0 || (m === 0 && today.getDate() >= birthDate.getDate());
+        const actualAge = isBirthdayPassed ? age : age - 1;
+
+        if (birthDate >= today) {
+            showError(field, "Birthday must be in the past.");
+            return false;
+        } else if (actualAge < 12) {
+            showError(field, "Member must be at least 12 years old.");
+            return false;
+        }
+
+        showValid(field);
+        return true;
+    }
+
+    function validateMembership() {
+        const field = "membership";
+        const value = document.getElementById(field).value;
+        if (!value || value === "Membership Plan") {
+            showError(field, "Please select a membership plan.");
+            return false;
+        }
+        showValid(field);
+        return true;
+    }
+
+    function validatePassword() {
+        const field = "password";
+        const value = document.getElementById(field).value;
+        if (value.length < 8) {
+            showError(field, "Password must be at least 8 characters long.");
+            return false;
+        }
+        showValid(field);
+        return true;
+    }
+
+    function validateConfirmPassword() {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        if (password !== confirmPassword) {
+            showError("confirmPassword", "Passwords do not match.");
+            return false;
+        }
+        showValid("confirmPassword");
+        return true;
+    }
+
+    //  Utility Functions 
+
+    function validatePattern(fieldId, pattern, errorMsg) {
+        const field = document.getElementById(fieldId);
+        const value = field.value.trim();
+        if (!pattern.test(value)) {
+            showError(fieldId, errorMsg);
+            return false;
+        }
+        showValid(fieldId);
+        return true;
+    }
+
+    function showError(fieldId, message) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.add("is-invalid");
+        input.classList.remove("is-valid");
+        if (error) error.textContent = message;
+    }
+
+    function showValid(fieldId) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        if (error) error.textContent = "";
+    }
+
+    function clearFieldState(fieldId) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+        input.classList.remove("is-invalid", "is-valid");
+        if (error) error.textContent = "";
+    }
+
     function clearErrors() {
-        const errorMessages = document.querySelectorAll(".invalid-feedback");
-        errorMessages.forEach((message) => message.textContent = "");
-
-        const inputFields = document.querySelectorAll("input");
-        inputFields.forEach((field) => {
-            field.classList.remove("is-invalid");
-            field.classList.remove("is-valid");
+        document.querySelectorAll(".invalid-feedback").forEach(error => error.textContent = "");
+        document.querySelectorAll("input, select").forEach(field => {
+            field.classList.remove("is-invalid", "is-valid");
         });
     }
 });

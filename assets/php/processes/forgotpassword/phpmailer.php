@@ -9,6 +9,10 @@ include('../../../shared/phpmailer/src/Exception.php');
 include('../../../shared/phpmailer/src/PHPMailer.php');
 include('../../../shared/phpmailer/src/SMTP.php');
 
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+
+
 $errors = array();
 
 // Step 1: User submits email for password reset
@@ -24,7 +28,25 @@ if (isset($_POST['btnContinue']) && !empty($_POST['email'])) {
 
         if ($insertCodeResult) {
             $subject = "Password Reset Code";
-            $message = "Your password reset code is <strong>$code</strong>.";
+            $message = "
+ <div style='font-family: Arial, sans-serif; margin: auto; color: #333; max-width: 500px'>
+    <h2 style='color: #fffbfb; padding: 20px; background-color: #28364e;'>GymBoost Password Reset</h2>
+    <p>Hello,</p>
+    <p>You requested to reset your password. Please use the code below to proceed:</p>
+    <div style='font-size: 16px; font-weight: bold; color: #28364e; margin: 20px 0;'>
+      $code
+    </div>
+    <p style='color: #888;'>For your protection, please do not share this code with anyone.</p>
+    <hr style='margin: 30px 0;'>
+
+    <!-- Footer -->
+    <p style='font-size: 12px; color: #aaa; text-align: center;'>
+      If you did not request this reset, please ignore this email.<br>
+      &copy; " . date('Y') . " GymBoost. All rights reserved.
+    </p>
+  </div>
+  ";
+
 
             $mail = new PHPMailer(true);
             try {
@@ -52,10 +74,10 @@ if (isset($_POST['btnContinue']) && !empty($_POST['email'])) {
                 $errors['otp-error'] = "Mailer Error: {$mail->ErrorInfo}";
             }
         } else {
-            $errors['db-error'] = "Something went wrong!";
+            $errors['db-error'] = "Something went wrong.";
         }
     } else {
-        $errors['email'] = "This email address does not exist!";
+        $errors['email'] = "This email address does not exist.";
     }
 }
 
@@ -75,7 +97,7 @@ if (isset($_POST['btnReset'])) {
         header('location: new-password.php');
         exit();
     } else {
-        $errors['otp-error'] = "You've entered incorrect code!";
+        $errors['otp'] = "You've an entered incorrect code.";
     }
 }
 
@@ -96,8 +118,8 @@ if (isset($_POST['btnChange'])) {
                 $stmt->bind_param("iss", $code, $hashedPassword, $email);
                 if ($stmt->execute()) {
                     if ($stmt->execute()) {
-                        header('Location: password-changed.php'); // Redirect first
-                        session_destroy(); // Destroy session after redirection
+                        header('Location: password-changed.php');
+                        session_destroy();
                         exit();
                     }
                 } else {
@@ -115,6 +137,12 @@ if (isset($_POST['btnChange'])) {
         echo "Error: Passwords do not match.";
         exit();
     }
+    if (!empty($errors)) {
+        $_SESSION['errors'] = $errors;
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
 }
 
 

@@ -13,7 +13,12 @@ function sanitize($data)
     return $data;
 }
 
-$loginError = "";
+$loginError = $_SESSION['loginError'] ?? "";
+$unlockTime = $_SESSION['unlockTime'] ?? null;
+
+unset($_SESSION['loginError']);
+unset($_SESSION['unlockTime']);
+
 
 if (isset($_POST['btnLogin'])) {
     $email = sanitize($_POST['email']);
@@ -29,17 +34,23 @@ if (isset($_POST['btnLogin'])) {
             if ($user['loginAttempts'] >= 3) {
                 $lastAttempt = strtotime($user['lastAttempt']);
                 $currentTime = time();
-                $lockoutDuration = 5 * 60;
+                $lockoutDuration = 1 * 60;
 
                 if ($currentTime - $lastAttempt < $lockoutDuration) {
-                    $loginError = "tooManyAttempts";
+                    $_SESSION['loginError'] = "tooManyAttempts";
+                    $_SESSION['unlockTime'] = $lastAttempt + $lockoutDuration;
+
+                    header("Location: login.php");
+                    exit();
                 } else {
+                    // Reset attempts
                     $resetQuery = "UPDATE users SET loginAttempts = 0, lastAttempt = NULL WHERE email = ?";
                     $resetStmt = mysqli_prepare($conn, $resetQuery);
                     mysqli_stmt_bind_param($resetStmt, "s", $email);
                     mysqli_stmt_execute($resetStmt);
                 }
             }
+
             // Login user, update login attempts
             if ($loginError !== "tooManyAttempts") {
                 if (password_verify($password, $user['password'])) {
@@ -66,7 +77,10 @@ if (isset($_POST['btnLogin'])) {
                     mysqli_stmt_bind_param($updateStmt, "s", $email);
                     mysqli_stmt_execute($updateStmt);
 
-                    $loginError = "invalidCredentials";
+                    $_SESSION['loginError'] = "invalidCredentials";
+                    header("Location: login.php");
+                    exit();
+
                 }
             }
         } else {

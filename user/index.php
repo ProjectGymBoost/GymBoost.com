@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (empty($_SESSION['userID'])) {
     header("Location: ../login.php");
     exit();
@@ -12,7 +13,9 @@ if ($_SESSION['role'] === 'admin') {
     header("Location: ../admin/index.php"); 
     exit();
 }
-
+if (!empty($_SESSION['userID'])) {
+    $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
+}
 
 $page = "dashboard";
 
@@ -133,7 +136,15 @@ if (isset($_GET['page'])) {
                 link.classList.add('active');
             });
         });
+
+        
     </script>
+
+    <script>
+  // Store in sessionStorage for faster access
+  sessionStorage.setItem("lastVisitedPage", window.location.href);
+</script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
