@@ -130,8 +130,7 @@ if (isset($_POST['btnChange'])) {
             exit();
         }
     } else {
-        echo "Error: Passwords do not match.";
-        exit();
+        $errors['confirmPassword'] = "Passwords do not match.";
     }
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;

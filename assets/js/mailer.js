@@ -1,13 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
 
-    // Real-time Validation Setup 
-    const fieldsToValidate = {
-        email: validateEmail,
-        password: validatePassword,
-        confirmPassword: validateConfirmPassword,
-        otp: validateOTP
-    };
+    // Real-time Validation 
+    const fieldsToValidate = {};
+
+    if (document.getElementById("email")) {
+        fieldsToValidate.email = validateEmail;
+    }
+    if (document.getElementById("password")) {
+        fieldsToValidate.password = validatePassword;
+    }
+    if (document.getElementById("confirmPassword")) {
+        fieldsToValidate.confirmPassword = validateConfirmPassword;
+    }
+    if (document.getElementById("otp")) {
+        fieldsToValidate.otp = validateOTP;
+    }
+
 
     for (const [fieldId, validator] of Object.entries(fieldsToValidate)) {
         const field = document.getElementById(fieldId);
@@ -22,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-      // On form submission
+    // On form submission
     form.addEventListener("submit", function (event) {
         let valid = true;
 
