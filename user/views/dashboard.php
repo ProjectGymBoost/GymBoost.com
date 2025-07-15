@@ -1,3 +1,5 @@
+<?php include("../assets/php/processes/user/dashboard.php"); ?>
+
 <div id="dashboard" class="container">
   <!-- ANNOUNCEMENTS -->
   <div id="announcement" class="container px-0 py-4 mb-3 mt-2">
