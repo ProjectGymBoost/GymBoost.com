@@ -1,5 +1,3 @@
-<?php include("../assets/php/processes/user/dashboard.php"); ?>
-
 <div id="dashboard" class="container">
   <!-- ANNOUNCEMENTS -->
   <div id="announcement" class="container px-0 py-4 mb-3 mt-2">
@@ -11,7 +9,7 @@
           <?php if (!empty($announcementsArray)): ?>
             <?php foreach ($announcementsArray as $announcement): ?>
               <div class="row justify-content-center mt-2">
-                <div class="col-12 col-md-8 mx-4 my-2">
+                <div class="col-12 col-md-8 mx-4 mt-2">
                   <div class="rounded-box card-bg-color">
                     <?= $announcement['message']; ?>
                   </div>
@@ -20,8 +18,8 @@
             <?php endforeach; ?>
           <?php else: ?>
             <div class="row justify-content-center mt-2">
-              <div class="col-12 col-md-8 mx-4 my-2">
-                <div class="rounded-box" style="color:red; font-weight:bold;">
+              <div class="col-12 col-md-8 mx-4 mt-2">
+                <div class="rounded-box" style="color:#D2042D; font-weight:bold;">
                   No announcements available.
                 </div>
               </div>
@@ -52,7 +50,7 @@
               <div class="mx-4 mb-2"><?= $usermembershipData['endDate']; ?></div>
             <?php endforeach; ?>
           <?php else: ?>
-            <div class="mx-4 mb-2" style="color:red; font-weight:bold;">No active membership found.</div>
+            <div class="mx-4 mb-2" style="color:#D2042D; font-weight:bold;">No active membership found.</div>
           <?php endif; ?>
         </div>
 
@@ -67,7 +65,7 @@
               <div class="mx-4 mb-2"><?= $userAttendanceData['checkInTotal']; ?></div>
             <?php endforeach; ?>
           <?php else: ?>
-            <div class="mx-4 mb-2" style="color:red; font-weight:bold;">No attendance records found.</div>
+            <div class="mx-4 mb-2" style="color:#D2042D; font-weight:bold;">No attendance records found.</div>
           <?php endif; ?>
 
           <!-- Points -->
@@ -77,7 +75,7 @@
               <div class="mx-4 mb-2"><?= $userPointsData['points']; ?></div>
             <?php endforeach; ?>
           <?php else: ?>
-            <div class="mx-4 mb-2" style="color:red; font-weight:bold;">No points earned yet.</div>
+            <div class="mx-4 mb-2" style="color:#D2042D; font-weight:bold;">No points earned yet.</div>
           <?php endif; ?>
         </div>
 
