@@ -113,7 +113,8 @@ if (isset($_SESSION['userCreated'])) {
                         <!-- User Data -->
                         <?php if (empty($userInfoArray)): ?>
                             <tr>
-                                <td colspan="5" style="color: red; font-weight: bold;">NO USER DATA AVAILABLE</td>
+                                <td colspan="5" style="color: red; font-weight: bold; text-align: center;">NO USER DATA
+                                    AVAILABLE</td>
                             </tr>
                         <?php endif; ?>
                         <tbody>
