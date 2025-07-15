@@ -1,3 +1,22 @@
+<?php
+include "../assets/shared/connect.php";
+include "../assets/php/classes/classes.php";
+
+session_start();
+include("../assets/shared/auth.php");
+
+$chart = new ChartData();
+
+$chart->loadDistinctYear();
+$chart->loadAttendanceData();
+$chart->loadMembershipData();
+
+$attendanceLabels = json_encode($chart->getAttendanceLabels());
+$attendanceData = json_encode($chart->getAttendanceData());
+$membershipLabels = json_encode($chart->getMembershipLabels());
+$membershipData = json_encode($chart->getMembershipData());
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +40,6 @@
     <div class="main px-2 px-md-0" style="margin-left: 70px; transition: margin-left 0.25s ease-in-out;">
 
         <div id="dashboard" class="container-fluid py-4 px-4">
-
-            <!-- Heading -->
             <div class="col-12 mb-4">
                 <div class="heading text-center text-sm-start">DASHBOARD</div>
             </div>
@@ -88,21 +105,6 @@
                     </div>
                 </div>
 
-                <!-- Pending Rewards -->
-                <!-- <div class="col-md-4">
-                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="subheading">5</div>
-                                <div>Pending Rewards</div>
-                            </div>
-                            <div class="col-4 d-flex justify-content-end align-items-center">
-                                <i class="bi bi-award-fill icon-dashboard" style="font-size: 2rem;"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
                 <!-- Total Plans -->
                 <div class="col-md-4">
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
@@ -122,13 +124,7 @@
             <!-- Dashboard Graph for Attendance Report and Member Distribution -->
             <div class="row">
                 <div class="col-auto">
-                    <select class="form-select"
-                        style="min-width: 150px; background-color: var(--primaryColor); color: var(--text-color-light); background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27white%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1.5 5.5l6 6 6-6%27/%3E%3C/svg%3E');">
-                        <option selected disabled>Select Year</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                    </select>
+                    <?= $chart->loadYearDropdown() ?>
                 </div>
             </div>
 
@@ -268,9 +264,108 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Bar Chart Data
+        var barLabels = <?= $attendanceLabels ?>;
+        var barData = <?= $attendanceData ?>;
+        var barColors = ["#1f2a3c", "#334566", "#60779c", "#8a99b5", "#c8d2e4", "#a1b1c1", "#b0b0b0", "#49546a", "#2c3e50", "#6c7a89", "#556677", "#7f8c8d"];
 
-    <script src="../assets/js/admin.js"></script>
+        new Chart("barChart", {
+            type: "bar",
+            data: {
+                labels: barLabels,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: barData
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false },
+                },
+                layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { display: false }, suggestedMin: 0, suggestedMax: 7 }
+                }
+            }
+        });
 
+        // Pie Chart Data
+        var pieLabels = <?= $membershipLabels ?>;
+        var pieData = <?= $membershipData ?>;
+        var pieColors = ["#b0b0b0", "#60779c", "#334566", "#1f2a3c", "#49546a", "#8a99b5", "#c8d2e4ff"];
+
+        new Chart("pieChart", {
+            type: "pie",
+            data: {
+                labels: pieLabels,
+                datasets: [{
+                    backgroundColor: pieColors,
+                    data: pieData
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: false },
+                    legend: {
+                        position: 'left',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            font: { size: 14 },
+                            pointStyleWidth: 18,
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // Bar Doughnut Data
+        var ageLabels = ["Senior (60+)", "Middle-Aged Adult (40-59)", "Young Adults (20-39)", "Teenagers (13-19)"];
+        var ageData = [0, 15, 50, 22];
+        var ageColors = ["#b0b0b0", "#60779c", "#334566", "#1f2a3c"];
+
+
+        var labelFontSize = window.innerWidth <= 767.98 ? 10 : 14;
+
+
+        new Chart("doughnutChart", {
+            type: "doughnut",
+            data: {
+                labels: ageLabels,
+                datasets: [{
+                    backgroundColor: ageColors,
+                    data: ageData
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: {
+                    title: { display: false },
+                    legend: {
+                        position: 'left',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            font: { size: labelFontSize },
+                            pointStyleWidth: 18,
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>

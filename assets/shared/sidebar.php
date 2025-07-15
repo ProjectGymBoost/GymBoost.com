@@ -1,3 +1,10 @@
+<?php
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+    session_destroy();
+    header("Location: ../login.php");
+    exit();
+} ?>
+
 <!-- Navbar for phone size -->
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
@@ -64,7 +71,7 @@
                 </a>
             </li>
             <li class="sidebar-item mt-auto">
-                <a href="../login.php" class="sidebar-link">
+                <a href="?logout=true" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
