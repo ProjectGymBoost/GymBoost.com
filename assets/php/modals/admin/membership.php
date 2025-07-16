@@ -139,7 +139,7 @@
 
                 <div class="modal-body text-center" style="padding: 1.5rem;">
                     <p style="margin: 0; font-size: 16px; color: black;">
-                        Are you sure you want to delete <strong><?= ($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership?<br><br>
+                        <span style="color: #D2042D;">Are you sure you want to delete <strong><?= ($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership?</span><br><br>
                         If you decided to delete this, you will cancel the user's membership.
                     </p>
                 </div>
