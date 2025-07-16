@@ -126,7 +126,7 @@
                 </div>
                 <div class="modal-body text-center text-black" style="padding: 1.5rem;">
                     <p style="margin: 0; font-size: 16px;">
-                        Are you sure you want to delete this <strong><?= htmlspecialchars($a['title']) ?></strong> announcement? <br><br>
+                        <span style="color: #D2042D;">Are you sure you want to delete this <strong><?= htmlspecialchars($a['title']) ?></strong> announcement?</span><br><br>
                         Once deleted, this announcement will no longer be visible to others and cannot be
                         recovered.
                     </p>
