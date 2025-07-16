@@ -1,3 +1,8 @@
+<?php
+session_start();
+include("../assets/shared/auth.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

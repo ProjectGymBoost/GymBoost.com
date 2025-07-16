@@ -1,3 +1,15 @@
+<?php
+session_start();
+include("../assets/shared/auth.php");
+include("../assets/shared/connect.php");
+include("../assets/php/processes/admin/users.php");
+
+if (isset($_SESSION['userCreated'])) {
+    $userCreated = true;
+    unset($_SESSION['userCreated']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,51 +34,63 @@
         <div class="container-fluid py-4 px-4">
 
             <!-- Heading -->
-            <div class="col-12 mb-4">
+            <div class="col-12 mb-4 d-flex align-items-center justify-content-between">
                 <div class="heading text-center text-sm-start">USERS</div>
             </div>
 
-            <!-- Controls: Search, Sort By, Order By, Apply Button -->
-            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-
+            <form method="GET" action="" class="d-flex flex-wrap justify-content-center gap-3 mb-4">
                 <!-- Search -->
                 <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
-                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
-                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+                    <input type="search" name="search" id="searchInput" class="form-control"
+                        placeholder="Search users..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
                 <!-- Sort By -->
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
-                    <select id="sortBy" class="form-select">
-                        <option selected disabled>Sort By</option>
-                        <option value="first_name">First Name</option>
-                        <option value="last_name">Last Name</option>
-                        <option value="last_name">Points</option>
+                    <select name="sortBy" class="form-select">
+                        <option disabled>Sort By</option>
+                        <option value="none" <?= ($_GET['sortBy'] ?? '') === 'none' ? 'selected' : '' ?>>User ID</option>
+                        <option value="firstName" <?= ($_GET['sortBy'] ?? '') === 'firstName' ? 'selected' : '' ?>>First
+                            Name</option>
+                        <option value="lastName" <?= ($_GET['sortBy'] ?? '') === 'lastName' ? 'selected' : '' ?>>Last Name
+                        </option>
+                        <option value="points" <?= ($_GET['sortBy'] ?? '') === 'points' ? 'selected' : '' ?>>Points
+                        </option>
                     </select>
                 </div>
 
                 <!-- Order By -->
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
-                    <select id="orderBy" class="form-select">
-                        <option selected disabled>Order</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                    <select name="orderBy" class="form-select">
+                        <option disabled>Order</option>
+                        <option value="ASC" <?= strtoupper($_GET['orderBy'] ?? '') === 'ASC' ? 'selected' : '' ?>>Ascending
+                        </option>
+                        <option value="DESC" <?= strtoupper($_GET['orderBy'] ?? '') === 'DESC' ? 'selected' : '' ?>>
+                            Descending</option>
                     </select>
                 </div>
-            </div>
+                <input type="hidden" name="entriesCount" value="<?php echo $entriesCount; ?>">
+            </form>
 
             <!-- Pagination and Add New Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="small text-muted">
-                    Show
-                    <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    entries
-                </div>
+                <form method="GET" action="">
+                    <div class="small text-muted">
+                        Show
+                        <select name="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted"
+                            onchange="this.form.submit()">
+                            <option value="5" <?= ($_GET['entriesCount'] ?? '') == '5' ? 'selected' : '' ?>>5</option>
+                            <option value="10" <?= ($_GET['entriesCount'] ?? '') == '10' ? 'selected' : '' ?>>10</option>
+                            <option value="25" <?= ($_GET['entriesCount'] ?? '') == '25' ? 'selected' : '' ?>>25</option>
+                            <option value="50" <?= ($_GET['entriesCount'] ?? '') == '50' ? 'selected' : '' ?>>50</option>
+                        </select>
+                        entries
+                    </div>
+                    <input type="hidden" name="search" value="<?php echo $search; ?>">
+                    <input type="hidden" name="sortBy" value="<?php echo $sortBy; ?>">
+                    <input type="hidden" name="orderBy" value="<?php echo $orderBy; ?>">
+                </form>
 
                 <!-- Add New Button -->
                 <a href="register.php" class="btn btn-primary subheading">ADD NEW</a>
@@ -81,175 +105,77 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
-                                <th scope="col">Points</th>
+                                <th scope="col">POINTS</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
                         </thead>
 
                         <!-- User Data -->
+                        <?php if (empty($userInfoArray)): ?>
+                            <tr>
+                                <td colspan="5" style="color: red; font-weight: bold;">NO USER DATA AVAILABLE</td>
+                            </tr>
+                        <?php endif; ?>
                         <tbody>
-                            <tr>
-                                <td scope="row">1</td>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>1500</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>Jenna Miles</td>
-                                <td>Reyes</td>
-                                <td>1400</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">3</td>
-                                <td>John</td>
-                                <td>Smith</td>
-                                <td>1300</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">4</td>
-                                <td>Emily</td>
-                                <td>Brown</td>
-                                <td>1200</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">5</td>
-                                <td>Michael</td>
-                                <td>Johnson</td>
-                                <td>1100</td>
-                                <td>
-                                    <li style="display: flex; justify-content: center;">
-                                        <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteUser1Modal">
-                                            <i class="bi bi-trash3 px-1"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
+                            <?php foreach ($userInfoArray as $info): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($info['userID']) ?></td>
+                                    <td><?= htmlspecialchars($info['firstName']) ?></td>
+                                    <td><?= htmlspecialchars($info['lastName']) ?></td>
+                                    <td><?= htmlspecialchars($info['points']) ?></td>
+                                    <td>
+                                        <li style="display: flex; justify-content: center;">
+                                            <a style="color: red" data-bs-toggle="modal"
+                                                data-bs-target="#deleteUserModal<?php echo $info['userID']; ?>">
+                                                <i class="bi bi-trash3 px-1"></i>
+                                            </a>
+                                        </li>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
+
                     </table>
                 </div>
             </div>
 
-            <!-- Delete Account Modal -->
-            <div class="modal fade" id="deleteUser1Modal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
-                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;">
-                        <!-- Header -->
-                        <div
-                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                            <h4 class="modal-title text-center subheading" id="deleteUserModalLabel"
-                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                DELETE USER ACCOUNT
-                            </h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body text-center" style="padding: 1.5rem;">
-                            <p style="margin: 0; font-size: 16px; color: black;">
-                                Are you sure you want to delete <strong>John Doe's</strong> account? <br><br>If you
-                                decided to delete this user's account, all data related to it will also be deleted.
-                            </p>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"">
-                                CANCEL
-                            </button>
-                            <button type=" button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                data-bs-toggle="modal" data-bs-target="#confirmDeleteUser1Modal">
-                                DELETE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Confirm Delete Account Modal -->
-            <div class="modal fade" id="confirmDeleteUser1Modal" tabindex="-1"
-                aria-labelledby="confirmDeleteUserModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;  color: white; border: none;">
-                        <div class="modal-header" style="border: none;">
-                            <h4 class="modal-title heading text-center w-100 text-black"
-                                id="confirmDeleteUserModalLabel" style="margin: 0;">
-                                USER DELETED
-                            </h4>
-                        </div>
-                        <div class="modal-body text-center text-black">
-                            <strong>John Doe's</strong> account has been successfully deleted.
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                CLOSE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Delete Modal and Delete Confirmation Modal -->
+            <?php include("../assets/php/modals/admin/users.php"); ?>
 
             <!-- Bottom Pagination Info -->
             <div class="d-flex justify-content-between align-items-center">
                 <div class="small text-muted">
-                    Showing 2 of 2 entries
+                    Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
                 </div>
+
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <?php if ($currentPage > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link" style="background-color: #ffffff;"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Previous">&laquo;</a>
+                            </li>
+                        <?php endif ?>
+
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <?php $isActive = $i == $currentPage; ?>
+                            <li class="page-item <?= $isActive ? 'active' : '' ?>">
+                                <a class="page-link"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor ?>
+
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li class="page-item">
+                                <a class="page-link" style="background-color: #ffffff;"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Next">&raquo;</a>
+                            </li>
+                        <?php endif ?>
                     </ul>
                 </nav>
             </div>
@@ -259,6 +185,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form[method="get"]');
+
+            let debounceTimer;
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function () {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    form.submit();
+                }, 500);
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll("select[name='sortBy'], select[name='orderBy']").forEach(select => {
+            select.addEventListener('change', () => {
+                select.form.submit();
+            });
+        });
+    </script>
+
 </body>
 
 </html>

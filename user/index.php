@@ -1,4 +1,21 @@
 <?php
+session_start();
+if (empty($_SESSION['userID'])) {
+    header("Location: ../login.php");
+    exit();
+} else if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+    session_destroy();
+    header("Location: ../login.php");
+    exit();
+}
+if ($_SESSION['role'] === 'admin') {
+    header("Location: ../admin/index.php"); 
+    exit();
+}
+if (!empty($_SESSION['userID'])) {
+    $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
+}
+
 $page = "dashboard";
 
 if (isset($_GET['page'])) {
@@ -93,7 +110,7 @@ if (isset($_GET['page'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-danger" href="../index.php"><i
+                            <li><a class="dropdown-item text-danger" href="?logout=true"><i
                                         class="bi bi-box-arrow-right px-1"></i>
                                     Log Out</a></li>
                         </ul>
@@ -106,6 +123,7 @@ if (isset($_GET['page'])) {
     <!-- Main Content -->
     <div id="mainContent" class="flex-grow-1" style="margin-top: 87px;">
         <div style="overflow-x: hidden;">
+            
             <?php include("views/" . $page . ".php"); ?>
         </div>
     </div>
@@ -117,7 +135,15 @@ if (isset($_GET['page'])) {
                 link.classList.add('active');
             });
         });
+
+        
     </script>
+
+    <script>
+  // Store in sessionStorage for faster access
+  sessionStorage.setItem("lastVisitedPage", window.location.href);
+</script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

@@ -1,4 +1,23 @@
 <?php
+session_start();
+
+if (!empty($_SESSION['userID'])) {
+    if (!empty($_SESSION['lastVisited'])) {
+        header("Location: " . $_SESSION['lastVisited']);
+        exit();
+    }
+
+    // Fallback 
+    if ($_SESSION['role'] === 'admin') {
+        header("Location: /GymBoost.com/admin/index.php");
+    } else {
+        header("Location: /GymBoost.com/user/index.php?page=dashboard");
+    }
+    exit();
+}
+
+
+
 $page = "home";
 
 if (isset($_GET['page'])) {
@@ -166,6 +185,7 @@ if (isset($_GET['page'])) {
       });
     });
   </script>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
