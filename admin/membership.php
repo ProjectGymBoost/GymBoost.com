@@ -102,7 +102,8 @@ $showDeleteModal = isset($membershipDeleted);
                     <tbody>
                         <?php if (empty($membershipArray)): ?>
                             <tr>
-                                <td colspan="6" style="color: red; font-weight: bold;">NO MEMBERSHIP DATA AVAILABLE</td>
+                                <td colspan="5" style="color:#D2042D; font-weight: bold; text-align: center;">NO MEMBERSHIP DATA
+                                    AVAILABLE</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($membershipArray as $member): ?>

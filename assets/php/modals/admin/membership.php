@@ -116,7 +116,7 @@
                         <h4 class="modal-title heading text-center w-100 text-black m-0">MEMBERSHIP UPDATED</h4>
                     </div>
                     <div class="modal-body text-center text-black">
-                        <strong><?= strtoupper($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership has been successfully edited.
+                        <strong><?= ($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership has been successfully edited.
                     </div>
                     <div class="modal-footer d-flex justify-content-center pb-4 border-0">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
@@ -139,7 +139,7 @@
 
                 <div class="modal-body text-center" style="padding: 1.5rem;">
                     <p style="margin: 0; font-size: 16px; color: black;">
-                        Are you sure you want to delete <strong><?= strtoupper($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership?<br><br>
+                        Are you sure you want to delete <strong><?= ($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership?<br><br>
                         If you decided to delete this, you will cancel the user's membership.
                     </p>
                 </div>
@@ -179,7 +179,7 @@
                     <h4 class="modal-title heading text-center w-100 text-black m-0">MEMBERSHIP DELETED</h4>
                 </div>
                 <div class="modal-body text-center text-black">
-                    <strong><?= strtoupper(htmlspecialchars($_GET['name'])); ?>'s</strong> membership has been successfully deleted.
+                    <strong><?= (htmlspecialchars($_GET['name'])); ?>'s</strong> membership has been successfully deleted.
                 </div>
                 <div class="modal-footer d-flex justify-content-center pb-4 border-0">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
