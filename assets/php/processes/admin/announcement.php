@@ -1,39 +1,33 @@
 <?php
-include('../../../shared/connect.php');
+// PAGINATION CONFIG
+$entriesCount = isset($_GET['entriesCount']) ? (int) $_GET['entriesCount'] : 5;
+if (!in_array($entriesCount, [5, 10, 25, 50])) {
+    $entriesCount = 5;
+}
 
-if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
-    header('Content-Type: application/json');
+$currentPage = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
+$offset = ($currentPage - 1) * $entriesCount;
 
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $offset = ($page - 1) * $limit;
+// TOTAL COUNT
+$totalQuery = "SELECT COUNT(*) AS total FROM announcements";
+$totalResult = executeQuery($totalQuery);
+$totalEntries = mysqli_fetch_assoc($totalResult)['total'];
+$totalPages = ceil($totalEntries / $entriesCount);
 
-    $announcementsQuery = "SELECT * FROM announcements ORDER BY announcementID ASC LIMIT $limit OFFSET $offset";
-    $announcementsResult = executeQuery($announcementsQuery);
+$startEntry = ($totalEntries > 0) ? $offset + 1 : 0;
+$endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 0;
 
-    $totalQuery = "SELECT COUNT(*) AS total FROM announcements";
-    $totalResult = executeQuery($totalQuery);
-
-    if (!$announcementsResult || !$totalResult) {
-        echo json_encode(['status' => 'error', 'message' => 'Database query failed']);
-        exit;
+// MAIN QUERY
+$announcementInfoArray = [];
+$announcementQuery = "
+    SELECT * FROM announcements
+    ORDER BY announcementID ASC
+    LIMIT $entriesCount OFFSET $offset
+";
+$result = executeQuery($announcementQuery);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $announcementInfoArray[] = $row;
     }
-
-    $announcements = [];
-    while ($row = mysqli_fetch_assoc($announcementsResult)) {
-        $announcements[] = $row;
-    }
-
-    $totalRow = mysqli_fetch_assoc($totalResult);
-    $total = $totalRow ? (int)$totalRow['total'] : 0;
-
-    echo json_encode([
-        'status' => count($announcements) ? 'success' : 'empty',
-        'data' => $announcements,
-        'total' => $total,
-        'page' => $page,
-        'limit' => $limit
-    ]);
-    exit;
 }
 ?>

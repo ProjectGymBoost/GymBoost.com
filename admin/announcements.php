@@ -1,6 +1,8 @@
 <?php
 session_start();
 include("../assets/shared/auth.php");
+include("../assets/shared/connect.php");
+include("../assets/php/processes/admin/announcement.php");
 ?>
 
 <!DOCTYPE html>
@@ -33,16 +35,18 @@ include("../assets/shared/auth.php");
 
             <!-- Pagination and Add New Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="small text-muted">
-                    Show
-                    <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    entries
-                </div>
+                <form method="GET" action="">
+                    <div class="small text-muted">
+                        Show
+                        <select name="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted" onchange="this.form.submit()">
+                            <option value="5" <?= $entriesCount == 5 ? 'selected' : '' ?>>5</option>
+                            <option value="10" <?= $entriesCount == 10 ? 'selected' : '' ?>>10</option>
+                            <option value="25" <?= $entriesCount == 25 ? 'selected' : '' ?>>25</option>
+                            <option value="50" <?= $entriesCount == 50 ? 'selected' : '' ?>>50</option>
+                        </select>
+                        entries
+                    </div>
+                </form>
 
                 <!-- Add New Button -->
                 <a class="btn btn-primary subheading" data-bs-toggle="modal" data-bs-target="#addAnnouncementModal">
@@ -64,10 +68,24 @@ include("../assets/shared/auth.php");
                             </tr>
                         </thead>
 
-                        <tbody id="announcementTableBody">
-                            <tr>
-                                <td colspan="4" class="text-center text-muted">Loading announcements...</td>
-                            </tr>
+                        <tbody>
+                            <?php if (empty($announcementInfoArray)): ?>
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No announcements found.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($announcementInfoArray as $a): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($a['announcementID']) ?></td>
+                                        <td><?= htmlspecialchars($a['title']) ?></td>
+                                        <td><?= htmlspecialchars(substr($a['message'], 0, 100)) ?><?= strlen($a['message']) > 100 ? '...' : '' ?></td>
+                                        <td class="text-center">
+                                            <a data-bs-toggle="modal" data-bs-target="#editAnnouncement<?= $a['announcementID'] ?>Modal"><i class="bi bi-pencil-square px-2"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#deleteAnnouncement<?= $a['announcementID'] ?>Modal" style="color:red;"><i class="bi bi-trash3 px-2"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            <?php endif ?>
                         </tbody>
                     </table>
                 </div>
@@ -75,9 +93,40 @@ include("../assets/shared/auth.php");
 
             <!-- Pagination -->
             <div class="d-flex justify-content-between align-items-center">
-                <div class="small text-muted" id="paginationInfo">Showing 0 to 0 of 0 entries</div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination mt-3"></ul>
+                <div class="small text-muted">
+                    Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mt-3">
+                        <?php if ($currentPage > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link"
+                                style="background-color: #ffffff;"
+                                href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>"
+                                aria-label="Previous">&laquo;</a>
+                            </li>
+                        <?php endif ?>
+
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <?php $isActive = $i == $currentPage; ?>
+                            <li class="page-item <?= $isActive ? 'active' : '' ?>">
+                                <a class="page-link"
+                                href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>"
+                                style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor ?>
+
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li class="page-item">
+                                <a class="page-link"
+                                style="background-color: #ffffff;"
+                                href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>"
+                                aria-label="Next">&raquo;</a>
+                            </li>
+                        <?php endif ?>
+                    </ul>
                 </nav>
             </div>
 
@@ -292,8 +341,6 @@ include("../assets/shared/auth.php");
             
         </div>
     </div>
-
-    <script src="../assets/js/announcements.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
