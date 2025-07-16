@@ -1,6 +1,16 @@
 <?php
 session_start();
 include("../assets/shared/auth.php");
+
+include("../assets/shared/connect.php");
+include("../assets/php/processes/admin/membership.php");
+
+// Flash message handling
+if (isset($_SESSION['membershipDeleted'])) {
+    $membershipDeleted = $_SESSION['membershipDeleted'];
+    unset($_SESSION['membershipDeleted']);
+}
+$showDeleteModal = isset($membershipDeleted);
 ?>
 
 <!DOCTYPE html>
@@ -32,357 +42,177 @@ include("../assets/shared/auth.php");
             </div>
 
             <!-- Controls: Search Sort By, Order By, Apply Button -->
-            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-
-                <!-- Search -->
-                <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
-                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
-                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+            <form method="GET" action="" class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                <div class="flex-grow-1 input-group" style="max-width: 400px;">
+                    <input type="search" name="search" id="searchInput" class="form-control" placeholder="Search members..." value="<?= htmlspecialchars($search) ?>">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
-
-                <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
-                    <select id="sortBy" class="form-select">
-                        <option selected disabled>Sort By</option>
-                        <option value="first_name">First Name</option>
-                        <option value="last_name">Last Name</option>
-                        <option value="last_name">Date</option>
+                <div class="flex-grow-1" style="max-width: 160px;">
+                    <select name="sortBy" class="form-select">
+                        <option disabled>Sort By</option>
+                        <option value="rfidNumber" <?= $sortBy === 'rfidNumber' ? 'selected' : '' ?>>RFID Number</option>
+                        <option value="firstName" <?= $sortBy === 'firstName' ? 'selected' : '' ?>>First Name</option>
+                        <option value="lastName" <?= $sortBy === 'lastName' ? 'selected' : '' ?>>Last Name</option>
+                        <option value="startDate" <?= $sortBy === 'startDate' ? 'selected' : '' ?>>Start Date</option>
+                        <option value="endDate" <?= $sortBy === 'endDate' ? 'selected' : '' ?>>Expiry Date</option>
                     </select>
                 </div>
-
-                <!-- Order By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
-                    <select id="orderBy" class="form-select">
-                        <option selected disabled>Order</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                <div class="flex-grow-1" style="max-width: 160px;">
+                    <select name="orderBy" class="form-select">
+                        <option disabled>Order</option>
+                        <option value="ASC" <?= $orderBy === 'ASC' ? 'selected' : '' ?>>Ascending</option>
+                        <option value="DESC" <?= $orderBy === 'DESC' ? 'selected' : '' ?>>Descending</option>
                     </select>
                 </div>
-            </div>
+                <input type="hidden" name="entriesCount" value="<?= $entriesCount ?>">
+            </form>
 
-            <!-- Pagination and Add New Button -->
+            <!-- Entries Count -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="small text-muted">
-                    Show
-                    <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    entries
-                </div>
-
+                <form method="GET" action="">
+                    <div class="small text-muted">
+                        Show
+                        <select name="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted" onchange="this.form.submit()">
+                            <option value="5" <?= $entriesCount == 5 ? 'selected' : '' ?>>5</option>
+                            <option value="10" <?= $entriesCount == 10 ? 'selected' : '' ?>>10</option>
+                            <option value="25" <?= $entriesCount == 25 ? 'selected' : '' ?>>25</option>
+                            <option value="50" <?= $entriesCount == 50 ? 'selected' : '' ?>>50</option>
+                        </select>
+                        entries
+                    </div>
+                    <input type="hidden" name="search" value="<?= $search ?>">
+                    <input type="hidden" name="sortBy" value="<?= $sortBy ?>">
+                    <input type="hidden" name="orderBy" value="<?= $orderBy ?>">
+                </form>
             </div>
 
             <!-- User Table -->
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-striped table-borderless">
-                        <thead class="align-middle">
+            <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                    <thead>
+                        <tr>
+                            <th>RFID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Start Date</th>
+                            <th>Expiry Date</th>
+                            <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($membershipArray)): ?>
                             <tr>
-                                <th scope="col">RFID NUMBER</th>
-                                <th scope="col">FIRST NAME</th>
-                                <th scope="col">LAST NAME</th>
-                                <th scope="col">Start Date</th>
-                                <th scope="col">Expiry Date</th>
-                                <th class="text-center" scope="col">ACTION</th>
+                                <td colspan="6" style="color:#D2042D; font-weight: bold; text-align: center;">NO MEMBERSHIP DATA
+                                    AVAILABLE</td>
                             </tr>
-                        </thead>
-
-                        <!-- User Data -->
-                        <tbody>
-                            <tr>
-                                <td scope="row">439783475934769</td>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>2025-07-01</td>
-                                <td>2025-08-01</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editMembership1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteMembership1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">758294617305284</td>
-                                <td>Jenna Miles</td>
-                                <td>Reyes</td>
-                                <td>2025-07-01</td>
-                                <td>2025-08-01</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editMembership1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteMembership1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">624983157209473</td>
-                                <td>Jose</td>
-                                <td>Rizal</td>
-                                <td>2025-07-02</td>
-                                <td>2025-08-02</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editMembership1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteMembership1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">839471625083194</td>
-                                <td>Emily</td>
-                                <td>Brown</td>
-                                <td>2025-07-02</td>
-                                <td>2025-08-02</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editMembership1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteMembership1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">195738420671385</td>
-                                <td>Michael</td>
-                                <td>Johnson</td>
-                                <td>2025-07-03</td>
-                                <td>2025-08-03</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a data-bs-toggle="modal" data-bs-target="#editMembership1Modal">
-                                            <i class="bi bi-pencil-square px-2"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteMembership1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <?php else: ?>
+                            <?php foreach ($membershipArray as $member): ?>
+                                <tr>
+                                    <td><?= $member['rfidNumber'] ?></td>
+                                    <td><?= $member['firstName'] ?></td>
+                                    <td><?= $member['lastName'] ?></td>
+                                    <td><?= $member['startDate'] ?></td>
+                                    <td><?= $member['endDate'] ?></td>
+                                    <td class="d-flex flex-row justify-content-center">
+                                        <li>
+                                            <a data-bs-toggle="modal" data-bs-target="#editMembershipModal<?= $member['userMembershipID']; ?>">
+                                                <i class="bi bi-pencil-square px-2"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a style="color: red;" data-bs-toggle="modal" data-bs-target="#deleteMembershipModal<?= $member['userMembershipID']; ?>">
+                                                <i class="bi bi-trash3 px-2"></i>
+                                            </a>
+                                        </li>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
+            
 
-            <!-- Edit Membership Modal -->
-            <div class="modal fade" id="editMembership1Modal" tabindex="-1"
-                aria-labelledby="editMembership1ModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;">
-                        <!-- Header -->
-                        <div
-                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                            <h4 class="modal-title text-center subheading" id="editMembership1ModalLabel"
-                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                EDIT MEMBERSHIP
-                            </h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
-                            </button>
-                        </div>
+            <!-- Delete and Edit Modal with their confirmation as well -->
+            <?php 
+            $membershipInfoArray = $membershipArray; 
+            include("../assets/php/modals/admin/membership.php"); 
+            ?>
 
-                        <!-- Body -->
-                        <div class="modal-body" style="padding: 1.5rem;">
-                            <form id="editMembershipForm">
-                                <div class="mb-3 text-start">
-                                    <label class="form-label fw-bold">First Name</label>
-                                    <div class="form-control-plaintext">Jon</div>
-                                </div>
-                                <div class="mb-3 text-start">
-                                    <label class="form-label fw-bold">Last Name</label>
-                                    <div class="form-control-plaintext">Doe</div>
-                                </div>
-                                <div class="mb-3 text-start">
-                                    <label for="membershipStatus" class="form-label fw-bold">Membership Plan</label>
-                                    <select class="form-select" id="membershipStatus">
-                                        <option value="present">Half month</option>
-                                        <option value="present">1 month</option>
-                                        <option value="late">2 Months</option>
-                                        <option value="excused">3 Months</option>
-                                        <option value="excused">Semi-annual</option>
-                                        <option value="excused">Annual</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3 text-start">
-                                    <label for="membershipDate" class="form-label fw-bold">Start date</label>
-                                    <input type="date" class="form-control" id="membershipDate" value="2025-07-01">
-                                </div>
-                                <div class="mb-3 text-start">
-                                    <label for="membershipDate" class="form-label fw-bold">Expiry date</label>
-                                    <input type="date" class="form-control" id="membershipDate" value="2025-07-01">
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                CANCEL
-                            </button>
-                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                data-bs-toggle="modal" data-bs-target="#confirmEditMembership1Modal">
-                                SAVE CHANGES
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Confirm Edit Membership Modal -->
-            <div class="modal fade" id="confirmEditMembership1Modal" tabindex="-1"
-                aria-labelledby="confirmEditMembershipModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-                        <div class="modal-header" style="border: none;">
-                            <h4 class="modal-title heading text-center w-100 text-black"
-                                id="confirmEditMembershipModalLabel" style="margin: 0;">
-                                MEMBERSHIP UPDATED
-                            </h4>
-                        </div>
-                        <div class="modal-body text-center text-black">
-                            <strong>Jon Doe's</strong> membership has been successfully edited.
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                CLOSE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Delete Membership Modal -->
-            <div class="modal fade" id="deleteMembership1Modal" tabindex="-1"
-                aria-labelledby="deleteMembership1ModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;">
-                        <!-- Header -->
-                        <div
-                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                            <h4 class="modal-title text-center subheading" id="deleteMembership1ModalLabel"
-                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                DELETE MEMBERSHIP
-                            </h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body text-center" style="padding: 1.5rem;">
-                            <p style="margin: 0; font-size: 16px; color: black;">
-                                Are you sure you want to delete <strong>Jon Doe's</strong> membership? <br><br>If you
-                                decided to delete this, you will cancel the user's membership.
-                            </p>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                CANCEL
-                            </button>
-                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                data-bs-toggle="modal" data-bs-target="#confirmdeleteMembership1Modal"
-                                data-bs-dismiss="modal">
-                                DELETE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Confirm Delete Membership Modal -->
-            <div class="modal fade" id="confirmdeleteMembership1Modal" tabindex="-1"
-                aria-labelledby="confirmDeleteMembershipModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-                        <div class="modal-header" style="border: none;">
-                            <h4 class="modal-title heading text-center w-100 text-black"
-                                id="confirmDeleteMembershipModalLabel" style="margin: 0;">
-                                MEMBERSHIP DELETED
-                            </h4>
-                        </div>
-                        <div class="modal-body text-center text-black">
-                            <strong>Jon Doe's</strong> membership has been successfully deleted.
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                CLOSE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Bottom Pagination Info -->
             <div class="d-flex justify-content-between align-items-center">
                 <div class="small text-muted">
-                    Showing 2 of 3 entries
+                    Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
                 </div>
+
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <?php if ($currentPage > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link" style="background-color: #ffffff;"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Previous">&laquo;</a>
+                            </li>
+                        <?php endif ?>
+
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <?php $isActive = $i == $currentPage; ?>
+                            <li class="page-item <?= $isActive ? 'active' : '' ?>">
+                                <a class="page-link"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor ?>
+
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li class="page-item">
+                                <a class="page-link" style="background-color: #ffffff;"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Next">&raquo;</a>
+                            </li>
+                        <?php endif ?>
                     </ul>
                 </nav>
             </div>
+
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form[method="get"]');
+
+            let debounceTimer;
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function () {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    form.submit();
+                }, 500);
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sortOrderForm = document.querySelector("form[method='get']");
+            
+            if (sortOrderForm) {
+                sortOrderForm.querySelectorAll("select[name='sortBy'], select[name='orderBy']").forEach(select => {
+                    select.addEventListener('change', () => {
+                        sortOrderForm.submit();
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
