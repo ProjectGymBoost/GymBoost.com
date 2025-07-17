@@ -16,13 +16,15 @@
                 </div>
 
                 <!-- Body -->
-                <div class="modal-body text-center" style="padding: 1.5rem;">
+                <div class="modal-body text-center text-black" style="padding: 1.5rem;">
                     <p style="margin: 0; font-size: 16px;">
-                        Are you sure you want to delete
-                        <?php echo '<span style="color: #D2042D; font-weight: bold;">' . strtoupper($info['firstName'] . ' ' . $info['lastName'] . "'s") . '</span>'; ?>
-                        account? <br><br>If you
-                        decided to delete this user's account, all data related to it will also
-                        be deleted.
+                        <span style="color: #D2042D;">
+                            Are you sure you want to delete
+                            <strong><?= htmlspecialchars($info['firstName'] . ' ' . $info['lastName']) ?>'s</strong>
+                            account?
+                        </span>
+                        <br><br>
+                        If you decided to delete this user's account, all data related to it will also be deleted.
                     </p>
                 </div>
 
