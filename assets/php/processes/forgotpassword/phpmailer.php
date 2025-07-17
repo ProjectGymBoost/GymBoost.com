@@ -1,13 +1,13 @@
 <?php
 session_start();
-include("../../../shared/connect.php");
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-include('../../../shared/phpmailer/src/Exception.php');
-include('../../../shared/phpmailer/src/PHPMailer.php');
-include('../../../shared/phpmailer/src/SMTP.php');
+include(__DIR__ . '/../../../shared/connect.php');
+include(__DIR__ . '/../../../shared/phpmailer/src/Exception.php');
+include(__DIR__ . '/../../../shared/phpmailer/src/PHPMailer.php');
+include(__DIR__ . '/../../../shared/phpmailer/src/SMTP.php');
+
 
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
@@ -130,7 +130,8 @@ if (isset($_POST['btnChange'])) {
             exit();
         }
     } else {
-        $errors['confirmPassword'] = "Passwords do not match.";
+        echo "Error: Passwords do not match.";
+        exit();
     }
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
@@ -140,5 +141,113 @@ if (isset($_POST['btnChange'])) {
 
 }
 
+// Logic for email change
+if (isset($_POST['btnEmail'])) {
+    $newEmail = trim($_POST['verifyEmail']);
+    $userID = $_SESSION['userID'] ?? null;
 
+    if (!$userID) {
+        $_SESSION['error'] = "User session expired.";
+        header("Location: settings.php");
+        exit();
+    }
+    // Get full name of current user 
+    $getCurrentUserQuery = "SELECT firstName, lastName FROM users WHERE userID='$userID'";
+    $currentUserResult = executeQuery($getCurrentUserQuery);
+
+    if (mysqli_num_rows($currentUserResult) > 0) {
+        $currentUser = mysqli_fetch_assoc($currentUserResult);
+        $fullName = $currentUser['firstName'] . ' ' . $currentUser['lastName'];
+    } else {
+        $fullName = 'Valued User';
+    }
+
+    // Validate email format
+    if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['emailInputError'] = "Invalid email format.";
+        $_SESSION['oldEmailInput'] = $newEmail;
+        $_SESSION['show_modal'] = 'editAccountEmailModal';
+        header("Location: index.php?page=profile");
+        exit();
+    }
+
+    // Check if the new email is already taken
+    $checkEmailQuery = "SELECT * FROM users WHERE email='$newEmail'";
+    $checkEmailResult = executeQuery($checkEmailQuery);
+
+    if (mysqli_num_rows($checkEmailResult) > 0) {
+        $user = mysqli_fetch_assoc($checkEmailResult);
+
+        $_SESSION['emailInputError'] = "This email is already in use.";
+        $_SESSION['oldEmailInput'] = $newEmail;
+        $_SESSION['show_modal'] = 'editAccountEmailModal';
+        header("Location: index.php?page=profile");
+        exit();
+    }
+
+    $otpCode = rand(111111, 999999);
+    $_SESSION['otp_code'] = $otpCode;
+    $_SESSION['pending_email'] = $newEmail;
+
+    // Send OTP via email
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'hardbodyfitnessgym13@gmail.com';
+        $mail->Password = 'vfko hohl crbg lgid';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('hardbodyfitnessgym13@gmail.com', 'Hard Body Fitness Gym');
+        $mail->addAddress($newEmail);
+        $mail->isHTML(true);
+        $mail->Subject = "Email Verification OTP";
+        $mail->Body = "<p>Hi " . htmlspecialchars($fullName) . ",</p>
+
+                        <p>Your one-time password (OTP) is:</p>
+
+                        <p><strong>$otpCode</strong></p>
+
+                        <p>Please enter this OTP to proceed with email change. If you did not request this, please ignore this message or contact support immediately.</p>
+
+                        <p>Thanks,<br>Hard Body Fitness Gym</p>
+
+                        ";
+
+        $mail->send();
+        $_SESSION['show_modal'] = 'otpModal';
+        header("Location: index.php?page=profile");
+        exit();
+    } catch (Exception $e) {
+        $_SESSION['emailInputError'] = "Failed to send OTP. Try again.";
+        $_SESSION['show_modal'] = 'editAccountEmailModal';
+        header("Location: index.php?page=profile");
+        exit();
+    }
+}
+
+if (isset($_POST['btnConfirmPass'])) {
+    $enteredOtp = $_POST['enteredOTP'];
+    $sessionOtp = $_SESSION['otp_code'] ?? null;
+    $newEmail = $_SESSION['pending_email'] ?? null;
+    $userID = $_SESSION['userID'] ?? null;
+
+    if ($enteredOtp == $sessionOtp && $newEmail && $userID) {
+        $checkOTPQuery = "UPDATE users SET email = '$newEmail', code = NULL WHERE userID = $userID";
+        $checkOTPResult = executeQuery($checkOTPQuery);
+
+        // Clear session data
+        unset($_SESSION['otp_code'], $_SESSION['pending_email']);
+        $_SESSION['show_modal'] = 'confirmEditEmailInfoModal';
+        header("Location: index.php?page=profile");
+        exit();
+    } elseif ($enteredOtp !== $sessionOtp) {
+        // OTP is incorrect
+        $_SESSION['otpError'] = "The OTP you entered is incorrect. Please try again.";
+        $_SESSION['show_modal'] = 'otpModal';
+        header("Location: index.php?page=profile");
+    }
+}
 ?>
