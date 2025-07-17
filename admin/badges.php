@@ -3,7 +3,6 @@ session_start();
 include("../assets/shared/auth.php");
 include("../assets/shared/connect.php");
 include("../assets/php/processes/admin/badges.php");
-include("../assets/php/processes/admin/user-badges.php");
 ?>
 
 <!DOCTYPE html>
@@ -59,34 +58,34 @@ include("../assets/php/processes/admin/user-badges.php");
 
                         <!-- Badge Data -->
                         <?php if (empty($badgeInfoArray)): ?>
-                                <tr>
-                                    <td colspan="5" style="color:#D2042D; font-weight: bold; text-align: center;">NO BADGE
-                                        DATA AVAILABLE</td>
-                                </tr>
+                            <tr>
+                                <td colspan="5" style="color:#D2042D; font-weight: bold; text-align: center;">NO BADGE
+                                    DATA AVAILABLE</td>
+                            </tr>
                         <?php endif; ?>
                         <tbody>
                             <?php foreach ($badgeInfoArray as $info): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($info['badgeID']) ?></td>
-                                        <td><?= htmlspecialchars($info['badgeName']) ?></td>
-                                        <td><?= htmlspecialchars($info['description']) ?></td>
-                                        <td><?= htmlspecialchars($info['requirementValue']) ?></td>
-                                        <td><?= htmlspecialchars($info['iconUrl']) ?></td>
-                                        <td style="display: flex; justify-content: center;">
-                                            <li>
-                                                <a data-bs-toggle="modal"
-                                                    data-bs-target="#editBadgeModal<?php echo $info['badgeID']; ?>">
-                                                    <i class="bi bi-pencil-square px-2"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a style="color: red;" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteBadgeModal<?php echo $info['badgeID']; ?>">
-                                                    <i class="bi bi-trash3 px-2"></i>
-                                                </a>
-                                            </li>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><?= htmlspecialchars($info['badgeID']) ?></td>
+                                    <td><?= htmlspecialchars($info['badgeName']) ?></td>
+                                    <td><?= htmlspecialchars($info['description']) ?></td>
+                                    <td><?= htmlspecialchars($info['requirementValue']) ?></td>
+                                    <td><?= htmlspecialchars($info['iconUrl']) ?></td>
+                                    <td style="display: flex; justify-content: center;">
+                                        <li>
+                                            <a data-bs-toggle="modal"
+                                                data-bs-target="#editBadgeModal<?php echo $info['badgeID']; ?>">
+                                                <i class="bi bi-pencil-square px-2"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a style="color: red;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteBadgeModal<?php echo $info['badgeID']; ?>">
+                                                <i class="bi bi-trash3 px-2"></i>
+                                            </a>
+                                        </li>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -178,27 +177,27 @@ include("../assets/php/processes/admin/user-badges.php");
 
                         <!-- User Badge Data -->
                         <?php if (empty($userBadgeInfoArray)): ?>
-                                <tr>
-                                    <td colspan="5" style="color:#D2042D; font-weight: bold; text-align: center;">NO USER BADGE
-                                        DATA AVAILABLE</td>
-                                </tr>
+                            <tr>
+                                <td colspan="5" style="color:#D2042D; font-weight: bold; text-align: center;">NO USER BADGE
+                                    DATA AVAILABLE</td>
+                            </tr>
                         <?php endif; ?>
                         <tbody>
                             <?php foreach ($userBadgeInfoArray as $infoAlt): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($infoAlt['userBadgeID']) ?></td>
-                                        <td><?= htmlspecialchars($infoAlt['badgeID']) ?></td>
-                                        <td><?= htmlspecialchars($infoAlt['username']) ?></td>
-                                        <td><?= htmlspecialchars($infoAlt['dateEarned']) ?></td>
-                                        <td>
-                                            <li style="display: flex; justify-content: center;">
-                                                <a style="color: red" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteUserBadgeModal<?php echo $infoAlt['userBadgeID']; ?>">
-                                                    <i class="bi bi-trash3 px-1"></i>
-                                                </a>
-                                            </li>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><?= htmlspecialchars($infoAlt['userBadgeID']) ?></td>
+                                    <td><?= htmlspecialchars($infoAlt['badgeID']) ?></td>
+                                    <td><?= htmlspecialchars($infoAlt['username']) ?></td>
+                                    <td><?= htmlspecialchars($infoAlt['dateEarned']) ?></td>
+                                    <td>
+                                        <li style="display: flex; justify-content: center;">
+                                            <a style="color: red" data-bs-toggle="modal"
+                                                data-bs-target="#deleteUserBadgeModal<?php echo $infoAlt['userBadgeID']; ?>">
+                                                <i class="bi bi-trash3 px-1"></i>
+                                            </a>
+                                        </li>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
 
@@ -216,30 +215,30 @@ include("../assets/php/processes/admin/user-badges.php");
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
                         <?php if ($currentPage > 1): ?>
-                                <li class="page-item">
-                                    <a class="page-link" style="background-color: #ffffff;"
-                                        href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
-                                        aria-label="Previous">&laquo;</a>
-                                </li>
+                            <li class="page-item">
+                                <a class="page-link" style="background-color: #ffffff;"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
+                                    aria-label="Previous">&laquo;</a>
+                            </li>
                         <?php endif ?>
 
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                <?php $isActive = $i == $currentPage; ?>
-                                <li class="page-item <?= $isActive ? 'active' : '' ?>">
-                                    <a class="page-link"
-                                        href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
-                                        style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
-                                        <?= $i ?>
-                                    </a>
-                                </li>
+                            <?php $isActive = $i == $currentPage; ?>
+                            <li class="page-item <?= $isActive ? 'active' : '' ?>">
+                                <a class="page-link"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
+                                    style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
                         <?php endfor ?>
 
                         <?php if ($currentPage < $totalPages): ?>
-                                <li class="page-item">
-                                    <a class="page-link" style="background-color: #ffffff;"
-                                        href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
-                                        aria-label="Next">&raquo;</a>
-                                </li>
+                            <li class="page-item">
+                                <a class="page-link" style="background-color: #ffffff;"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
+                                    aria-label="Next">&raquo;</a>
+                            </li>
                         <?php endif ?>
                     </ul>
                 </nav>
