@@ -22,13 +22,15 @@
                     $fields = [
                         ['badgeName', 'Badge Name', 'text'],
                         ['description', 'Description', 'text'],
-                        ['requirementValue', 'Requirement Value', 'text'],
+                        ['requirementValue', 'Requirement Value', 'number'],
                     ];
                     foreach ($fields as [$name, $label, $type]):
+                        $extraAttributes = ($name === 'requirementValue') ? 'min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, \'\')"' : '';
                         ?>
                         <div class="mb-3 text-start">
                             <label for="<?= $name ?>" class="form-label fw-bold"><?= $label ?></label>
-                            <input type="<?= $type ?>" class="form-control" id="<?= $name ?>" name="<?= $name ?>" required>
+                            <input type="<?= $type ?>" class="form-control" id="<?= $name ?>" name="<?= $name ?>" required
+                                <?= $extraAttributes ?>>
                         </div>
                     <?php endforeach; ?>
 
@@ -80,11 +82,14 @@
                             ['description', 'Description', $info['description']],
                             ['requirementValue', 'Requirement Value', $info['requirementValue']],
                         ];
-                        foreach ($fields as [$name, $label, $value]): ?>
+                        foreach ($fields as [$name, $label, $value]):
+                            $inputType = ($name === 'requirementValue') ? 'number' : 'text';
+                            $extraAttributes = ($inputType === 'number') ? 'min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, \'\')"' : '';
+                            ?>
                             <div class="mb-3">
                                 <label for="<?= $name . $badgeID ?>" class="form-label fw-bold"><?= $label ?></label>
-                                <input type="text" class="form-control" id="<?= $name . $badgeID ?>" name="<?= $name ?>"
-                                    value="<?= htmlspecialchars($value) ?>">
+                                <input type="<?= $inputType ?>" class="form-control" id="<?= $name . $badgeID ?>"
+                                    name="<?= $name ?>" value="<?= htmlspecialchars($value) ?>" <?= $extraAttributes ?>>
                             </div>
                         <?php endforeach; ?>
 

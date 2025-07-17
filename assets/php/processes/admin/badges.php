@@ -23,7 +23,7 @@ if (isset($_POST['btnAdd'])) {
 
     // Handle uploaded icon
     if (!empty($_FILES['iconUrl']['name'])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/CopyGymboost/assets/img/badges/';
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/';
 
         if (!is_dir($targetDir)) {
             mkdir($targetDir, 0755, true);
@@ -37,7 +37,7 @@ if (isset($_POST['btnAdd'])) {
 
         if (in_array($fileType, $allowedTypes)) {
             if (move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
-                $iconUrl = 'assets/img/badges/' . $fileName;
+                $iconUrl = $fileName;
             } else {
                 echo "Upload failed: Could not move uploaded file.";
                 exit;
@@ -71,7 +71,7 @@ if (isset($_POST['btnEdit'])) {
 
     // Handle uploaded icon
     if (!empty($_FILES['iconUrl']['name'])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/CopyGymboost/assets/img/badges/';
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/';
 
         // Create the folder if it doesn't exist
         if (!is_dir($targetDir)) {
@@ -86,7 +86,7 @@ if (isset($_POST['btnEdit'])) {
 
         if (in_array($fileType, $allowedTypes)) {
             if (move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
-                $iconUrl = 'assets/img/badges/' . $fileName;
+                $iconUrl = $fileName;
             } else {
                 echo "Upload failed: Could not move uploaded file.";
                 exit;
