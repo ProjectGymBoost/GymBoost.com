@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const loginError = document.getElementById("loginError")?.value;
+    const loginError = document.getElementById("loginError")?.textContent.trim();
 
     const errorMessages = {
         invalidCredentials: "Incorrect email or password.",
-        userNotFound: "Invalid email and password."
+        userNotFound: "Invalid email and password.",
+        accountInactive: "Your account is inactive. Please approach the front desk."
     };
 
     if (loginError && errorMessages[loginError]) {
