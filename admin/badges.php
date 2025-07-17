@@ -67,10 +67,13 @@ include("../assets/php/processes/admin/badges.php");
                             <?php foreach ($badgeInfoArray as $info): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($info['badgeID']) ?></td>
-                                    <td><?= htmlspecialchars($info['badgeName']) ?></td>
-                                    <td><?= htmlspecialchars($info['description']) ?></td>
+                                    <td><?= htmlspecialchars(substr($info['badgeName'], 0, length: 20)) ?><?= strlen($info['badgeName']) > 20 ? '...' : '' ?>
+                                    </td>
+                                    <td><?= htmlspecialchars(substr($info['description'], 0, length: 40)) ?><?= strlen($info['description']) > 40 ? '...' : '' ?>
+                                    </td>
                                     <td><?= htmlspecialchars($info['requirementValue']) ?></td>
-                                    <td><?= htmlspecialchars($info['iconUrl']) ?></td>
+                                    <td><?= htmlspecialchars(substr($info['iconUrl'], 0, 20)) ?><?= strlen($info['iconUrl']) > 20 ? '...' : '' ?>
+                                    </td>
                                     <td style="display: flex; justify-content: center;">
                                         <li>
                                             <a data-bs-toggle="modal"
@@ -187,7 +190,8 @@ include("../assets/php/processes/admin/badges.php");
                                 <tr>
                                     <td><?= htmlspecialchars($infoAlt['userBadgeID']) ?></td>
                                     <td><?= htmlspecialchars($infoAlt['badgeID']) ?></td>
-                                    <td><?= htmlspecialchars($infoAlt['username']) ?></td>
+                                    <td><?= htmlspecialchars(substr($infoAlt['username'], 0, length: 50)) ?><?= strlen($infoAlt['username']) > 50 ? '...' : '' ?>
+                                    </td>
                                     <td><?= htmlspecialchars($infoAlt['dateEarned']) ?></td>
                                     <td>
                                         <li style="display: flex; justify-content: center;">
@@ -200,7 +204,6 @@ include("../assets/php/processes/admin/badges.php");
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
-
                     </table>
                 </div>
             </div>
