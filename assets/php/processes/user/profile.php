@@ -54,7 +54,6 @@ if (mysqli_num_rows($userInfoResult) > 0) {
 if (isset($_POST['btnSaveProfile'])) {
     $uploadError = false;
 
-    // Handle profile picture upload
     if (isset($_FILES['profilePic']) && $_FILES['profilePic']['error'] !== UPLOAD_ERR_NO_FILE) {
         $fileError = $_FILES['profilePic']['error'];
 
@@ -65,7 +64,7 @@ if (isset($_POST['btnSaveProfile'])) {
             $fileType = $_FILES['profilePic']['type'];
 
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            $maxFileSize = 5 * 1024 * 1024; // 5MB
+            $maxFileSize = 5 * 1024 * 1024; 
 
             if (in_array($fileType, $allowedTypes) && $fileSize <= $maxFileSize) {
                 $uploadDir = __DIR__ . '/../../../img/profile/';
@@ -73,17 +72,24 @@ if (isset($_POST['btnSaveProfile'])) {
                 $newFileName = uniqid('profile_', true) . '.' . $extension;
                 $destinationPath = $uploadDir . $newFileName;
 
-                // Ensure directory exists
                 if (!is_dir($uploadDir)) {
                     mkdir($uploadDir, 0755, true);
                 }
 
                 if (move_uploaded_file($fileTmpPath, $destinationPath)) {
+                    $currentPic = $userInfoArray['profilePicture'];
+                    if ($currentPic && $currentPic !== 'defaultProfile.png') {
+                        $oldFilePath = $uploadDir . $currentPic;
+                        if (file_exists($oldFilePath)) {
+                            unlink($oldFilePath);
+                        }
+                    }
+
                     executeQuery("
-                    UPDATE users 
-                    SET profilePicture = '$newFileName' 
-                    WHERE userID = $userID
-                ");
+                        UPDATE users 
+                        SET profilePicture = '$newFileName' 
+                        WHERE userID = $userID
+                    ");
                     $_SESSION['uploadStatus'] = 'success';
                 } else {
                     $_SESSION['uploadStatus'] = 'error';
@@ -105,6 +111,7 @@ if (isset($_POST['btnSaveProfile'])) {
         exit;
     }
 }
+
 
 if (isset($_POST['btnRemovePic'])) {
     $uploadDir = __DIR__ . '/../../../img/profile/';
@@ -226,15 +233,22 @@ if (isset($_POST['btnSaveAccInfo'])) {
 }
 
 if (isset($_POST['btnCloseDelete'])) {
-    $_SESSION['userID'];
+    $uploadDir = __DIR__ . '/../../../img/profile/';
+    $currentPic = $userInfoArray['profilePicture']; 
 
-    $deleteAccQuery = "DELETE FROM users 
-    WHERE userID = $userID";
+    if ($currentPic && $currentPic !== 'defaultProfile.png') {
+        $picPath = $uploadDir . $currentPic;
+        if (file_exists($picPath)) {
+            unlink($picPath);
+        }
+    }
 
+    $deleteAccQuery = "DELETE FROM users WHERE userID = $userID";
     executeQuery($deleteAccQuery);
     session_unset();
     session_destroy();
+
     header("Location: ../login.php");
     exit;
-
 }
+
