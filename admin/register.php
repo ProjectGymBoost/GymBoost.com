@@ -112,7 +112,7 @@ include("../assets/shared/auth.php");
                                 <!-- RFID Number -->
                                 <div class="flex-grow-1 position-relative">
                                     <input type="text" placeholder="RFID Number" class="form-control" name="rfid"
-                                        id="rfid" style="border-radius: 5px;"
+                                        id="rfid" maxlength="10" style="border-radius: 5px;"
                                         value="<?php echo isset($_POST['rfid']) ? htmlspecialchars($_POST['rfid']) : ''; ?>"
                                         required>
                                     <div id="rfidError" class="invalid-feedback text-start"></div>

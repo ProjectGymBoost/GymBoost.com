@@ -223,6 +223,29 @@ if (isset($_GET['page'])) {
             }
         });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add event listener for all elements with the class "toggle-password"
+            document.querySelectorAll('.toggle-password').forEach(function (toggleButton) {
+                toggleButton.addEventListener('click', function () {
+                    const targetId = this.getAttribute('data-target'); // Get the input field's ID from the data-target attribute
+                    const passwordField = document.getElementById(targetId);
+                    const icon = this.querySelector('i');
+
+                    // Toggle the password field type between 'password' and 'text'
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';  // Show the password
+                        icon.classList.remove('bi-eye-slash');
+                        icon.classList.add('bi-eye');  // Change to eye icon
+                    } else {
+                        passwordField.type = 'password';  // Hide the password
+                        icon.classList.remove('bi-eye');
+                        icon.classList.add('bi-eye-slash');  // Change to eye-slash icon
+                    }
+                });
+            });
+        });
+
+
     </script>
 
 </body>

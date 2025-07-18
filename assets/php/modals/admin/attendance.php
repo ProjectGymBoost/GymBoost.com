@@ -9,7 +9,7 @@
                         style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
                         <h4 class="modal-title text-center subheading" id="deleteUserModalLabel"
                             style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                            DELETE USER ACCOUNT
+                            DELETE USER ATTENDANCE
                         </h4>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
                             style="position: absolute; top: 16px; right: 16px;"></button>
@@ -19,7 +19,7 @@
                             <span style="color: #D2042D;">
                                 Are you sure you want to delete
                                 <span style="font-weight: bold;">
-                                    <?= strtoupper($info['firstName'] . ' ' . $info['lastName']) ?>
+                                    <?=($info['firstName'] . ' ' . $info['lastName']) ?>
                                 </span>'s attendance record?
                             </span>
                             <br><br>
@@ -46,7 +46,7 @@
 <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1' && isset($_GET['name'])): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var confirmModal = new bootstrap.Modal(document.getElementById('confirmDeleteUserModal'));
+            var confirmModal = new bootstrap.Modal(document.getElementById('confirmDeleteAttendanceModal'));
             confirmModal.show();
 
             const url = new URL(window.location);
@@ -57,19 +57,19 @@
     </script>
 <?php endif; ?>
 
-<div class="modal fade" id="confirmDeleteUserModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="confirmDeleteAttendanceModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px;">
             <div class="modal-header border-0">
-                <h4 class="modal-title heading text-center w-100 text-black">USER DELETED</h4>
+                <h4 class="modal-title heading text-center w-100 text-black">ATTENDANCE RECORD DELETED</h4>
             </div>
             <div class="modal-body text-center">
                 <strong>
                     <span style="color: #D2042D; font-weight: bold;">
-                        <?= strtoupper($_GET['name'] ?? '') ?>'s
+                        <?=($_GET['name'] ?? '') ?>'s
                     </span>
                 </strong>
-                account has been successfully deleted.
+                Attendance record has been successfully deleted.
             </div>
             <div class="modal-footer d-flex justify-content-center pb-4 border-0">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>

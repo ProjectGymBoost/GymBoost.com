@@ -58,7 +58,7 @@ if (!empty($_SESSION['userID'])) {
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
-                        <option value="none" <?= ($_GET['sortBy'] ?? '') === 'none' ? 'selected' : '' ?>>Attendance ID
+                        <option value="userID" <?= ($_GET['sortBy'] ?? '') === 'userID' ? 'selected' : '' ?>>User ID
                         </option>
                         <option value="firstName" <?= ($_GET['sortBy'] ?? '') === 'firstName' ? 'selected' : '' ?>>
                             First Name</option>
@@ -155,7 +155,7 @@ if (!empty($_SESSION['userID'])) {
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
                         <?php
-                        $range = 1; // shows current ± 1 = total of 3 pages
+                        $range = 1; 
                         $start = max(1, $currentPage - $range);
                         $end = min($totalPages, $currentPage + $range);
                         if ($currentPage > 1): ?>

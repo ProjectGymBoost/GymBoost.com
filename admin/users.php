@@ -32,6 +32,21 @@ if (isset($_SESSION['userCreated'])) {
     <!-- Main Content -->
     <div class="main px-2 px-md-0" style="margin-left: 70px; transition: margin-left 0.25s ease-in-out;">
         <div class="container-fluid py-4 px-4">
+            <!-- Toast Notification -->
+            <?php if (isset($userCreated) && $userCreated): ?>
+                <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 3;">
+                    <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                User successfully registered!
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <!-- Heading -->
             <div class="col-12 mb-4 d-flex align-items-center justify-content-between">

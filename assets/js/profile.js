@@ -1,56 +1,50 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-// Profile info
-const profileUpdatedFlag = document.getElementById("profileUpdatedFlag")?.value;
-if (profileUpdatedFlag === "true") {
-  const confirmProfileModalEl = document.getElementById("confirmEditProfileModal");
-  const confirmProfileModal = bootstrap.Modal.getOrCreateInstance(confirmProfileModalEl);
-  setTimeout(() => confirmProfileModal.show(), 300);
-}
-
-// Profile picture updated 
-const picUpdatedFlag = document.getElementById("profilePicUpdatedFlag")?.value;
-if (picUpdatedFlag === "true") {
-  const confirmPicModalEl = document.getElementById("confirmUpdateProfilePicModal");
-  const confirmPicModal = bootstrap.Modal.getOrCreateInstance(confirmPicModalEl);
-  setTimeout(() => confirmPicModal.show(), 300);
-}
-
-// Remove pic
-const removedPicFlag = document.getElementById("profilePicRemovedFlag")?.value;
-if (removedPicFlag === "true") {
-  const confirmRemoveModalEl = document.getElementById("confirmRemoveProfilePictureModal");
-  if (confirmRemoveModalEl) {
-    const confirmRemoveModal = bootstrap.Modal.getOrCreateInstance(confirmRemoveModalEl);
-    setTimeout(() => confirmRemoveModal.show(), 300);
+  // Profile info
+  const profileUpdatedFlag = document.getElementById("profileUpdatedFlag")?.value;
+  if (profileUpdatedFlag === "true") {
+    const confirmProfileModalEl = document.getElementById("confirmEditProfileModal");
+    const confirmProfileModal = bootstrap.Modal.getOrCreateInstance(confirmProfileModalEl);
+    setTimeout(() => confirmProfileModal.show(), 300);
   }
-}
 
+  // Profile picture updated 
+  const picUpdatedFlag = document.getElementById("profilePicUpdatedFlag")?.value;
+  if (picUpdatedFlag === "true") {
+    const confirmPicModalEl = document.getElementById("confirmUpdateProfilePicModal");
+    const confirmPicModal = bootstrap.Modal.getOrCreateInstance(confirmPicModalEl);
+    setTimeout(() => confirmPicModal.show(), 300);
+  }
 
+  // Remove pic
+  const removedPicFlag = document.getElementById("profilePicRemovedFlag")?.value;
+  if (removedPicFlag === "true") {
+    const confirmRemoveModalEl = document.getElementById("confirmRemoveProfilePictureModal");
+    if (confirmRemoveModalEl) {
+      const confirmRemoveModal = bootstrap.Modal.getOrCreateInstance(confirmRemoveModalEl);
+      setTimeout(() => confirmRemoveModal.show(), 300);
+    }
+  }
 
-  // === EDIT PROFILE MODAL ===
+  // EDIT PROFILE MODAL
   const profileForm = document.getElementById("editProfileForm");
   const editProfileModalEl = document.getElementById("editProfileModal");
   const saveProfileChangesBtn = document.getElementById("saveChangesBtn");
-
   const editProfileModal = bootstrap.Modal.getOrCreateInstance(editProfileModalEl);
-
-  
 
   let profileFormSaved = false;
 
-profileForm.addEventListener("submit", function (e) {
-  const isValid = validateProfileForm();
-  if (!isValid) {
-    e.preventDefault(); 
-    profileFormSaved = false;
-    return;
-  }
+  profileForm.addEventListener("submit", function (e) {
+    const isValid = validateProfileForm();
+    if (!isValid) {
+      e.preventDefault();
+      profileFormSaved = false;
+      return;
+    }
 
-  profileFormSaved = true;
-  editProfileModal.hide(); 
-});
-
+    profileFormSaved = true;
+    editProfileModal.hide();
+  });
 
   editProfileModalEl.addEventListener("hidden.bs.modal", function () {
     if (!profileFormSaved) {
@@ -64,6 +58,7 @@ profileForm.addEventListener("submit", function (e) {
     let valid = true;
     clearErrors(profileForm);
 
+  // Validation
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
 
@@ -84,34 +79,34 @@ profileForm.addEventListener("submit", function (e) {
     return valid;
   }
 
-const editPassModalEl = document.getElementById("editAccountPassModal");
-const confirmPassModalEl = document.getElementById("confirmEditPassModal");
-const passForm = document.getElementById("editAccountPassForm");
-const savePassChangesBtn = document.getElementById("saveAccountChangesBtn");
+  // EDIT PASSWORD MODAL
+  const editPassModalEl = document.getElementById("editAccountPassModal");
+  const confirmPassModalEl = document.getElementById("confirmEditPassModal");
+  const passForm = document.getElementById("editAccountPassForm");
+  const savePassChangesBtn = document.getElementById("saveAccountChangesBtn");
+  const editPassModal = bootstrap.Modal.getOrCreateInstance(editPassModalEl);
+  const confirmPassModal = bootstrap.Modal.getOrCreateInstance(confirmPassModalEl);
+  const currentPasswordErrorInput = document.getElementById("currentPasswordErrorValue");
+  const currentPasswordErrorValue = currentPasswordErrorInput ? currentPasswordErrorInput.value : null;
+  const accountUpdatedFlag = document.getElementById("accountUpdatedFlag")?.value;
 
-const editPassModal = bootstrap.Modal.getOrCreateInstance(editPassModalEl);
-const confirmPassModal = bootstrap.Modal.getOrCreateInstance(confirmPassModalEl);
-const currentPasswordErrorInput = document.getElementById("currentPasswordErrorValue");
-const currentPasswordErrorValue = currentPasswordErrorInput ? currentPasswordErrorInput.value : null;
-const accountUpdatedFlag = document.getElementById("accountUpdatedFlag")?.value;
-
- var emailModal = document.getElementById('editAccountEmailModal');
+  var emailModal = document.getElementById('editAccountEmailModal');
   var otpModal = document.getElementById('otpModal');
 
-    if (emailModal) {
-        emailModal.addEventListener('shown.bs.modal', function () {
-            var emailInput = document.getElementById('email');
-            if (emailInput) emailInput.focus();
-        });
-    }
+  if (emailModal) {
+    emailModal.addEventListener('shown.bs.modal', function () {
+      var emailInput = document.getElementById('email');
+      if (emailInput) emailInput.focus();
+    });
+  }
 
-    if (otpModal) {
-        otpModal.addEventListener('shown.bs.modal', function () {
-            var otpInput = document.getElementById('otp');
-            if (otpInput) otpInput.focus();
-        });
-    }
-    
+  if (otpModal) {
+    otpModal.addEventListener('shown.bs.modal', function () {
+      var otpInput = document.getElementById('otp');
+      if (otpInput) otpInput.focus();
+    });
+  }
+
 if (currentPasswordErrorValue) {
   editPassModal.show();
   showError("currentPassword", currentPasswordErrorValue);
@@ -119,21 +114,22 @@ if (currentPasswordErrorValue) {
   setTimeout(() => confirmPassModal.show(), 300);
 }
 
-savePassChangesBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  const isValid = validatePasswordForm();
-  if (isValid) passForm.submit();
-});
-
-editPassModalEl.addEventListener("hidden.bs.modal", () => {
-  passForm.reset();
-  clearErrors(passForm);
-  ["currentPassword", "newPassword", "confirmPassword"].forEach(field => {
-    document.getElementById(field)?.classList.remove("is-valid", "is-invalid");
+  savePassChangesBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    const isValid = validatePasswordForm();
+    if (isValid) passForm.submit();
   });
-});
 
-  // === Validation Logic ===
+  editPassModalEl.addEventListener("hidden.bs.modal", function () {
+    clearFormFields(passForm);
+
+    clearErrors(passForm);
+    ["currentPassword", "newPassword", "confirmPassword"].forEach(field => {
+      document.getElementById(field)?.classList.remove("is-valid", "is-invalid");
+    });
+  });
+
+  // Validation Logic 
   function validatePasswordForm() {
     let valid = true;
     clearErrors(passForm);
@@ -174,6 +170,7 @@ editPassModalEl.addEventListener("hidden.bs.modal", () => {
     return valid;
   }
 
+  // Helpers
   function showError(field, message) {
     const input = document.getElementById(field);
     const error = document.getElementById(field + "Error");
@@ -196,5 +193,11 @@ editPassModalEl.addEventListener("hidden.bs.modal", () => {
     });
     form.querySelectorAll(".text-danger").forEach(el => el.textContent = "");
   }
-});
 
+  function clearFormFields(form) {
+    if (!form) return;
+    form.querySelectorAll("input").forEach(input => {
+      input.value = ''; 
+    });
+  }
+});

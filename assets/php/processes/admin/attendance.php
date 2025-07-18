@@ -7,7 +7,7 @@ $userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
 $searchCondition = '';
 
 if (!empty($userSearch)) {
-    $searchCondition = "WHERE (
+    $searchCondition = "AND (
         CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
         OR attendances.attendanceID LIKE '%$userSearch%' 
         OR users.firstName LIKE '%$userSearch%' 
@@ -17,19 +17,17 @@ if (!empty($userSearch)) {
 }
 
 // SORT AND ORDER BY
-$sortBy = $_GET['sortBy'] ?? 'none';
+$sortBy = $_GET['sortBy'] ?? 'userID';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
-$allowedSortColumns = ['firstName', 'lastName', 'checkinDate'];
+$allowedSortColumns = ['userID', 'firstName', 'lastName', 'checkinDate'];
 $allowedOrder = ['ASC', 'DESC'];
 
 if (in_array($sortBy, $allowedSortColumns) && in_array($orderBy, $allowedOrder)) {
     $orderCondition = "ORDER BY $sortBy $orderBy";
 } else {
-    $orderDirection = in_array($orderBy, $allowedOrder) ? $orderBy : 'ASC';
-    $orderCondition = "ORDER BY attendanceID $orderDirection";
+    $orderCondition = "ORDER BY attendanceID ASC";
 }
-
 
 // PAGINATION
 $entriesCount = isset($_GET['entriesCount']) ? (int) $_GET['entriesCount'] : 5;
@@ -44,6 +42,7 @@ $totalQuery = "
     SELECT COUNT(*) AS total
     FROM attendances
     JOIN users ON users.userID = attendances.userID
+    WHERE users.role = 'user' 
     $searchCondition
 ";
 
@@ -57,11 +56,11 @@ $end = min($totalPages, $currentPage + $range);
 $startEntry = ($totalEntries > 0) ? $offset + 1 : 0;
 $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 0;
 
-
 // MAIN DATA QUERY
 $userInfoQuery = "
 SELECT 
         users.userID,
+        users.role,
         users.firstName,
         users.lastName,
         attendances.attendanceID,
@@ -71,6 +70,8 @@ SELECT
         users
     JOIN 
         attendances ON users.userID = attendances.userID
+    WHERE 
+        users.role = 'user'
     $searchCondition
     $orderCondition
     LIMIT $entriesCount OFFSET $offset
@@ -94,15 +95,14 @@ if (isset($_POST['btnDelete'])) {
     executeQuery($deleteQuery);
 
     header(
-        "Location: " . $_SERVER['PHP_SELF'] .
-        "?deleted=1" .
-        "&name=" . urlencode($deleteFirstName . ' ' . $deleteLastName) .
-        "&page=" . $currentPage .
-        "&entriesCount=" . $entriesCount .
-        "&search=" . urlencode($search) .
-        "&sortBy=" . $sortBy .
+        "Location: " . $_SERVER['PHP_SELF'] . 
+        "?deleted=1" . 
+        "&name=" . urlencode($deleteFirstName . ' ' . $deleteLastName) . 
+        "&page=" . $currentPage . 
+        "&entriesCount=" . $entriesCount . 
+        "&search=" . urlencode($search) . 
+        "&sortBy=" . $sortBy . 
         "&orderBy=" . $orderBy
     );
     exit;
 }
-

@@ -1,4 +1,3 @@
-
 <!-- Update Profile Picture Modal -->
 <div class="modal fade" id="updateProfilePictureModal" tabindex="-1" aria-labelledby="updateProfileModalLabel"
     aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -51,7 +50,7 @@
                 Your profile picture has been successfully updated.
             </div>
             <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                <button type="button"  class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
             </div>
         </div>
     </div>
@@ -204,7 +203,7 @@
             targetModal.show();
         });
     </script>
-<?php 
+    <?php
     unset($_SESSION['show_modal']);
 endif; ?>
 
@@ -244,7 +243,8 @@ endif; ?>
                             ? $_SESSION['oldEmailInput']
                             : ($userInfoArray['email'] ?? '');
                         ?>
-                        <input type="text" class="form-control" name="verifyEmail" placeholder="Enter new email..." id="email">
+                        <input type="text" class="form-control" name="verifyEmail" placeholder="Enter new email..."
+                            id="email">
                         <span id="emailError" class="text-danger small d-block mt-1">
                             <?= $_SESSION['emailInputError'] ?? '' ?>
                         </span>
@@ -344,10 +344,8 @@ endif; ?>
                 <input type="hidden" name="btnSaveAccInfo" value="1"> <!-- Correct trigger -->
 
                 <!-- Modal Header -->
-                <div
-                    style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                    <h4 class="modal-title text-center subheading" id="editAccountPassModalLabel"
-                        style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h4 class="modal-title text-center subheading" id="editAccountPassModalLabel" style="margin: 0; font-size: 20px; letter-spacing: 2px;">
                         EDIT PASSWORD
                     </h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
@@ -357,29 +355,50 @@ endif; ?>
                 <!-- Modal Body -->
                 <div class="modal-body" style="padding: 1.5rem;">
                     <?php if (isset($_SESSION['currentPasswordError'])): ?>
-                        <input type="hidden" id="currentPasswordErrorValue" value="<?= htmlspecialchars($_SESSION['currentPasswordError']);
-                        unset($_SESSION['currentPasswordError']); ?>">
+                        <input type="hidden" id="currentPasswordErrorValue" value="<?= htmlspecialchars($_SESSION['currentPasswordError']); ?>">
+                        <?php unset($_SESSION['currentPasswordError']); ?>
                     <?php endif; ?>
-                    <?php if (isset($_SESSION['accountUpdated'])): ?>
+                     <?php if (isset($_SESSION['accountUpdated'])): ?>
                         <input type="hidden" id="accountUpdatedFlag" value="true">
                         <?php unset($_SESSION['accountUpdated']); ?>
                     <?php endif; ?>
 
                     <div class="mb-3 text-start">
                         <label for="currentPassword" class="form-label fw-bold">Current Password</label>
-                        <input type="password" class="form-control" name="currentPass" id="currentPassword">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="currentPass" id="currentPassword"
+                                value="<?= htmlspecialchars($_POST['currentPass'] ?? ($_SESSION['currentPass'] ?? '')) ?>">
+                            <span class="input-group-text toggle-password" data-target="currentPassword"
+                                style="cursor: pointer;">
+                                <i class="bi bi-eye-slash"></i>
+                            </span>
+                        </div>
                         <span id="currentPasswordError" class="text-danger small d-block mt-1"></span>
                     </div>
 
                     <div class="mb-3 text-start">
                         <label for="newPassword" class="form-label fw-bold">New Password</label>
-                        <input type="password" class="form-control" name="newPass" id="newPassword">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="newPass" id="newPassword"
+                                value="<?= htmlspecialchars($_POST['newPass'] ?? ($_SESSION['newPass'] ?? '')) ?>">
+                            <span class="input-group-text toggle-password" data-target="newPassword"
+                                style="cursor: pointer;">
+                                <i class="bi bi-eye-slash"></i>
+                            </span>
+                        </div>
                         <span id="newPasswordError" class="text-danger small d-block mt-1"></span>
                     </div>
 
                     <div class="mb-3 text-start">
                         <label for="confirmPassword" class="form-label fw-bold">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirmPass" id="confirmPassword">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword"
+                                value="<?= htmlspecialchars($_POST['confirmPass'] ?? ($_SESSION['confirmPass'] ?? '')) ?>">
+                            <span class="input-group-text toggle-password" data-target="confirmPassword"
+                                style="cursor: pointer;">
+                                <i class="bi bi-eye-slash"></i>
+                            </span>
+                        </div>
                         <span id="confirmPasswordError" class="text-danger small d-block mt-1"></span>
                     </div>
                 </div>
@@ -395,6 +414,7 @@ endif; ?>
         </div>
     </div>
 </div>
+
 
 
 <!-- Confirm Edit Password Modal -->

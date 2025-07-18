@@ -132,15 +132,19 @@ if (isset($_POST['btnSaveInfo'])) {
     header("Location: {$_SERVER['PHP_SELF']}?page=profile");
     exit;
 }
-
-
 if (isset($_POST['btnSaveAccInfo'])) {
+    // Store user inputs in session if errors occur
+    $_SESSION['currentPass'] = $_POST['currentPass'] ?? '';
+    $_SESSION['newPass'] = $_POST['newPass'] ?? '';
+    $_SESSION['confirmPass'] = $_POST['confirmPass'] ?? '';
+
     $userID = $_SESSION['userID'] ?? null;
 
     $email = trim($_POST['email'] ?? '');
     $currentPass = trim($_POST['currentPass'] ?? '');
     $newPass = $_POST['newPass'] ?? '';
     $confirmPass = $_POST['confirmPass'] ?? '';
+    
 
     $isChangingEmail = !empty($email);
     $isEnteringCurrentPassword = !empty($currentPass);
@@ -148,7 +152,7 @@ if (isset($_POST['btnSaveAccInfo'])) {
 
     $updateFields = [];
 
-
+    // Password validation
     if ($isEnteringCurrentPassword || $isChangingPassword) {
         if (strlen($currentPass) < 8) {
             $_SESSION['currentPasswordError'] = "Current password must be correct.";
@@ -178,6 +182,7 @@ if (isset($_POST['btnSaveAccInfo'])) {
         }
     }
 
+    // Email validation
     if ($isChangingEmail) {
         $sanitizedEmail = mysqli_real_escape_string($conn, $email);
         $checkEmailQuery = "SELECT userID FROM users WHERE email = '$sanitizedEmail' AND userID != $userID";
@@ -198,6 +203,9 @@ if (isset($_POST['btnSaveAccInfo'])) {
         $updateResult = executeQuery($updateQuery);
 
         if ($updateResult) {
+            unset($_SESSION['currentPass']);
+            unset($_SESSION['newPass']);
+            unset($_SESSION['confirmPass']);
             $_SESSION['accountUpdated'] = true;
             header("Location: {$_SERVER['PHP_SELF']}?page=profile");
             exit;
@@ -220,4 +228,3 @@ if (isset($_POST['btnCloseDelete'])) {
     exit;
 
 }
-
