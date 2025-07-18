@@ -366,7 +366,7 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="currentPassword" class="form-label fw-bold">Current Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="currentPass" id="currentPassword"
+                            <input type="password" class="form-control" name="currentPass" id="currentPassword" placeholder="Enter your current password"
                                 value="<?= htmlspecialchars($_POST['currentPass'] ?? ($_SESSION['currentPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="currentPassword"
                                 style="cursor: pointer;">
@@ -379,7 +379,7 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="newPassword" class="form-label fw-bold">New Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="newPass" id="newPassword"
+                            <input type="password" class="form-control" name="newPass" id="newPassword" placeholder="Enter a new password"
                                 value="<?= htmlspecialchars($_POST['newPass'] ?? ($_SESSION['newPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="newPassword"
                                 style="cursor: pointer;">
@@ -392,7 +392,7 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="confirmPassword" class="form-label fw-bold">Confirm Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword"
+                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword" placeholder="Confirm your password"
                                 value="<?= htmlspecialchars($_POST['confirmPass'] ?? ($_SESSION['confirmPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="confirmPassword"
                                 style="cursor: pointer;">
