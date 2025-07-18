@@ -58,7 +58,7 @@ if (!empty($_SESSION['userID'])) {
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
-                        <option value="userID" <?= ($_GET['sortBy'] ?? '') === 'userID' ? 'selected' : '' ?>>User ID
+                        <option value="attendanceID" <?= ($_GET['sortBy'] ?? '') === 'attendanceID' ? 'selected' : '' ?>>Attendance ID
                         </option>
                         <option value="firstName" <?= ($_GET['sortBy'] ?? '') === 'firstName' ? 'selected' : '' ?>>
                             First Name</option>
@@ -121,7 +121,7 @@ if (!empty($_SESSION['userID'])) {
                             <?php else: ?>
                                 <?php foreach ($userInfoArray as $info): ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($info['userID']) ?></td>
+                                        <td><?= htmlspecialchars($info['attendanceID']) ?></td>
                                         <td><?= htmlspecialchars($info['firstName']) ?></td>
                                         <td><?= htmlspecialchars($info['lastName']) ?></td>
                                         <td><?= htmlspecialchars($info['checkinDate']) ?></td>

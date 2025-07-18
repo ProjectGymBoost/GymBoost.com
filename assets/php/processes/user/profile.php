@@ -107,12 +107,18 @@ if (isset($_POST['btnSaveProfile'])) {
 }
 
 if (isset($_POST['btnRemovePic'])) {
-    $_SESSION['userID'];
+    $uploadDir = __DIR__ . '/../../../img/profile/';
+    $currentPic = $userInfoArray['profilePicture'];
 
-    $removePicQuery = "UPDATE users SET profilePicture = 'defaultProfile.png'
-    WHERE userID = $userID";
-
+    if ($currentPic && $currentPic !== 'defaultProfile.png') {
+        $oldFilePath = $uploadDir . $currentPic;
+        if (file_exists($oldFilePath)) {
+            unlink($oldFilePath);
+        }
+    }
+    $removePicQuery = "UPDATE users SET profilePicture = 'defaultProfile.png' WHERE userID = $userID";
     executeQuery($removePicQuery);
+
     $_SESSION['profilePicRemoved'] = true;
     header("Location: {$_SERVER['PHP_SELF']}?page=profile");
     exit;
@@ -144,7 +150,7 @@ if (isset($_POST['btnSaveAccInfo'])) {
     $currentPass = trim($_POST['currentPass'] ?? '');
     $newPass = $_POST['newPass'] ?? '';
     $confirmPass = $_POST['confirmPass'] ?? '';
-    
+
 
     $isChangingEmail = !empty($email);
     $isEnteringCurrentPassword = !empty($currentPass);
@@ -169,6 +175,11 @@ if (isset($_POST['btnSaveAccInfo'])) {
             header("Location: {$_SERVER['PHP_SELF']}?page=profile");
             exit;
         }
+        if (password_verify($newPass, $user['password'])) {
+            $_SESSION['currentPasswordError'] = "New password cannot be the same as your current password.";
+            header("Location: {$_SERVER['PHP_SELF']}?page=profile");
+            exit;
+        }
 
         if ($isChangingPassword) {
             if ($newPass !== $confirmPass) {
@@ -176,7 +187,6 @@ if (isset($_POST['btnSaveAccInfo'])) {
                 header("Location: {$_SERVER['PHP_SELF']}?page=profile");
                 exit;
             }
-
             $hashedNewPass = password_hash($newPass, PASSWORD_DEFAULT);
             $updateFields[] = "password = '$hashedNewPass'";
         }

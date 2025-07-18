@@ -17,16 +17,16 @@ if (!empty($userSearch)) {
 }
 
 // SORT AND ORDER BY
-$sortBy = $_GET['sortBy'] ?? 'userID';
+$sortBy = $_GET['sortBy'] ?? 'attendanceID';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
-$allowedSortColumns = ['userID', 'firstName', 'lastName', 'checkinDate'];
+$allowedSortColumns = ['attendanceID', 'firstName', 'lastName', 'checkinDate'];
 $allowedOrder = ['ASC', 'DESC'];
 
 if (in_array($sortBy, $allowedSortColumns) && in_array($orderBy, $allowedOrder)) {
     $orderCondition = "ORDER BY $sortBy $orderBy";
 } else {
-    $orderCondition = "ORDER BY attendanceID ASC";
+    $orderCondition = "ORDER BY attendances.attendanceID ASC";
 }
 
 // PAGINATION

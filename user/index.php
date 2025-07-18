@@ -191,27 +191,30 @@ if (isset($_GET['page'])) {
         function attachProfilePreview() {
             const browseImageInput = document.getElementById('fileInput');
             const profilePicPreview = document.getElementById('profilePreview2');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
 
-            if (browseImageInput && profilePicPreview) {
+            if (browseImageInput && profilePicPreview && fileNameDisplay) {
                 browseImageInput.addEventListener('change', function (e) {
                     const file = e.target.files[0];
                     if (file && file.type.startsWith('image/')) {
-                        console.log('File selected: ', file);
+                        fileNameDisplay.value = file.name;
+
                         const reader = new FileReader();
                         reader.onload = function (event) {
                             profilePicPreview.src = event.target.result;
-                            console.log('Preview updated with file: ', event.target.result);
                         };
                         reader.readAsDataURL(file);
                     } else {
+                        fileNameDisplay.value = '';
                         console.error('Invalid file type selected.');
                     }
                 });
             } else {
-                console.error('File input or profile preview element not found.');
+                console.error('Required elements not found.');
             }
         }
         attachProfilePreview();
+
 
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -224,22 +227,20 @@ if (isset($_GET['page'])) {
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Add event listener for all elements with the class "toggle-password"
             document.querySelectorAll('.toggle-password').forEach(function (toggleButton) {
                 toggleButton.addEventListener('click', function () {
-                    const targetId = this.getAttribute('data-target'); // Get the input field's ID from the data-target attribute
+                    const targetId = this.getAttribute('data-target');
                     const passwordField = document.getElementById(targetId);
                     const icon = this.querySelector('i');
 
-                    // Toggle the password field type between 'password' and 'text'
                     if (passwordField.type === 'password') {
-                        passwordField.type = 'text';  // Show the password
+                        passwordField.type = 'text';
                         icon.classList.remove('bi-eye-slash');
-                        icon.classList.add('bi-eye');  // Change to eye icon
+                        icon.classList.add('bi-eye');
                     } else {
-                        passwordField.type = 'password';  // Hide the password
+                        passwordField.type = 'password';
                         icon.classList.remove('bi-eye');
-                        icon.classList.add('bi-eye-slash');  // Change to eye-slash icon
+                        icon.classList.add('bi-eye-slash');
                     }
                 });
             });

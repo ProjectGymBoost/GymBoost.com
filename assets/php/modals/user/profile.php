@@ -482,7 +482,7 @@ endif; ?>
                 </div>
                 <div class="modal-body text-center text-black">
                     This account has been successfully deleted.<br>
-                    You have been logged out and will be redirected to the login page.
+                    You will be logged out and will be redirected to the login page.
                 </div>
                 <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
                     <button type="submit" id="btnCloseDelete" name="btnCloseDelete" class="btn btn-primary"

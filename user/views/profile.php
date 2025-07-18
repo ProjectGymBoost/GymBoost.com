@@ -1,5 +1,6 @@
 <?php
 $pfpClass = $profileUpdated ? 'border-updated' : 'border-normal';
+$isDefaultPic = ($pfpFileName  === 'defaultProfile.png');
 ?>
 
 <div id="profile" class="container">
@@ -21,15 +22,19 @@ $pfpClass = $profileUpdated ? 'border-updated' : 'border-normal';
               <img id="profilePreview" src="../assets/img/profile/<?php echo $pfpFileName ?>" alt="Profile Picture"
                 class="rounded-circle mb-3 <?php echo $pfpClass; ?>"
                 style="width: 230px; height: 230px; object-fit: cover;">
-              <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 mb-4">
+              <div
+                class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 mb-4 <?= $isDefaultPic ? 'justify-content-center' : '' ?>">
                 <button class="btn btn-primary btn-sm px-3 px-md-4 px-lg-3" data-bs-toggle="modal"
                   data-bs-target="#updateProfilePictureModal">
                   Update Profile Picture
                 </button>
-                <button class="btn btn-primary btn-sm px-3 px-md-4 px-lg-3" data-bs-toggle="modal"
-                  data-bs-target="#removeProfilePictureModal">
-                  Remove Profile Picture
-                </button>
+
+                <?php if (!$isDefaultPic): ?>
+                  <button class="btn btn-primary btn-sm px-3 px-md-4 px-lg-3" data-bs-toggle="modal"
+                    data-bs-target="#removeProfilePictureModal">
+                    Remove Profile Picture
+                  </button>
+                <?php endif; ?>
               </div>
 
               <?php if (isset($_SESSION['accountUpdated']) && $_SESSION['accountUpdated'] === true): ?>
