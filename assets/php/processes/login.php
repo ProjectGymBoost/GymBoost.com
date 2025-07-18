@@ -13,10 +13,6 @@ function sanitize($data)
     return $data;
 }
 
-$loginError = $_SESSION['loginError'] ?? "";
-
-unset($_SESSION['loginError']);
-
 if (isset($_POST['btnLogin'])) {
     $email = sanitize($_POST['email']);
     $password = sanitize($_POST['password']);
@@ -29,28 +25,44 @@ if (isset($_POST['btnLogin'])) {
 
         if ($user = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $user['password'])) {
+
+                // If the user is inactive, show error message
+                if ($user['state'] === 'Inactive') {
+                    $_SESSION['loginError'] = 'accountInactive'; 
+                    header("Location: login.php"); 
+                    exit();
+                }
+
+
+                // Set session variables for active users
                 $_SESSION['userID'] = $user['userID'];
                 $_SESSION['firstName'] = $user['firstName'];
                 $_SESSION['lastName'] = $user['lastName'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['state'] = $user['state'];
 
+                // Redirect based on user role
                 if ($user['role'] === 'admin') {
                     header("Location: admin/index.php");
                 } else {
                     header("Location: user/index.php?page=dashboard");
                 }
                 exit();
+
             } else {
+                // Incorrect password
                 $_SESSION['loginError'] = "invalidCredentials";
                 header("Location: login.php");
                 exit();
             }
         } else {
-            mysqli_stmt_close($stmt);
+            // No user found
             $_SESSION['loginError'] = "userNotFound";
             header("Location: login.php");
             exit();
         }
     }
 }
+
+

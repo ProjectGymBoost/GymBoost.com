@@ -1,6 +1,19 @@
 <?php
 session_start();
-include("../assets/shared/auth.php");
+include(__DIR__ . '/../assets/shared/connect.php');
+include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
+
+if (empty($_SESSION['userID'])) {
+    header("Location: ../login.php");
+    exit();
+}
+if ($_SESSION['role'] === 'user') {
+    header("Location: ../user/index.php");
+    exit();
+}
+if (!empty($_SESSION['userID'])) {
+    $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,51 +45,61 @@ include("../assets/shared/auth.php");
                 <a href="../checkin.php"><button class="btn btn-primary">Check-in</button></a>
             </div>
 
-            <!-- Controls: Search, Sort By, Order By, Apply Button -->
-            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-
+            <!-- Controls Form -->
+            <form method="GET" action="" class="d-flex flex-wrap justify-content-center gap-3 mb-4">
                 <!-- Search -->
                 <div class="flex-grow-1 flex-sm-grow-0 input-group" style="max-width: 400px;">
-                    <input type="search" id="searchInput" class="form-control" placeholder="Search users...">
-                    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+                    <input type="search" name="search" id="searchInput" class="form-control"
+                        placeholder="Search users..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
                 <!-- Sort By -->
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
-                    <select id="sortBy" class="form-select">
-                        <option selected disabled>Sort By</option>
-                        <option value="first_name">First Name</option>
-                        <option value="last_name">Last Name</option>
-                        <option value="last_name">Date</option>
+                    <select name="sortBy" class="form-select">
+                        <option disabled>Sort By</option>
+                        <option value="attendanceID" <?= ($_GET['sortBy'] ?? '') === 'attendanceID' ? 'selected' : '' ?>>Attendance ID
+                        </option>
+                        <option value="firstName" <?= ($_GET['sortBy'] ?? '') === 'firstName' ? 'selected' : '' ?>>
+                            First Name</option>
+                        <option value="lastName" <?= ($_GET['sortBy'] ?? '') === 'lastName' ? 'selected' : '' ?>>Last
+                            Name</option>
+                        <option value="checkinDate" <?= ($_GET['sortBy'] ?? '') === 'checkinDate' ? 'selected' : '' ?>>
+                            Date</option>
                     </select>
                 </div>
 
                 <!-- Order By -->
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
-                    <select id="orderBy" class="form-select">
-                        <option selected disabled>Order</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                    <select name="orderBy" class="form-select">
+                        <option disabled>Order</option>
+                        <option value="ASC" <?= strtoupper($_GET['orderBy'] ?? '') === 'ASC' ? 'selected' : '' ?>>
+                            Ascending</option>
+                        <option value="DESC" <?= strtoupper($_GET['orderBy'] ?? '') === 'DESC' ? 'selected' : '' ?>>
+                            Descending</option>
                     </select>
                 </div>
-            </div>
 
-            <!-- Pagination and Add New Button -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
+                <input type="hidden" name="entriesCount" value="<?php echo $entriesCount; ?>">
+            </form>
+            <!-- End Controls Form -->
+
+             <!-- Pagination and Add New Button -->
+            <form method="GET" action="" class="d-flex justify-content-between align-items-center mb-3">
                 <div class="small text-muted">
                     Show
-                    <select id="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
+                    <select name="entriesCount" class="form-select d-inline-block w-auto mx-1 small text-muted"
+                        onchange="this.form.submit()">
+                        <option value="5" <?= ($_GET['entriesCount'] ?? '') == '5' ? 'selected' : '' ?>>5</option>
+                        <option value="10" <?= ($_GET['entriesCount'] ?? '') == '10' ? 'selected' : '' ?>>10</option>
+                        <option value="25" <?= ($_GET['entriesCount'] ?? '') == '25' ? 'selected' : '' ?>>25</option>
+                        <option value="50" <?= ($_GET['entriesCount'] ?? '') == '50' ? 'selected' : '' ?>>50</option>
                     </select>
                     entries
                 </div>
+            </form>
 
-            </div>
-
-            <!-- User Table -->
+            <!-- Attendance Table -->
             <div class="row">
                 <div class="table-responsive">
                     <table class="table table-striped table-borderless">
@@ -89,172 +112,80 @@ include("../assets/shared/auth.php");
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
                         </thead>
-
-                        <!-- User Data -->
                         <tbody>
-                            <tr>
-                                <td scope="row">1</td>
-                                <td>Jon</td>
-                                <td>Doe</td>
-                                <td>2025-07-01</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendance1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                            <?php if (empty($userInfoArray)): ?>
+                                <tr>
+                                    <td colspan="5" class="text-center" style="color: red; font-weight: bold;">NO ATTENDANCE
+                                        DATA AVAILABLE</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($userInfoArray as $info): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($info['attendanceID']) ?></td>
+                                        <td><?= htmlspecialchars($info['firstName']) ?></td>
+                                        <td><?= htmlspecialchars($info['lastName']) ?></td>
+                                        <td><?= htmlspecialchars($info['checkinDate']) ?></td>
+                                        <td>
+                                            <li style="display: flex; justify-content: center;">
+                                                <a style="color: red; text-decoration: none;" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteUserModal<?= $info['userID']; ?>">
+                                                    <i class="bi bi-trash3 px-1"></i>
+                                                </a>
+                                            </li>
+                                        </td>
+                                    </tr>
 
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>Jenna Miles</td>
-                                <td>Reyes</td>
-                                <td>2025-07-01</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendance1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                                    <!-- Modals -->
+                                    <?php include('../assets/php/modals/admin/attendance.php'); ?>
 
-                            <tr>
-                                <td scope="row">3</td>
-                                <td>Jose</td>
-                                <td>Rizal</td>
-                                <td>2025-07-02</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendance1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td scope="row">4</td>
-                                <td>Emily</td>
-                                <td>Brown</td>
-                                <td>2025-07-02</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendance1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td scope="row">5</td>
-                                <td>Michael</td>
-                                <td>Johnson</td>
-                                <td>2025-07-03</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <li>
-                                        <a style="color: red;" data-bs-toggle="modal"
-                                            data-bs-target="#deleteAttendance1Modal">
-                                            <i class="bi bi-trash3 px-2"></i>
-                                        </a>
-                                    </li>
-                                </td>
-                            </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <!-- End Attendance Table -->
 
-            <!-- Delete Attendance Modal -->
-            <div class="modal fade" id="deleteAttendance1Modal" tabindex="-1"
-                aria-labelledby="deleteAttendance1ModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px;">
-                        <!-- Header -->
-                        <div
-                            style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                            <h4 class="modal-title text-center subheading" id="deleteAttendance1ModalLabel"
-                                style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                                DELETE ATTENDANCE
-                            </h4>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"
-                                style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body text-center" style="padding: 1.5rem;">
-                            <p style="margin: 0; font-size: 16px; color: black;">
-                                Are you sure you want to delete <strong>Jon Doe's</strong> attendance? <br><br>If you
-                                decided to delete this user's attendance, all data related to it will also be deleted.
-                            </p>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                CANCEL
-                            </button>
-                            <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;"
-                                data-bs-toggle="modal" data-bs-target="#confirmdeleteAttendance1Modal"
-                                data-bs-dismiss="modal">
-                                DELETE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Confirm Delete Attendance Modal -->
-            <div class="modal fade" id="confirmdeleteAttendance1Modal" tabindex="-1"
-                aria-labelledby="confirmDeleteAttendanceModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-                        <div class="modal-header" style="border: none;">
-                            <h4 class="modal-title heading text-center w-100 text-black"
-                                id="confirmDeleteAttendanceModalLabel" style="margin: 0;">
-                                ATTENDANCE DELETED
-                            </h4>
-                        </div>
-                        <div class="modal-body text-center text-black">
-                            <strong>Jon Doe's</strong> attendance has been successfully deleted.
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                CLOSE
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Pagination Info -->
+            <!-- Bottom Pagination -->
             <div class="d-flex justify-content-between align-items-center">
                 <div class="small text-muted">
-                    Showing 2 of 3 entries
+                    Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <?php
+                        $range = 1; 
+                        $start = max(1, $currentPage - $range);
+                        $end = min($totalPages, $currentPage + $range);
+                        if ($currentPage > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Previous">&laquo;</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php for ($i = $start; $i <= $end; $i++): ?>
+                            <?php $isActive = $i == $currentPage; ?>
+                            <li class="page-item <?= $isActive ? 'active' : '' ?>">
+                                <a class="page-link"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- Next Arrow -->
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Next">&raquo;</a>
+                            </li>
+                        <?php endif; ?>
+
                     </ul>
                 </nav>
             </div>
@@ -262,8 +193,50 @@ include("../assets/shared/auth.php");
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-    crossorigin="anonymous"></script>
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form[method="get"]');
+
+            let debounceTimer;
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function () {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    form.submit();
+                }, 500);
+            });
+        });
+        if (searchInput && searchInput.value) {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+            }, 100);
+        }
+    </script>
+
+    <script>
+        document.querySelectorAll("select[name='sortBy'], select[name='orderBy']").forEach(select => {
+            select.addEventListener('change', () => {
+                select.form.submit();
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('hidden.bs.modal', function () {
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => backdrop.remove());
+
+            if (document.querySelectorAll('.modal.show').length === 0) {
+                document.body.classList.remove('modal-open');
+                document.body.style.paddingRight = '';
+            }
+        });
+    </script>
+
 </body>
 
 </html>

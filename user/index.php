@@ -1,5 +1,10 @@
 <?php
-session_start();
+include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
+include(__DIR__ . '/../assets/php/processes/user/profile.php');
+// Store session values 
+$userID = $_SESSION['userID'];
+$email = $_SESSION['email'] ?? "";
+
 if (empty($_SESSION['userID'])) {
     header("Location: ../login.php");
     exit();
@@ -9,12 +14,13 @@ if (empty($_SESSION['userID'])) {
     exit();
 }
 if ($_SESSION['role'] === 'admin') {
-    header("Location: ../admin/index.php"); 
+    header("Location: ../admin/index.php");
     exit();
 }
 if (!empty($_SESSION['userID'])) {
     $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
 }
+
 
 $page = "dashboard";
 
@@ -56,7 +62,31 @@ if (isset($_GET['page'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="../assets/css/styles.css" rel="stylesheet" />
     <link href="../assets/css/user.css" rel="stylesheet" />
+    <style>
+        /* CSS for Profile Pic */
+        .border-updated {
+            border: 4px solid green;
+            transition: border 0.5s ease;
+        }
 
+        .border-normal {
+            border: 2px solid #000;
+        }
+
+        input.is-valid {
+            border-color: #28a745;
+            border-width: 2px !important;
+        }
+
+        input.is-invalid {
+            border-color: #dc3545;
+            border-width: 2px !important;
+        }
+
+        .invalid-feedback {
+            position: absolute;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -123,10 +153,20 @@ if (isset($_GET['page'])) {
     <!-- Main Content -->
     <div id="mainContent" class="flex-grow-1" style="margin-top: 87px;">
         <div style="overflow-x: hidden;">
-            
+
             <?php include("views/" . $page . ".php"); ?>
+            <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
+
         </div>
     </div>
+
+    <script src="../assets/js/profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
 
     <script>
         document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
@@ -136,21 +176,79 @@ if (isset($_GET['page'])) {
             });
         });
 
-        
+        window.addEventListener('DOMContentLoaded', () => {
+            const profileImage = document.getElementById('profilePreview');
+
+            if (profileImage.classList.contains('border-updated')) {
+                setTimeout(() => {
+                    profileImage.classList.remove('border-updated');
+                    profileImage.classList.add('border-normal');
+                }, 3000);
+            }
+        });
+
+        // Function for profile pic preview
+        function attachProfilePreview() {
+            const browseImageInput = document.getElementById('fileInput');
+            const profilePicPreview = document.getElementById('profilePreview2');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+            if (browseImageInput && profilePicPreview && fileNameDisplay) {
+                browseImageInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        fileNameDisplay.value = file.name;
+
+                        const reader = new FileReader();
+                        reader.onload = function (event) {
+                            profilePicPreview.src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        fileNameDisplay.value = '';
+                        console.error('Invalid file type selected.');
+                    }
+                });
+            } else {
+                console.error('Required elements not found.');
+            }
+        }
+        attachProfilePreview();
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var modalToShow = "<?php echo isset($modalToShow) ? $modalToShow : ''; ?>";
+
+            if (modalToShow) {
+                var modal = new bootstrap.Modal(document.getElementById(modalToShow));
+                modal.show();
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.toggle-password').forEach(function (toggleButton) {
+                toggleButton.addEventListener('click', function () {
+                    const targetId = this.getAttribute('data-target');
+                    const passwordField = document.getElementById(targetId);
+                    const icon = this.querySelector('i');
+
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        icon.classList.remove('bi-eye-slash');
+                        icon.classList.add('bi-eye');
+                    } else {
+                        passwordField.type = 'password';
+                        icon.classList.remove('bi-eye');
+                        icon.classList.add('bi-eye-slash');
+                    }
+                });
+            });
+        });
+
+
     </script>
 
-    <script>
-  // Store in sessionStorage for faster access
-  sessionStorage.setItem("lastVisitedPage", window.location.href);
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -3,6 +3,12 @@ session_start();
 include('assets/shared/connect.php');
 date_default_timezone_set('Asia/Manila');
 include("assets/php/processes/checkin.php");
+
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +28,7 @@ include("assets/php/processes/checkin.php");
             <div class="col-12">
                 <div class="d-flex justify-content-center align-items-center vh-100">
                     <div class="text-center" style="width: 100%; max-width: 500px;">
-                        <a href="login.php">
+                        <a href="?logout=true">
                             <img src="assets/img/logo/officialLogo.png" alt="GymBoost" width="120" class="mb-4">
                         </a>
                         <div class="heading my-3">RFID CHECK-IN</div>

@@ -1,6 +1,4 @@
 <?php
-include("../assets/shared/connect.php");
-
 $userID = $_SESSION['userID'];
 
 // ANNOUNCEMENTS QUERY

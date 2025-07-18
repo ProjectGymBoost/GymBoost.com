@@ -62,9 +62,14 @@ include("assets/php/processes/login.php");
 <body style="background-color: var(--bgColor); height: 100vh; margin: 0; overflow: hidden;">
 
   <form method="POST">
-    <?php if (!empty($loginError)): ?>
-      <input type="hidden" id="loginError" value="<?php echo htmlspecialchars($loginError); ?>">
+    <?php if (isset($_SESSION['loginError'])): ?>
+      <div id="loginError" style="display: none;">
+        <?php echo htmlspecialchars($_SESSION['loginError']); ?>
+      </div>
+      <?php unset($_SESSION['loginError']); // Clear the error after it's used ?>
     <?php endif; ?>
+
+
 
     <!-- Navbar -->
     <nav class="navbar" style="background-color: var(--primaryColor);">
@@ -97,10 +102,18 @@ include("assets/php/processes/login.php");
               <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
               <label for="password">Password</label>
               <div id="passwordError" class="invalid-feedback text-start"></div>
-              <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor);
-                        text-shadow: 0 0 1px var(--primaryColor);"></i>
+              <i class="bi bi-eye-slash position-absolute" id="togglePassword"
+                style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: var(--primaryColor); text-shadow: 0 0 1px var(--primaryColor);"></i>
+
+              <!-- Display the login error if exists -->
+              <?php if (!empty($loginError)): ?>
+                <div id="loginError" class="invalid-feedback text-start">
+                  <?php echo htmlspecialchars($loginError); ?>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
+
 
           <!-- Login Button -->
           <button name="btnLogin" type="submit" class="btn btn-primary w-100 mt-2 mb-2"
@@ -139,6 +152,7 @@ include("assets/php/processes/login.php");
       });
     }
   </script>
+
   <script src="assets/js/login.js"></script>
 
 
