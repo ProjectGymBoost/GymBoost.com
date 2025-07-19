@@ -137,11 +137,13 @@
 
                 <?php
                 $rankBadgeClass = 'border border-dark text-dark';
-                if ($yourRank === 1) {
+                $rankInt = (int) $yourRank;
+
+                if ($rankInt === 1) {
                     $rankBadgeClass = 'bg-warning text-dark';
-                } elseif ($yourRank === 2) {
+                } elseif ($rankInt === 2) {
                     $rankBadgeClass = 'bg-secondary text-white';
-                } elseif ($yourRank === 3) {
+                } elseif ($rankInt === 3) {
                     $rankBadgeClass = 'bg-orange text-white';
                 }
                 ?>
