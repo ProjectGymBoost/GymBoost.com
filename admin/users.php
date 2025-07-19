@@ -70,6 +70,8 @@ if (isset($_SESSION['userCreated'])) {
                             Name</option>
                         <option value="lastName" <?= ($_GET['sortBy'] ?? '') === 'lastName' ? 'selected' : '' ?>>Last Name
                         </option>
+                        <option value="state" <?= ($_GET['sortBy'] ?? '') === 'state' ? 'selected' : '' ?>>State
+                        </option>
                         <option value="points" <?= ($_GET['sortBy'] ?? '') === 'points' ? 'selected' : '' ?>>Points
                         </option>
                     </select>
@@ -120,6 +122,7 @@ if (isset($_SESSION['userCreated'])) {
                                 <th scope="col">ID</th>
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
+                                <th scope="col">STATE</th>
                                 <th scope="col">POINTS</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
@@ -136,8 +139,11 @@ if (isset($_SESSION['userCreated'])) {
                             <?php foreach ($userInfoArray as $info): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($info['userID']) ?></td>
-                                    <td><?= htmlspecialchars($info['firstName']) ?></td>
-                                    <td><?= htmlspecialchars($info['lastName']) ?></td>
+                                    <td><?= htmlspecialchars(substr($info['firstName'], 0, length: 30)) ?><?= strlen($info['firstName']) > 30 ? '...' : '' ?>
+                                    </td>
+                                    <td><?= htmlspecialchars(substr($info['lastName'], 0, length: 30)) ?><?= strlen($info['lastName']) > 30 ? '...' : '' ?>
+                                    </td>
+                                    <td><?= htmlspecialchars($info['state']) ?></td>
                                     <td><?= htmlspecialchars($info['points']) ?></td>
                                     <td>
                                         <li style="display: flex; justify-content: center;">
@@ -163,18 +169,21 @@ if (isset($_SESSION['userCreated'])) {
                 <div class="small text-muted">
                     Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
                 </div>
-
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
-                        <?php if ($currentPage > 1): ?>
+                        <?php
+                        $range = 1;
+                        $start = max(1, $currentPage - $range);
+                        $end = min($totalPages, $currentPage + $range);
+                        if ($currentPage > 1): ?>
                             <li class="page-item">
-                                <a class="page-link" style="background-color: #ffffff;"
+                                <a class="page-link"
                                     href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Previous">&laquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <?php for ($i = $start; $i <= $end; $i++): ?>
                             <?php $isActive = $i == $currentPage; ?>
                             <li class="page-item <?= $isActive ? 'active' : '' ?>">
                                 <a class="page-link"
@@ -183,15 +192,17 @@ if (isset($_SESSION['userCreated'])) {
                                     <?= $i ?>
                                 </a>
                             </li>
-                        <?php endfor ?>
+                        <?php endfor; ?>
 
+                        <!-- Next Arrow -->
                         <?php if ($currentPage < $totalPages): ?>
                             <li class="page-item">
-                                <a class="page-link" style="background-color: #ffffff;"
+                                <a class="page-link"
                                     href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Next">&raquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
+
                     </ul>
                 </nav>
             </div>

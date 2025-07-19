@@ -6,11 +6,12 @@ $userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
 $searchCondition = '';
 
 if (!empty($userSearch)) {
-    $searchCondition = "WHERE (
+    $searchCondition = "AND (
         CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
         OR users.userID LIKE '%$userSearch%' 
         OR users.firstName LIKE '%$userSearch%' 
         OR users.lastName LIKE '%$userSearch%' 
+        OR users.state LIKE '%$userSearch%'
         OR users.points LIKE '%$userSearch%'
     )";
 }
@@ -20,7 +21,7 @@ if (!empty($userSearch)) {
 $sortBy = $_GET['sortBy'] ?? 'none';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
-$allowedSortColumns = ['firstName', 'lastName', 'points'];
+$allowedSortColumns = ['firstName', 'lastName', 'state', 'points'];
 $allowedOrder = ['ASC', 'DESC'];
 
 if (in_array($sortBy, $allowedSortColumns) && in_array($orderBy, $allowedOrder)) {
@@ -44,11 +45,15 @@ $offset = ($currentPage - 1) * $entriesCount;
 $totalQuery = "
     SELECT COUNT(*) AS total
     FROM users
+    WHERE role = 'user'
     $searchCondition
 ";
 $totalResult = executeQuery($totalQuery);
 $totalEntries = mysqli_fetch_assoc($totalResult)['total'];
 $totalPages = ceil($totalEntries / $entriesCount);
+$range = 1;
+$start = max(1, $currentPage - $range);
+$end = min($totalPages, $currentPage + $range);
 
 $startEntry = ($totalEntries > 0) ? $offset + 1 : 0;
 $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 0;
@@ -58,6 +63,7 @@ $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 
 $userInfoQuery = "
     SELECT *
     FROM users
+    WHERE role = 'user'
     $searchCondition
     $orderCondition
     LIMIT $entriesCount OFFSET $offset
@@ -93,4 +99,3 @@ if (isset($_POST['btnDelete'])) {
     );
     exit;
 }
-
