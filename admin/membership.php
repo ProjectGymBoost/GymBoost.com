@@ -146,34 +146,37 @@ $showDeleteModal = isset($membershipDeleted);
                     Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
                 </div>
 
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation">
                     <ul class="pagination mt-3">
+                        <!-- Previous Arrow -->
                         <?php if ($currentPage > 1): ?>
                             <li class="page-item">
-                                <a class="page-link" style="background-color: #ffffff;"
-                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                <a class="page-link"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= htmlspecialchars($search) ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Previous">&laquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <!-- Page Numbers -->
+                        <?php for ($i = $start; $i <= $end; $i++): ?>
                             <?php $isActive = $i == $currentPage; ?>
                             <li class="page-item <?= $isActive ? 'active' : '' ?>">
                                 <a class="page-link"
-                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= htmlspecialchars($search) ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
                                     <?= $i ?>
                                 </a>
                             </li>
-                        <?php endfor ?>
+                        <?php endfor; ?>
 
+                        <!-- Next Arrow -->
                         <?php if ($currentPage < $totalPages): ?>
                             <li class="page-item">
-                                <a class="page-link" style="background-color: #ffffff;"
-                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                <a class="page-link"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= htmlspecialchars($search) ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Next">&raquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
@@ -198,6 +201,14 @@ $showDeleteModal = isset($membershipDeleted);
                 }, 500);
             });
         });
+
+        // FOCUS BACK TO SEARCH INPUT AFTER RELOAD
+        if (searchInput && searchInput.value) {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+            }, 100);
+        }
     </script>
 
     <script>
