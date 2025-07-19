@@ -1,4 +1,6 @@
-<!-- REWARD -->
+<?php include("../assets/php/processes/user/achievements.php"); ?>
+
+<!-- ACHIEVEMENTS -->
 <div class="container">
 
     <!-- BADGES -->
@@ -65,20 +67,33 @@
     </div>
 
     <!-- COMMUNITY LEADERBOARD -->
-    <div class="heading mt-5">COMMUNITY LEADERBOARD</div>
+    <div id="leaderboard" class="heading mt-5">COMMUNITY LEADERBOARD</div>
     <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
     <div class="container my-5 px-0">
         <div class="bg-container text-white p-3 p-md-5 rounded-4">
+
             <!-- Filter -->
             <div class="row row-cols-1 row-cols-md-3 g-2 g-md-5 mb-4 mb-md-5 mx-0">
                 <div class="col px-1">
-                    <button class="btn btn-light rounded-pill px-2 px-md-4 fw-bold w-100">WEEKLY</button>
+                    <a href="<?= $baseURL ?>&filter=weekly#leaderboard"
+                        class="btn rounded-pill px-2 px-md-4 fw-bold w-100 <?= $filter === 'weekly' ? 'bg-white text-dark' : 'text-white' ?>"
+                        style="border: 2px solid white;">
+                        WEEKLY
+                    </a>
                 </div>
                 <div class="col px-1">
-                    <button class="btn btn-light rounded-pill px-2 px-md-4 fw-bold w-100">MONTHLY</button>
+                    <a href="<?= $baseURL ?>&filter=monthly#leaderboard"
+                        class="btn rounded-pill px-2 px-md-4 fw-bold w-100 <?= $filter === 'monthly' ? 'bg-white text-dark' : 'text-white' ?>"
+                        style="border: 2px solid white;">
+                        MONTHLY
+                    </a>
                 </div>
                 <div class="col px-1">
-                    <button class="btn btn-light rounded-pill px-2 px-md-4 fw-bold w-100">ALL TIME</button>
+                    <a href="<?= $baseURL ?>&filter=all#leaderboard"
+                        class="btn rounded-pill px-2 px-md-4 fw-bold w-100 <?= $filter === 'all' ? 'bg-white text-dark' : 'text-white' ?>"
+                        style="border: 2px solid white;">
+                        ALL TIME
+                    </a>
                 </div>
             </div>
 
@@ -90,57 +105,79 @@
             </div>
 
             <!-- Leaderboard Items -->
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
-                <div class="col-3 col-sm-2">
-                    <span class="badge bg-warning py-2 py-lg-3 px-3 fw-bold">1</span>
+            <?php foreach ($leaderboard as $entry): ?>
+                <?php
+                $badgeClass = 'border border-dark text-dark';
+                if ($entry['rank'] === 1)
+                    $badgeClass = 'bg-warning text-dark';
+                elseif ($entry['rank'] === 2)
+                    $badgeClass = 'bg-secondary text-white';
+                elseif ($entry['rank'] === 3)
+                    $badgeClass = 'bg-orange text-white';
+                ?>
+                <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
+                    <div class="col-3 col-sm-2">
+                        <span class="badge <?php echo $badgeClass; ?> py-2 py-lg-3 px-3 fw-bold">
+                            <?php echo $entry['rank']; ?>
+                        </span>
+                    </div>
+                    <div class="col ps-2 fw-semibold text-truncate">
+                        <?php echo htmlspecialchars($entry['username']); ?>
+                    </div>
+                    <div class="col-3 col-sm-2 fw-bold text-end pe-1">
+                        <?php echo $entry['points']; ?>
+                    </div>
                 </div>
-                <div class="col ps-2 fw-semibold text-truncate">John Doe</div>
-                <div class="col-3 col-sm-2 fw-bold text-end pe-1">1500</div>
-            </div>
+            <?php endforeach; ?>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
-                <div class="col-3 col-sm-2">
-                    <span class="badge bg-secondary py-2 py-lg-3 px-3 fw-bold">2</span>
+            <?php if ($yourRank !== null): ?>
+                <div class="text-center text-white fw-bold text-uppercase mt-4 mt-md-5 mb-3 mb-md-4">
+                    Your Current Ranking
                 </div>
-                <div class="col ps-2 fw-semibold text-truncate">Jane Smith</div>
-                <div class="col-3 col-sm-2 fw-bold text-end pe-1">1400</div>
-            </div>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
-                <div class="col-3 col-sm-2">
-                    <span class="badge bg-orange text-white py-2 py-lg-3 px-3 fw-bold">3</span>
-                </div>
-                <div class="col ps-2 fw-semibold text-truncate">John Lloyd Cruz</div>
-                <div class="col-3 col-sm-2 fw-bold text-end pe-1">1300</div>
-            </div>
+                <?php
+                $rankBadgeClass = 'border border-dark text-dark';
+                if ($yourRank === 1) {
+                    $rankBadgeClass = 'bg-warning text-dark';
+                } elseif ($yourRank === 2) {
+                    $rankBadgeClass = 'bg-secondary text-white';
+                } elseif ($yourRank === 3) {
+                    $rankBadgeClass = 'bg-orange text-white';
+                }
+                ?>
 
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
-                <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">4</span>
+                <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-3 mx-0">
+                    <div class="col-3 col-sm-2">
+                        <span class="badge <?php echo $rankBadgeClass; ?> py-2 py-lg-3 px-3 fw-bold">
+                            <?php echo $yourRank; ?>
+                        </span>
+                    </div>
+                    <div class="col ps-2 fw-semibold text-truncate">You</div>
+                    <div class="col-3 col-sm-2 text-end pe-1 fw-bold">
+                        <?php echo $yourPoints; ?>
+                    </div>
                 </div>
-                <div class="col ps-2 text-truncate">LeBron James</div>
-                <div class="col-3 col-sm-2 text-end pe-1">1200</div>
-            </div>
-
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-4 mx-0">
-                <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">5</span>
-                </div>
-                <div class="col ps-2 text-truncate">Jasmine Air</div>
-                <div class="col-3 col-sm-2 text-end pe-1">1100</div>
-            </div>
-
-            <!-- Your Rank -->
-            <div class="text-center text-white fw-bold text-uppercase mt-4 mt-md-5 mb-3 mb-md-4">Your Current Ranking</div>
-            <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-3 mx-0">
-                <div class="col-3 col-sm-2">
-                    <span class="badge border border-dark py-2 py-lg-3 px-3 fw-bold text-dark">6</span>
-                </div>
-                <div class="col ps-2 fw-semibold text-truncate">You</div>
-                <div class="col-3 col-sm-2 text-end pe-1 fw-bold">1000</div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // JUMP TO LEADERBOARD SECTION
+            if (window.location.hash === "#leaderboard") {
+                const html = document.documentElement;
+                const originalScrollBehavior = html.style.scrollBehavior;
+                html.style.scrollBehavior = "auto";
+
+                const target = document.querySelector('#leaderboard');
+                if (target) {
+                    target.scrollIntoView();
+                }
+
+                html.style.scrollBehavior = originalScrollBehavior;
+            }
+        });
+    </script>
 </div>
 
 <!-- Dialogflow Chatbot -->
