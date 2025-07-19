@@ -13,6 +13,7 @@ if (mysqli_num_rows($badgeInfoResult) > 0) {
     }
 }
 
+$badgeImageDir = __DIR__ . '/../../../../assets/img/badges/';
 
 // (BADGES) - ADD / INSERT QUERY
 if (isset($_POST['btnAdd'])) {
@@ -23,14 +24,13 @@ if (isset($_POST['btnAdd'])) {
 
     // Handle uploaded icon
     if (!empty($_FILES['iconUrl']['name'])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/';
 
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0755, true);
+        if (!is_dir($badgeImageDir)) {
+            mkdir($badgeImageDir, 0755, true);
         }
 
         $fileName = basename($_FILES['iconUrl']['name']);
-        $uploadPath = $targetDir . $fileName;
+        $uploadPath = $badgeImageDir . $fileName;
 
         $allowedTypes = ['image/jpeg', 'image/png'];
         $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
@@ -71,15 +71,14 @@ if (isset($_POST['btnEdit'])) {
 
     // Handle uploaded icon
     if (!empty($_FILES['iconUrl']['name'])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/';
 
         // Create the folder if it doesn't exist
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0755, true);
+        if (!is_dir($badgeImageDir)) {
+            mkdir($badgeImageDir, 0755, true);
         }
 
         $fileName = basename($_FILES['iconUrl']['name']);
-        $uploadPath = $targetDir . $fileName;
+        $uploadPath = $badgeImageDir . $fileName;
 
         $allowedTypes = ['image/jpeg', 'image/png'];
         $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
@@ -100,7 +99,7 @@ if (isset($_POST['btnEdit'])) {
 
                 // Delete the old image after successful upload
                 if ($oldIcon) {
-                    $oldIconPath = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/' . $oldIcon;
+                    $oldIconPath = $badgeImageDir . $oldIcon;
                     if (file_exists($oldIconPath) && $oldIcon !== $fileName) {
                         unlink($oldIconPath);
                     }
@@ -145,7 +144,7 @@ if (isset($_POST['btnDelete'])) {
         $iconUrl = $badgeToDelete['iconUrl'];
 
         // Delete the uploaded icon file from the server directory
-        $filePath = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/' . $iconUrl;
+        $filePath = $badgeImageDir . $iconUrl;
         if (file_exists($filePath)) {
             unlink($filePath);
         }
