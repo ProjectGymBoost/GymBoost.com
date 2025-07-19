@@ -6,6 +6,10 @@ include("../assets/shared/connect.php");
 $currentPage = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $entriesCount = isset($_GET['entriesCount']) ? (int) $_GET['entriesCount'] : 5;
 
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : '';
+$orderBy = isset($_GET['orderBy']) ? $_GET['orderBy'] : '';
+
 include("../assets/php/processes/admin/announcement.php");
 ?>
 
@@ -102,34 +106,41 @@ include("../assets/php/processes/admin/announcement.php");
                 </div>
                 <nav aria-label="Page navigation">
                     <ul class="pagination mt-3">
+                        <?php
+                        $range = 1;
+                        $start = max(1, $currentPage - $range);
+                        $end = min($totalPages, $currentPage + $range);
+                        ?>
+
+                        <!-- Previous Arrow -->
                         <?php if ($currentPage > 1): ?>
                             <li class="page-item">
                                 <a class="page-link"
-                                style="background-color: #ffffff;"
-                                href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>"
-                                aria-label="Previous">&laquo;</a>
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Previous">&laquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <!-- Page Numbers -->
+                        <?php for ($i = $start; $i <= $end; $i++): ?>
                             <?php $isActive = $i == $currentPage; ?>
                             <li class="page-item <?= $isActive ? 'active' : '' ?>">
                                 <a class="page-link"
-                                href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>"
-                                style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
                                     <?= $i ?>
                                 </a>
                             </li>
-                        <?php endfor ?>
+                        <?php endfor; ?>
 
+                        <!-- Next Arrow -->
                         <?php if ($currentPage < $totalPages): ?>
                             <li class="page-item">
                                 <a class="page-link"
-                                style="background-color: #ffffff;"
-                                href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>"
-                                aria-label="Next">&raquo;</a>
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    aria-label="Next">&raquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>

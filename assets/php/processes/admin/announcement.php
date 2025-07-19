@@ -14,6 +14,10 @@ $totalResult = executeQuery($totalQuery);
 $totalEntries = mysqli_fetch_assoc($totalResult)['total'];
 $totalPages = ceil($totalEntries / $entriesCount);
 
+$range = 1;
+$start = max(1, $currentPage - $range);
+$end = min($totalPages, $currentPage + $range);
+
 $startEntry = ($totalEntries > 0) ? $offset + 1 : 0;
 $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 0;
 

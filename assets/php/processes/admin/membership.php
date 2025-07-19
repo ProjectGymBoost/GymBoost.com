@@ -52,6 +52,10 @@ $countResult = executeQuery($countQuery);
 $totalEntries = mysqli_fetch_assoc($countResult)['total'];
 $totalPages = ceil($totalEntries / $entriesCount);
 
+$range = 1;
+$start = max(1, $currentPage - $range);
+$end = min($totalPages, $currentPage + $range);
+
 $startEntry = ($totalEntries > 0) ? $offset + 1 : 0;
 $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 0;
 
@@ -147,3 +151,31 @@ if (isset($_POST['btnDeleteMembership'])) {
         exit;
     }
 }
+
+$today = date('Y-m-d');
+
+// Expire members
+$expireQuery = "
+    UPDATE users u
+    JOIN (
+        SELECT um.userID, MAX(um.endDate) AS latestEndDate
+        FROM user_memberships um
+        GROUP BY um.userID
+    ) AS latest ON u.userID = latest.userID
+    SET u.state = 'Inactive'
+    WHERE latest.latestEndDate < '$today';
+";
+executeQuery($expireQuery);
+
+// Reactivate valid members
+$activateQuery = "
+    UPDATE users u
+    JOIN (
+        SELECT um.userID, MAX(um.endDate) AS latestEndDate
+        FROM user_memberships um
+        GROUP BY um.userID
+    ) AS latest ON u.userID = latest.userID
+    SET u.state = 'Active'
+    WHERE latest.latestEndDate >= '$today';
+";
+executeQuery($activateQuery);
