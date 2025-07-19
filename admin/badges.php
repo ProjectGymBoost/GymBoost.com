@@ -211,38 +211,42 @@ include("../assets/php/processes/admin/badges.php");
             <!-- Bottom Pagination Info -->
             <div class="d-flex justify-content-between align-items-center">
                 <div class="small text-muted">
-                    Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?>
-                    entries
+                    Showing <?= $startEntry ?> to <?= $endEntry ?> of <?= $totalEntries ?> entries
                 </div>
-
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
-                        <?php if ($currentPage > 1): ?>
+                        <?php
+                        $range = 1;
+                        $start = max(1, $currentPage - $range);
+                        $end = min($totalPages, $currentPage + $range);
+                        if ($currentPage > 1): ?>
                             <li class="page-item">
-                                <a class="page-link" style="background-color: #ffffff;"
-                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
+                                <a class="page-link"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Previous">&laquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <?php for ($i = $start; $i <= $end; $i++): ?>
                             <?php $isActive = $i == $currentPage; ?>
                             <li class="page-item <?= $isActive ? 'active' : '' ?>">
                                 <a class="page-link"
-                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
                                     <?= $i ?>
                                 </a>
                             </li>
-                        <?php endfor ?>
+                        <?php endfor; ?>
 
+                        <!-- Next Arrow -->
                         <?php if ($currentPage < $totalPages): ?>
                             <li class="page-item">
-                                <a class="page-link" style="background-color: #ffffff;"
-                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>#userBadgeSection"
+                                <a class="page-link"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Next">&raquo;</a>
                             </li>
-                        <?php endif ?>
+                        <?php endif; ?>
+
                     </ul>
                 </nav>
             </div>

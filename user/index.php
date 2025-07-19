@@ -33,8 +33,8 @@ if (isset($_GET['page'])) {
         case "workout":
             $page = "workout";
             break;
-        case "rewards":
-            $page = "rewards";
+        case "achievements":
+            $page = "achievements";
             break;
         case "profile":
             $page = "profile";
@@ -116,8 +116,8 @@ if (isset($_GET['page'])) {
                             echo 'active'; ?>" href="?page=workout">WORKOUT CENTRAL</a>
                     </li>
                     <li class="nav-item py-1 pb-2 px-1">
-                        <a class="nav-link px-4 py-1 <?php if ($page == 'rewards')
-                            echo 'active'; ?>" href="?page=rewards">ACHIEVEMENTS</a>
+                        <a class="nav-link px-4 py-1 <?php if ($page == 'achievements')
+                            echo 'active'; ?>" href="?page=achievements">ACHIEVEMENTS</a>
                     </li>
                 </ul>
 

@@ -13,6 +13,7 @@ if (mysqli_num_rows($badgeInfoResult) > 0) {
     }
 }
 
+$badgeImageDir = __DIR__ . '/../../../../assets/img/badges/';
 
 // (BADGES) - ADD / INSERT QUERY
 if (isset($_POST['btnAdd'])) {
@@ -23,14 +24,13 @@ if (isset($_POST['btnAdd'])) {
 
     // Handle uploaded icon
     if (!empty($_FILES['iconUrl']['name'])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/';
 
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0755, true);
+        if (!is_dir($badgeImageDir)) {
+            mkdir($badgeImageDir, 0755, true);
         }
 
         $fileName = basename($_FILES['iconUrl']['name']);
-        $uploadPath = $targetDir . $fileName;
+        $uploadPath = $badgeImageDir . $fileName;
 
         $allowedTypes = ['image/jpeg', 'image/png'];
         $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
@@ -71,22 +71,39 @@ if (isset($_POST['btnEdit'])) {
 
     // Handle uploaded icon
     if (!empty($_FILES['iconUrl']['name'])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/GymBoost.com/assets/img/badges/';
 
         // Create the folder if it doesn't exist
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0755, true);
+        if (!is_dir($badgeImageDir)) {
+            mkdir($badgeImageDir, 0755, true);
         }
 
         $fileName = basename($_FILES['iconUrl']['name']);
-        $uploadPath = $targetDir . $fileName;
+        $uploadPath = $badgeImageDir . $fileName;
 
         $allowedTypes = ['image/jpeg', 'image/png'];
         $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
 
         if (in_array($fileType, $allowedTypes)) {
+
+            $fetchOldIconQuery = "SELECT iconUrl FROM badges WHERE badgeID = '$badgeID'";
+            $result = executeQuery($fetchOldIconQuery);
+            $oldIcon = null;
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $oldIcon = $row['iconUrl'];
+            }
+
+            // Upload new image
             if (move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
                 $iconUrl = $fileName;
+
+                // Delete the old image after successful upload
+                if ($oldIcon) {
+                    $oldIconPath = $badgeImageDir . $oldIcon;
+                    if (file_exists($oldIconPath) && $oldIcon !== $fileName) {
+                        unlink($oldIconPath);
+                    }
+                }
             } else {
                 echo "Upload failed: Could not move uploaded file.";
                 exit;
@@ -107,8 +124,7 @@ if (isset($_POST['btnEdit'])) {
     executeQuery($editQuery);
 
     header(
-        "Location: " . $_SERVER['PHP_SELF'] .
-        "?edited=1&editBadgeId=" . $badgeID
+        "Location: " . $_SERVER['PHP_SELF'] . "?edited=1&editBadgeId=" . $badgeID
     );
     exit;
 }
@@ -128,7 +144,7 @@ if (isset($_POST['btnDelete'])) {
         $iconUrl = $badgeToDelete['iconUrl'];
 
         // Delete the uploaded icon file from the server directory
-        $filePath = $_SERVER['DOCUMENT_ROOT'] . '/CopyGymboost/' . $iconUrl;
+        $filePath = $badgeImageDir . $iconUrl;
         if (file_exists($filePath)) {
             unlink($filePath);
         }
@@ -153,7 +169,7 @@ $userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
 $searchCondition = '';
 
 if (!empty($userSearch)) {
-    $searchCondition = "WHERE (
+    $searchCondition = "AND (
         user_badges.userBadgeID LIKE '%$userSearch%' 
         OR CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
         OR user_badges.badgeID LIKE '%$userSearch%' 
@@ -191,12 +207,15 @@ $totalQuery = "
     SELECT COUNT(*) AS total
     FROM user_badges
     JOIN users ON user_badges.userID = users.userID
+    WHERE users.role = 'user'
     $searchCondition
 ";
 $totalResult = executeQuery($totalQuery);
 $totalEntries = mysqli_fetch_assoc($totalResult)['total'];
 $totalPages = ceil($totalEntries / $entriesCount);
-
+$range = 1;
+$start = max(1, $currentPage - $range);
+$end = min($totalPages, $currentPage + $range);
 
 $startEntry = ($totalEntries > 0) ? $offset + 1 : 0;
 $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 0;
@@ -211,9 +230,11 @@ $userBadgeInfoQuery = "
         user_badges
     JOIN 
         users ON user_badges.userID = users.userID
+    WHERE 
+        users.role = 'user'
     $searchCondition
     $orderCondition
-    LIMIT $entriesCount offset $offset
+    LIMIT $entriesCount OFFSET $offset
 ";
 
 $userBadgeInfoArray = [];
