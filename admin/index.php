@@ -174,91 +174,23 @@ $membershipData = json_encode($chart->getMembershipData());
                                 <th colspan="4" class="fw-bold text-center">TOP 10 ACTIVE MEMBERS</th>
                             </tr>
                             <tr>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Rank</th>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    User</th>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Workouts this Month</th>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Points</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">Rank</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">User</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">Workouts this Month</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">Points</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="top10Tbody">
                             <tr>
-                                <td class="d-flex align-items-center fw-bold">
-                                    <i class="bi bi-award-fill text-warning me-2"></i> 1
-                                </td>
-                                <td><strong>Jon Doe</strong></td>
-                                <td><strong>20</strong></td>
-                                <td><strong>1500</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center fw-bold">
-                                    <i class="bi bi-award-fill text-primary me-2"></i> 2
-                                </td>
-                                <td><strong>Jenna Miles</strong></td>
-                                <td><strong>18</strong></td>
-                                <td><strong>1400</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center fw-bold">
-                                    <i class="bi bi-award-fill text-secondary me-2"></i> 3
-                                </td>
-                                <td><strong>Jose Rizal</strong></td>
-                                <td><strong>16</strong></td>
-                                <td><strong>1300</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">4</td>
-                                <td>Emily Brown</td>
-                                <td>14</td>
-                                <td>1200</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">5</td>
-                                <td>Michael Johhnson</td>
-                                <td>12</td>
-                                <td>1100</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">6</td>
-                                <td>Sponge Bob</td>
-                                <td>11</td>
-                                <td>1000</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">7</td>
-                                <td>Emily Brown</td>
-                                <td>10</td>
-                                <td>900</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">8</td>
-                                <td>Michael Johhnson</td>
-                                <td>9</td>
-                                <td>800</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">9</td>
-                                <td>Sponge Bob</td>
-                                <td>8</td>
-                                <td>700</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">10</td>
-                                <td>Sponge Bob</td>
-                                <td>7</td>
-                                <td>600</td>
+                                <td colspan="4" class="text-center text-muted">Loading...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- Loading of the Top 10 Active Members -->
+            <script src="../assets/js/admin.js"></script>
 
         </div>
     </div>
