@@ -49,6 +49,8 @@ class ChartData
     public $attendanceData = array();
     public $membershipLabels = array();
     public $membershipData = array();
+    public $ageLabels = array();
+    public $ageData = array();
 
     public function __construct()
     {
@@ -87,8 +89,20 @@ class ChartData
 
     public function loadAttendanceData()
     {
-        $months = ["January", "February", "March", "April", "May", "June",
-           "July", "August", "September", "October", "November", "December"];
+        $months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
 
         $this->attendanceLabels = $months;
         $this->attendanceData = array_fill(0, 12, 0);
@@ -125,6 +139,34 @@ class ChartData
         }
     }
 
+    public function loadAgeDistribution()
+    {
+        date_default_timezone_set('Asia/Manila');
+
+        $this->ageLabels = ["Senior (60+)", "Middle-Aged Adult (40-59)", "Young Adults (20-39)", "Teenagers (13-19)"];
+        $this->ageData = [0, 0, 0, 0];
+
+        $ageQuery = "SELECT birthday FROM users WHERE birthday IS NOT NULL";
+        $ageResult = executeQuery($ageQuery);
+
+        $today = new DateTime();
+
+        while ($userRecord = mysqli_fetch_assoc($ageResult)) {
+            $birthdate = new DateTime($userRecord['birthday']);
+            $ageInYears = $birthdate->diff($today)->y;
+
+            if ($ageInYears >= 60) {
+                $this->ageData[0]++;
+            } elseif ($ageInYears >= 40) {
+                $this->ageData[1]++;
+            } elseif ($ageInYears >= 20) {
+                $this->ageData[2]++;
+            } elseif ($ageInYears >= 13) {
+                $this->ageData[3]++;
+            }
+        }
+    }
+
     public function getAttendanceLabels()
     {
         return $this->attendanceLabels;
@@ -143,6 +185,16 @@ class ChartData
     public function getMembershipData()
     {
         return $this->membershipData;
+    }
+
+    public function getAgeLabels()
+    {
+        return $this->ageLabels;
+    }
+
+    public function getAgeData()
+    {
+        return $this->ageData;
     }
 
     public function getYear()
