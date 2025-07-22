@@ -21,6 +21,7 @@ $stmt = $conn->prepare("
         AND w.status = 'Completed' 
         AND DATE(w.workoutDate) BETWEEN ? AND ?
     WHERE u.state = 'Active'
+    AND u.role = 'user'
     GROUP BY u.userID
     ORDER BY workoutsThisMonth DESC, points DESC
     LIMIT 10
