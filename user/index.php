@@ -1,26 +1,30 @@
 <?php
+
 include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
 include(__DIR__ . '/../assets/php/processes/user/profile.php');
-// Store session values 
-$userID = $_SESSION['userID'];
-$email = $_SESSION['email'] ?? "";
 
+// Redirects
 if (empty($_SESSION['userID'])) {
     header("Location: ../login.php");
     exit();
-} else if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+}
+
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
     session_destroy();
     header("Location: ../login.php");
     exit();
 }
+
 if ($_SESSION['role'] === 'admin') {
     header("Location: ../admin/index.php");
     exit();
 }
-if (!empty($_SESSION['userID'])) {
-    $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
-}
 
+$userID = $_SESSION['userID'];
+$_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
+$email = $_SESSION['email'] ?? "";
+
+include(__DIR__ . '/../assets/php/processes/user/achievements.php');
 
 $page = "dashboard";
 
@@ -127,7 +131,7 @@ if (isset($_GET['page'])) {
                         <a class="nav-link <?php echo $profileActive; ?>" href="?page=profile" id="profileDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false"
                             style="display: flex; align-items: center; gap: 8px; padding: 0; cursor: pointer;">
-                            <img src="../assets/img/logo/officialLogo.png" alt="Profile" width="40" height="40"
+                            <img src="../assets/img/profile/<?php echo $pfpFileName ?>" alt="Profile" width="40" height="40"
                                 class="rounded-circle d-none d-lg-block" style="object-fit: cover; outline: none;" />
                             <span class="profile-text d-block d-lg-none px-4 py-1 <?php if ($page == 'profile')
                                 echo 'active'; ?>" style="font-weight: bold;">
@@ -156,11 +160,15 @@ if (isset($_GET['page'])) {
 
             <?php include("views/" . $page . ".php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
+            <!-- Load modal globally -->
+            <?php include(__DIR__ . "/../assets/php/modals/user/achievements.php"); ?>
+
 
         </div>
     </div>
 
     <script src="../assets/js/profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
@@ -226,28 +234,13 @@ if (isset($_GET['page'])) {
             }
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll('.toggle-password').forEach(function (toggleButton) {
-                toggleButton.addEventListener('click', function () {
-                    const targetId = this.getAttribute('data-target');
-                    const passwordField = document.getElementById(targetId);
-                    const icon = this.querySelector('i');
-
-                    if (passwordField.type === 'password') {
-                        passwordField.type = 'text';
-                        icon.classList.remove('bi-eye-slash');
-                        icon.classList.add('bi-eye');
-                    } else {
-                        passwordField.type = 'password';
-                        icon.classList.remove('bi-eye');
-                        icon.classList.add('bi-eye-slash');
-                    }
-                });
-            });
-        });
-
-
+        window.currentPage = "<?php echo $page; ?>";
+        window.showBadge = <?php echo isset($showNewBadge) && $showNewBadge ? 'true' : 'false'; ?>;
+        window.newlyEarnedBadges = <?php echo json_encode($newlyEarnedBadges ?? []); ?>;
+        window.modalToShow = "<?php echo isset($modalToShow) ? $modalToShow : ''; ?>";
     </script>
+    <script src="../assets/js/badges.js"></script>
+
 
 </body>
 

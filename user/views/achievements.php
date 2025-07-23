@@ -1,70 +1,48 @@
-<?php include("../assets/php/processes/user/achievements.php"); ?>
 
 <!-- ACHIEVEMENTS -->
+<?php
+$showNewBadge = false;
+
+if (isset($_SESSION['newlyEarnedBadges'])) {
+    $newlyEarnedBadges = $_SESSION['newlyEarnedBadges'];
+    $showNewBadge = true;
+    unset($_SESSION['newlyEarnedBadges']);
+}
+?>
+
+
 <div class="container">
 
-    <!-- BADGES -->
-    <div class="container px-0 py-4 mb-3 mt-2">
-        <div class="row">
-            <div class="col-12">
-                <div class="heading">BADGES</div>
-                <hr class="border-3 border-dark opacity-100 m-0">
+   <div class="container px-0 py-4 mb-3 mt-2">
+    <div class="row">
+        <div class="col-12">
+            <div class="heading">BADGES</div>
+            <hr class="border-3 border-dark opacity-100 m-0">
 
-                <div class="overflow-auto px-2 mt-5">
-                    <div class="d-flex flex-nowrap justify-content-center gap-5 py-3 min-scroll-width">
+            <div class="overflow-auto px-2 mt-5">
+                <div class="d-flex flex-nowrap justify-content-center gap-5 py-3 min-scroll-width">
 
-                        <!-- Unlocked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card">
-                            <img src="../assets/img/badges/starter.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-semibold">First gym<br>check-in</div>
+                    <?php while ($badge = mysqli_fetch_assoc($badgesResult)): ?>
+                        <?php
+                            $isUnlocked = in_array($badge['badgeID'], $earnedBadgeIDs);
+                            $badgeIcon = "../assets/img/badges/" . $badge['iconUrl'];
+                            $badgeName = htmlspecialchars($badge['badgeName']);
+                            $badgeDesc = htmlspecialchars($badge['description']);
+                        ?>
+
+                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card <?= $isUnlocked ? '' : 'locked' ?>">
+                            <img src="<?= $badgeIcon ?>" class="img-fluid mx-auto mb-2 badge-image" alt="<?= $badgeName ?>">
+                            <div class="fw-bold <?= $isUnlocked ? '' : 'text-muted' ?>"><?= $badgeDesc ?></div>
+                            <?php if (!$isUnlocked): ?>
+                                <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
+                            <?php endif; ?>
                         </div>
-
-                        <!-- Unlocked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card">
-                            <img src="../assets/img/badges/weekly.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold">Checked-in for<br>7 days in total</div>
-                        </div>
-
-                        <!-- Unlocked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card">
-                            <img src="../assets/img/badges/monthly.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold">Attended<br>20 sessions</div>
-                        </div>
-
-                        <!-- Locked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
-                            <img src="../assets/img/badges/3months.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold text-muted">Active for<br>3 months straight</div>
-                            <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
-                        </div>
-
-                        <!-- Locked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
-                            <img src="../assets/img/badges/6month.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold text-muted">Active for<br>6 months straight</div>
-                            <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
-                        </div>
-
-                        <!-- Locked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
-                            <img src="../assets/img/badges/loyalty.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold text-muted">Logged<br>50 workouts</div>
-                            <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
-                        </div>
-
-                        <!-- Locked Badge -->
-                        <div class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card locked">
-                            <img src="../assets/img/badges/master.png" class="img-fluid mx-auto mb-2 badge-image">
-                            <div class="fw-bold text-muted">Member for<br>1 year</div>
-                            <i class="bi bi-lock-fill position-absolute top-0 end-0 m-2 text-white opacity-75"></i>
-                        </div>
-
-                    </div>
+                    <?php endwhile; ?>
                 </div>
-
             </div>
         </div>
     </div>
+</div>
 
     <!-- COMMUNITY LEADERBOARD -->
     <div id="leaderboard" class="heading mt-5">COMMUNITY LEADERBOARD</div>

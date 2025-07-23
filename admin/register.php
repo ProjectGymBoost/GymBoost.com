@@ -117,7 +117,7 @@ include("../assets/shared/auth.php");
                                         required>
                                     <div id="rfidError" class="invalid-feedback text-start"></div>
                                     <input type="hidden" id="rfidExistsError" class="text-start"
-                                        value="<?php echo $rfidExistsError?>">
+                                        value="<?php echo $rfidExistsError ?>">
                                 </div>
 
                                 <!-- Birthday -->
@@ -131,15 +131,21 @@ include("../assets/shared/auth.php");
                                 <div class="flex-grow-1">
                                     <select class="form-select w-100" name="membershipID" id="membership" required>
                                         <option selected disabled>Membership Plan</option>
-                                        <option value="2">Half Month</option>
-                                        <option value="3">1 Month</option>
-                                        <option value="4">2 Months</option>
-                                        <option value="5">3 Months</option>
-                                        <option value="6">Semi Annual</option>
-                                        <option value="7">Annual</option>
+                                        <?php
+                                        $membershipQuery = "
+                                                        SELECT membershipID, planType 
+                                                        FROM memberships
+                                                        ORDER BY CAST(SUBSTRING_INDEX(requirement, ' ', 1) AS UNSIGNED) ASC
+                                                    ";
+                                        $membershipResult = executeQuery($membershipQuery);
+                                        while ($membership = mysqli_fetch_assoc($membershipResult)) {
+                                            echo '<option value="' . $membership['membershipID'] . '">' . $membership['planType'] . '</option>';
+                                        }
+                                        ?>
                                     </select>
                                     <div id="membershipError" class="invalid-feedback text-start"></div>
                                 </div>
+
                             </div>
 
                             <hr

@@ -19,7 +19,7 @@
                             <span style="color: #D2042D;">
                                 Are you sure you want to delete
                                 <span style="font-weight: bold;">
-                                    <?=($info['firstName'] . ' ' . $info['lastName']) ?>
+                                    <?= ($info['firstName'] . ' ' . $info['lastName']) ?>
                                 </span>'s attendance record?
                             </span>
                             <br><br>
@@ -33,6 +33,7 @@
                             <input type="hidden" name="deleteAttendanceId" value="<?= $info['attendanceID']; ?>">
                             <input type="hidden" name="deleteFirstName" value="<?= $info['firstName']; ?>">
                             <input type="hidden" name="deleteLastName" value="<?= $info['lastName']; ?>">
+                            <input type="hidden" name="deleteDate" value="<?= $info['checkinDate']; ?>">
                             <button type="submit" class="btn btn-primary" name="btnDelete">DELETE</button>
                         </form>
                     </div>
@@ -46,13 +47,22 @@
 <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1' && isset($_GET['name'])): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var confirmModal = new bootstrap.Modal(document.getElementById('confirmDeleteAttendanceModal'));
-            confirmModal.show();
+            setTimeout(function () {
+                var confirmModalEl = document.getElementById('confirmDeleteAttendanceModal');
+                if (confirmModalEl) {
+                    var confirmModal = new bootstrap.Modal(confirmModalEl);
+                    confirmModal.show();
 
-            const url = new URL(window.location);
-            url.searchParams.delete('deleted');
-            url.searchParams.delete('name');
-            history.replaceState(null, '', url.toString());
+                    confirmModalEl.addEventListener('hidden.bs.modal', function () {
+                        document.body.style.overflow = 'auto';
+                        document.body.classList.remove('modal-open');
+                    });
+
+                    const url = new URL(window.location);
+                    url.searchParams.delete('highlight');
+                    window.history.replaceState({}, document.title, url);
+                }
+            }, 100);
         });
     </script>
 <?php endif; ?>
@@ -66,7 +76,7 @@
             <div class="modal-body text-center">
                 <strong>
                     <span style="color: #D2042D; font-weight: bold;">
-                        <?=($_GET['name'] ?? '') ?>'s
+                        <?= ($_GET['name'] ?? '') ?>'s
                     </span>
                 </strong>
                 Attendance record has been successfully deleted.

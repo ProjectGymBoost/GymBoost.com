@@ -3,6 +3,164 @@ $userID = $_SESSION['userID'];
 $baseURL = $_SERVER['PHP_SELF'] . "?page=achievements";
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'weekly';
 
+// Check if the user already seen the badge earned
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dismiss_badge_modal'])) {
+    $userID = $_SESSION['userID'];
+    $today = date('Y-m-d');
+    $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND DATE(dateEarned) = '$today'";
+    mysqli_query($conn, $updateQuery);
+
+    $_SESSION['showNewBadgeDismissed'] = true;
+    $_SESSION['showNewBadge'] = false;
+
+    header("Location: ?page=achievements");
+    exit();
+}
+
+// Assign badges earned 
+if (!isset($_SESSION['badgeShownToday'])) {
+    checkAndAssignBadges($conn, $userID);
+
+    $today = date('Y-m-d');
+    $query = "SELECT b.badgeID, b.badgeName, b.description, b.iconUrl, ub.dateEarned, ub.dismissed
+              FROM user_badges ub
+              JOIN badges b ON ub.badgeID = b.badgeID
+              WHERE ub.userID = $userID AND DATE(ub.dateEarned) = '$today' AND ub.dismissed = 0
+              ORDER BY ub.userBadgeID DESC";
+    $result = mysqli_query($conn, $query);
+
+    $newlyEarnedBadges = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $badgeData = array();
+        $badgeData['badgeID'] = $row['badgeID'];
+        $badgeData['name'] = $row['badgeName'];
+        $badgeData['desc'] = $row['description'];
+        $badgeData['icon'] = $row['iconUrl'];
+        $newlyEarnedBadges[] = $badgeData;
+    }
+
+    if (!empty($newlyEarnedBadges)) {
+        $_SESSION['newlyEarnedBadges'] = $newlyEarnedBadges;
+        $_SESSION['showNewBadge'] = true;
+    }
+
+    $_SESSION['badgeShownToday'] = true;
+}
+
+$resultArr = fetchBadgesAndEarned($conn, $userID);
+$badgesResult = $resultArr[0];
+$earnedBadgeIDs = $resultArr[1];
+
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+$validPages = array('dashboard', 'workout', 'achievements', 'profile');
+if (!in_array($page, $validPages)) {
+    header("Location: ?page=dashboard");
+    exit();
+}
+
+// Check if user attendance meet badge reqs
+function checkAndAssignBadges($conn, $userID)
+{
+    $newlyEarnedBadges = array();
+    $userID = $_SESSION['userID'];
+
+    $checkinResult = mysqli_query($conn, "SELECT COUNT(*) AS totalCheckins FROM attendances WHERE userID = $userID");
+    $checkinRow = mysqli_fetch_assoc($checkinResult);
+    $totalCheckins = (int) $checkinRow['totalCheckins'];
+
+    $badgesResult = mysqli_query($conn, "SELECT badgeID, badgeName, description, iconUrl, requirementValue FROM badges ORDER BY requirementValue ASC");
+
+    $earnedBadgeIDs = array();
+    $earnedBadgesResult = mysqli_query($conn, "SELECT badgeID FROM user_badges WHERE userID = $userID");
+    while ($row = mysqli_fetch_assoc($earnedBadgesResult)) {
+        $earnedBadgeIDs[] = $row['badgeID'];
+    }
+
+    $dateNow = date("Y-m-d");
+
+    while ($badge = mysqli_fetch_assoc($badgesResult)) {
+        $badgeID = $badge['badgeID'];
+        $requirement = $badge['requirementValue'];
+
+        $isEarned = false;
+
+        if ($badgeID == 2) { 
+            $hasStreak = hasConsecutiveCheckins($conn, $userID, 5);
+
+            if ($hasStreak && !in_array($badgeID, $earnedBadgeIDs)) {
+                mysqli_query($conn, "INSERT INTO user_badges (userID, badgeID, dateEarned) VALUES ($userID, $badgeID, '$dateNow')");
+                $badgeData = array();
+                $badgeData['name'] = $badge['badgeName'];
+                $badgeData['desc'] = $badge['description'];
+                $badgeData['icon'] = $badge['iconUrl'];
+                $newlyEarnedBadges[] = $badgeData;
+            } elseif (!$hasStreak && in_array($badgeID, $earnedBadgeIDs)) {
+                mysqli_query($conn, "DELETE FROM user_badges WHERE userID = $userID AND badgeID = $badgeID");
+            }
+
+        } else {
+            if ($totalCheckins >= $requirement && !in_array($badgeID, $earnedBadgeIDs)) {
+                mysqli_query($conn, "INSERT INTO user_badges (userID, badgeID, dateEarned) VALUES ($userID, $badgeID, '$dateNow')");
+                $badgeData = array();
+                $badgeData['name'] = $badge['badgeName'];
+                $badgeData['desc'] = $badge['description'];
+                $badgeData['icon'] = $badge['iconUrl'];
+                $newlyEarnedBadges[] = $badgeData;
+            }
+        }
+    }
+
+    return $newlyEarnedBadges;
+}
+
+// For consecutive checkins
+function hasConsecutiveCheckins($conn, $userID, $requiredDays)
+{
+    $countCheckinQuery = "SELECT DATE(checkinDate) as checkinDate FROM attendances 
+              WHERE userID = $userID 
+              GROUP BY DATE(checkinDate) 
+              ORDER BY checkinDate ASC";
+
+    $countCheckinResult = executeQuery($countCheckinQuery);
+    $dates = [];
+
+    while ($row = mysqli_fetch_assoc($countCheckinResult)) {
+        $dates[] = $row['checkinDate'];
+    }
+
+    $count = 1;
+    for ($i = 1; $i < count($dates); $i++) {
+        $prevDate = new DateTime($dates[$i - 1]);
+        $currentDate = new DateTime($dates[$i]);
+        $diff = $prevDate->diff($currentDate)->days;
+
+        if ($diff === 1) {
+            $count++;
+            if ($count >= $requiredDays) {
+                return true;
+            }
+        } else {
+            $count = 1;
+        }
+    }
+
+    return false;
+}
+
+// Fetch badge earned by user
+function fetchBadgesAndEarned($conn, $userID)
+{
+    $badgesResult = mysqli_query($conn, "SELECT * FROM badges ORDER BY requirementValue ASC");
+    $earnedBadgesResult = mysqli_query($conn, "SELECT badgeID FROM user_badges WHERE userID = $userID");
+    $earnedBadgeIDs = [];
+    while ($row = mysqli_fetch_assoc($earnedBadgesResult)) {
+        $earnedBadgeIDs[] = $row['badgeID'];
+    }
+
+    return [$badgesResult, $earnedBadgeIDs];
+}
+
+
 // FETCH LEADERBOARD DATA
 $leaderboardQuery = "";
 if ($filter === 'weekly') {
