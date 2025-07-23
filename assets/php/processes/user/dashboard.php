@@ -17,9 +17,14 @@ SELECT user_memberships.membershipID, user_memberships.endDate, memberships.plan
 FROM user_memberships
 JOIN memberships ON user_memberships.membershipID = memberships.membershipID
 WHERE user_memberships.userID = $userID
-";
+AND user_memberships.userMembershipID = (
+    SELECT MAX(userMembershipID)
+    FROM user_memberships
+    WHERE userID = $userID
+)";
 $usermembershipArray = [];
 $usermembershipResult = executeQuery($usermembershipQuery);
+
 if (mysqli_num_rows($usermembershipResult) > 0) {
     while ($row = mysqli_fetch_assoc($usermembershipResult)) {
         $usermembershipArray[] = $row;

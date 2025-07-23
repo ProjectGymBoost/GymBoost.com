@@ -8,13 +8,18 @@ include("../assets/shared/auth.php");
 $chart = new ChartData();
 
 $chart->loadDistinctYear();
+$chart->loadFilterDropdown();
+
 $chart->loadAttendanceData();
 $chart->loadMembershipData();
+$chart->loadAgeDistribution();
 
 $attendanceLabels = json_encode($chart->getAttendanceLabels());
 $attendanceData = json_encode($chart->getAttendanceData());
 $membershipLabels = json_encode($chart->getMembershipLabels());
 $membershipData = json_encode($chart->getMembershipData());
+$ageLabels = json_encode($chart->getAgeLabels());
+$ageData = json_encode($chart->getAgeData());
 ?>
 
 <!DOCTYPE html>
@@ -125,6 +130,9 @@ $membershipData = json_encode($chart->getMembershipData());
             <div class="row">
                 <div class="col-auto">
                     <?= $chart->loadYearDropdown() ?>
+                </div>
+                <div class="col-auto">
+                    <?= $chart->loadFilterDropdown() ?>
                 </div>
             </div>
 
@@ -330,8 +338,8 @@ $membershipData = json_encode($chart->getMembershipData());
         });
 
         // Bar Doughnut Data
-        var ageLabels = ["Senior (60+)", "Middle-Aged Adult (40-59)", "Young Adults (20-39)", "Teenagers (13-19)"];
-        var ageData = [0, 15, 50, 22];
+        var ageLabels = <?= $ageLabels ?>;
+        var ageData = <?= $ageData ?>;
         var ageColors = ["#b0b0b0", "#60779c", "#334566", "#1f2a3c"];
 
 
