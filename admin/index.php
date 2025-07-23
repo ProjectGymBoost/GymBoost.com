@@ -8,6 +8,8 @@ include("../assets/shared/auth.php");
 $chart = new ChartData();
 
 $chart->loadDistinctYear();
+$chart->loadFilterDropdown();
+
 $chart->loadAttendanceData();
 $chart->loadMembershipData();
 $chart->loadAgeDistribution();
@@ -128,6 +130,9 @@ $ageData = json_encode($chart->getAgeData());
             <div class="row">
                 <div class="col-auto">
                     <?= $chart->loadYearDropdown() ?>
+                </div>
+                <div class="col-auto">
+                    <?= $chart->loadFilterDropdown() ?>
                 </div>
             </div>
 
