@@ -197,14 +197,15 @@ class ChartData
                 FROM users
                 JOIN user_memberships ON users.userID = user_memberships.userID
                 WHERE users.birthday IS NOT NULL
-                AND user_memberships.userMembershipID = (
-                    SELECT MIN(userMembershipID)
-                    FROM user_memberships AS earliest_membership
-                    WHERE earliest_membership.userID = users.userID
-                )
-                AND YEAR(user_memberships.startDate) = $this->year
-                AND users.role = 'user'
-                $this->stateCondition";
+                    AND users.role = 'user'
+                    $this->stateCondition
+                    AND user_memberships.userMembershipID = (
+                        SELECT MIN(earliest_yearly_record.userMembershipID)
+                        FROM user_memberships AS earliest_yearly_record
+                        WHERE earliest_yearly_record.userID = users.userID
+                        AND YEAR(earliest_yearly_record.startDate) = YEAR(user_memberships.startDate)
+                    )
+                    AND YEAR(user_memberships.startDate) = $this->year";
 
         $result = executeQuery($query);
         $today = new DateTime();
