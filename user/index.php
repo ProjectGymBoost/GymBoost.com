@@ -2,6 +2,10 @@
 
 include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
 include(__DIR__ . '/../assets/php/processes/user/profile.php');
+include(__DIR__ . '/../assets/php/classes/classes.php');
+
+$userID = $_SESSION['userID'];
+$email = $_SESSION['email'] ?? "";
 
 // Redirects
 if (empty($_SESSION['userID'])) {
@@ -50,6 +54,14 @@ if (isset($_GET['page'])) {
 } else {
     header("Location: ?page=dashboard");
 }
+
+$calendar = new WorkoutCalendar();
+
+if ($userID) {
+    $calendar->handleWorkoutActions($userID);
+    $calendar->loadEvents($userID);
+}
+$eventsJSON = $calendar->getEvents();
 
 ?>
 
@@ -160,7 +172,6 @@ if (isset($_GET['page'])) {
 
             <?php include("views/" . $page . ".php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
-            <!-- Load modal globally -->
             <?php include(__DIR__ . "/../assets/php/modals/user/achievements.php"); ?>
 
 
