@@ -1,15 +1,3 @@
-<?php
-include("../assets/php/classes/classes.php");
-$userID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
-$calendar = new WorkoutCalendar();
-
-if ($userID) {
-  $calendar->handleWorkoutActions($userID);
-  $calendar->loadEvents($userID);
-}
-$eventsJSON = $calendar->getEvents();
-?>
-
 <div id="workout" class="container">
   <div class="container-lg px-0 py-4 mb-3 mt-2">
     <div class="row">
@@ -55,7 +43,7 @@ $eventsJSON = $calendar->getEvents();
             </div>
           </div>
           <div id="calendar" class="p-4"></div>
-  
+
         </div>
       </div>
     </div>

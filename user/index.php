@@ -1,7 +1,8 @@
 <?php
 include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
 include(__DIR__ . '/../assets/php/processes/user/profile.php');
-// Store session values 
+include(__DIR__ . '/../assets/php/classes/classes.php');
+
 $userID = $_SESSION['userID'];
 $email = $_SESSION['email'] ?? "";
 
@@ -20,7 +21,6 @@ if ($_SESSION['role'] === 'admin') {
 if (!empty($_SESSION['userID'])) {
     $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
 }
-
 
 $page = "dashboard";
 
@@ -46,6 +46,14 @@ if (isset($_GET['page'])) {
 } else {
     header("Location: ?page=dashboard");
 }
+
+$calendar = new WorkoutCalendar();
+
+if ($userID) {
+    $calendar->handleWorkoutActions($userID);
+    $calendar->loadEvents($userID);
+}
+$eventsJSON = $calendar->getEvents();
 
 ?>
 
@@ -156,7 +164,7 @@ if (isset($_GET['page'])) {
 
             <?php include("views/" . $page . ".php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
-            <?php include(__DIR__ ."/../assets/php/modals/user/workout.php"); ?>
+            <?php include(__DIR__ . "/../assets/php/modals/user/workout.php"); ?>
 
         </div>
     </div>
@@ -246,7 +254,6 @@ if (isset($_GET['page'])) {
                 });
             });
         });
-
 
     </script>
 
