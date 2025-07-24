@@ -20,8 +20,7 @@
                             <input type="hidden" name="addWorkout" value="1">
                             <input type="hidden" name="userID" value="<?php echo $_SESSION['userID']; ?>">
                             <label for="WorkoutType" class="form-label">Workout Type</label>
-                            <select id="addWorkoutType" name="workoutType[]" class="form-select" multiple>
-                                <option disabled selected>Workout</option>
+                            <select id="addWorkoutType" name="workoutType[]" class="form-select" multiple required>
                                 <option value="Cardio">Cardio</option>
                                 <option value="Chest">Chest</option>
                                 <option value="Back">Back</option>
@@ -47,15 +46,15 @@
                         <div class="col-12 col-md-4">
                             <label for="workoutColor" class="form-label">Color</label>
                             <input type="color" name="color" class="form-control form-control-color w-100"
-                                id="workoutColor" value="#0d6efd" />
+                                id="workoutColor" value="#28364e" />
                         </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                    <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem 0 0 0;">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             CANCEL
                         </button>
-                        <button type="submit" class="btn btn-primary" name="addWorkout" style="margin-left: 0.5rem;">
-                            SAVE
+                        <button type="submit" class="btn btn-primary" name="addWorkout">
+                            ADD
                         </button>
                     </div>
                 </form>
@@ -108,7 +107,7 @@
                         <input type="hidden" name="editWorkoutID" id="editWorkoutID">
                         <div class="mb-4 text-start">
                             <label for="editWorkoutType" class="form-label">Workout Type</label>
-                            <select id="editWorkoutType" name="editWorkoutType[]" class="form-select" multiple>
+                            <select id="editWorkoutType" name="editWorkoutType[]" class="form-select" multiple required>
                                 <option disabled selected>Workout</option>
                                 <option value="Cardio">Cardio</option>
                                 <option value="Chest">Chest</option>
@@ -124,28 +123,26 @@
 
                         <div class="col-6 col-md-4">
                             <label for="editWorkoutStart" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="editWorkoutStart" name="editWorkoutStart"
-                                required />
+                            <input type="date" class="form-control" id="editWorkoutStart" name="editWorkoutStart" required />
                         </div>
 
                         <div class="col-6 col-md-4">
                             <label for="editWorkoutEnd" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="editWorkoutEnd" name="editWorkoutEnd"
-                                required />
+                            <input type="date" class="form-control" id="editWorkoutEnd" name="editWorkoutEnd" required />
                         </div>
 
                         <div class="col-12 col-md-4">
                             <label for="editWorkoutColor" class="form-label">Color</label>
                             <input type="color" class="form-control form-control-color w-100" id="editWorkoutColor"
-                                value="#0d6efd" name="editWorkoutColor" />
+                                value="#28364e" name="editWorkoutColor" />
                         </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                    <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem 0 0 0;">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                             onclick="openDeleteModal()">
                             DELETE
                         </button>
-                        <button type="submit" name="editWorkout" class="btn btn-primary" style="margin-left: 0.5rem;">
+                        <button type="submit" name="editWorkout" class="btn btn-primary">
                             SAVE CHANGES
                         </button>
                     </div>
