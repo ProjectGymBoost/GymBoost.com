@@ -275,3 +275,102 @@ class ChartData
         return $this->filter;
     }
 }
+
+class WorkoutCalendar
+{
+    public $events = [];
+
+    public function loadEvents($userID)
+    {
+        // DISPLAY WORKOUTS
+        $query = "SELECT * FROM workout_logs WHERE userID = '$userID'";
+        $result = executeQuery($query);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $this->events[] = [
+                'id' => $row['workoutID'],
+                'title' => $row['workoutType'],
+                'start' => $row['startDate'],
+                'end' => $row['endDate'],
+                'color' => $row['color']
+            ];
+        }
+    }
+
+    public function getEvents()
+    {
+        return json_encode($this->events);
+    }
+
+    public function handleWorkoutActions($userID)
+    {
+        // ADD WORKOUT
+        if (isset($_POST['addWorkout'])) {
+            $startDate = $_POST['startDate'];
+            $endDate = $_POST['endDate'];
+            $color = $_POST['color'];
+            $workoutType = isset($_POST['workoutType'])
+                ? (is_array($_POST['workoutType']) ? implode(', ', $_POST['workoutType']) : $_POST['workoutType'])
+                : '';
+
+            $query = "INSERT INTO workout_logs (userID, workoutType, startDate, endDate, color) 
+                  VALUES ('$userID', '$workoutType', '$startDate', '$endDate', '$color')";
+            executeQuery($query);
+
+            $GLOBALS['showAddModal'] = true;
+            $this->preventFormResubmission();
+        }
+
+        // EDIT WORKOUT
+        if (isset($_POST['editWorkout'])) {
+            $workoutID = $_POST['editWorkoutID'];
+            $workoutType = isset($_POST['editWorkoutType'])
+                ? (is_array($_POST['editWorkoutType']) ? implode(', ', $_POST['editWorkoutType']) : $_POST['editWorkoutType'])
+                : '';
+            $startDate = $_POST['editWorkoutStart'];
+            $endDate = $_POST['editWorkoutEnd'];
+            $color = $_POST['editWorkoutColor'];
+
+            $query = "UPDATE workout_logs 
+                  SET workoutType = '$workoutType', startDate = '$startDate', endDate = '$endDate', color = '$color'
+                  WHERE workoutID = '$workoutID' AND userID = '$userID'";
+            executeQuery($query);
+
+            $GLOBALS['showEditModal'] = true;
+            $this->preventFormResubmission();
+        }
+
+        // DELETE WORKOUT
+        if (isset($_POST['deleteWorkout'])) {
+            $workoutID = $_POST['deleteWorkoutID'];
+            $query = "DELETE FROM workout_logs WHERE workoutID = '$workoutID' AND userID = '$userID'";
+            executeQuery($query);
+
+            $GLOBALS['showDeleteModal'] = true;
+            $this->preventFormResubmission();
+        }
+    }
+
+    public function preventFormResubmission()
+    {
+        echo <<<SCRIPT
+        <script>
+            if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+            }
+        </script>
+        SCRIPT;
+    }
+
+    public function formatWorkoutList($workouts)
+    {
+        $count = count($workouts);
+        if ($count === 0)
+            return '';
+        if ($count === 1)
+            return strtolower($workouts[0]);
+        if ($count === 2)
+            return strtolower($workouts[0] . ' and ' . $workouts[1]);
+        return strtolower(implode(', ', array_slice($workouts, 0, -1)) . ' and ' . end($workouts));
+    }
+}
