@@ -64,7 +64,7 @@ if (isset($_POST['btnAddMembershipPlan'])) {
     if ($planType === '') {
         $errors['planType'] = "Plan type is required.";
     }
-    if (!preg_match('/^(1\s*day|[2-9]\d*\s*days)$/i', $requirement)) {
+    if (!preg_match('/^[1-9]\d*\s*days?$/i', $requirement)) {
         $errors['requirement'] = "Requirement must include a valid number followed by 'day(s)'.";
     }
     if (!preg_match('/^\d+\.00$/', $price)) {
@@ -121,7 +121,7 @@ if (isset($_POST['btnEditMembershipPlan'])) {
     if ($planType === '') {
         $errors['planType'] = "Plan type is required.";
     }
-    if (!preg_match('/^(1\s*day|[2-9]\d*\s*days)$/i', $requirement)) {
+    if (!preg_match('/^[1-9]\d*\s*days?$/i', $requirement)) {
         $errors['requirement'] = "Requirement must include a valid number followed by 'day(s)'.";
     }
     if (!preg_match('/^\d+\.00$/', $price)) {

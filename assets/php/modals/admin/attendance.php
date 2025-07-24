@@ -48,6 +48,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             setTimeout(function () {
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+
                 var confirmModalEl = document.getElementById('confirmDeleteAttendanceModal');
                 if (confirmModalEl) {
                     var confirmModal = new bootstrap.Modal(confirmModalEl);

@@ -84,7 +84,7 @@ function checkAndAssignBadges($conn, $userID)
 
         $isEarned = false;
 
-        if ($badgeID == 2) { 
+        if ($badgeID == 2) {
             $hasStreak = hasConsecutiveCheckins($conn, $userID, 5);
 
             if ($hasStreak && !in_array($badgeID, $earnedBadgeIDs)) {
@@ -106,6 +106,8 @@ function checkAndAssignBadges($conn, $userID)
                 $badgeData['desc'] = $badge['description'];
                 $badgeData['icon'] = $badge['iconUrl'];
                 $newlyEarnedBadges[] = $badgeData;
+            } elseif ($totalCheckins < $requirement && in_array($badgeID, $earnedBadgeIDs)) {
+                mysqli_query($conn, "DELETE FROM user_badges WHERE userID = $userID AND badgeID = $badgeID");
             }
         }
     }

@@ -1,4 +1,5 @@
 <?php
+include("user/achievements.php");
 // Get RFID input
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rfid'])) {
     $rfid = trim($_POST['rfid']);

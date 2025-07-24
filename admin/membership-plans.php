@@ -52,7 +52,7 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
             <!-- Controls Form -->
             <form method="GET" action="" class="d-flex flex-wrap justify-content-center gap-3 mb-4">
                 <!-- Sort By -->
-                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 210px;">
                     <select name="sortBy" class="form-select" onchange="this.form.submit()">
                         <option disabled>Sort By</option>
                         <option value="membershipID" <?= ($_GET['sortBy'] ?? '') === 'membershipID' ? 'selected' : '' ?>>

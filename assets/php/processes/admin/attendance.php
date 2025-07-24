@@ -98,6 +98,7 @@ if (isset($_POST['btnDelete'])) {
     header(
         "Location: " . $_SERVER['PHP_SELF'] .
         "?deleted=1" .
+        "&highlight=" . $deleteAttendanceId .
         "&name=" . urlencode($deleteFirstName . ' ' . $deleteLastName) .
         "&page=" . $currentPage .
         "&date=" . $deleteDate .

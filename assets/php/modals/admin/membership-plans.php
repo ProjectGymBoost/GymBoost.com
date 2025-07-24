@@ -2,23 +2,28 @@
 $editPlanErrors = $_SESSION['editPlanErrors'] ?? [];
 $editPlanData = $_SESSION['editPlanData'] ?? [];
 ?>
-<?php if (!empty($editPlanErrors) && isset($_GET['editID'])): ?>
+<?php if (!empty($editPlanErrors)): ?>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const modalId = "editMembershipPlanModal<?= (int) $_GET['editID'] ?>";
-            const modalEl = document.getElementById(modalId);
-            if (modalEl) {
-                const editModal = new bootstrap.Modal(modalEl);
-                editModal.show();
-                const sessionData = <?= json_encode($editPlanData[(int) $_GET['editID']] ?? []) ?>;
-                Object.entries(sessionData).forEach(([field, value]) => {
-                    const input = modalEl.querySelector(`[name="${field}"]`);
-                    if (input) input.value = value;
-                });
-            }
+            <?php foreach ($editPlanErrors as $membershipID => $errors): ?>
+                const modalId = "editMembershipPlanModal<?= (int) $membershipID ?>";
+                const modalEl = document.getElementById(modalId);
+                if (modalEl) {
+                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                    const editModal = new bootstrap.Modal(modalEl);
+                    editModal.show();
+
+                    const sessionData = <?= json_encode($editPlanData[(int) $membershipID] ?? []) ?>;
+                    Object.entries(sessionData).forEach(([field, value]) => {
+                        const input = modalEl.querySelector(`[name="${field}"]`);
+                        if (input) input.value = value;
+                    });
+                }
+            <?php endforeach; ?>
         });
     </script>
 <?php endif; ?>
+
 
 <?php foreach ($membershipPlanInfoArray as $info): ?>
     <div class="modal fade" id="editMembershipPlanModal<?= $info['membershipID'] ?>" tabindex="-1"
@@ -94,128 +99,130 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
             </div>
         </div>
     </div>
-<?php
-unset($_SESSION['editPlanErrors'], $_SESSION['editPlanData']);
-?>
+    <?php
+    unset($_SESSION['editPlanErrors'], $_SESSION['editPlanData']);
+    ?>
 
 
-<!-- Confirm Edit Membership Plan Modal -->
-<?php if (isset($_GET['updated']) && $_GET['updated'] == '1'): ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
-                var confirmModalEl = document.getElementById('confirmEditMembershipPlanModal');
-                if (confirmModalEl) {
-                    var confirmModal = new bootstrap.Modal(confirmModalEl);
-                    confirmModal.show();
+    <!-- Confirm Edit Membership Plan Modal -->
+    <?php if (isset($_GET['updated']) && $_GET['updated'] == '1'): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    const confirmModalEl = document.getElementById('confirmEditMembershipPlanModal');
+                    if (confirmModalEl) {
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        const confirmModal = new bootstrap.Modal(confirmModalEl);
+                        confirmModal.show();
 
-                    confirmModalEl.addEventListener('hidden.bs.modal', function () {
-                        document.body.style.overflow = 'auto';
-                        document.body.classList.remove('modal-open');
-                    });
+                        confirmModalEl.addEventListener('hidden.bs.modal', function () {
+                            document.body.style.overflow = 'auto';
+                            document.body.classList.remove('modal-open');
+                        });
 
-                    const url = new URL(window.location);
-                    url.searchParams.delete('updated');
-                    window.history.replaceState({}, document.title, url);
-                }
-            }, 100);
-        });
-    </script>
-<?php endif; ?>
+                        const url = new URL(window.location);
+                        url.searchParams.delete('updated');
+                        window.history.replaceState({}, document.title, url);
+                    }
+                }, 100);
+            });
+        </script>
+    <?php endif; ?>
 
-<div class="modal fade" id="confirmEditMembershipPlanModal" tabindex="-1"
-    aria-labelledby="confirmEditMembershipModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-            <div class="modal-header" style="border: none;">
-                <h4 class="modal-title heading text-center w-100 text-black" id="confirmEditMembershipModalLabel"
-                    style="margin: 0;">
-                    MEMBERSHIP PLAN UPDATED
-                </h4>
-            </div>
-            <div class="modal-body text-center text-black">
-                Membership Plan has been successfully edited.
-            </div>
-            <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    CLOSE
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Membership Plan Modal -->
-<div class="modal fade" id="deleteMembershipPlanModal<?= $info['membershipID'] ?>" tabindex="-1"
-    aria-labelledby="deleteMembershipPlanModalLabel<?= $info['membershipID'] ?>" aria-hidden="true"
-    data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px;">
-            <!-- Header -->
-            <div
-                style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                <h4 class="modal-title text-center subheading"
-                    id="deleteMembershipPlanModalLabel<?= $info['membershipID'] ?>"
-                    style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                    DELETE MEMBERSHIP PLAN
-                </h4>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                    style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
-            </div>
-
-            <!-- Body -->
-            <div class="modal-body text-center" style="padding: 1.5rem;">
-                <p style="margin: 0; font-size: 16px; color: black;">
-                    <span style="color: #D2042D;">
-                        Are you sure you want to delete
-                        <span style="font-weight: bold;">
-                            <?= ($info['planType']) ?>
-                        </span>membership plan?
-                    </span>
-                </p>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    CANCEL
-                </button>
-                <form method="POST">
-                    <button type="submit" name="btnDeleteMembershipPlan" class="btn btn-primary"
-                        style="margin-left: 0.5rem;">
-                        DELETE
+    <div class="modal fade" id="confirmEditMembershipPlanModal" tabindex="-1"
+        aria-labelledby="confirmEditMembershipModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+                <div class="modal-header" style="border: none;">
+                    <h4 class="modal-title heading text-center w-100 text-black" id="confirmEditMembershipModalLabel"
+                        style="margin: 0;">
+                        MEMBERSHIP PLAN UPDATED
+                    </h4>
+                </div>
+                <div class="modal-body text-center text-black">
+                    Membership Plan has been successfully edited.
+                </div>
+                <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        CLOSE
                     </button>
-                    <input type="hidden" name="membershipID" value="<?= $info['membershipID']; ?>">
-                    <input type="hidden" name="planType" value="<?= $info['planType']; ?>">
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Confirm Delete Membership Plan Modal -->
-<?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
-                var confirmModalEl = document.getElementById('confirmDeleteMembershipPlanModal');
-                if (confirmModalEl) {
-                    var confirmModal = new bootstrap.Modal(confirmModalEl);
-                    confirmModal.show();
+    <!-- Delete Membership Plan Modal -->
+    <div class="modal fade" id="deleteMembershipPlanModal<?= $info['membershipID'] ?>" tabindex="-1"
+        aria-labelledby="deleteMembershipPlanModalLabel<?= $info['membershipID'] ?>" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px;">
+                <!-- Header -->
+                <div
+                    style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                    <h4 class="modal-title text-center subheading"
+                        id="deleteMembershipPlanModalLabel<?= $info['membershipID'] ?>"
+                        style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                        DELETE MEMBERSHIP PLAN
+                    </h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                        style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
+                </div>
 
-                    confirmModalEl.addEventListener('hidden.bs.modal', function () {
-                        document.body.style.overflow = 'auto';
-                        document.body.classList.remove('modal-open');
-                    });
+                <!-- Body -->
+                <div class="modal-body text-center" style="padding: 1.5rem;">
+                    <p style="margin: 0; font-size: 16px; color: black;">
+                        <span style="color: #D2042D;">
+                            Are you sure you want to delete
+                            <span style="font-weight: bold;">
+                                <?= ($info['planType']) ?>
+                            </span>membership plan?
+                        </span>
+                    </p>
+                </div>
 
-                    const url = new URL(window.location);
-                    url.searchParams.delete('deleted');
-                    window.history.replaceState({}, document.title, url);
-                }
-            }, 100);
-        });
-    </script>
-<?php endif; ?>
+                <!-- Footer -->
+                <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        CANCEL
+                    </button>
+                    <form method="POST">
+                        <button type="submit" name="btnDeleteMembershipPlan" class="btn btn-primary"
+                            style="margin-left: 0.5rem;">
+                            DELETE
+                        </button>
+                        <input type="hidden" name="membershipID" value="<?= $info['membershipID']; ?>">
+                        <input type="hidden" name="planType" value="<?= $info['planType']; ?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Membership Plan Modal -->
+    <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    const confirmModalEl = document.getElementById('confirmDeleteMembershipPlanModal');
+                    if (confirmModalEl) {
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        const confirmModal = new bootstrap.Modal(confirmModalEl);
+                        confirmModal.show();
+
+                        confirmModalEl.addEventListener('hidden.bs.modal', function () {
+                            document.body.style.overflow = 'auto';
+                            document.body.classList.remove('modal-open');
+                        });
+
+                        const url = new URL(window.location);
+                        url.searchParams.delete('deleted');
+                        window.history.replaceState({}, document.title, url);
+                    }
+                }, 100);
+            });
+        </script>
+    <?php endif; ?>
 <?php endforeach; ?>
 
 <div class="modal fade" id="confirmDeleteMembershipPlanModal" tabindex="-1"
@@ -299,42 +306,47 @@ unset($_SESSION['editPlanErrors'], $_SESSION['editPlanData']);
     </div>
 </div>
 
-<?php
-// Auto-show modal if there are errors in session
-if (!empty($_SESSION['addPlanErrors'])): ?>
+<?php if (!empty($_SESSION['addPlanErrors'])): ?>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const addModalEl = document.getElementById('addMembershipModal');
             if (addModalEl) {
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
                 const addModal = new bootstrap.Modal(addModalEl);
                 addModal.show();
             }
         });
     </script>
 <?php endif; ?>
+
 <?php
-// Clear session errors and old inputs after rendering
 unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price']);
 ?>
 
-
 <!-- Confirmation modal after success -->
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        <?php if (!empty($_SESSION['addPlanErrors'])): ?>
-            var addModal = new bootstrap.Modal(document.getElementById('addMembershipModal'));
+        function removeBackdrops() {
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        }
+
+        <?php if (!empty($_SESSION['addPlanErrors'])): ?>
+            removeBackdrops();
+            const addModal = new bootstrap.Modal(document.getElementById('addMembershipModal'));
             addModal.show();
         <?php endif; ?>
 
         <?php if (isset($_GET['added'])): ?>
-            var confirmModal = new bootstrap.Modal(document.getElementById('confirmAddMembershipModal'));
-            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-            setTimeout(() => confirmModal.show(), 300);
+            setTimeout(() => {
+                removeBackdrops();
+                const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddMembershipModal'));
+                confirmModal.show();
+            }, 300);
         <?php endif; ?>
     });
 </script>
+
+
 
 <?php
 // Clear errors after displaying once
@@ -360,3 +372,8 @@ unset($_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price']);
         </div>
     </div>
 </div>
+<script>
+    function cleanBackdrops() {
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    }
+</script>
