@@ -156,6 +156,7 @@ if (isset($_GET['page'])) {
 
             <?php include("views/" . $page . ".php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
+            <?php include(__DIR__ ."/../assets/php/modals/user/workout.php"); ?>
 
         </div>
     </div>
