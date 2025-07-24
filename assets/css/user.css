@@ -1,192 +1,281 @@
+@import url("https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css");
+
+.fc .fc-list-day-cushion,
+.fc .fc-list-day-text,
+.fc .fc-list-day-side-text {
+  color: var(--text-color-dark) !important;
+  background-color: var(--text-color-light) !important;
+}
+
+.fc a {
+  text-decoration: none;
+}
+
+.fc-daygrid-day-number {
+  color: var(--text-color-dark);
+}
+
+.fc-col-header-cell-cushion {
+  color: var(--text-color-light);
+}
+
+.fc-toolbar-title {
+  font-size: 1.1rem !important;
+}
+
+.fc .fc-button {
+  background-color: var(--primaryColor);
+  padding: 4px 10px;
+  text-transform: capitalize;
+}
+
+.fc .fc-button:hover {
+  background-color: var(--text-color-dark);
+}
+
+.fc .fc-day-today {
+  background-color: #d5d5d5 !important;
+}
+
 .custom-navbar {
-    border-bottom: 2px solid var(--primaryColor);
-    background-color: var(--bgColor);
+  border-bottom: 2px solid var(--primaryColor);
+  background-color: var(--bgColor);
 }
 
 .navbar-toggler,
 .navbar-toggler:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .navbar-nav .nav-item {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .dropdown-item {
-    color: var(--text-color-dark);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    padding: 2px 2px;
+  color: var(--text-color-dark);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 2px 2px;
 }
 
 .dropdown-item:hover {
-    background-color: var(--primaryColor) !important;
-    color: var(--text-color-light) !important;
+  background-color: var(--primaryColor) !important;
+  color: var(--text-color-light) !important;
 }
 
 .dropdown-item.text-danger {
-    color: #dc3545;
+  color: #dc3545;
 }
 
 .dropdown-item.text-danger:hover {
-    background-color: #dc3545 !important;
-    color: var(--text-color-light) !important;
+  background-color: #dc3545 !important;
+  color: var(--text-color-light) !important;
 }
 
 .navbar-nav .nav-link {
-    color: var(--text-color-dark);
-    border-radius: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  color: var(--text-color-dark);
+  border-radius: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navbar-nav .nav-link.active {
-    background-color: var(--primaryColor);
-    color: var(--text-color-light) !important;
+  background-color: var(--primaryColor);
+  color: var(--text-color-light) !important;
 }
 
 .navbar-nav .nav-link:hover {
-    background-color: var(--primaryColor);
-    color: var(--text-color-light) !important;
+  background-color: var(--primaryColor);
+  color: var(--text-color-light) !important;
 }
 
 .profile-text:hover {
-    color: var(--text-color-light);
+  color: var(--text-color-light);
 }
 
 .profile-text.active {
-    background-color: var(--primaryColor);
-    color: var(--text-color-light) !important;
-    border-radius: 20px;
-    width: 100%;
+  background-color: var(--primaryColor);
+  color: var(--text-color-light) !important;
+  border-radius: 20px;
+  width: 100%;
 }
 
 .rounded-box {
-    color: white;
-    padding: 7px 5px;
-    border-radius: 10px;
-    text-align: center;
+  color: white;
+  padding: 7px 5px;
+  border-radius: 10px;
+  text-align: center;
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 td {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 th {
-    background-color: var(--primaryColor) !important;
-    color: var(--text-color-light) !important;
-    white-space: nowrap;
+  background-color: var(--primaryColor) !important;
+  color: var(--text-color-light) !important;
+  white-space: nowrap;
 }
 
 .pagination .page-link {
-    color: var(--text-color-dark);
+  color: var(--text-color-dark);
 }
 
 .form-select:focus,
 .form-control:focus,
-.page-link:focus {
-    border-color: var(--primaryColor);
-    border-width: 2px;
-    box-shadow: none;
-}
-
-@media (max-width: 767.98px) {
-    .rfid-card {
-        width: 360px !important;
-        height: 240px !important;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-@media (max-width: 380px) {
-    .rfid-card {
-        width: 330px !important;
-        height: 220px !important;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .navigation-wrapper {
-        flex-wrap: wrap;
-    }
-
-    .navigation-wrapper {
-        flex-grow: 1;
-        max-width: 100% !important;
-    }
+.page-link:focus,
+.fc-button:focus {
+  border-color: var(--primaryColor);
+  border-width: 2px;
+  box-shadow: none !important;
 }
 
 .card-locked {
-    min-width: 180px;
-    background-color: #ccc;
+  min-width: 180px;
+  background-color: #ccc;
 }
 
 .card-unlocked {
-    min-width: 180px;
-    background-color: var(--primaryColor);
-    color: white;
+  min-width: 180px;
+  background-color: var(--primaryColor);
+  color: white;
 }
 
 .badge-card {
-    min-width: 250px;
+  min-width: 250px;
 }
 
 .badge-image {
-    height: 170px;
-    width: 140px;
-    object-fit: contain;
+  height: 170px;
+  width: 140px;
+  object-fit: contain;
 }
 
-
 .medal-locked {
-    width: 90px;
+  width: 90px;
 }
 
 .medal-unlocked {
-    width: 90px;
-    opacity: 0.5;
+  width: 90px;
+  opacity: 0.5;
 }
 
 .badges-container {
-    min-width: max-content;
-    margin: 0 auto;
+  min-width: max-content;
+  margin: 0 auto;
 }
 
 .min-scroll-width {
-    min-width: max-content;
+  min-width: max-content;
 }
 
 .badge-unlocked {
-    width: 200px;
-    height: 150px;
-    background-color: var(--primaryColor);
+  width: 200px;
+  height: 150px;
+  background-color: var(--primaryColor);
 }
 
 .bg-container {
-    background-color: var(--primaryColor);
+  background-color: var(--primaryColor);
 }
 
 .badge-locked {
-    width: 200px;
-    height: 150px;
+  width: 200px;
+  height: 150px;
 }
 
 .bg-orange {
-    background-color: #D87D1F
+  background-color: #d87d1f;
 }
 
 .locked .badge-image {
-    filter: grayscale(100%) brightness(60%);
-    opacity: 0.5;
+  filter: grayscale(100%) brightness(60%);
+  opacity: 0.5;
 }
 
 .locked .fw-semibold {
-    opacity: 0.6;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .schedule-header-sm {
+    font-size: 0.85rem !important;
+  }
+
+  .calendar-instructions .btn {
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .calendar-instructions .dropdown-menu {
+    font-size: 0.8rem;
+    min-width: 240px;
+    min-height: auto;
+  }
+
+  .calendar-instructions .dropdown-item-text {
+    padding-left: 0.5rem;
+  }
+
+  .fc .fc-button {
+    padding: 2px 6px !important;
+    font-size: 13px !important;
+  }
+
+  .fc-toolbar-title {
+    font-size: 0.8rem !important;
+  }
+
+  .fc .fc-list-event-title,
+  .fc .fc-list-event-time,
+  .fc .fc-list-day-text,
+  .fc .fc-list-day-side-text {
+    font-size: 13px !important;
+  }
+
+  .fc .fc-list-day-cushion {
+    padding: 10px !important;
+    font-size: 12px !important;
+  }
+
+  .fc-header-toolbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .fc-toolbar-chunk {
+    margin-bottom: 5px;
+  }
+
+  .rfid-card {
+    width: 360px !important;
+    height: 240px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .rfid-card {
+    width: 330px !important;
+    height: 220px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navigation-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .navigation-wrapper {
+    flex-grow: 1;
+    max-width: 100% !important;
+  }
 }
