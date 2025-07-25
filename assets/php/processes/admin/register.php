@@ -33,6 +33,7 @@ if (isset($_POST['btnRegister'])) {
     $startDate = date('Y-m-d');
     $endDate = date('Y-m-d', strtotime("+$duration days"));
 
+
     // Check if email already exists.
     $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
     $checkEmailResult = executeQuery($checkEmailQuery);
@@ -44,7 +45,7 @@ if (isset($_POST['btnRegister'])) {
     if (mysqli_num_rows($checkEmailResult) > 0) {
         $emailExistsError = "emailExists";
     } elseif (mysqli_num_rows($checkRfidResult) > 0) {
-        $rfidExistsError = "rfidExists"; 
+        $rfidExistsError = "rfidExists";
     } else {
         $user = new User(null, $firstName, $lastName, $email, $password, $rfid, $birthday);
 

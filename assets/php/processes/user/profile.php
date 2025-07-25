@@ -25,15 +25,23 @@ if (isset($_SESSION['userID'])) {
     $userID = $_SESSION['userID'];
     $userInfoQuery = "
     SELECT 
-    u.*, 
-    m.planType, 
-    um.startDate, 
-    um.endDate
-FROM users u
-JOIN user_memberships um ON u.userID = um.userID
-JOIN memberships m ON um.membershipID = m.membershipID
-WHERE u.state = 'Active' AND u.userID = $userID";
+        u.*, 
+        m.planType, 
+        um.startDate, 
+        um.endDate
+    FROM users u
+    JOIN user_memberships um ON u.userID = um.userID
+    JOIN memberships m ON um.membershipID = m.membershipID
+    WHERE u.state = 'Active' 
+      AND u.userID = $userID
+      AND um.startDate = (
+          SELECT MAX(startDate) 
+          FROM user_memberships 
+          WHERE userID = u.userID
+      );
+    ";
 }
+
 
 $userInfoResult = executeQuery($userInfoQuery);
 if (mysqli_num_rows($userInfoResult) > 0) {
@@ -64,7 +72,7 @@ if (isset($_POST['btnSaveProfile'])) {
             $fileType = $_FILES['profilePic']['type'];
 
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            $maxFileSize = 5 * 1024 * 1024; 
+            $maxFileSize = 5 * 1024 * 1024;
 
             if (in_array($fileType, $allowedTypes) && $fileSize <= $maxFileSize) {
                 $uploadDir = __DIR__ . '/../../../img/profile/';
@@ -234,7 +242,7 @@ if (isset($_POST['btnSaveAccInfo'])) {
 
 if (isset($_POST['btnCloseDelete'])) {
     $uploadDir = __DIR__ . '/../../../img/profile/';
-    $currentPic = $userInfoArray['profilePicture']; 
+    $currentPic = $userInfoArray['profilePicture'];
 
     if ($currentPic && $currentPic !== 'defaultProfile.png') {
         $picPath = $uploadDir . $currentPic;

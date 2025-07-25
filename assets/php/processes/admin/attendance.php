@@ -90,19 +90,19 @@ if (isset($_POST['btnDelete'])) {
     $deleteAttendanceId = (int) $_POST['deleteAttendanceId'];
     $deleteFirstName = $_POST['deleteFirstName'];
     $deleteLastName = $_POST['deleteLastName'];
+    $deleteDate = $_POST['deleteDate'];
 
     $deleteQuery = "DELETE FROM attendances WHERE attendanceID = $deleteAttendanceId";
     executeQuery($deleteQuery);
 
     header(
-        "Location: " . $_SERVER['PHP_SELF'] . 
-        "?deleted=1" . 
-        "&name=" . urlencode($deleteFirstName . ' ' . $deleteLastName) . 
-        "&page=" . $currentPage . 
-        "&entriesCount=" . $entriesCount . 
-        "&search=" . urlencode($search) . 
-        "&sortBy=" . $sortBy . 
-        "&orderBy=" . $orderBy
+        "Location: " . $_SERVER['PHP_SELF'] .
+        "?deleted=1" .
+        "&highlight=" . $deleteAttendanceId .
+        "&name=" . urlencode($deleteFirstName . ' ' . $deleteLastName) .
+        "&page=" . $currentPage .
+        "&date=" . $deleteDate .
+        "&entriesCount=" . $entriesCount
     );
     exit;
 }
