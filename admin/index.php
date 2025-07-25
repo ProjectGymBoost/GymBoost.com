@@ -55,7 +55,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">100</div>
+                                <div class="subheading" id="usersCount">0</div>
                                 <div>Users</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -70,7 +70,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">86</div>
+                                <div class="subheading" id="activeMembersCount">0</div>
                                 <div>Active Members</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -85,7 +85,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">4</div>
+                                <div class="subheading" id="newMembersCount">0</div>
                                 <div>New Members</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -100,7 +100,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">8</div>
+                                <div class="subheading" id="attendanceTodayCount">0</div>
                                 <div>Attendance Today</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -115,7 +115,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">4</div>
+                                <div class="subheading" id="totalPlansCount">0</div>
                                 <div>Total Plans</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
