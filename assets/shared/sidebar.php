@@ -94,7 +94,7 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                 <li><a href="attendance.php" class="sidebar-link"><i class="bi bi-calendar-check"></i> Attendance</a></li>
                 <li><a href="badges.php" class="sidebar-link"><i class="bi bi-patch-check"></i> Badges</a></li>
                 <li><a href="announcements.php" class="sidebar-link"><i class="bi bi-bell"></i> Announcements</a></li>
-                <li><a href="../login.php" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                <li><a href="?logout=true" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
             </ul>
         </div>
     </div>

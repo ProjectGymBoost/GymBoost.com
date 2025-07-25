@@ -1,4 +1,5 @@
-<?php 
+<?php
+include("user/achievements.php");
 // Get RFID input
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rfid'])) {
     $rfid = trim($_POST['rfid']);
@@ -30,7 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rfid'])) {
                 $timeIn = date('h:i A');
 
                 $insertAttendanceQuery = "INSERT INTO attendances (userID, userMembershipID, checkinDate, timeIn) VALUES ('$userID', '$userMembershipID', '$today', '$timeIn')";
-                executeQuery($insertAttendanceQuery);
+                $insertResult = executeQuery($insertAttendanceQuery);
+
+                if ($insertResult) {
+                    checkAndAssignBadges($conn, $userID);
+                }
 
                 $updatePointsQuery = "UPDATE users SET points = points + 5 WHERE userID = $userID";
                 executeQuery($updatePointsQuery);
