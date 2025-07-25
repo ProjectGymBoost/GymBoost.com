@@ -64,6 +64,26 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-10 col-lg-8 mb-4">
                         <div class="heading text-center">RENEW MEMBERSHIP</div>
+
+                        <?php if (isset($_GET['active']) && $_GET['active'] == 1): ?>
+                            <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+                                <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive"
+                                    aria-atomic="true">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            Renewal failed. User is still <strong>Active</strong>.
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                            aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                const url = new URL(window.location);
+                                url.searchParams.delete('active');
+                                history.replaceState(null, '', url.toString());
+                            </script>
+                        <?php endif; ?>
                     </div>
 
                     <div class="d-flex justify-content-center align">
@@ -72,7 +92,7 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                             <!-- User Dropdown -->
                             <div class="w-100 mb-3">
-                                <label class="form-label fw-bold">Select User</label>
+                                <label class="form-label fw-bold"></label>
                                 <select class="form-select select2" name="userID" required>
                                     <option selected disabled>Select User</option>
                                     <?php while ($user = mysqli_fetch_assoc($usersResult)): ?>
@@ -85,9 +105,9 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                             <!-- Membership Plan -->
                             <div class="w-100 mb-3">
-                                <label class="form-label fw-bold">Membership Plan</label>
+                                <label class="form-label fw-bold"></label>
                                 <select class="form-select" name="membershipID" id="membershipPlan" required>
-                                    <option disabled selected>Select a plan</option>
+                                    <option disabled selected>Membership Plan</option>
                                     <?php while ($plan = mysqli_fetch_assoc($membershipResult)): ?>
                                         <option value="<?= $plan['membershipID']; ?>"
                                             data-requirement="<?= $plan['requirement']; ?>">

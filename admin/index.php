@@ -80,6 +80,21 @@ $ageData = json_encode($chart->getAgeData());
                     </div>
                 </div>
 
+                <!-- Inactive Members -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading" id="inactiveMembersCount">0</div>
+                                <div>Inactive Members</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-person-bounding-box icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- New Members -->
                 <div class="col-md-4">
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
@@ -179,13 +194,14 @@ $ageData = json_encode($chart->getAgeData());
                     <table class="table table-striped table-borderless">
                         <thead>
                             <tr>
-                                <th colspan="4" class="fw-bold text-center">TOP 10 ACTIVE MEMBERS</th>
+                                <?php $monthName = strtoupper(date('F')); ?>
+                                <th colspan="4" class="fw-bold text-center"><?= $monthName ?> TOP 10 ACTIVE MEMBERS</th>
                             </tr>
                             <tr>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">Rank</th>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">User</th>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">Workouts this Month</th>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">Points</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">RANK</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">USER</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">TOTAL WORKOUTS</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">TOTAL POINTS</th>
                             </tr>
                         </thead>
                         <tbody id="top10Tbody">

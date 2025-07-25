@@ -309,13 +309,17 @@ class WorkoutCalendar
             $startDate = $_POST['startDate'];
             $endDate = $_POST['endDate'];
             $color = $_POST['color'];
-            $workoutType = isset($_POST['workoutType'])
-                ? (is_array($_POST['workoutType']) ? implode(', ', $_POST['workoutType']) : $_POST['workoutType'])
-                : '';
+            $workoutTypes = isset($_POST['workoutType']) ? $_POST['workoutType'] : [];
+            if (!is_array($workoutTypes)) {
+                $workoutTypes = [$workoutTypes];
+            }
 
-            $query = "INSERT INTO workout_logs (userID, workoutType, startDate, endDate, color) 
-                  VALUES ('$userID', '$workoutType', '$startDate', '$endDate', '$color')";
-            executeQuery($query);
+            foreach ($workoutTypes as $type) {
+                $safeType = mysqli_real_escape_string($GLOBALS['conn'], $type);
+                $query = "INSERT INTO workout_logs (userID, workoutType, startDate, endDate, color) 
+                        VALUES ('$userID', '$safeType', '$startDate', '$endDate', '$color')";
+                executeQuery($query);
+            }
 
             $GLOBALS['showAddModal'] = true;
             $this->preventFormResubmission();
@@ -436,7 +440,7 @@ class UserChartData
             return '<span class="text-muted">No recorded years available</span>';
         }
 
-        $options = '<option selected disabled>Select Year</option>';
+        $options = '<option disabled>Select Year</option>';
         foreach ($this->availableYears as $year) {
             $selected = ($year == $this->year) ? 'selected' : '';
             $options .= "<option value=\"$year\" $selected>$year</option>";
@@ -445,7 +449,8 @@ class UserChartData
         return '
         <div class="row mt-5">
             <div class="col-auto">
-                <form method="GET">
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="page" value="workout">
                     <select name="year" class="form-select"
                         onchange="this.form.submit()"
                         style="
@@ -465,7 +470,7 @@ class UserChartData
             </div>
         </div>';
     }
-    
+
     public function getTypeLabels()
     {
         return $this->typeLabels;

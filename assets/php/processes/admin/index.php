@@ -11,6 +11,7 @@ $response = [
     "stats" => [
         "totalUsers" => 0,
         "activeMembers" => 0,
+        "inactiveMembers" => 0,
         "newMembers" => 0,
         "attendanceToday" => 0,
         "totalPlans" => 0
@@ -26,19 +27,22 @@ try {
         SELECT 
             u.userID,
             CONCAT(u.firstName, ' ', u.lastName) AS fullName,
-            COUNT(w.workoutID) AS workoutsThisMonth,
-            IFNULL(u.points, 0) AS points
+            COUNT(DISTINCT w.workoutID) AS workoutsThisMonth,
+            COUNT(DISTINCT a.attendanceID) * 5 AS points
         FROM users u
         LEFT JOIN workout_logs w 
             ON u.userID = w.userID 
             AND DATE(w.startDate) BETWEEN ? AND ?
+        LEFT JOIN attendances a
+            ON u.userID = a.userID 
+            AND DATE(a.checkinDate) BETWEEN ? AND ?
         WHERE u.state = 'Active'
         AND u.role = 'user'
         GROUP BY u.userID
         ORDER BY workoutsThisMonth DESC, points DESC
         LIMIT 10
     ");
-    $stmt->bind_param("ss", $startOfMonth, $endOfMonth);
+    $stmt->bind_param("ssss", $startOfMonth, $endOfMonth, $startOfMonth, $endOfMonth);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -50,6 +54,7 @@ try {
     $dashboardQueries = [
         'totalUsers' => "SELECT COUNT(*) AS count FROM users",
         'activeMembers' => "SELECT COUNT(*) AS count FROM users WHERE state = 'Active'",
+        'inactiveMembers' => "SELECT COUNT(*) AS count FROM users WHERE state = 'Inactive'",
         'newMembers' => "SELECT COUNT(DISTINCT userID) AS count FROM user_memberships WHERE DATE(startDate) >= CURDATE() - INTERVAL 7 DAY",
         'attendanceToday' => "SELECT COUNT(*) AS count FROM attendances WHERE DATE(checkinDate) = CURDATE()",
         'totalPlans' => "SELECT COUNT(*) AS count FROM memberships"

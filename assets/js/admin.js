@@ -43,6 +43,7 @@ function loadTopMembersAndStats() {
 
             document.getElementById('usersCount').textContent = parseInt(stats.totalUsers) || 0;
             document.getElementById('activeMembersCount').textContent = parseInt(stats.activeMembers) || 0;
+            document.getElementById('inactiveMembersCount').textContent = parseInt(stats.inactiveMembers) || 0;
             document.getElementById('newMembersCount').textContent = parseInt(stats.newMembers) || 0;
             document.getElementById('attendanceTodayCount').textContent = parseInt(stats.attendanceToday) || 0;
             document.getElementById('totalPlansCount').textContent = parseInt(stats.totalPlans) || 0;

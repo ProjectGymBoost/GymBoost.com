@@ -7,14 +7,25 @@ if (isset($_POST['btnRenew'])) {
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
 
-    // Insert new membership entry (preserves history)
-    $query = "INSERT INTO user_memberships (userID, membershipID, startDate, endDate)
-              VALUES (?, ?, ?, ?)";
+    // Check if the user is still Active
+    $statusQuery = "SELECT state FROM users WHERE userID = $userID";
+    $statusResult = executeQuery($statusQuery);
+    $statusRow = mysqli_fetch_assoc($statusResult);
 
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "iiss", $userID, $membershipID, $startDate, $endDate);
+    if ($statusRow && $statusRow['state'] === "Active") {
+        // Redirect with warning if the user is still active
+        header("Location: renewal.php?active=1");
+        exit;
+    }
 
-    if (mysqli_stmt_execute($stmt)) {
+    // Proceed with inserting new membership
+    $query = "
+        INSERT INTO user_memberships (userID, membershipID, startDate, endDate)
+        VALUES ($userID, $membershipID, '$startDate', '$endDate')
+    ";
+    $result = executeQuery($query);
+
+    if ($result) {
         header("Location: membership.php?renewed=1");
         exit;
     } else {

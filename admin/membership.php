@@ -75,6 +75,7 @@ $showDeleteModal = isset($membershipDeleted);
                 <div class="flex-grow-1" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
+                        <option value="userMembershipID" <?= $sortBy === 'userMembershipID' ? 'selected' : '' ?>>ID</option>
                         <option value="rfidNumber" <?= $sortBy === 'rfidNumber' ? 'selected' : '' ?>>RFID Number</option>
                         <option value="firstName" <?= $sortBy === 'firstName' ? 'selected' : '' ?>>First Name</option>
                         <option value="lastName" <?= $sortBy === 'lastName' ? 'selected' : '' ?>>Last Name</option>
@@ -119,23 +120,25 @@ $showDeleteModal = isset($membershipDeleted);
                 <table class="table table-striped table-borderless">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>RFID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Start Date</th>
-                            <th>Expiry Date</th>
-                            <th class="text-center">Action</th>
+                            <th>FIRST NAME</th>
+                            <th>LAST NAME</th>
+                            <th>START DATE</th>
+                            <th>EXPIRY DATE</th>
+                            <th class="text-center">ACTION</th>
                     </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($membershipArray)): ?>
                             <tr>
-                                <td colspan="6" style="color:#D2042D; font-weight: bold; text-align: center;">NO MEMBERSHIP DATA
-                                    AVAILABLE</td>
+                                <td colspan="7" style="color:#D2042D; font-weight: bold; text-align: center;">NO MEMBERSHIP DATA AVAILABLE</td>
                             </tr>
                         <?php else: ?>
+                            <?php $index = $startEntry; ?>
                             <?php foreach ($membershipArray as $member): ?>
                                 <tr>
+                                    <td><?= $member['userMembershipID'] ?></td> 
                                     <td><?= $member['rfidNumber'] ?></td>
                                     <td><?= $member['firstName'] ?></td>
                                     <td><?= $member['lastName'] ?></td>
