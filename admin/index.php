@@ -55,7 +55,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">100</div>
+                                <div class="subheading" id="usersCount">0</div>
                                 <div>Users</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -70,8 +70,23 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">86</div>
+                                <div class="subheading" id="activeMembersCount">0</div>
                                 <div>Active Members</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <i class="bi bi-person-bounding-box icon-dashboard" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inactive Members -->
+                <div class="col-md-4">
+                    <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="subheading" id="inactiveMembersCount">0</div>
+                                <div>Inactive Members</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
                                 <i class="bi bi-person-bounding-box icon-dashboard" style="font-size: 2rem;"></i>
@@ -85,7 +100,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">4</div>
+                                <div class="subheading" id="newMembersCount">0</div>
                                 <div>New Members</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -100,7 +115,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">8</div>
+                                <div class="subheading" id="attendanceTodayCount">0</div>
                                 <div>Attendance Today</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -115,7 +130,7 @@ $ageData = json_encode($chart->getAgeData());
                     <div class="card-dashboard p-4" style="background-color: var(--secondaryColor); border: none;">
                         <div class="row">
                             <div class="col-8">
-                                <div class="subheading">4</div>
+                                <div class="subheading" id="totalPlansCount">0</div>
                                 <div>Total Plans</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -179,94 +194,27 @@ $ageData = json_encode($chart->getAgeData());
                     <table class="table table-striped table-borderless">
                         <thead>
                             <tr>
-                                <th colspan="4" class="fw-bold text-center">TOP 10 ACTIVE MEMBERS</th>
+                                <?php $monthName = strtoupper(date('F')); ?>
+                                <th colspan="4" class="fw-bold text-center"><?= $monthName ?> TOP 10 ACTIVE MEMBERS</th>
                             </tr>
                             <tr>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Rank</th>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    User</th>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Workouts this Month</th>
-                                <th scope="col"
-                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
-                                    Points</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">RANK</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">USER</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">TOTAL WORKOUTS</th>
+                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">TOTAL POINTS</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="top10Tbody">
                             <tr>
-                                <td class="d-flex align-items-center fw-bold">
-                                    <i class="bi bi-award-fill text-warning me-2"></i> 1
-                                </td>
-                                <td><strong>Jon Doe</strong></td>
-                                <td><strong>20</strong></td>
-                                <td><strong>1500</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center fw-bold">
-                                    <i class="bi bi-award-fill text-primary me-2"></i> 2
-                                </td>
-                                <td><strong>Jenna Miles</strong></td>
-                                <td><strong>18</strong></td>
-                                <td><strong>1400</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center fw-bold">
-                                    <i class="bi bi-award-fill text-secondary me-2"></i> 3
-                                </td>
-                                <td><strong>Jose Rizal</strong></td>
-                                <td><strong>16</strong></td>
-                                <td><strong>1300</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">4</td>
-                                <td>Emily Brown</td>
-                                <td>14</td>
-                                <td>1200</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">5</td>
-                                <td>Michael Johhnson</td>
-                                <td>12</td>
-                                <td>1100</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">6</td>
-                                <td>Sponge Bob</td>
-                                <td>11</td>
-                                <td>1000</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">7</td>
-                                <td>Emily Brown</td>
-                                <td>10</td>
-                                <td>900</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">8</td>
-                                <td>Michael Johhnson</td>
-                                <td>9</td>
-                                <td>800</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">9</td>
-                                <td>Sponge Bob</td>
-                                <td>8</td>
-                                <td>700</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center">10</td>
-                                <td>Sponge Bob</td>
-                                <td>7</td>
-                                <td>600</td>
+                                <td colspan="4" class="text-center text-muted">Loading...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- Loading of the Top 10 Active Members -->
+            <script src="../assets/js/admin.js"></script>
 
         </div>
     </div>

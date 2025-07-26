@@ -374,3 +374,124 @@ class WorkoutCalendar
         return strtolower(implode(', ', array_slice($workouts, 0, -1)) . ' and ' . end($workouts));
     }
 }
+
+class UserChartData
+{
+    public $userID, $year;
+    public $typeLabels = [], $typeCounts = [];
+    public $monthlyLabels = [], $monthlyCounts = [];
+    public $availableYears = [];
+
+    public function __construct($userID, $year = null)
+    {
+        $this->userID = $userID;
+        $this->year = $year ?? date('Y');
+        $this->monthlyLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        $this->monthlyCounts = array_fill(0, 12, 0);
+    }
+
+    public function loadWorkoutTypeData()
+    {
+        global $conn;
+        $query = "SELECT workoutType FROM workout_logs
+                WHERE userID = '$this->userID' AND YEAR(startDate) = '$this->year'";
+        $result = executeQuery($query);
+
+        $typeCounter = [];
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $types = array_map('trim', explode(',', $row['workoutType']));
+            foreach ($types as $type) {
+                if (!empty($type)) {
+                    $typeCounter[$type] = ($typeCounter[$type] ?? 0) + 1;
+                }
+            }
+        }
+
+        foreach ($typeCounter as $type => $count) {
+            $this->typeLabels[] = $type;
+            $this->typeCounts[] = $count;
+        }
+    }
+
+    public function loadMonthlyWorkoutData()
+    {
+        global $conn;
+        $query = "SELECT MONTH(startDate) AS month, COUNT(*) AS count
+          FROM workout_logs
+          WHERE userID = '$this->userID' AND YEAR(startDate) = '$this->year'
+          GROUP BY MONTH(startDate)";
+        $result = executeQuery($query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $this->monthlyCounts[$row['month'] - 1] = intval($row['count']);
+        }
+    }
+
+    public function loadAvailableYears()
+    {
+        global $conn;
+        $query = "SELECT DISTINCT YEAR(startDate) AS year
+          FROM workout_logs
+          WHERE userID = '$this->userID'
+          ORDER BY year DESC";
+        $result = executeQuery($query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $this->availableYears[] = $row['year'];
+        }
+    }
+
+    public function loadYearDropdown()
+    {
+        if (empty($this->availableYears)) {
+            return '<span class="text-muted">No recorded years available</span>';
+        }
+
+        $options = '<option disabled>Select Year</option>';
+        foreach ($this->availableYears as $year) {
+            $selected = ($year == $this->year) ? 'selected' : '';
+            $options .= "<option value=\"$year\" $selected>$year</option>";
+        }
+
+        return '
+        <div class="row mt-5">
+            <div class="col-auto">
+                <form method="GET" action="index.php#statistics">
+                    <input type="hidden" name="page" value="workout">
+                    <select name="year" class="form-select"
+                        onchange="this.form.submit()"
+                        style="
+                            min-width: 150px;
+                            background-color: var(--primaryColor);
+                            color: var(--text-color-light);
+                            background-image: url(\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27white%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1.5 5.5l6 6 6-6%27/%3E%3C/svg%3E\');
+                            background-repeat: no-repeat;
+                            background-position: right 0.75rem center;
+                            background-size: 1rem;
+                            border: none;
+                            padding-right: 2rem;
+                        ">
+                        ' . $options . '
+                    </select>
+                </form>
+            </div>
+        </div>';
+    }
+
+
+    public function getTypeLabels()
+    {
+        return $this->typeLabels;
+    }
+    public function getTypeCounts()
+    {
+        return $this->typeCounts;
+    }
+    public function getMonthlyLabels()
+    {
+        return $this->monthlyLabels;
+    }
+    public function getMonthlyCounts()
+    {
+        return $this->monthlyCounts;
+    }
+}

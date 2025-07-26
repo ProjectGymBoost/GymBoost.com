@@ -5,6 +5,8 @@ include("../assets/shared/auth.php");
 include("../assets/shared/connect.php");
 include("../assets/php/processes/admin/membership.php");
 
+$membershipRenewed = isset($_GET['renewed']) && $_GET['renewed'] == 1;
+
 // Flash message handling
 if (isset($_SESSION['membershipDeleted'])) {
     $membershipDeleted = $_SESSION['membershipDeleted'];
@@ -36,6 +38,29 @@ $showDeleteModal = isset($membershipDeleted);
     <div class="main px-2 px-md-0" style="margin-left: 70px; transition: margin-left 0.25s ease-in-out;">
         <div class="container-fluid py-4 px-4">
 
+            <?php if ($membershipRenewed): ?>
+                <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+                    <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                Membership successfully renewed!
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Remove URL param after showing toast -->
+                <script>
+                    const url = new URL(window.location);
+                    url.searchParams.delete('renewed');
+                    history.replaceState(null, '', url.toString());
+                </script>
+            <?php endif; ?>
+
+
             <!-- Heading -->
             <div class="col-12 mb-4">
                 <div class="heading text-center text-sm-start">MEMBERSHIP</div>
@@ -50,6 +75,7 @@ $showDeleteModal = isset($membershipDeleted);
                 <div class="flex-grow-1" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
+                        <option value="userMembershipID" <?= $sortBy === 'userMembershipID' ? 'selected' : '' ?>>ID</option>
                         <option value="rfidNumber" <?= $sortBy === 'rfidNumber' ? 'selected' : '' ?>>RFID Number</option>
                         <option value="firstName" <?= $sortBy === 'firstName' ? 'selected' : '' ?>>First Name</option>
                         <option value="lastName" <?= $sortBy === 'lastName' ? 'selected' : '' ?>>Last Name</option>
@@ -84,6 +110,9 @@ $showDeleteModal = isset($membershipDeleted);
                     <input type="hidden" name="sortBy" value="<?= $sortBy ?>">
                     <input type="hidden" name="orderBy" value="<?= $orderBy ?>">
                 </form>
+
+                <!-- Add Renew Button -->
+                <a href="renewal.php" class="btn btn-primary subheading">RENEW</a>
             </div>
 
             <!-- User Table -->
@@ -91,23 +120,25 @@ $showDeleteModal = isset($membershipDeleted);
                 <table class="table table-striped table-borderless">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>RFID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Start Date</th>
-                            <th>Expiry Date</th>
-                            <th class="text-center">Action</th>
+                            <th>FIRST NAME</th>
+                            <th>LAST NAME</th>
+                            <th>START DATE</th>
+                            <th>EXPIRY DATE</th>
+                            <th class="text-center">ACTION</th>
                     </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($membershipArray)): ?>
                             <tr>
-                                <td colspan="6" style="color:#D2042D; font-weight: bold; text-align: center;">NO MEMBERSHIP DATA
-                                    AVAILABLE</td>
+                                <td colspan="7" style="color:#D2042D; font-weight: bold; text-align: center;">NO MEMBERSHIP DATA AVAILABLE</td>
                             </tr>
                         <?php else: ?>
+                            <?php $index = $startEntry; ?>
                             <?php foreach ($membershipArray as $member): ?>
                                 <tr>
+                                    <td><?= $member['userMembershipID'] ?></td> 
                                     <td><?= $member['rfidNumber'] ?></td>
                                     <td><?= $member['firstName'] ?></td>
                                     <td><?= $member['lastName'] ?></td>

@@ -17,6 +17,7 @@ $sortBy = $_GET['sortBy'] ?? 'none';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
 $allowedSortColumns = [
+    'userMembershipID' => 'um.userMembershipID',
     'rfidNumber' => 'u.rfidNumber',
     'firstName' => 'u.firstName',
     'lastName' => 'u.lastName',
@@ -31,7 +32,7 @@ if (array_key_exists($sortBy, $allowedSortColumns) && in_array($orderBy, $allowe
     $orderCondition = "ORDER BY $column $orderBy";
 } else {
     // Default sort
-    $orderCondition = "ORDER BY u.rfidNumber ASC";
+    $orderCondition = "ORDER BY um.userMembershipID ASC";
 }
 
 // PAGINATION
