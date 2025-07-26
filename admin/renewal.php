@@ -92,9 +92,8 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                             <!-- User Dropdown -->
                             <div class="w-100 mb-3">
-                                <label class="form-label fw-bold"></label>
+                                <label class="form-label fw-bold">Select User</label>
                                 <select class="form-select select2" name="userID" required>
-                                    <option selected disabled>Select User</option>
                                     <?php while ($user = mysqli_fetch_assoc($usersResult)): ?>
                                         <option value="<?= $user['userID']; ?>">
                                             <?= htmlspecialchars($user['firstName'] . ' ' . $user['lastName']); ?>
@@ -105,7 +104,7 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                             <!-- Membership Plan -->
                             <div class="w-100 mb-3">
-                                <label class="form-label fw-bold"></label>
+                                <label class="form-label fw-bold">Membership Plan</label>
                                 <select class="form-select" name="membershipID" id="membershipPlan" required>
                                     <option disabled selected>Membership Plan</option>
                                     <?php while ($plan = mysqli_fetch_assoc($membershipResult)): ?>

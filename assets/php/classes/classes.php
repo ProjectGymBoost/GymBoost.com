@@ -309,17 +309,13 @@ class WorkoutCalendar
             $startDate = $_POST['startDate'];
             $endDate = $_POST['endDate'];
             $color = $_POST['color'];
-            $workoutTypes = isset($_POST['workoutType']) ? $_POST['workoutType'] : [];
-            if (!is_array($workoutTypes)) {
-                $workoutTypes = [$workoutTypes];
-            }
+            $workoutType = isset($_POST['workoutType'])
+                ? (is_array($_POST['workoutType']) ? implode(', ', $_POST['workoutType']) : $_POST['workoutType'])
+                : '';
 
-            foreach ($workoutTypes as $type) {
-                $safeType = mysqli_real_escape_string($GLOBALS['conn'], $type);
-                $query = "INSERT INTO workout_logs (userID, workoutType, startDate, endDate, color) 
-                        VALUES ('$userID', '$safeType', '$startDate', '$endDate', '$color')";
-                executeQuery($query);
-            }
+            $query = "INSERT INTO workout_logs (userID, workoutType, startDate, endDate, color) 
+                  VALUES ('$userID', '$workoutType', '$startDate', '$endDate', '$color')";
+            executeQuery($query);
 
             $GLOBALS['showAddModal'] = true;
             $this->preventFormResubmission();
@@ -397,14 +393,24 @@ class UserChartData
     public function loadWorkoutTypeData()
     {
         global $conn;
-        $query = "SELECT workoutType, COUNT(*) as count
-          FROM workout_logs
-          WHERE userID = '$this->userID' AND YEAR(startDate) = '$this->year'
-          GROUP BY workoutType";
+        $query = "SELECT workoutType FROM workout_logs
+                WHERE userID = '$this->userID' AND YEAR(startDate) = '$this->year'";
         $result = executeQuery($query);
+
+        $typeCounter = [];
+
         while ($row = mysqli_fetch_assoc($result)) {
-            $this->typeLabels[] = $row['workoutType'];
-            $this->typeCounts[] = $row['count'];
+            $types = array_map('trim', explode(',', $row['workoutType']));
+            foreach ($types as $type) {
+                if (!empty($type)) {
+                    $typeCounter[$type] = ($typeCounter[$type] ?? 0) + 1;
+                }
+            }
+        }
+
+        foreach ($typeCounter as $type => $count) {
+            $this->typeLabels[] = $type;
+            $this->typeCounts[] = $count;
         }
     }
 
@@ -449,7 +455,7 @@ class UserChartData
         return '
         <div class="row mt-5">
             <div class="col-auto">
-                <form method="GET" action="index.php">
+                <form method="GET" action="index.php#statistics">
                     <input type="hidden" name="page" value="workout">
                     <select name="year" class="form-select"
                         onchange="this.form.submit()"
@@ -470,6 +476,7 @@ class UserChartData
             </div>
         </div>';
     }
+
 
     public function getTypeLabels()
     {
