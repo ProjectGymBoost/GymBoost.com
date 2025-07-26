@@ -106,7 +106,6 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                             <div class="w-100 mb-3">
                                 <label class="form-label fw-bold">Membership Plan</label>
                                 <select class="form-select" name="membershipID" id="membershipPlan" required>
-                                    <option disabled selected>Membership Plan</option>
                                     <?php while ($plan = mysqli_fetch_assoc($membershipResult)): ?>
                                         <option value="<?= $plan['membershipID']; ?>"
                                             data-requirement="<?= $plan['requirement']; ?>">
