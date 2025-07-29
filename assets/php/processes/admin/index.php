@@ -52,9 +52,9 @@ try {
 
     // DASHBOARD STATS
     $dashboardQueries = [
-        'totalUsers' => "SELECT COUNT(*) AS count FROM users",
-        'activeMembers' => "SELECT COUNT(*) AS count FROM users WHERE state = 'Active'",
-        'inactiveMembers' => "SELECT COUNT(*) AS count FROM users WHERE state = 'Inactive'",
+        'totalUsers' => "SELECT COUNT(*) AS count FROM users WHERE role = 'user'",
+        'activeMembers' => "SELECT COUNT(*) AS count FROM users WHERE state = 'Active' AND role = 'user'",
+        'inactiveMembers' => "SELECT COUNT(*) AS count FROM users WHERE state = 'Inactive' AND role = 'user'",
         'newMembers' => "SELECT COUNT(DISTINCT userID) AS count FROM user_memberships WHERE DATE(startDate) >= CURDATE() - INTERVAL 7 DAY",
         'attendanceToday' => "SELECT COUNT(*) AS count FROM attendances WHERE DATE(checkinDate) = CURDATE()",
         'totalPlans' => "SELECT COUNT(*) AS count FROM memberships"

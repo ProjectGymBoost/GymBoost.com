@@ -1,3 +1,5 @@
+// Chart.js for workout.php part of the Workout Statistics Graph for WORKOUT TYPE TRACKER and MONTHLY WORKOUT FREQUENCY
+
 document.addEventListener("DOMContentLoaded", function () {
   if (typeof chartData === "undefined") return;
 
@@ -14,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Full Body": "#1f2a3c"
   };
 
-  // === PIE CHART ===
+  // PIE CHART 
   const pieColors = chartData.typeLabels.map(label => workoutColors[label] || "#cccccc");
   const typeCtx = document.getElementById("workoutTypeChart")?.getContext("2d");
   if (typeCtx) {
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       data: {
         labels: chartData.typeLabels,
         datasets: [{
-          label: "Workout Types",
+          label: "",
           data: chartData.typeCounts,
           backgroundColor: pieColors
         }]
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // === BAR CHART ===
+  // BAR CHART
   const barColors = chartData.monthlyCounts.map((_, i) => {
     const defaultColors = [
       "#b0b0b0", "#1f2a3c", "#60779c", "#334566", "#1f2a3c",
