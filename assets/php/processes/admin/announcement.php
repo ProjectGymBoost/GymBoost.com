@@ -35,10 +35,23 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 
+function isValidAnnouncementInput($input) {
+    // Allows letters, numbers, common punctuations, and spaces.
+    return preg_match('/^[a-zA-Z0-9\s.,!?\'":;()\-\n\r]+$/u', $input);
+}
+
 // ADD ANNOUNCEMENT
 if (isset($_POST['btnAddAnnouncement'])) {
-    $title = mysqli_real_escape_string($conn, $_POST['newAnnouncementTitle']);
-    $message = mysqli_real_escape_string($conn, $_POST['newAnnouncementMessage']);
+    $title = trim($_POST['newAnnouncementTitle']);
+    $message = trim($_POST['newAnnouncementMessage']);
+
+    if (!isValidAnnouncementInput($title) || !isValidAnnouncementInput($message)) {
+        header("Location: " . $_SERVER['PHP_SELF'] . "?error=invalid_characters&page=$currentPage&entriesCount=$entriesCount");
+        exit;
+    }
+
+    $title = mysqli_real_escape_string($conn, $title);
+    $message = mysqli_real_escape_string($conn, $message);
 
     $insertQuery = "INSERT INTO announcements (title, message) VALUES ('$title', '$message')";
     executeQuery($insertQuery);
@@ -50,8 +63,16 @@ if (isset($_POST['btnAddAnnouncement'])) {
 // EDIT ANNOUNCEMENT
 if (isset($_POST['btnEditAnnouncement'])) {
     $id = $_POST['editAnnouncementID'];
-    $title = mysqli_real_escape_string($conn, $_POST['editAnnouncementTitle']);
-    $message = mysqli_real_escape_string($conn, $_POST['editAnnouncementMessage']);
+    $title = trim($_POST['editAnnouncementTitle']);
+    $message = trim($_POST['editAnnouncementMessage']);
+
+    if (!isValidAnnouncementInput($title) || !isValidAnnouncementInput($message)) {
+        header("Location: " . $_SERVER['PHP_SELF'] . "?error=invalid_characters&page=$currentPage&entriesCount=$entriesCount");
+        exit;
+    }
+
+    $title = mysqli_real_escape_string($conn, $title);
+    $message = mysqli_real_escape_string($conn, $message);
 
     $updateQuery = "UPDATE announcements SET title = '$title', message = '$message' WHERE announcementID = $id";
     executeQuery($updateQuery);

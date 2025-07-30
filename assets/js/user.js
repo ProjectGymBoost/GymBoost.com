@@ -1,7 +1,17 @@
 // Chart.js for workout.php part of the Workout Statistics Graph for WORKOUT TYPE TRACKER and MONTHLY WORKOUT FREQUENCY
 
 document.addEventListener("DOMContentLoaded", function () {
-  if (typeof chartData === "undefined") return;
+  // Show or hide the "No Data" message based on both charts
+  const noDataDiv = document.getElementById("noDataMessage");
+
+  const hasPieData = chartData.typeCounts.some(count => count > 0);
+  const hasBarData = chartData.monthlyCounts.some(count => count > 0);
+
+  if (!hasPieData && !hasBarData) {
+    noDataDiv.classList.remove("d-none");
+  } else {
+    noDataDiv.classList.add("d-none");
+  }
 
   const workoutColors = {
     "Cardio": "#60779c",

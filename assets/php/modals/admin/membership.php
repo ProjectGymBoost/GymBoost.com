@@ -13,7 +13,6 @@
 
                 <!-- Form -->
                 <form method="post">
-                    <!-- Body -->
                     <div class="modal-body" style="padding: 1.5rem;">
                         <input type="hidden" name="editMembershipId" value="<?= $info['userMembershipID']; ?>">
                         <input type="hidden" name="editFirstName" value="<?= $info['firstName']; ?>">
@@ -58,7 +57,6 @@
                     </div>
                 </form>
 
-                <!-- For Automatic Calculation of End Date for Membership Plans -->
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const planSelect = document.getElementById('editPlan<?= $info['userMembershipID']; ?>');
@@ -68,24 +66,23 @@
                         if (!planSelect || !startDateInput || !endDateInput) return;
 
                         function updateEndDate() {
-                        const selectedOption = planSelect.options[planSelect.selectedIndex];
-                        const requirement = selectedOption.getAttribute('data-requirement'); // e.g., "30 days"
+                            const selectedOption = planSelect.options[planSelect.selectedIndex];
+                            const requirement = selectedOption.getAttribute('data-requirement');
+                            const daysMatch = requirement.match(/(\d+)\s*days?/i);
+                            if (!daysMatch) return;
 
-                        const daysMatch = requirement.match(/(\d+)\s*days?/i);
-                        if (!daysMatch) return;
+                            const duration = parseInt(daysMatch[1], 10);
+                            const startDate = new Date(startDateInput.value);
+                            if (isNaN(duration) || isNaN(startDate.getTime())) return;
 
-                        const duration = parseInt(daysMatch[1], 10);
-                        const startDate = new Date(startDateInput.value);
-                        if (isNaN(duration) || isNaN(startDate.getTime())) return;
+                            const endDate = new Date(startDate);
+                            endDate.setDate(endDate.getDate() + duration);
 
-                        const endDate = new Date(startDate);
-                        endDate.setDate(endDate.getDate() + duration);
+                            const yyyy = endDate.getFullYear();
+                            const mm = String(endDate.getMonth() + 1).padStart(2, '0');
+                            const dd = String(endDate.getDate()).padStart(2, '0');
 
-                        const yyyy = endDate.getFullYear();
-                        const mm = String(endDate.getMonth() + 1).padStart(2, '0');
-                        const dd = String(endDate.getDate()).padStart(2, '0');
-
-                        endDateInput.value = `${yyyy}-${mm}-${dd}`;
+                            endDateInput.value = `${yyyy}-${mm}-${dd}`;
                         }
 
                         planSelect.addEventListener('change', updateEndDate);
@@ -96,39 +93,9 @@
         </div>
     </div>
 
-    <!-- Confirm Edit Modal -->
-    <?php if (isset($_GET['updated']) && $_GET['updated'] == '1' && $_GET['name'] == $info['firstName'] . ' ' . $info['lastName']): ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const modal = new bootstrap.Modal(document.getElementById('confirmEditMembershipModal<?= $info['userMembershipID']; ?>'));
-                modal.show();
-                const url = new URL(window.location);
-                url.searchParams.delete('updated');
-                url.searchParams.delete('name');
-                history.replaceState(null, '', url.toString());
-            });
-        </script>
-
-        <div class="modal fade" id="confirmEditMembershipModal<?= $info['userMembershipID']; ?>" tabindex="-1" aria-hidden="true">
-           <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content" style="border-radius: 15px; border: none;">
-                    <div class="modal-header border-0">
-                        <h4 class="modal-title heading text-center w-100 text-black m-0">MEMBERSHIP UPDATED</h4>
-                    </div>
-                    <div class="modal-body text-center text-black">
-                        <strong><?= ($info['firstName'] . ' ' . $info['lastName']); ?>'s</strong> membership has been successfully edited.
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center pb-4 border-0">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
     <!-- Delete Membership Modal -->
     <div class="modal fade" id="deleteMembershipModal<?= $info['userMembershipID']; ?>" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-       <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 15px;">
                 <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
                     <h4 class="modal-title text-center subheading" style="margin: 0; font-size: 20px; letter-spacing: 2px;">DELETE MEMBERSHIP</h4>
@@ -157,29 +124,16 @@
     </div>
 <?php endforeach; ?>
 
-<!-- Confirm Delete Modal -->
-<?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1' && isset($_GET['name'])): ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteMembershipModalGeneric'));
-            modal.show();
-
-            const url = new URL(window.location);
-            url.searchParams.delete('deleted');
-            url.searchParams.delete('deletedID');
-            url.searchParams.delete('name');
-            history.replaceState(null, '', url.toString());
-        });
-    </script>
-
-    <div class="modal fade" id="confirmDeleteMembershipModalGeneric" tabindex="-1" aria-hidden="true">
-       <div class="modal-dialog modal-dialog-centered">
+<!-- ✅ Confirm Edit Modal (Only Once) -->
+<?php if (isset($_GET['updated']) && $_GET['updated'] == '1' && isset($_GET['name'])): ?>
+    <div class="modal fade" id="confirmEditMembershipModalGeneric" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 15px; border: none;">
                 <div class="modal-header border-0">
-                    <h4 class="modal-title heading text-center w-100 text-black m-0">MEMBERSHIP DELETED</h4>
+                    <h4 class="modal-title heading text-center w-100 text-black m-0">MEMBERSHIP UPDATED</h4>
                 </div>
                 <div class="modal-body text-center text-black">
-                    <strong><?= (htmlspecialchars($_GET['name'])); ?>'s</strong> membership has been successfully deleted.
+                    <strong><?= htmlspecialchars($_GET['name']); ?>'s</strong> membership has been successfully edited.
                 </div>
                 <div class="modal-footer d-flex justify-content-center pb-4 border-0">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
@@ -187,4 +141,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Match backdrop opacity to delete modal -->
+    <style>
+        .modal-backdrop.show {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = new bootstrap.Modal(document.getElementById('confirmEditMembershipModalGeneric'));
+            modal.show();
+
+            const url = new URL(window.location);
+            url.searchParams.delete('updated');
+            url.searchParams.delete('name');
+            history.replaceState(null, '', url.toString());
+        });
+
+        document.addEventListener('hidden.bs.modal', function () {
+            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+        });
+    </script>
 <?php endif; ?>
