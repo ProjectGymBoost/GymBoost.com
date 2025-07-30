@@ -93,8 +93,10 @@ if (isset($_POST['btnEditMembership'])) {
     $editStartDate = $_POST['editStartDate'];
     $editEndDate = $_POST['editEndDate'];
     $editMembershipPlan = $_POST['editMembershipPlan'];
+    $editUserID = $_POST['editUserID'];
+    $editRFID = mysqli_real_escape_string($conn, $_POST['editRFID']);
 
-
+    // Update membership
     $updateQuery = "
         UPDATE user_memberships
         SET startDate = '$editStartDate', endDate = '$editEndDate',
@@ -103,9 +105,12 @@ if (isset($_POST['btnEditMembership'])) {
     ";
     executeQuery($updateQuery);
 
+    // Update RFID in users table
+    $updateUserQuery = "UPDATE users SET rfidNumber = '$editRFID' WHERE userID = $editUserID";
+    executeQuery($updateUserQuery);
+
     $editedName = $_POST['editFirstName'] . ' ' . $_POST['editLastName'];
-    header(
-        "Location: " . $_SERVER['PHP_SELF'] .
+    header("Location: " . $_SERVER['PHP_SELF'] .
         "?updated=1" .
         "&name=" . urlencode($editedName) .
         "&page=" . $currentPage .
@@ -116,6 +121,7 @@ if (isset($_POST['btnEditMembership'])) {
     );
     exit;
 }
+
 
 // MEMBERSHIP PLANS QUERY
 $membershipPlans = [];

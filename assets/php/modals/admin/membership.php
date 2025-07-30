@@ -17,15 +17,26 @@
                         <input type="hidden" name="editMembershipId" value="<?= $info['userMembershipID']; ?>">
                         <input type="hidden" name="editFirstName" value="<?= $info['firstName']; ?>">
                         <input type="hidden" name="editLastName" value="<?= $info['lastName']; ?>">
+                        <input type="hidden" name="editUserID" value="<?= $info['userID']; ?>">
+
+                        <div class="w-100 mb-3">
+                            <div class="row gx-3">
+                                <div class="col-md-6 mb-3 text-start">
+                                    <label class="form-label fw-bold">First Name</label>
+                                    <div class="form-control-plaintext"><?= htmlspecialchars($info['firstName']); ?></div>
+                                </div>
+                                <div class="col-md-6 mb-3 text-start">
+                                    <label class="form-label fw-bold">Last Name</label>
+                                    <div class="form-control-plaintext"><?= htmlspecialchars($info['lastName']); ?></div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="mb-3 text-start">
-                            <label class="form-label fw-bold">First Name</label>
-                            <div class="form-control-plaintext"><?= htmlspecialchars($info['firstName']); ?></div>
+                            <label class="form-label fw-bold" for="editRFID<?= $info['userMembershipID']; ?>">RFID Number</label>
+                            <input type="text" class="form-control" name="editRFID" id="editRFID<?= $info['userMembershipID']; ?>" value="<?= htmlspecialchars($info['rfidNumber']); ?>" required>
                         </div>
-                        <div class="mb-3 text-start">
-                            <label class="form-label fw-bold">Last Name</label>
-                            <div class="form-control-plaintext"><?= htmlspecialchars($info['lastName']); ?></div>
-                        </div>
+
                         <div class="mb-3 text-start">
                             <label for="editPlan<?= $info['userMembershipID']; ?>" class="form-label fw-bold">Membership Plan</label>
                             <select class="form-select" id="editPlan<?= $info['userMembershipID']; ?>" name="editMembershipPlan" required>
@@ -124,7 +135,7 @@
     </div>
 <?php endforeach; ?>
 
-<!-- ✅ Confirm Edit Modal (Only Once) -->
+<!-- Confirm Edit Modal (Only Once) -->
 <?php if (isset($_GET['updated']) && $_GET['updated'] == '1' && isset($_GET['name'])): ?>
     <div class="modal fade" id="confirmEditMembershipModalGeneric" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

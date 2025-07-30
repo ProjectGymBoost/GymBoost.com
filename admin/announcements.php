@@ -41,12 +41,6 @@ include("../assets/php/processes/admin/announcement.php");
                 <div class="heading text-center text-sm-start">ANNOUNCEMENT</div>
             </div>
 
-            <?php if (isset($_GET['error']) && $_GET['error'] === 'invalid_characters'): ?>
-                <div class="alert alert-danger text-center fw-bold" role="alert">
-                    Only letters, numbers, and basic punctuation are allowed in titles and messages.
-                </div>
-            <?php endif; ?>
-
             <!-- Pagination and Add New Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <form method="GET" action="">
