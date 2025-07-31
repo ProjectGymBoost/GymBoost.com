@@ -105,7 +105,7 @@ $eventsJSON = $calendar->getEvents();
             </div>
           </div>
 
-          <div id="noDataMessage" class="text-center mt-4 text-muted fw-bold d-none">No Data Available</div>
+          <div id="noDataMessage" class="text-center mt-4 text-muted fw-bold d-none"></div>
         </div>
       </div>
     </div>

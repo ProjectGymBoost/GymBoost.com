@@ -408,11 +408,17 @@ class UserChartData
             }
         }
 
-        foreach ($typeCounter as $type => $count) {
-            $this->typeLabels[] = $type;
-            $this->typeCounts[] = $count;
+        if (!empty($typeCounter)) {
+            foreach ($typeCounter as $type => $count) {
+                $this->typeLabels[] = $type;
+                $this->typeCounts[] = $count;
+            }
+        } else {
+            $this->typeLabels = ["No Data"];
+            $this->typeCounts = [0];
         }
     }
+
 
     public function loadMonthlyWorkoutData()
     {

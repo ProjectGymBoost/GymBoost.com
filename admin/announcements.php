@@ -72,6 +72,7 @@ include("../assets/php/processes/admin/announcement.php");
                                 <th scope="col">ID</th>
                                 <th scope="col">TITLE</th>
                                 <th scope="col">MESSAGE</th>
+                                <th scope="col">DATE CREATED</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
                         </thead>
@@ -87,6 +88,7 @@ include("../assets/php/processes/admin/announcement.php");
                                         <td><?= htmlspecialchars($a['announcementID']) ?></td>
                                         <td><?= htmlspecialchars($a['title']) ?></td>
                                         <td><?= htmlspecialchars(substr($a['message'], 0, 100)) ?><?= strlen($a['message']) > 100 ? '...' : '' ?></td>
+                                        <td><?= htmlspecialchars($a['dateCreated']) ?></td>
                                         <td class="text-center">
                                             <a data-bs-toggle="modal" data-bs-target="#editAnnouncement<?= $a['announcementID'] ?>Modal"><i class="bi bi-pencil-square px-2"></i></a>
                                             <a data-bs-toggle="modal" data-bs-target="#deleteAnnouncement<?= $a['announcementID'] ?>Modal" style="color:red;"><i class="bi bi-trash3 px-2"></i></a>

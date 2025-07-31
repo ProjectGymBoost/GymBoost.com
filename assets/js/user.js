@@ -1,5 +1,17 @@
+// Chart.js for workout.php part of the Workout Statistics Graph for WORKOUT TYPE TRACKER and MONTHLY WORKOUT FREQUENCY
+
 document.addEventListener("DOMContentLoaded", function () {
-  if (typeof chartData === "undefined") return;
+  // Show or hide the "No Data" message based on both charts
+  const noDataDiv = document.getElementById("noDataMessage");
+
+  const hasPieData = chartData.typeCounts.some(count => count > 0);
+  const hasBarData = chartData.monthlyCounts.some(count => count > 0);
+
+  if (!hasPieData && !hasBarData) {
+    noDataDiv.classList.remove("d-none");
+  } else {
+    noDataDiv.classList.add("d-none");
+  }
 
   const workoutColors = {
     "Cardio": "#60779c",
@@ -14,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Full Body": "#1f2a3c"
   };
 
-  // === PIE CHART ===
+  // PIE CHART 
   const pieColors = chartData.typeLabels.map(label => workoutColors[label] || "#cccccc");
   const typeCtx = document.getElementById("workoutTypeChart")?.getContext("2d");
   if (typeCtx) {
@@ -23,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       data: {
         labels: chartData.typeLabels,
         datasets: [{
-          label: "Workout Types",
+          label: "",
           data: chartData.typeCounts,
           backgroundColor: pieColors
         }]
@@ -47,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // === BAR CHART ===
+  // BAR CHART
   const barColors = chartData.monthlyCounts.map((_, i) => {
     const defaultColors = [
       "#b0b0b0", "#1f2a3c", "#60779c", "#334566", "#1f2a3c",
