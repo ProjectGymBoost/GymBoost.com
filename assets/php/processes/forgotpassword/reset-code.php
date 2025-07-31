@@ -99,6 +99,10 @@ if ($email == false) {
                         style="max-width: 400px; display: inline-block; text-align: center;">
                         SUBMIT
                     </button>
+                 <!-- Go back to login -->
+                    <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
+                        <a href="../../../../login.php" class="login-link">Go back to login</a>
+                    </div>
                 </div>
             </div>
         </div>

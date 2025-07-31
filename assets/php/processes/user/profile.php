@@ -72,9 +72,15 @@ if (isset($_POST['btnSaveProfile'])) {
             $fileType = $_FILES['profilePic']['type'];
 
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            $maxFileSize = 5 * 1024 * 1024;
+            $maxFileSize = 5 * 1024 * 1024; // 5MB
 
-            if (in_array($fileType, $allowedTypes) && $fileSize <= $maxFileSize) {
+            if (!in_array($fileType, $allowedTypes)) {
+                $_SESSION['uploadStatus'] = 'invalid_type';
+                $uploadError = true;
+            } elseif ($fileSize > $maxFileSize) {
+                $_SESSION['uploadStatus'] = 'file_too_large';
+                $uploadError = true;
+            } else {
                 $uploadDir = __DIR__ . '/../../../img/profile/';
                 $extension = pathinfo($fileName, PATHINFO_EXTENSION);
                 $newFileName = uniqid('profile_', true) . '.' . $extension;
@@ -100,15 +106,12 @@ if (isset($_POST['btnSaveProfile'])) {
                     ");
                     $_SESSION['uploadStatus'] = 'success';
                 } else {
-                    $_SESSION['uploadStatus'] = 'error';
+                    $_SESSION['uploadStatus'] = 'upload_failed';
                     $uploadError = true;
                 }
-            } else {
-                $_SESSION['uploadStatus'] = 'error';
-                $uploadError = true;
             }
         } else {
-            $_SESSION['uploadStatus'] = 'error';
+            $_SESSION['uploadStatus'] = 'upload_failed';
             $uploadError = true;
         }
     }

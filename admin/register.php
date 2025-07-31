@@ -83,18 +83,30 @@ include("../assets/shared/auth.php");
                             style="width: 100%; max-width: 800px; border-radius: 10px;">
                             <div class="d-flex gap-3 w-100">
                                 <!-- First Name -->
+
+                                <?php if ($firstNameError === "duplicateName" && $lastNameError === "duplicateName"): ?>
+                                    <input type="hidden" id="duplicateFullNameError" value="true">
+                                <?php endif; ?>
+
+                                <!-- First Name -->
                                 <div class="w-100 mb-3">
                                     <input type="text" placeholder="First Name" class="form-control" name="firstName"
-                                        id="firstName" required style="border-radius: 5px;">
+                                        id="firstName" required style="border-radius: 5px;"
+                                        value="<?php echo isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : ''; ?>">
                                     <div id="firstNameError" class="invalid-feedback mb-5 text-start"></div>
+                                    <input type="hidden" id="firstNameExistsError"
+                                        value="<?php echo $firstNameError; ?>">
                                 </div>
 
                                 <!-- Last Name -->
                                 <div class="w-100 mb-3">
                                     <input type="text" placeholder="Last Name" class="form-control" name="lastName"
-                                        id="lastName" required style="border-radius: 5px;">
+                                        id="lastName" required style="border-radius: 5px;"
+                                        value="<?php echo isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : ''; ?>">
                                     <div id="lastNameError" class="invalid-feedback text-start"></div>
+                                    <input type="hidden" id="lastNameExistsError" value="<?php echo $lastNameError; ?>">
                                 </div>
+
                             </div>
 
                             <!-- Email -->

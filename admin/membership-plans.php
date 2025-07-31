@@ -31,7 +31,7 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
 
         .invalid-feedback {
             position: absolute;
-            color: #dc3545 !important; 
+            color: #dc3545 !important;
         }
     </style>
 </head>
@@ -118,7 +118,8 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                         <tbody>
                             <?php if (empty($membershipPlanInfoArray)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center" style="color: red; font-weight: bold;">NO MEMBERSHIP
+                                    <td colspan="5" class="text-center" style="color: #D2042D; font-weight: bold;">NO
+                                        MEMBERSHIP
                                         PLAN
                                         DATA AVAILABLE</td>
                                 </tr>
@@ -145,11 +146,11 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                                             </li>
                                         </td>
                                     </tr>
-                                    <!-- Membership Plan Modals -->
-                                    <?php include('../assets/php/modals/admin/membership-plans.php'); ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
+                        <!-- Membership Plan Modals -->
+                        <?php include('../assets/php/modals/admin/membership-plans.php'); ?>
                     </table>
                 </div>
             </div>
@@ -217,7 +218,7 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
             });
         });
     </script>
-    
+
 
 
 </body>

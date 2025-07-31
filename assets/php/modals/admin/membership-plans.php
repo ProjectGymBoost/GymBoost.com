@@ -76,7 +76,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
 
                         <!-- Price -->
                         <div class="mb-4 text-start">
-                            <label for="editPrice<?= $info['membershipID'] ?>" class="form-label fw-bold">Price</label>
+                            <label for="editPrice<?= $info['membershipID'] ?>" class="form-label fw-bold">Price (₱)</label>
                             <input type="text" id="editPrice<?= $info['membershipID'] ?>" name="price"
                                 data-original-value="<?= htmlspecialchars($info['price']) ?>"
                                 class="form-control <?= isset($editPlanErrors[$info['membershipID']]['price']) ? 'is-invalid' : '' ?>"
@@ -286,7 +286,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                     </div>
 
                     <div class="mb-4 text-start">
-                        <label for="price" class="form-label fw-bold">Price</label>
+                        <label for="price" class="form-label fw-bold">Price (₱)</label>
                         <input type="text" name="price" id="price"
                             class="form-control <?= isset($_SESSION['addPlanErrors']['price']) ? 'is-invalid' : (isset($_SESSION['price']) ? 'is-valid' : '') ?>"
                             placeholder="e.g., 100.00" value="<?= htmlspecialchars($_SESSION['price'] ?? '') ?>">

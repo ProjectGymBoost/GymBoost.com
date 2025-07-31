@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const emailExistsError = document.getElementById("emailExistsError")?.value;
     const rfidExistsError = document.getElementById("rfidExistsError")?.value;
+    const duplicateFullNameError = document.getElementById("duplicateFullNameError")?.value;
+
+    if (duplicateFullNameError === "true") {
+        showError("firstName", "A user with this full name already exists.");
+        showError("lastName", "A user with this full name already exists.");
+    }
 
     if (emailExistsError === "emailExists") {
         showError("email", "Email already exists.");
@@ -11,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (rfidExistsError === "rfidExists") {
         showError("rfid", "This RFID is already linked to another account.");
     }
+
 
     // Mapping field IDs 
     const fieldsToValidate = {

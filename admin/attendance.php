@@ -104,7 +104,7 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                         <tbody>
                             <?php if (empty($userInfoArray)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center" style="color: red; font-weight: bold;">NO ATTENDANCE
+                                    <td colspan="5" class="text-center" style="color: #D2042D; font-weight: bold;">NO ATTENDANCE
                                         DATA AVAILABLE</td>
                                 </tr>
                             <?php else: ?>

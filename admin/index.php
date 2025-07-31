@@ -290,9 +290,18 @@ $ageData = json_encode($chart->getAgeData());
         var ageData = <?= $ageData ?>;
         var ageColors = ["#b0b0b0", "#60779c", "#334566", "#1f2a3c"];
 
+        if (window.innerWidth <= 1100) {
+            ageLabels = ageLabels.map(label => {
+                const parts = label.split(' ');
+                if (parts.length >= 2) {
+                    return [parts.slice(0, -1).join(' '), parts.slice(-1)[0]];
+                }
+                return label;
+            });
+        }
 
-        var labelFontSize = window.innerWidth <= 767.98 ? 10 : 14;
-
+        var labelFontSize = window.innerWidth <= 767.98 ? 11 : 14;
+        var pointSize = window.innerWidth <= 767.98 ? 13 : 18;
 
         new Chart("doughnutChart", {
             type: "doughnut",
@@ -314,13 +323,14 @@ $ageData = json_encode($chart->getAgeData());
                             usePointStyle: true,
                             pointStyle: 'circle',
                             font: { size: labelFontSize },
-                            pointStyleWidth: 18,
+                            pointStyleWidth: pointSize,
                             padding: 20
                         }
                     }
                 }
             }
         });
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
