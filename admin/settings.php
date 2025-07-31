@@ -61,7 +61,7 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
                                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#editNameModal">
                                         <i class="bi bi-pencil-square"></i>
-                                        <span class="d-none d-sm-inline">CHANGE</span>cd 
+                                        <span class="d-none d-sm-inline">CHANGE</span>
                                     </button>
                                 </div>
                             </div>
