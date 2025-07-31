@@ -34,7 +34,7 @@
 
                         <div class="mb-3 text-start">
                             <label class="form-label fw-bold" for="editRFID<?= $info['userMembershipID']; ?>">RFID Number</label>
-                            <input type="text" class="form-control" name="editRFID" id="editRFID<?= $info['userMembershipID']; ?>" value="<?= htmlspecialchars($info['rfidNumber']); ?>" required>
+                            <input type="text" class="form-control" name="editRFID" id="editRFID<?= $info['userMembershipID']; ?>" value="<?= htmlspecialchars($info['rfidNumber']); ?>" maxlength="10" required>
                         </div>
 
                         <div class="mb-3 text-start">
