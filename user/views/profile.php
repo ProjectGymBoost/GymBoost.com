@@ -1,6 +1,6 @@
 <?php
 $pfpClass = $profileUpdated ? 'border-updated' : 'border-normal';
-$isDefaultPic = ($pfpFileName  === 'defaultProfile.png');
+$isDefaultPic = ($pfpFileName === 'defaultProfile.png');
 ?>
 
 <div id="profile" class="container">
@@ -57,12 +57,28 @@ $isDefaultPic = ($pfpFileName  === 'defaultProfile.png');
                 <?php unset($_SESSION['profilePicRemoved']); ?>
               <?php endif; ?>
 
-              <?php if (isset($_SESSION['uploadStatus']) && $_SESSION['uploadStatus'] === 'error'): ?>
+              <?php if (isset($_SESSION['uploadStatus']) && $_SESSION['uploadStatus'] !== 'success'): ?>
                 <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 3;">
                   <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive"
                     aria-atomic="true">
                     <div class="d-flex">
-                      <div class="toast-body">Profile picture not saved.</div>
+                      <div class="toast-body">
+                        <?php
+                        switch ($_SESSION['uploadStatus']) {
+                          case 'invalid_type':
+                            echo 'Invalid file type. Please upload an image in JPG or PNG format only.';
+                            break;
+                          case 'file_too_large':
+                            echo 'File too large. Please upload an image smaller than 5MB.';
+                            break;
+                          case 'upload_failed':
+                            echo 'Failed to upload image. Please try again.';
+                            break;
+                          default:
+                            echo 'An unknown error occurred during upload.';
+                        }
+                        ?>
+                      </div>
                       <button type="button" class="btn-close btn-close-white me-2 m-auto"
                         data-bs-dismiss="toast"></button>
                     </div>
@@ -136,7 +152,7 @@ $isDefaultPic = ($pfpFileName  === 'defaultProfile.png');
                   <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                     data-bs-target="#editAccountEmailModal">
                     <i class="bi bi-pencil-square"></i>
-                    CHANGE
+                    <span class="d-none d-sm-inline">CHANGE</span>
                   </button>
                 </div>
               </div>
@@ -153,7 +169,7 @@ $isDefaultPic = ($pfpFileName  === 'defaultProfile.png');
                   <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                     data-bs-target="#editAccountPassModal">
                     <i class="bi bi-pencil-square"></i>
-                    CHANGE
+                    <span class="d-none d-sm-inline">CHANGE</span>
                   </button>
                 </div>
               </div>

@@ -70,6 +70,12 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                     <span>Announcements</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="settings.php" class="sidebar-link">
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
             <li class="sidebar-item mt-auto">
                 <a href="?logout=true" class="sidebar-link">
                     <i class="bi bi-box-arrow-right"></i>
@@ -94,6 +100,7 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                 <li><a href="attendance.php" class="sidebar-link"><i class="bi bi-calendar-check"></i> Attendance</a></li>
                 <li><a href="badges.php" class="sidebar-link"><i class="bi bi-patch-check"></i> Badges</a></li>
                 <li><a href="announcements.php" class="sidebar-link"><i class="bi bi-bell"></i> Announcements</a></li>
+                <li><a href="settings.php" class="sidebar-link"><i class="bi bi-gear"></i> Settings</a></li>
                 <li><a href="?logout=true" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
             </ul>
         </div>

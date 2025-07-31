@@ -1,122 +1,12 @@
-<!-- Update Profile Picture Modal -->
-<div class="modal fade" id="updateProfilePictureModal" tabindex="-1" aria-labelledby="updateProfileModalLabel"
-    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px;">
-            <div
-                style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                <h4 class="modal-title text-center subheading" id="updateProfileModalLabel">UPDATE PROFILE PICTURE</h4>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                    style="position: absolute; top: 16px; right: 16px;"></button>
-            </div>
-            <form method="POST" id="profileForm" enctype="multipart/form-data" novalidate>
-                <div class="modal-body">
-                    <div class="d-flex flex-column align-items-center gap-3">
-                        <div class="rounded-circle overflow-hidden bg-black" style="width: 120px; height: 120px;">
-                            <img id="profilePreview2" src="../assets/img/profile/<?php echo $pfpFileName ?>"
-                                alt="Current Photo" class="w-100 h-100" style="object-fit: cover;">
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center"
-                            style="max-width: 350px; width: 100%;">
-                            <input type="text" id="fileNameDisplay"
-                                class="form-control text-black bg-transparent rounded-0 rounded-start" readonly>
-                            <label class="btn btn-primary rounded-0 rounded-end d-inline-flex align-items-center"
-                                for="fileInput">Browse <i class="bi bi-upload ms-2"></i></label>
-                            <input type="file" class="d-none" id="fileInput" accept="image/*" name="profilePic">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                    <button type="submit" name="btnSaveProfile" class="btn btn-primary">SAVE CHANGES</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Confirm Profile Pic Updated -->
-<div class="modal fade" id="confirmUpdateProfilePicModal" tabindex="-1" aria-labelledby="confirmUpdateProfilePicLabel"
-    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-            <div class="modal-header" style="border: none;">
-                <h4 class="modal-title heading text-center w-100 text-black" id="confirmUpdateProfilePicModalLabel"
-                    style="margin: 0;">
-                    PROFILE PICTURE UPDATED
-                </h4>
-            </div>
-            <div class="modal-body text-center text-black">
-                Your profile picture has been successfully updated.
-            </div>
-            <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Remove Profile Picture Modal -->
-<form method="POST">
-    <div class="modal fade" id="removeProfilePictureModal" tabindex="-1"
-        aria-labelledby="removeProfilePictureModalLabel" aria-hidden="true" data-bs-backdrop="static"
-        data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 15px;">
-                <!-- Header with top border radius -->
-                <div style="background-color: var(--primaryColor); color: white; padding: 1rem;
-                    border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                    <h4 class="modal-title text-center subheading" id="removeProfilePictureModalLabel">REMOVE PROFILE
-                        PICTURE</h4>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                        style="position: absolute; top: 16px; right: 16px;"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Are you sure you want to remove your profile picture?<br><br>If yes, your profile will be set to
-                        our default picture.</p>
-                </div>
-                <div class="modal-footer justify-content-end">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                    <button type="submit" name="btnRemovePic" class="btn btn-primary">REMOVE</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-
-<!-- Confirm Remove Profile Pic-->
-<div class="modal fade" id="confirmRemoveProfilePictureModal" tabindex="-1"
-    aria-labelledby="confirmRemoveProfilePictureModalLabel" aria-hidden="true" data-bs-backdrop="static"
-    data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
-            <div class="modal-header" style="border: none;">
-                <h4 class="modal-title heading text-center w-100 text-black" id="confirmRemoveProfilePictureModalLabel"
-                    style="margin: 0;">
-                    PROFILE PICTURE REMOVED
-                </h4>
-            </div>
-            <div class="modal-body text-center text-black">
-                Your profile picture has been set to the default.
-            </div>
-            <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
-                <button type="button" name="btnClosePic" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!-- Edit Profile Info Modal -->
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true"
+<div class="modal fade" id="editNameModal" tabindex="-1" aria-labelledby="editNameModalLabel" aria-hidden="true"
     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="POST" id="editProfileForm">
+        <form method="POST" id="editNameForm">
             <div class="modal-content" style="border-radius: 15px;">
                 <div
                     style="background-color: var(--primaryColor); color: white; padding: 1rem; border-radius: 15px 15px 0 0; position: relative;">
-                    <h4 class="modal-title text-center subheading" id="editProfileModalLabel">EDIT PROFILE</h4>
+                    <h4 class="modal-title text-center subheading" id="editNameModalLabel">EDIT NAME</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
                         style="position: absolute; top: 16px; right: 16px;"></button>
                 </div>
@@ -125,26 +15,16 @@
                         <div class="col-md-6 mb-3 text-start">
                             <label for="firstName" class="form-label fw-bold">First Name</label>
                             <input type="text" class="form-control" name="firstName" id="firstName"
-                                value="<?php echo $userInfoArray['firstName'] ?? ''; ?>">
-                            <span id="firstNameError" class="text-danger d-block small m-1"></span>
+                                value="<?php echo htmlspecialchars($userInfoArray['firstName'] ?? ''); ?>">
+                            <span id="firstNameError" class="text-danger small d-block mt-1"></span>
                         </div>
                         <div class="col-md-6 mb-3 text-start">
                             <label for="lastName" class="form-label fw-bold">Last Name</label>
                             <input type="text" class="form-control" name="lastName" id="lastName"
-                                value="<?php echo $userInfoArray['lastName'] ?? ''; ?>">
-                            <span id="lastNameError" class="text-danger d-block small m-1"></span>
+                                value="<?php echo htmlspecialchars($userInfoArray['lastName'] ?? ''); ?>">
+                            <span id="lastNameError" class="text-danger small d-block mt-1"></span>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3 text-start">
-                            <label for="Age" class="form-label fw-bold">Age</label>
-                            <span data-bs-toggle="tooltip" title="Age is auto-calculated based on birthday."
-                                style="cursor: pointer;">
-                                <i class="bi bi-info-circle text-secondary"></i>
-                            </span>
-                            <input type="text" class="form-control" name="age" id="Age"
-                                value="<?php echo $userInfoArray['age']; ?>" disabled>
-                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-end">
@@ -156,7 +36,29 @@
     </div>
 </div>
 
-<!-- Confirm Edit Profile Info Modal -->
+<!-- Confirm Edit Admin Info Modal -->
+<div class="modal fade" id="confirmNameModal" tabindex="-1" aria-labelledby="confirmNameModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; color: white; border: none;">
+            <div class="modal-header" style="border: none;">
+                <h4 class="modal-title heading text-center w-100 text-black" id="confirmNameModalLabel"
+                    style="margin: 0;">
+                    NAME UPDATED
+                </h4>
+            </div>
+            <div class="modal-body text-center text-black">
+                Your name has been successfully edited.
+            </div>
+            <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">
+                <button type="button" id="btnCloseSubmit" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Confirm Edit Admin Info Modal -->
 <div class="modal fade" id="confirmEditProfileModal" tabindex="-1" aria-labelledby="confirmEditProfileModalLabel"
     aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -176,23 +78,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- RFID Modal -->
-<div class="modal fade" id="rfidModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content position-relative">
-            <div class="modal-body p-0">
-                <img src="../assets/img/profile/rfidcard.png" alt="RFID Full" class="img-fluid rounded-4">
-            </div>
-            <span class="position-absolute"
-                style="bottom: 10px; right: 10px; color: black; padding: 2px 6px; font-size: 20px;">
-                <?php echo $userInfoArray['rfidNumber'] ?? 'N/A'; ?>
-            </span>
-        </div>
-    </div>
-</div>
-
 
 <!-- Edit Account Email Modal -->
 <?php if (isset($_SESSION['show_modal'])): ?>
@@ -259,7 +144,7 @@ endif; ?>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         CANCEL
                     </button>
-                    <button type="submit" name="btnEmail" id="" class="btn btn-primary" style="margin-left: 0.5rem;">
+                    <button type="submit" name="btnAdminEmail" id="" class="btn btn-primary" style="margin-left: 0.5rem;">
                         SAVE CHANGES
                     </button>
                 </div>
@@ -304,7 +189,7 @@ endif; ?>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         CANCEL
                     </button>
-                    <button type="submit" name="btnConfirmPass" id="" class="btn btn-primary"
+                    <button type="submit" name="btnAdminConfirmPass" id="" class="btn btn-primary"
                         style="margin-left: 0.5rem;">
                         SAVE CHANGES
                     </button>
@@ -341,11 +226,13 @@ endif; ?>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px;">
             <form id="editAccountPassForm" method="POST">
-                <input type="hidden" name="btnSaveAccInfo" value="1"> <!-- Correct trigger -->
+                <input type="hidden" name="btnSaveAccInfo" value="1">
 
                 <!-- Modal Header -->
-                <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                    <h4 class="modal-title text-center subheading" id="editAccountPassModalLabel" style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                <div
+                    style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h4 class="modal-title text-center subheading" id="editAccountPassModalLabel"
+                        style="margin: 0; font-size: 20px; letter-spacing: 2px;">
                         EDIT PASSWORD
                     </h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
@@ -355,10 +242,11 @@ endif; ?>
                 <!-- Modal Body -->
                 <div class="modal-body" style="padding: 1.5rem;">
                     <?php if (isset($_SESSION['currentPasswordError'])): ?>
-                        <input type="hidden" id="currentPasswordErrorValue" value="<?= htmlspecialchars($_SESSION['currentPasswordError']); ?>">
+                        <input type="hidden" id="currentPasswordErrorValue"
+                            value="<?= htmlspecialchars($_SESSION['currentPasswordError']); ?>">
                         <?php unset($_SESSION['currentPasswordError']); ?>
                     <?php endif; ?>
-                     <?php if (isset($_SESSION['accountUpdated'])): ?>
+                    <?php if (isset($_SESSION['accountUpdated'])): ?>
                         <input type="hidden" id="accountUpdatedFlag" value="true">
                         <?php unset($_SESSION['accountUpdated']); ?>
                     <?php endif; ?>
@@ -366,7 +254,8 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="currentPassword" class="form-label fw-bold">Current Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="currentPass" id="currentPassword" placeholder="Enter your current password"
+                            <input type="password" class="form-control" name="currentPass" id="currentPassword"
+                                placeholder="Enter your current password"
                                 value="<?= htmlspecialchars($_POST['currentPass'] ?? ($_SESSION['currentPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="currentPassword"
                                 style="cursor: pointer;">
@@ -379,7 +268,8 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="newPassword" class="form-label fw-bold">New Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="newPass" id="newPassword" placeholder="Enter a new password"
+                            <input type="password" class="form-control" name="newPass" id="newPassword"
+                                placeholder="Enter a new password"
                                 value="<?= htmlspecialchars($_POST['newPass'] ?? ($_SESSION['newPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="newPassword"
                                 style="cursor: pointer;">
@@ -392,7 +282,8 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="confirmPassword" class="form-label fw-bold">Confirm Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword" placeholder="Confirm your password"
+                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword"
+                                placeholder="Confirm your password"
                                 value="<?= htmlspecialchars($_POST['confirmPass'] ?? ($_SESSION['confirmPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="confirmPassword"
                                 style="cursor: pointer;">

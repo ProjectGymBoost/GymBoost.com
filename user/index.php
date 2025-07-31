@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+require_once("../assets/shared/connect.php");
 include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
 include(__DIR__ . '/../assets/php/processes/user/profile.php');
 include(__DIR__ . '/../assets/php/classes/classes.php');
@@ -27,6 +28,8 @@ if ($_SESSION['role'] === 'admin') {
 $userID = $_SESSION['userID'];
 $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
 $email = $_SESSION['email'] ?? "";
+
+
 
 include(__DIR__ . '/../assets/php/processes/user/achievements.php');
 
@@ -174,7 +177,6 @@ $eventsJSON = $calendar->getEvents();
             <?php include("views/" . $page . ".php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/achievements.php"); ?>
-
             <?php include(__DIR__ . "/../assets/php/modals/user/workout.php"); ?>
 
         </div>

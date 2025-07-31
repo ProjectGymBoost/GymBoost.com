@@ -1,9 +1,13 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 if (!empty($_SESSION['userID'])) {
-    header("Location: /user/index.php");
-    exit();
-}
+        if ($_SESSION['role'] === 'admin') {
+            header("Location: /admin/index.php");
+        } else {
+            header("Location: /user/index.php?page=dashboard");
+        }
+        exit();
+    }
 
 function sanitize($data)
 {
@@ -45,10 +49,11 @@ if (isset($_POST['btnLogin'])) {
                 // Redirect based on user role
                 if ($user['role'] === 'admin') {
                     header("Location: admin/index.php");
+                      exit();
                 } else {
                     header("Location: user/index.php?page=dashboard");
-                }
-                exit();
+                      exit();
+                    }
 
             } else {
                 // Incorrect password

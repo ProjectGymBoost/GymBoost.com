@@ -4,21 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddMembershipModal'));
         confirmModal.show();
     }
-    
-  const editModals = document.querySelectorAll('[id^="editMembershipPlanModal"]');
 
-   document.querySelectorAll('[id^="editMembershipPlanModal"]').forEach((modalEl) => {
-    modalEl.addEventListener('hidden.bs.modal', () => {
-        modalEl.querySelectorAll('input').forEach((input) => {
-            const original = input.dataset.originalValue;
-            if (original !== undefined) input.value = original;
+    const editModals = document.querySelectorAll('[id^="editMembershipPlanModal"]');
 
-            input.classList.remove('is-invalid');
-            const errorDiv = modalEl.querySelector(`#${input.id}Error`);
-            if (errorDiv) errorDiv.textContent = '';
+    document.querySelectorAll('[id^="editMembershipPlanModal"]').forEach((modalEl) => {
+        modalEl.addEventListener('hidden.bs.modal', () => {
+            modalEl.querySelectorAll('input').forEach((input) => {
+                const original = input.dataset.originalValue;
+                if (original !== undefined) input.value = original;
+
+                input.classList.remove('is-invalid');
+                const errorDiv = modalEl.querySelector(`#${input.id}Error`);
+                if (errorDiv) errorDiv.textContent = '';
+            });
         });
     });
-});
 
     const addForm = document.querySelector("#addMembershipModal form");
     const addModalEl = document.getElementById("addMembershipModal");
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         input.classList.remove("is-invalid", "is-valid");
                     }
                 });
-            }, 200); 
+            }, 200);
         });
     }
 
@@ -74,6 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(fieldId, errorId, "Plan type is required.");
             return false;
         }
+        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
+            showError(fieldId, errorId, "Plan type must not contain special characters.");
+            return false;
+        }
         showValid(fieldId, errorId);
         return true;
     }
@@ -81,7 +85,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function validateRequirement(fieldId, errorId) {
         const value = document.getElementById(fieldId)?.value.trim();
         if (!/^\d+\s*days$/i.test(value)) {
-            showError(fieldId, errorId, "Requirement must be like '30 days'.");
+            showError(fieldId, errorId, "Requirement must include a valid number followed by 'day(s)'.");
+            return false;
+        }
+        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
+            showError(fieldId, errorId, "Plan type must not contain special characters.");
             return false;
         }
         showValid(fieldId, errorId);
@@ -92,6 +100,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const value = document.getElementById(fieldId)?.value.trim();
         if (!/^\d+\.00$/.test(value)) {
             showError(fieldId, errorId, "Price must end with .00 (e.g., 100.00).");
+            return false;
+        }
+        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
+            showError(fieldId, errorId, "Plan type must not contain special characters.");
             return false;
         }
         showValid(fieldId, errorId);
@@ -134,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modalEl.addEventListener("shown.bs.modal", () => {
             const form = modalEl.querySelector('form');
             if (form) {
-                clearErrors(form); 
+                clearErrors(form);
             }
         });
     });
