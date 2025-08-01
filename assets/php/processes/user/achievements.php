@@ -162,8 +162,9 @@ function fetchBadgesAndEarned($conn, $userID)
     return [$badgesResult, $earnedBadgeIDs];
 }
 
-
 // FETCH LEADERBOARD DATA
+$filter = $_GET['filter'] ?? 'all';
+
 $leaderboardQuery = "";
 if ($filter === 'weekly') {
     $leaderboardQuery = "
@@ -174,6 +175,7 @@ if ($filter === 'weekly') {
         AND users.role = 'user'
         AND users.state = 'active'
         GROUP BY attendances.userID
+        HAVING points > 0
         ORDER BY points DESC
         LIMIT 5
     ";
@@ -186,6 +188,7 @@ if ($filter === 'weekly') {
         AND users.role = 'user'
         AND users.state = 'active'
         GROUP BY attendances.userID
+        HAVING points > 0
         ORDER BY points DESC
         LIMIT 5
     ";
@@ -195,11 +198,11 @@ if ($filter === 'weekly') {
         FROM users
         WHERE users.role = 'user'
         AND users.state = 'active'
+        AND users.points > 0
         ORDER BY users.points DESC
         LIMIT 5
     ";
 }
-
 
 // CALCULATE USER RANKS
 $leaderboard = [];
@@ -210,8 +213,9 @@ $result = executeQuery($leaderboardQuery);
 
 $rank = 1;
 $lastRecordedPoints = null;
+$hasLeaderboardData = (mysqli_num_rows($result) > 0);
 
-if (mysqli_num_rows($result) > 0) {
+if ($hasLeaderboardData) {
     while ($user = mysqli_fetch_assoc($result)) {
         if ($lastRecordedPoints !== null && $user['points'] < $lastRecordedPoints) {
             $rank++;
@@ -225,11 +229,9 @@ if (mysqli_num_rows($result) > 0) {
         }
 
         $leaderboard[] = $user;
-
         $lastRecordedPoints = $user['points'];
     }
 }
-
 
 // DISPLAY THE CURRENT RANK OF THE LOGGED-IN USER
 $userRankQuery = "";
@@ -280,8 +282,16 @@ if ($filter === 'weekly') {
 
 $userRankResult = executeQuery($userRankQuery);
 
-if (mysqli_num_rows($userRankResult) > 0) {
+if ($hasLeaderboardData && mysqli_num_rows($userRankResult) > 0) {
     $userRankData = mysqli_fetch_assoc($userRankResult);
-    $yourRank = $userRankData['rank'];
     $yourPoints = $userRankData['points'];
+
+    if ((int) $yourPoints > 0) {
+        $yourRank = $userRankData['rank'];
+    } else {
+        $yourRank = 'N/A';
+    }
+} else {
+    $yourRank = null;
+    $yourPoints = 0;
 }
