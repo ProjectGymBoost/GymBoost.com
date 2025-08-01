@@ -190,26 +190,25 @@ class ChartData
     {
         date_default_timezone_set('Asia/Manila');
 
-        $this->ageLabels = ["Senior (60+)", "Middle-Aged Adult (40-59)", "Young Adults (20-39)", "Teenagers (13-19)"];
-        $this->ageData = [0, 0, 0, 0];
+        $allLabels = ["Seniors (60+)", "Middle-Aged Adults (40-59)", "Young Adults (20-39)", "Teenagers (13-19)"];
+        $allData = [0, 0, 0, 0];
 
         $query = "SELECT users.birthday
-                FROM users
-                JOIN user_memberships ON users.userID = user_memberships.userID
-                WHERE users.birthday IS NOT NULL
-                    AND users.role = 'user'
-                    $this->stateCondition
-                    AND user_memberships.userMembershipID = (
-                        SELECT MIN(earliest_yearly_record.userMembershipID)
-                        FROM user_memberships AS earliest_yearly_record
-                        WHERE earliest_yearly_record.userID = users.userID
-                        AND YEAR(earliest_yearly_record.startDate) = YEAR(user_memberships.startDate)
-                    )
-                    AND YEAR(user_memberships.startDate) = $this->year";
+            FROM users
+            JOIN user_memberships ON users.userID = user_memberships.userID
+            WHERE users.birthday IS NOT NULL
+                AND users.role = 'user'
+                $this->stateCondition
+                AND user_memberships.userMembershipID = (
+                    SELECT MIN(earliest_yearly_record.userMembershipID)
+                    FROM user_memberships AS earliest_yearly_record
+                    WHERE earliest_yearly_record.userID = users.userID
+                    AND YEAR(earliest_yearly_record.startDate) = YEAR(user_memberships.startDate)
+                )
+                AND YEAR(user_memberships.startDate) = $this->year";
 
         $result = executeQuery($query);
         $today = new DateTime();
-        $matchedUsers = 0;
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -217,24 +216,35 @@ class ChartData
                 $age = $birthdate->diff($today)->y;
 
                 if ($age >= 60) {
-                    $this->ageData[0]++;
-                    $matchedUsers++;
+                    $allData[0]++;
                 } elseif ($age >= 40) {
-                    $this->ageData[1]++;
-                    $matchedUsers++;
+                    $allData[1]++;
                 } elseif ($age >= 20) {
-                    $this->ageData[2]++;
-                    $matchedUsers++;
+                    $allData[2]++;
                 } elseif ($age >= 13) {
-                    $this->ageData[3]++;
-                    $matchedUsers++;
+                    $allData[3]++;
                 }
             }
 
-            if ($matchedUsers === 0) {
+            // Filter only the labels with non-zero values
+            $filteredLabels = [];
+            $filteredData = [];
+
+            for ($i = 0; $i < count($allData); $i++) {
+                if ($allData[$i] > 0) {
+                    $filteredLabels[] = $allLabels[$i];
+                    $filteredData[] = $allData[$i];
+                }
+            }
+
+            if (empty($filteredLabels)) {
                 $this->ageLabels = ["No Data"];
                 $this->ageData = [0];
+            } else {
+                $this->ageLabels = $filteredLabels;
+                $this->ageData = $filteredData;
             }
+
         } else {
             $this->ageLabels = ["No Data"];
             $this->ageData = [0];
