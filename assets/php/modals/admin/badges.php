@@ -170,7 +170,7 @@ if (
                         <div class="mb-3">
                             <label for="iconUrl<?= $badgeID ?>" class="form-label fw-bold">Icon</label>
                             <input type="file" class="form-control" id="iconUrl<?= $badgeID ?>" name="iconUrl"
-                                accept=".png,.jpg,.jpeg,.svg" <?= empty($iconUrl) ? 'required' : '' ?>>
+                                accept=".png,.jpg,.jpeg" <?= empty($iconUrl) ? 'required' : '' ?>>
                             <?php if (!empty($iconUrlError)): ?>
                                 <div class="text-danger small mt-1"><?= $iconUrlError ?></div>
                             <?php endif; ?>
