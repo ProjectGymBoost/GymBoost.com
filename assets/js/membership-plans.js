@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (window.location.search.includes('added=1')) {
-        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-        const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddMembershipModal'));
-        confirmModal.show();
+        const confirmModalEl = document.getElementById('confirmAddMembershipModal');
+        if (confirmModalEl) {
+            const confirmModal = bootstrap.Modal.getOrCreateInstance(confirmModalEl);
+            confirmModal.show();
+        }
     }
+
 
     const editModals = document.querySelectorAll('[id^="editMembershipPlanModal"]');
 
@@ -48,9 +51,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!isPlanTypeValid || !isRequirementValid || !isPriceValid) {
                 e.preventDefault();
-                new bootstrap.Modal(addModalEl).show();
+
+                const existingModal = bootstrap.Modal.getOrCreateInstance(addModalEl); // ✅ Prevent backdrop stacking
+                existingModal.show();
             }
         });
+
 
         addModalEl.addEventListener("hidden.bs.modal", function () {
             setTimeout(() => {
@@ -89,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
-            showError(fieldId, errorId, "Plan type must not contain special characters.");
+            showError(fieldId, errorId, "Requirement must not contain special characters.");
             return false;
         }
         showValid(fieldId, errorId);
@@ -102,13 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(fieldId, errorId, "Price must end with .00 (e.g., 100.00).");
             return false;
         }
-        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
-            showError(fieldId, errorId, "Plan type must not contain special characters.");
+
+        if (/[^0-9.]/.test(value)) {
+            showError(fieldId, errorId, "Price must not contain special characters.");
             return false;
         }
+
         showValid(fieldId, errorId);
         return true;
     }
+
 
     function showError(fieldId, errorId, message) {
         const input = document.getElementById(fieldId);

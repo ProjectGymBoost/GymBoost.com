@@ -72,12 +72,14 @@ if (isset($_POST['btnAddMembershipPlan'])) {
     } elseif (!preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
         $errors['requirement'] = "Requirement must not contain special characters.";
     }
+    
 
     if (!preg_match('/^\d+\.00$/', $price)) {
         $errors['price'] = "Price must be in valid format ending with .00 (e.g., 100.00).";
-    } elseif (!preg_match('/^[0-9.\-]+$/', $price)) {
+    } elseif (preg_match('/[^0-9.]/', $price)) {
         $errors['price'] = "Price must not contain special characters.";
     }
+
 
 
     if (isDuplicateMembership($conn, $planType, $requirement, $price, $membershipID ?? null)) {
@@ -95,8 +97,6 @@ if (isset($_POST['btnAddMembershipPlan'])) {
             $errors['price'] = "This requirement and price combination already exists.";
         }
     }
-
-
 
     if (!empty($errors)) {
         $_SESSION['addPlanErrors'] = $errors;
@@ -138,9 +138,10 @@ if (isset($_POST['btnEditMembershipPlan'])) {
 
     if (!preg_match('/^\d+\.00$/', $price)) {
         $errors['price'] = "Price must be in valid format ending with .00 (e.g., 100.00).";
-    } elseif (!preg_match('/^[0-9.\-]+$/', $price)) {
+    } elseif (preg_match('/[^0-9.]/', $price)) {
         $errors['price'] = "Price must not contain special characters.";
     }
+
 
     if (isDuplicateMembership($conn, $planType, $requirement, $price, $membershipID ?? null)) {
         $errors['planType'] = "This exact plan type, requirement, and price already exists.";
