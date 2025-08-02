@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!isPlanTypeValid || !isRequirementValid || !isPriceValid) {
                 e.preventDefault();
 
-                const existingModal = bootstrap.Modal.getOrCreateInstance(addModalEl); // ✅ Prevent backdrop stacking
+                const existingModal = bootstrap.Modal.getOrCreateInstance(addModalEl);
                 existingModal.show();
             }
         });
@@ -90,14 +90,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function validateRequirement(fieldId, errorId) {
         const value = document.getElementById(fieldId)?.value.trim();
-        if (!/^\d+\s*days$/i.test(value)) {
-            showError(fieldId, errorId, "Requirement must include a valid number followed by 'day(s)'.");
+
+        const match = value.match(/^(\d+)\s+(day|days)$/i);
+        if (!match) {
+            showError(fieldId, errorId, "Requirement must include a valid number followed by 'day' or 'days'.");
             return false;
         }
-        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
+
+        const number = parseInt(match[1], 10);
+        const word = match[2].toLowerCase();
+
+        if ((number === 1 && word !== 'day') || (number !== 1 && word !== 'days')) {
+            showError(fieldId, errorId, "Use 'day' for 1 and 'days' for numbers greater than 1.");
+            return false;
+        }
+        if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
             showError(fieldId, errorId, "Requirement must not contain special characters.");
             return false;
         }
+
         showValid(fieldId, errorId);
         return true;
     }
