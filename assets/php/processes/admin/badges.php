@@ -1,4 +1,7 @@
 <?php
+
+$badgeNameError = $descriptionError = $requirementValueError = $iconUrlError = '';
+
 // (BADGES) - MAIN DATA QUERY
 $badgeInfoQuery = "
     SELECT *
@@ -17,118 +20,211 @@ $badgeImageDir = __DIR__ . '/../../../../assets/img/badges/';
 
 // (BADGES) - ADD / INSERT QUERY
 if (isset($_POST['btnAdd'])) {
-    $badgeName = $_POST['badgeName'];
-    $description = $_POST['description'];
-    $requirementValue = $_POST['requirementValue'];
-    $iconUrl = $_POST['iconUrl'];
+    $badgeName = trim($_POST['badgeName']);
+    $description = trim($_POST['description']);
+    $requirementValue = trim($_POST['requirementValue']);
+    $iconUrl = '';
+    $hasError = false;
 
-    // Handle uploaded icon
-    if (!empty($_FILES['iconUrl']['name'])) {
+    // Input validations
+    if (!preg_match('/^[a-zA-Z0-9\s\-\.\,\!\?\:\;\'\"\(\)]+$/', $badgeName)) {
+        $badgeNameError = "Badge name contains disallowed special characters.";
+        $hasError = true;
+    }
 
-        if (!is_dir($badgeImageDir)) {
-            mkdir($badgeImageDir, 0755, true);
-        }
+    if (!preg_match('/^[a-zA-Z0-9\s\-\.\,\!\?\:\;\'\"\(\)]+$/', $description)) {
+        $descriptionError = "Description contains disallowed special characters.";
+        $hasError = true;
+    }
 
-        $fileName = basename($_FILES['iconUrl']['name']);
-        $uploadPath = $badgeImageDir . $fileName;
+    if (!preg_match('/^[1-9][0-9]*$/', $requirementValue)) {
+        $requirementValueError = "Requirement value must be a positive integer.";
+        $hasError = true;
+    }
 
-        $allowedTypes = ['image/jpeg', 'image/png'];
-        $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
+    // Check if a file is selected at all
+    if (empty($_FILES['iconUrl']['name'])) {
+        $iconUrlError = "Please select an icon file.";
+        $hasError = true;
+    }
 
-        if (in_array($fileType, $allowedTypes)) {
-            if (move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
-                $iconUrl = $fileName;
-            } else {
-                echo "Upload failed: Could not move uploaded file.";
-                exit;
+    // Proceed only if initial validations pass
+    if (!$hasError) {
+        $normalizedBadgeName = strtolower(trim($badgeName));
+        $normalizedDescription = strtolower(trim($description));
+        $normalizedRequirement = trim($requirementValue);
+
+        $checkQuery = "SELECT * FROM badges";
+        $result = mysqli_query($conn, $checkQuery);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            if (strtolower(trim($row['badgeName'])) === $normalizedBadgeName) {
+                $badgeNameError = "Badge name already exists.";
+                $hasError = true;
             }
-        } else {
-            echo "Upload failed: Invalid file type.";
-            exit;
+            if (strtolower(trim($row['description'])) === $normalizedDescription) {
+                $descriptionError = "Description already exists.";
+                $hasError = true;
+            }
+            if (trim($row['requirementValue']) == $normalizedRequirement) {
+                $requirementValueError = "Requirement value already exists.";
+                $hasError = true;
+            }
         }
     }
 
-    $insertQuery = "INSERT INTO badges (badgeName, description, requirementValue, iconUrl)
-                    VALUES ('$badgeName', '$description', '$requirementValue', '$iconUrl')";
+    // Now upload image ONLY if no errors
+    if (!$hasError) {
+        $fileName = basename($_FILES['iconUrl']['name']);
+        $uploadPath = $badgeImageDir . $fileName;
+        $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
+        $allowedTypes = ['image/jpeg', 'image/png'];
 
-    executeQuery($insertQuery);
+        if (!in_array($fileType, $allowedTypes)) {
+            $iconUrlError = "Only JPG and PNG files are allowed.";
+            $hasError = true;
+        } elseif (!move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
+            $iconUrlError = "Failed to upload icon.";
+            $hasError = true;
+        } else {
+            $iconUrl = $fileName;
+        }
+    }
 
-    header(
-        "Location: " . $_SERVER['PHP_SELF'] .
-        "?added=1&addBadgeId=" . $addBadgeId
-    );
-    exit;
+    // Final insertion
+    if (!$hasError) {
+        $insertQuery = "INSERT INTO badges (badgeName, description, requirementValue, iconUrl)
+                        VALUES ('$badgeName', '$description', '$requirementValue', '$iconUrl')";
+        executeQuery($insertQuery);
+        header("Location: " . $_SERVER['PHP_SELF'] . "?added=1&addBadgeId=" . $addBadgeId);
+        exit;
+    }
 }
 
 
-// (BADGES) - EDIT QUERY
+// (BADGES) - UPDATE / EDIT QUERY
 if (isset($_POST['btnEdit'])) {
     $badgeID = $_POST['badgeID'];
-    $badgeName = $_POST['badgeName'];
-    $description = $_POST['description'];
-    $requirementValue = $_POST['requirementValue'];
-    $iconUrl = $_POST['iconUrl'];
 
-    // Handle uploaded icon
-    if (!empty($_FILES['iconUrl']['name'])) {
+    $badgeName = trim($_POST['badgeName']);
+    $description = trim($_POST['description']);
+    $requirementValue = trim($_POST['requirementValue']);
+    $iconUrl = '';
+    $hasError = false;
 
-        // Create the folder if it doesn't exist
-        if (!is_dir($badgeImageDir)) {
-            mkdir($badgeImageDir, 0755, true);
+    $badgeNameErrorVar = "badgeNameError_$badgeID";
+    $descriptionErrorVar = "descriptionError_$badgeID";
+    $requirementValueErrorVar = "requirementValueError_$badgeID";
+    $iconUrlErrorVar = "iconUrlError_$badgeID";
+
+    // Validations  
+    if (!preg_match('/^[a-zA-Z0-9\s\-\.\,\!\?\:\;\'\"\(\)]+$/', $badgeName)) {
+        ${$badgeNameErrorVar} = "Badge name must not contain special characters.";
+        $hasError = true;
+    }
+
+    if (!preg_match('/^[a-zA-Z0-9\s\-\.\,\!\?\:\;\'\"\(\)]+$/', $description)) {
+        ${$descriptionErrorVar} = "Description must not contain special characters.";
+        $hasError = true;
+    }
+
+    if (!preg_match('/^[1-9][0-9]*$/', $requirementValue)) {
+        ${$requirementValueErrorVar} = "Requirement value must be a positive integer.";
+        $hasError = true;
+    }
+
+    // Handle duplicate checking
+    $tempIconName = !empty($_FILES['iconUrl']['name']) ? basename($_FILES['iconUrl']['name']) : $_POST['originalIconUrl'];
+    $normalizedBadgeName = strtolower(trim($badgeName));
+    $normalizedDescription = strtolower(trim($description));
+    $normalizedIconUrl = strtolower(trim($tempIconName));
+
+    $checkQuery = "SELECT * FROM badges WHERE badgeID != '$badgeID'";
+    $result = mysqli_query($conn, $checkQuery);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        if (strtolower(trim($row['badgeName'])) === $normalizedBadgeName) {
+            ${$badgeNameErrorVar} = "Badge name already exists.";
+            $hasError = true;
         }
-
-        $fileName = basename($_FILES['iconUrl']['name']);
-        $uploadPath = $badgeImageDir . $fileName;
-
-        $allowedTypes = ['image/jpeg', 'image/png'];
-        $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
-
-        if (in_array($fileType, $allowedTypes)) {
-
-            $fetchOldIconQuery = "SELECT iconUrl FROM badges WHERE badgeID = '$badgeID'";
-            $result = executeQuery($fetchOldIconQuery);
-            $oldIcon = null;
-            if ($result && mysqli_num_rows($result) > 0) {
-                $row = mysqli_fetch_assoc($result);
-                $oldIcon = $row['iconUrl'];
-            }
-
-            // Upload new image
-            if (move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
-                $iconUrl = $fileName;
-
-                // Delete the old image after successful upload
-                if ($oldIcon) {
-                    $oldIconPath = $badgeImageDir . $oldIcon;
-                    if (file_exists($oldIconPath) && $oldIcon !== $fileName) {
-                        unlink($oldIconPath);
-                    }
-                }
-            } else {
-                echo "Upload failed: Could not move uploaded file.";
-                exit;
-            }
-        } else {
-            echo "Upload failed: Invalid file type.";
-            exit;
+        if (strtolower(trim($row['description'])) === $normalizedDescription) {
+            ${$descriptionErrorVar} = "Description already exists.";
+            $hasError = true;
+        }
+        if (trim($row['requirementValue']) == $requirementValue) {
+            ${$requirementValueErrorVar} = "Requirement value already exists.";
+            $hasError = true;
+        }
+        if (strtolower(trim($row['iconUrl'])) === $normalizedIconUrl) {
+            ${$iconUrlErrorVar} = "Icon is already used.";
+            $hasError = true;
         }
     }
 
-    $editQuery = "UPDATE badges SET 
-        badgeName = '$badgeName', 
-        description = '$description', 
-        requirementValue = '$requirementValue', 
-        iconUrl = '$iconUrl'
-        WHERE badgeID = '$badgeID'";
+    // If no validation errors, then handle file upload
+    if (!$hasError) {
+        if (!empty($_FILES['iconUrl']['name'])) {
+            if (!is_dir($badgeImageDir)) {
+                mkdir($badgeImageDir, 0755, true);
+            }
 
-    executeQuery($editQuery);
+            $fileName = basename($_FILES['iconUrl']['name']);
+            $uploadPath = $badgeImageDir . $fileName;
+            $fileType = mime_content_type($_FILES['iconUrl']['tmp_name']);
+            $allowedTypes = ['image/jpeg', 'image/png'];
 
-    header(
-        "Location: " . $_SERVER['PHP_SELF'] . "?edited=1&editBadgeId=" . $badgeID
-    );
-    exit;
+            if (!in_array($fileType, $allowedTypes)) {
+                ${$iconUrlErrorVar} = "Only JPG and PNG files are allowed.";
+                $hasError = true;
+            } elseif (!move_uploaded_file($_FILES['iconUrl']['tmp_name'], $uploadPath)) {
+                ${$iconUrlErrorVar} = "Failed to upload icon.";
+                $hasError = true;
+            } else {
+                $iconUrl = $fileName;
+
+                if (!empty($_POST['originalIconUrl']) && $_POST['originalIconUrl'] !== $fileName) {
+                    $oldIcon = $_POST['originalIconUrl'];
+                    $countQuery = "SELECT COUNT(*) AS count FROM badges WHERE iconUrl = '$oldIcon'";
+                    $countResult = mysqli_query($conn, $countQuery);
+                    $countRow = mysqli_fetch_assoc($countResult);
+
+                    if ($countRow['count'] <= 1) {
+                        $oldIconPath = $badgeImageDir . $oldIcon;
+                        if (file_exists($oldIconPath)) {
+                            unlink($oldIconPath);
+                        }
+                    }
+                }
+            }
+        } else {
+            // No new upload, keep original icon 
+            $iconUrl = $_POST['originalIconUrl'] ?? '';
+            if (empty($iconUrl)) {
+                ${$iconUrlErrorVar} = "Icon file is missing.";
+                $hasError = true;
+            }
+        }
+    }
+
+    // Final update query
+    if (!$hasError) {
+        $safeBadgeName = mysqli_real_escape_string($conn, $badgeName);
+        $safeDescription = mysqli_real_escape_string($conn, $description);
+        $safeRequirementValue = mysqli_real_escape_string($conn, $requirementValue);
+        $safeIconUrl = mysqli_real_escape_string($conn, $iconUrl);
+
+        $updateQuery = "UPDATE badges 
+                        SET badgeName = '$safeBadgeName', 
+                            description = '$safeDescription', 
+                            requirementValue = '$safeRequirementValue', 
+                            iconUrl = '$safeIconUrl' 
+                        WHERE badgeID = '$badgeID'";
+        executeQuery($updateQuery);
+
+        header("Location: " . $_SERVER['PHP_SELF'] . "?edited=1&editBadgeId=" . $badgeID);
+        exit;
+    }
 }
-
 
 // (BADGES) - DELETE QUERY
 if (isset($_POST['btnDelete'])) {

@@ -20,23 +20,31 @@
                 <div class="modal-body" style="padding: 1.5rem;">
                     <?php
                     $fields = [
-                        ['badgeName', 'Badge Name', 'text'],
-                        ['description', 'Description', 'text'],
-                        ['requirementValue', 'Requirement Value', 'number'],
+                        ['badgeName', 'Badge Name', 'text', isset($badgeNameError) ? $badgeNameError : ''],
+                        ['description', 'Description', 'text', isset($descriptionError) ? $descriptionError : ''],
+                        ['requirementValue', 'Requirement Value', 'number', isset($requirementValueError) ? $requirementValueError : ''],
                     ];
-                    foreach ($fields as [$name, $label, $type]):
+
+                    foreach ($fields as [$name, $label, $type, $error]) {
                         $extraAttributes = ($name === 'requirementValue') ? 'min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, \'\')"' : '';
+                        $value = (isset($_POST['btnAdd']) && isset($_POST[$name])) ? htmlspecialchars($_POST[$name]) : '';
                         ?>
                         <div class="mb-3 text-start">
                             <label for="<?= $name ?>" class="form-label fw-bold"><?= $label ?></label>
-                            <input type="<?= $type ?>" class="form-control" id="<?= $name ?>" name="<?= $name ?>" required
-                                <?= $extraAttributes ?>>
+                            <input type="<?= $type ?>" class="form-control" id="<?= $name ?>" name="<?= $name ?>"
+                                value="<?= $value ?>" required <?= $extraAttributes ?>>
+                            <?php if (!empty($error)): ?>
+                                <div class="text-danger mt-1" style="font-size: 0.875rem;"><?= $error ?></div>
+                            <?php endif; ?>
                         </div>
-                    <?php endforeach; ?>
+                    <?php } ?>
 
                     <div class="mb-3 text-start">
                         <label for="badgeIcon" class="form-label fw-bold">Icon</label>
                         <input type="file" class="form-control" id="badgeIcon" name="iconUrl" accept="image/*" required>
+                        <?php if (!empty($iconUrlError)): ?>
+                            <div class="text-danger mt-1" style="font-size: 0.875rem;"><?= $iconUrlError ?></div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -50,56 +58,127 @@
     </div>
 </div>
 
+<?php
+// Trigger modal open if any error message is set
+$showAddModal = false;
+if (
+    isset($_POST['btnAdd']) && (
+        !empty($badgeNameError) ||
+        !empty($descriptionError) ||
+        !empty($requirementValueError) ||
+        !empty($iconUrlError)
+    )
+) {
+    $showAddModal = true;
+}
+
+?>
+
+<?php if ($showAddModal): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var addModal = new bootstrap.Modal(document.getElementById('addBadgeModal'));
+            addModal.show();
+
+            // Prevent form resubmission
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        });
+    </script>
+<?php endif; ?>
+
+
 <!--(BADGES) EDIT -->
 <?php foreach ($badgeInfoArray as $info): ?>
-    <?php $badgeID = htmlspecialchars($info['badgeID']); ?>
+    <?php
+    $badgeID = htmlspecialchars($info['badgeID']);
+    $badgeName = htmlspecialchars($info['badgeName']);
+    $description = htmlspecialchars($info['description']);
+    $requirementValue = htmlspecialchars($info['requirementValue']);
+    $iconUrl = htmlspecialchars($info['iconUrl']);
+
+    // Set error variables safely
+    $badgeNameError = isset(${"badgeNameError_$badgeID"}) ? ${"badgeNameError_$badgeID"} : '';
+    $descriptionError = isset(${"descriptionError_$badgeID"}) ? ${"descriptionError_$badgeID"} : '';
+    $requirementValueError = isset(${"requirementValueError_$badgeID"}) ? ${"requirementValueError_$badgeID"} : '';
+    $iconUrlError = isset(${"iconUrlError_$badgeID"}) ? ${"iconUrlError_$badgeID"} : '';
+
+    // Check if this is the badge being edited
+    $isEditingThisBadge = isset($_POST['btnEdit']) && isset($_POST['badgeID']) && $_POST['badgeID'] == $badgeID;
+    ?>
+
     <div class="modal fade" id="editBadgeModal<?= $badgeID ?>" tabindex="-1"
         aria-labelledby="editBadgeModalLabel<?= $badgeID ?>" aria-hidden="true" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4">
-                <!-- Header -->
-                <div
-                    style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
-                    <h4 class="modal-title text-center subheading" id="editBadgeModalLabel<?= $badgeID ?>"
-                        style="margin: 0; font-size: 20px; letter-spacing: 2px;">
-                        EDIT BADGES
-                    </h4>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                        style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
-                    </button>
-                </div>
+                <form action="<?= $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
 
-                <!-- Body -->
-                <form id="editBadgeForm<?= $badgeID ?>" method="POST" enctype="multipart/form-data">
+                    <!-- Header -->
+                    <div
+                        style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
+                        <h4 class="modal-title text-center subheading" id="editBadgeModalLabel<?= $badgeID ?>"
+                            style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                            EDIT BADGES
+                        </h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                            style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                        </button>
+                    </div>
+
+                    <!-- Body -->
                     <div class="modal-body p-4">
                         <input type="hidden" name="badgeID" value="<?= $badgeID ?>">
-                        <input type="hidden" name="iconUrl" value="<?= htmlspecialchars($info['iconUrl']) ?>">
+                        <input type="hidden" name="originalIconUrl" value="<?= htmlspecialchars($iconUrl) ?>">
 
-                        <?php
-                        $fields = [
-                            ['badgeName', 'Badge', $info['badgeName']],
-                            ['description', 'Description', $info['description']],
-                            ['requirementValue', 'Requirement Value', $info['requirementValue']],
-                        ];
-                        foreach ($fields as [$name, $label, $value]):
-                            $inputType = ($name === 'requirementValue') ? 'number' : 'text';
-                            $extraAttributes = ($inputType === 'number') ? 'min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, \'\')"' : '';
-                            ?>
-                            <div class="mb-3">
-                                <label for="<?= $name . $badgeID ?>" class="form-label fw-bold"><?= $label ?></label>
-                                <input type="<?= $inputType ?>" class="form-control" id="<?= $name . $badgeID ?>"
-                                    name="<?= $name ?>" value="<?= htmlspecialchars($value) ?>" <?= $extraAttributes ?>>
-                            </div>
-                        <?php endforeach; ?>
-
+                        <!-- Badge Name -->
                         <div class="mb-3">
-                            <label for="badgeIcon<?= $badgeID ?>" class="form-label fw-bold">Icon</label>
-                            <input type="file" class="form-control" id="badgeIcon<?= $badgeID ?>" name="iconUrl"
-                                accept="image/*">
-                            <?php if (!empty($info['iconUrl'])): ?>
+                            <label for="badgeName<?= $badgeID ?>" class="form-label fw-bold">Badge Name</label>
+                            <input type="text" class="form-control" id="badgeName<?= $badgeID ?>" name="badgeName"
+                                value="<?= $isEditingThisBadge && isset($_POST['badgeName']) ? htmlspecialchars($_POST['badgeName']) : $badgeName ?>"
+                                required>
+                            <?php if (!empty($badgeNameError)): ?>
+                                <div class="text-danger small mt-1"><?= $badgeNameError ?></div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description<?= $badgeID ?>" class="form-label fw-bold">Description</label>
+                            <textarea class="form-control" id="description<?= $badgeID ?>" name="description" rows="3"
+                                required><?= $isEditingThisBadge && isset($_POST['description']) ? htmlspecialchars($_POST['description']) : $description ?></textarea>
+                            <?php if (!empty($descriptionError)): ?>
+                                <div class="text-danger small mt-1"><?= $descriptionError ?></div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Requirement Value -->
+                        <div class="mb-3">
+                            <label for="requirementValue<?= $badgeID ?>" class="form-label fw-bold">Requirement
+                                Value</label>
+                            <input type="number" class="form-control" id="requirementValue<?= $badgeID ?>"
+                                name="requirementValue"
+                                value="<?= $isEditingThisBadge && isset($_POST['requirementValue']) ? htmlspecialchars($_POST['requirementValue']) : $requirementValue ?>"
+                                required>
+                            <?php if (!empty($requirementValueError)): ?>
+                                <div class="text-danger small mt-1"><?= $requirementValueError ?></div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="mb-3">
+                            <label for="iconUrl<?= $badgeID ?>" class="form-label fw-bold">Icon</label>
+                            <input type="file" class="form-control" id="iconUrl<?= $badgeID ?>" name="iconUrl"
+                                accept=".png,.jpg,.jpeg" <?= empty($iconUrl) ? 'required' : '' ?>>
+                            <?php if (!empty($iconUrlError)): ?>
+                                <div class="text-danger small mt-1"><?= $iconUrlError ?></div>
+                            <?php endif; ?>
+                            <?php if (!empty($iconUrl)): ?>
                                 <div class="mt-2 text-muted small">
-                                    Current icon URL: <code><?= htmlspecialchars($info['iconUrl']) ?></code>
+                                    Current icon URL:
+                                    <a href="<?= htmlspecialchars($iconUrl) ?>"
+                                        target="_blank"><?= htmlspecialchars($iconUrl) ?></a>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -108,13 +187,28 @@
                     <!-- Footer -->
                     <div class="modal-footer border-0 justify-content-end">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="submit" class="btn btn-primary ms-2" name="btnEdit">SAVE CHANGES</button>
+                        <button type="submit" name="btnEdit" class="btn btn-primary ms-2">SAVE CHANGES</button>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
 <?php endforeach; ?>
+
+<?php if (isset($_POST['btnEdit']) && isset($hasError) && $hasError && isset($_POST['badgeID'])): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var editModal = new bootstrap.Modal(document.getElementById("editBadgeModal<?= $_POST['badgeID'] ?>"));
+            editModal.show();
+
+            // Prevent form resubmission
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        });
+    </script>
+<?php endif; ?>
 
 <!--(BADGES) DELETE -->
 <?php foreach ($badgeInfoArray as $info): ?>
