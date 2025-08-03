@@ -111,7 +111,7 @@ if (isset($_POST['btnAddMembershipPlan'])) {
 
     if (!empty($errors)) {
         $_SESSION['addPlanErrors'] = $errors;
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF'] . "?addError=1&page=$currentPage&entriesCount=$entriesCount");
         exit;
     } else {
         $insertQuery = "

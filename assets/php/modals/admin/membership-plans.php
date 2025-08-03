@@ -219,7 +219,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         url.searchParams.delete('deleted');
                         window.history.replaceState({}, document.title, url);
                     }
-                }, 100);
+                });
             });
         </script>
     <?php endif; ?>

@@ -1,8 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.search.includes('added=1')) {
-        const confirmModalEl = document.getElementById('confirmAddMembershipModal');
-        if (confirmModalEl) {
-            const confirmModal = bootstrap.Modal.getOrCreateInstance(confirmModalEl);
+
+     if (window.location.search.includes('added=1')) {
+        const addModal = bootstrap.Modal.getInstance(addModalEl);
+        if (addModal) {
+            addModalEl.addEventListener('hidden.bs.modal', function () {
+                const confirmModal = new bootstrap.Modal(confirmModalEl);
+                confirmModal.show();
+            });
+            addModal.hide(); 
+        } else {
+            const confirmModal = new bootstrap.Modal(confirmModalEl);
             confirmModal.show();
         }
     }
@@ -80,13 +87,16 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(fieldId, errorId, "Plan type is required.");
             return false;
         }
-        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
+
+        if (!/^[a-zA-Z0-9\-]+(?: [a-zA-Z0-9\-]+)*$/.test(value)) {
             showError(fieldId, errorId, "Plan type must not contain special characters.");
             return false;
         }
+
         showValid(fieldId, errorId);
         return true;
     }
+
 
     function validateRequirement(fieldId, errorId) {
         const value = document.getElementById(fieldId)?.value.trim();
@@ -169,5 +179,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 clearErrors(form);
             }
         });
+    });
+
+    const confirmationModals = ['confirmAddMembershipModal', 'confirmEditMembershipPlanModal', 'confirmDeleteMembershipPlanModal'];
+
+    confirmationModals.forEach(modalId => {
+        const modalEl = document.getElementById(modalId);
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
+            });
+        }
     });
 });
