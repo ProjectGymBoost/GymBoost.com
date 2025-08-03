@@ -219,7 +219,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         url.searchParams.delete('deleted');
                         window.history.replaceState({}, document.title, url);
                     }
-                }, 100);
+                });
             });
         </script>
     <?php endif; ?>
@@ -309,15 +309,19 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
 <?php if (!empty($_SESSION['addPlanErrors'])): ?>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const existingBackdrop = document.querySelector('.modal-backdrop');
+            if (existingBackdrop) existingBackdrop.remove(); 
+
             const addModalEl = document.getElementById('addMembershipModal');
             if (addModalEl) {
-                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-                const addModal = new bootstrap.Modal(addModalEl);
+                const addModal = bootstrap.Modal.getOrCreateInstance(addModalEl);
                 addModal.show();
             }
         });
     </script>
 <?php endif; ?>
+
+
 
 <?php
 unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price']);

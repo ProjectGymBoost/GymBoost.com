@@ -67,17 +67,30 @@ if (isset($_POST['btnAddMembershipPlan'])) {
         $errors['planType'] = "Plan type must not contain special characters.";
     }
 
-    if (!preg_match('/^[1-9]\d*\s+days?$/i', $requirement)) {
-        $errors['requirement'] = "Requirement must include a valid number followed by 'day(s)'.";
-    } elseif (!preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
+    if (!preg_match('/^(\d+)\s+(day|days)$/i', $requirement, $matches)) {
+        $errors['requirement'] = "Requirement must include a valid number followed by a space and 'day' or 'days'.";
+    } else {
+        $number = (int) $matches[1];
+        $unit = strtolower($matches[2]);
+
+        // Enforce singular/plural agreement
+        if (($number === 1 && $unit !== 'day') || ($number !== 1 && $unit !== 'days')) {
+            $errors['requirement'] = "Use 'day' for 1 and 'days' for numbers greater than 1.";
+        }
+    }
+
+    // Check for invalid characters
+    if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
         $errors['requirement'] = "Requirement must not contain special characters.";
     }
 
+
     if (!preg_match('/^\d+\.00$/', $price)) {
         $errors['price'] = "Price must be in valid format ending with .00 (e.g., 100.00).";
-    } elseif (!preg_match('/^[0-9.\-]+$/', $price)) {
+    } elseif (preg_match('/[^0-9.]/', $price)) {
         $errors['price'] = "Price must not contain special characters.";
     }
+
 
 
     if (isDuplicateMembership($conn, $planType, $requirement, $price, $membershipID ?? null)) {
@@ -96,11 +109,9 @@ if (isset($_POST['btnAddMembershipPlan'])) {
         }
     }
 
-
-
     if (!empty($errors)) {
         $_SESSION['addPlanErrors'] = $errors;
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF'] . "?addError=1&page=$currentPage&entriesCount=$entriesCount");
         exit;
     } else {
         $insertQuery = "
@@ -129,18 +140,28 @@ if (isset($_POST['btnEditMembershipPlan'])) {
     } elseif (!preg_match('/^[a-zA-Z0-9\- ]+$/', $planType)) {
         $errors['planType'] = "Plan type must not contain special characters.";
     }
+    if (!preg_match('/^(\d+)\s+(day|days)$/i', $requirement, $matches)) {
+        $errors['requirement'] = "Requirement must include a valid number followed by a space and 'day' or 'days'.";
+    } else {
+        $number = (int) $matches[1];
+        $unit = strtolower($matches[2]);
 
-    if (!preg_match('/^[1-9]\d*\s+days?$/i', $requirement)) {
-        $errors['requirement'] = "Requirement must include a valid number followed by 'day(s)'.";
-    } elseif (!preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
+        if (($number === 1 && $unit !== 'day') || ($number !== 1 && $unit !== 'days')) {
+            $errors['requirement'] = "Use 'day' for 1 and 'days' for numbers greater than 1.";
+        }
+    }
+
+    if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
         $errors['requirement'] = "Requirement must not contain special characters.";
     }
 
+
     if (!preg_match('/^\d+\.00$/', $price)) {
         $errors['price'] = "Price must be in valid format ending with .00 (e.g., 100.00).";
-    } elseif (!preg_match('/^[0-9.\-]+$/', $price)) {
+    } elseif (preg_match('/[^0-9.]/', $price)) {
         $errors['price'] = "Price must not contain special characters.";
     }
+
 
     if (isDuplicateMembership($conn, $planType, $requirement, $price, $membershipID ?? null)) {
         $errors['planType'] = "This exact plan type, requirement, and price already exists.";

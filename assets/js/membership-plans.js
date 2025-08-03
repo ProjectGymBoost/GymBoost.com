@@ -1,9 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.search.includes('added=1')) {
-        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-        const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddMembershipModal'));
-        confirmModal.show();
+
+     if (window.location.search.includes('added=1')) {
+        const addModal = bootstrap.Modal.getInstance(addModalEl);
+        if (addModal) {
+            addModalEl.addEventListener('hidden.bs.modal', function () {
+                const confirmModal = new bootstrap.Modal(confirmModalEl);
+                confirmModal.show();
+            });
+            addModal.hide(); 
+        } else {
+            const confirmModal = new bootstrap.Modal(confirmModalEl);
+            confirmModal.show();
+        }
     }
+
 
     const editModals = document.querySelectorAll('[id^="editMembershipPlanModal"]');
 
@@ -48,9 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!isPlanTypeValid || !isRequirementValid || !isPriceValid) {
                 e.preventDefault();
-                new bootstrap.Modal(addModalEl).show();
+
+                const existingModal = bootstrap.Modal.getOrCreateInstance(addModalEl);
+                existingModal.show();
             }
         });
+
 
         addModalEl.addEventListener("hidden.bs.modal", function () {
             setTimeout(() => {
@@ -74,24 +87,38 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(fieldId, errorId, "Plan type is required.");
             return false;
         }
-        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
+
+        if (!/^[a-zA-Z0-9\-]+(?: [a-zA-Z0-9\-]+)*$/.test(value)) {
             showError(fieldId, errorId, "Plan type must not contain special characters.");
             return false;
         }
+
         showValid(fieldId, errorId);
         return true;
     }
 
+
     function validateRequirement(fieldId, errorId) {
         const value = document.getElementById(fieldId)?.value.trim();
-        if (!/^\d+\s*days$/i.test(value)) {
-            showError(fieldId, errorId, "Requirement must include a valid number followed by 'day(s)'.");
+
+        const match = value.match(/^(\d+)\s+(day|days)$/i);
+        if (!match) {
+            showError(fieldId, errorId, "Requirement must include a valid number followed by 'day' or 'days'.");
             return false;
         }
-        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
-            showError(fieldId, errorId, "Plan type must not contain special characters.");
+
+        const number = parseInt(match[1], 10);
+        const word = match[2].toLowerCase();
+
+        if ((number === 1 && word !== 'day') || (number !== 1 && word !== 'days')) {
+            showError(fieldId, errorId, "Use 'day' for 1 and 'days' for numbers greater than 1.");
             return false;
         }
+        if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
+            showError(fieldId, errorId, "Requirement must not contain special characters.");
+            return false;
+        }
+
         showValid(fieldId, errorId);
         return true;
     }
@@ -102,13 +129,16 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(fieldId, errorId, "Price must end with .00 (e.g., 100.00).");
             return false;
         }
-        if (!/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/.test(value)) {
-            showError(fieldId, errorId, "Plan type must not contain special characters.");
+
+        if (/[^0-9.]/.test(value)) {
+            showError(fieldId, errorId, "Price must not contain special characters.");
             return false;
         }
+
         showValid(fieldId, errorId);
         return true;
     }
+
 
     function showError(fieldId, errorId, message) {
         const input = document.getElementById(fieldId);
@@ -149,5 +179,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 clearErrors(form);
             }
         });
+    });
+
+    const confirmationModals = ['confirmAddMembershipModal', 'confirmEditMembershipPlanModal', 'confirmDeleteMembershipPlanModal'];
+
+    confirmationModals.forEach(modalId => {
+        const modalEl = document.getElementById(modalId);
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
+            });
+        }
     });
 });
