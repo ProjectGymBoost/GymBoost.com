@@ -251,19 +251,39 @@ th {
   .fc-toolbar-chunk {
     margin-bottom: 5px;
   }
+}
 
+@media (max-width: 450px) {
   .rfid-card {
-    width: 360px !important;
+    width: 375px !important;
     height: 240px !important;
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
   .rfid-card {
     width: 330px !important;
     height: 220px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 350px) {
+  .rfid-card {
+    width: 300px !important;
+    height: 200px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 300px) {
+  .rfid-card {
+    width: 250px !important;
+    height: 180px !important;
     margin-left: auto;
     margin-right: auto;
   }
@@ -277,5 +297,12 @@ th {
   .navigation-wrapper {
     flex-grow: 1;
     max-width: 100% !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .btn-responsive-sm {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.75rem;
   }
 }

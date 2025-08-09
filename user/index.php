@@ -113,7 +113,7 @@ $eventsJSON = $calendar->getEvents();
     <div class="container-fluid px-0 fixed-top">
         <nav class="navbar navbar-expand-lg px-3 custom-navbar">
             <!-- Logo -->
-            <a class="navbar-brand">
+            <a class="navbar-brand" href="?page=dashboard">
                 <img src="../assets/img/logo/officialLogo.png" width="40" height="40" alt="Logo">
             </a>
 

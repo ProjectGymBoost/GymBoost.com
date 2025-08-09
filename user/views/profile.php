@@ -93,11 +93,14 @@ $isDefaultPic = ($pfpFileName === 'defaultProfile.png');
                 <div class="col-md-6 col-6 mb-3 px-0 px-md-5 px-lg-4">
                   <div><b>First Name:</b> <?php echo $userInfoArray['firstName'] ?? 'N/A'; ?></div>
                 </div>
-                <div class="col-md-6 col-6 mb-3 px-0 px-md-3 text-end text-md-start">
+                <div class="col-md-6 col-6 mb-3 px-0 px-md-3 text-md-start">
                   <div><b>Last Name:</b> <?php echo $userInfoArray['lastName'] ?? 'N/A'; ?></div>
                 </div>
                 <div class="col-md-6 col-6 mb-3 px-0 px-md-5 px-lg-4">
                   <div><b>Age:</b> <?php echo $userInfoArray['age']; ?></div>
+                </div>
+                 <div class="col-md-6 col-6 mb-3 px-0 px-md-3 text-md-start">
+                  <div><b>User ID:</b> <?php echo $userInfoArray['userID'] ?? 'N/A'; ?></div>
                 </div>
               </div>
             </div>
@@ -148,8 +151,8 @@ $isDefaultPic = ($pfpFileName === 'defaultProfile.png');
               <div class="col-8 col-md-10">
                 <div class="input-group">
                   <input type="email" class="form-control" name="email" placeholder="Enter email"
-                    value="<?php echo $userInfoArray['email'] ?? 'N/A'; ?>" disabled>
-                  <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                    value="<?php echo $userInfoArray['email'] ?? 'N/A'; ?>" style="font-size: clamp(0.8rem, 2vw, 1.1rem);" disabled>
+                  <button class="btn btn-primary btn-responsive-sm" type="button" data-bs-toggle="modal"
                     data-bs-target="#editAccountEmailModal">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-sm-inline">CHANGE</span>
@@ -165,8 +168,8 @@ $isDefaultPic = ($pfpFileName === 'defaultProfile.png');
               <div class="col-8 col-md-10">
                 <div class="input-group">
                   <input type="password" class="form-control" placeholder="********" name="password"
-                    placeholder="Enter password" disabled>
-                  <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                    placeholder="Enter password" style="font-size: clamp(0.8rem, 2vw, 1.1rem);" disabled>
+                  <button class="btn btn-primary btn-responsive-sm" type="button" data-bs-toggle="modal"
                     data-bs-target="#editAccountPassModal">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-sm-inline">CHANGE</span>
