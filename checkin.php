@@ -29,12 +29,12 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                 <div class="d-flex justify-content-center align-items-center vh-100">
                     <div class="text-center" style="width: 100%; max-width: 500px;">
                         <a href="?logout=true">
-                            <img src="assets/img/logo/officialLogo.png" alt="GymBoost" width="120" class="mb-4">
+                            <img src="assets/img/logo/officialLogo.png" alt="GymBoost" width="150">
                         </a>
-                        <div class="heading my-3">RFID CHECK-IN</div>
+                        <div class="heading mb-3" style="font-size: 3.5rem">RFID CHECK-IN</div>
                         <form method="POST" autocomplete="off">
-                            <input type="text" id="rfid" name="rfid" class="form-control text-center"
-                                style="border-color: var(--primaryColor); border-width: 3px; box-shadow:none;"
+                            <input type="text" id="rfid" name="rfid" class="form-control text-center my-4"
+                                style="border-color: var(--primaryColor); border-width: 3px; box-shadow:none; font-size: 25px"
                                 placeholder="Scan RFID..." autofocus>
                         </form>
                         <?php if ($message): ?>
@@ -64,8 +64,6 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
             alert.classList.add('fade');
             setTimeout(() => alert.remove(), 600);
         }
-    }, 5000);
+    }, 8000);
 </script>
-
-
 </html>

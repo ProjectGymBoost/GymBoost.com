@@ -202,7 +202,7 @@
                                 <strong><?= $calendar->formatWorkoutList($titles) ?></strong>
                                 workout<?= count($titles) > 1 ? 's' : '' ?>?
                             </span><br><br>
-                            If you decided to delete this workout, it will be permanently removed from your workout history.
+                            If you decide to delete this workout, it will be permanently removed from your workout history.
                         </p>
                         <input type="hidden" name="deleteWorkoutID" id="deleteWorkoutID" value="<?= $event['id'] ?>">
                         <input type="hidden" name="userID" value="<?= $userID ?>">
