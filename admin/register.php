@@ -187,6 +187,7 @@ include("../assets/shared/auth.php");
                                 <button type="submit" name="btnRegister" class="btn btn-primary">
                                     CREATE
                                 </button>
+                                <a class="btn btn-secondary" href="users.php">CANCEL</a>
                             </div>
                         </div>
                     </div>

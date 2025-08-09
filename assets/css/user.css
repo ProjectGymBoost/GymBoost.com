@@ -251,7 +251,9 @@ th {
   .fc-toolbar-chunk {
     margin-bottom: 5px;
   }
+}
 
+@media (max-width: 450px) {
   .rfid-card {
     width: 360px !important;
     height: 240px !important;
@@ -269,6 +271,15 @@ th {
   }
 }
 
+@media (max-width: 300px) {
+  .rfid-card {
+    width: 250px !important;
+    height: 180px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 @media (max-width: 575.98px) {
   .navigation-wrapper {
     flex-wrap: wrap;
@@ -277,5 +288,12 @@ th {
   .navigation-wrapper {
     flex-grow: 1;
     max-width: 100% !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .btn-responsive-sm {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.75rem;
   }
 }

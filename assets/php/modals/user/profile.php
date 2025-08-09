@@ -72,8 +72,11 @@
                         style="position: absolute; top: 16px; right: 16px;"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <p>Are you sure you want to remove your profile picture?<br><br>If yes, your profile will be set to
-                        our default picture.</p>
+                    <p>
+                        <span style="color: #D2042D;">Are you sure you want to remove your profile
+                            picture?</span><br><br>
+                        If yes, your profile will be set to our default picture.
+                    </p>
                 </div>
                 <div class="modal-footer justify-content-end">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
@@ -344,8 +347,10 @@ endif; ?>
                 <input type="hidden" name="btnSaveAccInfo" value="1"> <!-- Correct trigger -->
 
                 <!-- Modal Header -->
-                <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                    <h4 class="modal-title text-center subheading" id="editAccountPassModalLabel" style="margin: 0; font-size: 20px; letter-spacing: 2px;">
+                <div
+                    style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h4 class="modal-title text-center subheading" id="editAccountPassModalLabel"
+                        style="margin: 0; font-size: 20px; letter-spacing: 2px;">
                         EDIT PASSWORD
                     </h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
@@ -355,10 +360,11 @@ endif; ?>
                 <!-- Modal Body -->
                 <div class="modal-body" style="padding: 1.5rem;">
                     <?php if (isset($_SESSION['currentPasswordError'])): ?>
-                        <input type="hidden" id="currentPasswordErrorValue" value="<?= htmlspecialchars($_SESSION['currentPasswordError']); ?>">
+                        <input type="hidden" id="currentPasswordErrorValue"
+                            value="<?= htmlspecialchars($_SESSION['currentPasswordError']); ?>">
                         <?php unset($_SESSION['currentPasswordError']); ?>
                     <?php endif; ?>
-                     <?php if (isset($_SESSION['accountUpdated'])): ?>
+                    <?php if (isset($_SESSION['accountUpdated'])): ?>
                         <input type="hidden" id="accountUpdatedFlag" value="true">
                         <?php unset($_SESSION['accountUpdated']); ?>
                     <?php endif; ?>
@@ -366,7 +372,8 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="currentPassword" class="form-label fw-bold">Current Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="currentPass" id="currentPassword" placeholder="Enter your current password"
+                            <input type="password" class="form-control" name="currentPass" id="currentPassword"
+                                placeholder="Enter your current password"
                                 value="<?= htmlspecialchars($_POST['currentPass'] ?? ($_SESSION['currentPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="currentPassword"
                                 style="cursor: pointer;">
@@ -379,7 +386,8 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="newPassword" class="form-label fw-bold">New Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="newPass" id="newPassword" placeholder="Enter a new password"
+                            <input type="password" class="form-control" name="newPass" id="newPassword"
+                                placeholder="Enter a new password"
                                 value="<?= htmlspecialchars($_POST['newPass'] ?? ($_SESSION['newPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="newPassword"
                                 style="cursor: pointer;">
@@ -392,7 +400,8 @@ endif; ?>
                     <div class="mb-3 text-start">
                         <label for="confirmPassword" class="form-label fw-bold">Confirm Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword" placeholder="Confirm your password"
+                            <input type="password" class="form-control" name="confirmPass" id="confirmPassword"
+                                placeholder="Confirm your password"
                                 value="<?= htmlspecialchars($_POST['confirmPass'] ?? ($_SESSION['confirmPass'] ?? '')) ?>">
                             <span class="input-group-text toggle-password" data-target="confirmPassword"
                                 style="cursor: pointer;">
@@ -454,7 +463,7 @@ endif; ?>
             <!-- Body -->
             <div class="modal-body text-center text-black" style="padding: 1.5rem;">
                 <p>
-                    Are you sure you want to delete this account?<br><br>
+                    <span style="color: #D2042D;">Are you sure you want to delete this account?</span><br><br>
                     If you proceed, all associated data will be permanently removed.
                 </p>
             </div>
