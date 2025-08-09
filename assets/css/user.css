@@ -255,17 +255,26 @@ th {
 
 @media (max-width: 450px) {
   .rfid-card {
-    width: 360px !important;
+    width: 375px !important;
     height: 240px !important;
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
   .rfid-card {
     width: 330px !important;
     height: 220px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 350px) {
+  .rfid-card {
+    width: 300px !important;
+    height: 200px !important;
     margin-left: auto;
     margin-right: auto;
   }
