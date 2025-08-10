@@ -49,7 +49,7 @@ if (isset($_SESSION['userCreated'])) {
             <?php endif; ?>
 
             <!-- Heading -->
-            <div class="col-12 mb-4 d-flex align-items-center justify-content-between">
+            <div class="col-12 mb-4">
                 <div class="heading text-center text-sm-start">USERS</div>
             </div>
 
@@ -61,6 +61,20 @@ if (isset($_SESSION['userCreated'])) {
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
+                <!-- Filter By -->
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
+                    <select name="filterBy" class="form-select">
+                        <option disabled>Filter By</option>
+                        <option value="none" <?= ($_GET['filterBy'] ?? '') === 'none' ? 'selected' : '' ?>>Show All
+                        </option>
+                        <option value="activeOnly" <?= ($_GET['filterBy'] ?? '') === 'activeOnly' ? 'selected' : '' ?>>
+                            Active</option>
+                        <option value="inactiveOnly" <?= ($_GET['filterBy'] ?? '') === 'inactiveOnly' ? 'selected' : '' ?>>
+                            Inactive
+                        </option>
+                    </select>
+                </div>
+
                 <!-- Sort By -->
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
@@ -69,8 +83,6 @@ if (isset($_SESSION['userCreated'])) {
                         <option value="firstName" <?= ($_GET['sortBy'] ?? '') === 'firstName' ? 'selected' : '' ?>>First
                             Name</option>
                         <option value="lastName" <?= ($_GET['sortBy'] ?? '') === 'lastName' ? 'selected' : '' ?>>Last Name
-                        </option>
-                        <option value="state" <?= ($_GET['sortBy'] ?? '') === 'state' ? 'selected' : '' ?>>State
                         </option>
                         <option value="points" <?= ($_GET['sortBy'] ?? '') === 'points' ? 'selected' : '' ?>>Points
                         </option>
@@ -105,6 +117,7 @@ if (isset($_SESSION['userCreated'])) {
                         entries
                     </div>
                     <input type="hidden" name="search" value="<?php echo $search; ?>">
+                    <input type="hidden" name="filterBy" value="<?php echo $filterBy; ?>">
                     <input type="hidden" name="sortBy" value="<?php echo $sortBy; ?>">
                     <input type="hidden" name="orderBy" value="<?php echo $orderBy; ?>">
                 </form>
@@ -178,7 +191,7 @@ if (isset($_SESSION['userCreated'])) {
                         if ($currentPage > 1): ?>
                             <li class="page-item">
                                 <a class="page-link"
-                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    href="?page=<?= $currentPage - 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&filterBy=<?= $filterBy ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Previous">&laquo;</a>
                             </li>
                         <?php endif; ?>
@@ -187,7 +200,7 @@ if (isset($_SESSION['userCreated'])) {
                             <?php $isActive = $i == $currentPage; ?>
                             <li class="page-item <?= $isActive ? 'active' : '' ?>">
                                 <a class="page-link"
-                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    href="?page=<?= $i ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&filterBy=<?= $filterBy ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     style="<?= $isActive ? 'background-color: var(--primaryColor); color: white; border: none;' : 'background-color: #ffffff; color: #000000;' ?>">
                                     <?= $i ?>
                                 </a>
@@ -198,7 +211,7 @@ if (isset($_SESSION['userCreated'])) {
                         <?php if ($currentPage < $totalPages): ?>
                             <li class="page-item">
                                 <a class="page-link"
-                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
+                                    href="?page=<?= $currentPage + 1 ?>&entriesCount=<?= $entriesCount ?>&search=<?= $search ?>&filterBy=<?= $filterBy ?>&sortBy=<?= $sortBy ?>&orderBy=<?= $orderBy ?>"
                                     aria-label="Next">&raquo;</a>
                             </li>
                         <?php endif; ?>
@@ -215,27 +228,34 @@ if (isset($_SESSION['userCreated'])) {
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // DEBOUNCE SEARCH AUTO SUBMIT
             const form = document.querySelector('form[method="get"]');
-
-            let debounceTimer;
             const searchInput = document.getElementById('searchInput');
+            let debounceTimer;
+
             searchInput.addEventListener('input', function () {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                     form.submit();
                 }, 500);
             });
-        });
-    </script>
 
-    <script>
-        document.querySelectorAll("select[name='sortBy'], select[name='orderBy']").forEach(select => {
-            select.addEventListener('change', () => {
-                select.form.submit();
+            // FOCUS BACK TO SEARCH INPUT AFTER RELOAD
+            if (searchInput && searchInput.value) {
+                setTimeout(() => {
+                    searchInput.focus();
+                    searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+                }, 100);
+            }
+
+            // SORT, ORDER, AND FILTER AUTO SUBMIT
+            document.querySelectorAll("select[name='sortBy'], select[name='orderBy'], select[name='filterBy']").forEach(select => {
+                select.addEventListener('change', () => {
+                    select.form.submit();
+                });
             });
         });
     </script>
-
 </body>
 
 </html>

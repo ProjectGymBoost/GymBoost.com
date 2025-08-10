@@ -88,6 +88,18 @@ if (
     </script>
 <?php endif; ?>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addBadgeForm = document.getElementById('addBadgeForm');
+        const modal = document.getElementById('addBadgeModal');
+
+        // Reset form and clear errors when modal is closed
+        modal.addEventListener('hidden.bs.modal', function () {
+            addBadgeForm.reset();
+            document.querySelectorAll('#addBadgeModal .text-danger').forEach(el => el.textContent = '');
+        });
+    });
+</script>
 
 <!--(BADGES) EDIT -->
 <?php foreach ($badgeInfoArray as $info): ?>
@@ -176,9 +188,7 @@ if (
                             <?php endif; ?>
                             <?php if (!empty($iconUrl)): ?>
                                 <div class="mt-2 text-muted small">
-                                    Current icon URL:
-                                    <a href="<?= htmlspecialchars($iconUrl) ?>"
-                                        target="_blank"><?= htmlspecialchars($iconUrl) ?></a>
+                                    Current icon URL: <?= htmlspecialchars($iconUrl) ?>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -209,6 +219,23 @@ if (
         });
     </script>
 <?php endif; ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all edit modals
+        document.querySelectorAll('[id^="editBadgeModal"]').forEach(function (modalEl) {
+            const form = modalEl.querySelector('form');
+
+            // Reset form and clear errors when the modal is closed
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                if (form) {
+                    form.reset();
+                }
+                modalEl.querySelectorAll('.text-danger').forEach(el => el.textContent = '');
+            });
+        });
+    });
+</script>
 
 <!--(BADGES) DELETE -->
 <?php foreach ($badgeInfoArray as $info): ?>
