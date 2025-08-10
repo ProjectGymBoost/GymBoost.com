@@ -31,7 +31,7 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
             <!-- Heading and Check-in Button -->
             <div class="col-12 mb-4 d-flex align-items-center justify-content-between">
                 <div class="heading text-center text-sm-start">ATTENDANCE</div>
-                <a href="../checkin.php"><button class="btn btn-primary">Check-in</button></a>
+                <a href="../checkin.php" target="_blank" rel="noopener noreferrer"><button class="btn btn-primary">Check-in</button></a>
             </div>
 
             <!-- Controls Form -->
