@@ -124,7 +124,7 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                                 <div class="row gx-3">
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Start Date</label>
-                                        <input type="date" class="form-control" name="startDate" id="startDate" min="<?= date('Y-m-d') ?>" required>
+                                        <input type="date" class="form-control" name="startDate" id="startDate" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">End Date</label>
@@ -151,110 +151,35 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
         <!-- JS to auto-calculate endDate -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Enable Select2
+                // Enable Select2 on any .select2 elements
                 $('.select2').select2({
                     placeholder: 'Select User',
-                    width: '100%'
+                    width: '100%' // Make it full-width like Bootstrap
                 });
 
                 const planSelect = document.getElementById('membershipPlan');
                 const startInput = document.getElementById('startDate');
                 const endInput = document.getElementById('endDate');
 
-                // Add error containers under date inputs (if not already in HTML)
-                if (!document.getElementById('startDateError')) {
-                    const div = document.createElement('div');
-                    div.id = 'startDateError';
-                    div.className = 'invalid-feedback text-start';
-                    startInput.insertAdjacentElement('afterend', div);
-                }
-                if (!document.getElementById('endDateError')) {
-                    const div = document.createElement('div');
-                    div.id = 'endDateError';
-                    div.className = 'invalid-feedback text-start';
-                    endInput.insertAdjacentElement('afterend', div);
-                }
-
-                const startError = document.getElementById('startDateError');
-                const endError = document.getElementById('endDateError');
-
-                // Auto-update end date based on plan duration
                 function updateEndDate() {
                     const selectedOption = planSelect.options[planSelect.selectedIndex];
                     const requirement = selectedOption.getAttribute('data-requirement');
-                    const match = requirement ? requirement.match(/(\d+)\s*days?/i) : null;
+                    const match = requirement.match(/(\d+)\s*days?/i);
                     if (!match) return;
 
-                    const days = parseInt(match[1], 10);
+                    const days = parseInt(match[1]);
                     const startDate = new Date(startInput.value);
-                    if (isNaN(startDate.getTime())) return;
+                    if (isNaN(startDate)) return;
 
-                    const endDate = new Date(startDate);
-                    endDate.setDate(endDate.getDate() + days);
-
-                    const yyyy = endDate.getFullYear();
-                    const mm = String(endDate.getMonth() + 1).padStart(2, '0');
-                    const dd = String(endDate.getDate()).padStart(2, '0');
+                    startDate.setDate(startDate.getDate() + days);
+                    const yyyy = startDate.getFullYear();
+                    const mm = String(startDate.getMonth() + 1).padStart(2, '0');
+                    const dd = String(startDate.getDate()).padStart(2, '0');
                     endInput.value = `${yyyy}-${mm}-${dd}`;
                 }
 
-                // Validate date logic
-                function validateDates() {
-                    let valid = true;
-                    startError.textContent = '';
-                    endError.textContent = '';
-
-                    const startVal = startInput.value;
-                    const endVal = endInput.value;
-
-                    if (!startVal || !endVal) return true;
-
-                    const startDate = new Date(startVal);
-                    const endDate = new Date(endVal);
-
-                    const today = new Date();
-                    const maxEnd = new Date();
-                    maxEnd.setFullYear(maxEnd.getFullYear() + 5);
-
-                    if ($startDate < date('Y-m-d')) {
-                        startError.textContent = 'Start date cannot be in the past.';
-                        valid = false;
-                    }
-                    if (endDate <= startDate) {
-                        endError.textContent = 'End date must be after start date.';
-                        valid = false;
-                    }
-                    if (endDate > maxEnd) {
-                        endError.textContent = 'End date is too far in the future.';
-                        valid = false;
-                    }
-
-                    return valid;
-                }
-
-                // Event bindings
-                planSelect.addEventListener('change', () => {
-                    updateEndDate();
-                    validateDates();
-                });
-                startInput.addEventListener('change', () => {
-                    updateEndDate();
-                    validateDates();
-                });
-                endInput.addEventListener('change', validateDates);
-
-                // Prevent bad submission
-                const form = startInput.closest('form');
-                form.addEventListener('submit', function (e) {
-                    if (!validateDates()) {
-                        e.preventDefault();
-                        startInput.classList.add('is-invalid');
-                        endInput.classList.add('is-invalid');
-                    } else {
-                        startInput.classList.remove('is-invalid');
-                        endInput.classList.remove('is-invalid');
-                    }
-                });
+                planSelect.addEventListener('change', updateEndDate);
+                startInput.addEventListener('change', updateEndDate);
             });
         </script>
     </form>
