@@ -2,7 +2,7 @@
 
 <div id="dashboard" class="container">
   <!-- ANNOUNCEMENTS -->
-  <div id="announcement" class="container px-0 py-4 mb-3 mt-2">
+  <div id="announcement" class="announcement container px-0 py-4 mb-3 mt-2">
     <div class="row">
       <div class="col-12">
         <div class="heading">ANNOUNCEMENT</div>
