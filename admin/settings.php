@@ -48,7 +48,7 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
                     <?php endif; ?>
 
                     <div class="card-body p-4">
-                        <h5 class="subheading">PERSONAL INFORMATION</h5>
+                        <h5 class="subheading">ACCOUNT INFORMATION</h5>
                         <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 1rem 0;">
 
                         <!-- Name -->
