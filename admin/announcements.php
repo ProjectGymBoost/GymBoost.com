@@ -45,7 +45,7 @@ include("../assets/php/processes/admin/announcement.php");
             <form method="GET" action="" class="d-flex flex-wrap justify-content-center gap-3 mb-4">
                 <!-- Search -->
                 <div class="flex-grow-1 input-group" style="max-width: 400px;">
-                    <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search announcements..." value="<?= htmlspecialchars($search) ?>">
+                    <input type="search" name="search" id="searchInput" class="form-control" placeholder="Search announcements..." value="<?= htmlspecialchars($search) ?>">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
 
@@ -262,24 +262,36 @@ include("../assets/php/processes/admin/announcement.php");
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form[method="get"]');
+
+            let debounceTimer;
             const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function () {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    form.submit();
+                }, 500);
+            });
+        });
 
-            if (searchInput && form) {
-                let debounceTimer;
-                searchInput.addEventListener('input', function () {
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(() => {
-                        form.submit();
-                    }, 500);
+        // FOCUS BACK TO SEARCH INPUT AFTER RELOAD
+        if (searchInput && searchInput.value) {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+            }, 100);
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sortOrderForm = document.querySelector("form[method='get']");
+            
+            if (sortOrderForm) {
+                sortOrderForm.querySelectorAll("select[name='sortBy'], select[name='orderBy']").forEach(select => {
+                    select.addEventListener('change', () => {
+                        sortOrderForm.submit();
+                    });
                 });
-
-                // FOCUS BACK TO SEARCH INPUT AFTER RELOAD
-                if (searchInput.value) {
-                    setTimeout(() => {
-                        searchInput.focus();
-                        searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
-                    }, 100);
-                }
             }
         });
     </script>
