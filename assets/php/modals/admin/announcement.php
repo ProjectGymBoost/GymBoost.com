@@ -2,7 +2,9 @@
 <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px;">
-            <form method="POST">
+            <form id="addAnnouncementForm" method="POST">
+                <input type="hidden" name="btnAddAnnouncement" value="1">
+                
                 <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
                     <h4 class="modal-title text-center subheading" style="margin: 0; font-size: 20px; letter-spacing: 2px;">ADD ANNOUNCEMENT</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
@@ -12,35 +14,28 @@
                 <div class="modal-body" style="padding: 1.5rem;">
                     <div class="mb-3 text-start">
                         <label for="newAnnouncementTitle" class="form-label fw-bold">Title</label>
-                        <input type="text" class="form-control" placeholder="Enter title" name="newAnnouncementTitle" required>
+                        <input id="newAnnouncementTitle" type="text" class="form-control" placeholder="Enter title" name="newAnnouncementTitle" required>
                     </div>
                     <div class="text-start">
                         <label for="newAnnouncementMessage" class="form-label fw-bold">Message</label>
-                        <textarea class="form-control" placeholder="Enter message" name="newAnnouncementMessage" rows="3" required></textarea>
+                        <textarea id="newAnnouncementDescription" class="form-control" placeholder="Enter message" name="newAnnouncementMessage" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-end" style="padding: 1rem;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                    <button type="submit" name="btnAddAnnouncement" class="btn btn-primary">ADD</button>
+                    <button type="submit" id="openConfirmAdd" class="btn btn-primary">ADD</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Confirm Add Modal -->
-<?php if (isset($_GET['added']) && $_GET['added'] == 1): ?>
-<script>
-    window.addEventListener('DOMContentLoaded', function () {
-        var modal = new bootstrap.Modal(document.getElementById('confirmAddAnnouncementModal'));
-        modal.show();
-    });
-</script>
+<!-- Confirm Add Modal (Always Rendered) -->
 <div class="modal fade" id="confirmAddAnnouncementModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px; color: white;">
             <div class="modal-header" style="border: none;">
-                <h4 class="modal-title heading text-center w-100 text-black" style="margin: 0;">ANNOUNCEMENT ADDED</h4>
+                <h4 class="modal-title heading text-center w-100 text-black">ANNOUNCEMENT ADDED</h4>
             </div>
             <div class="modal-body text-center text-black">
                 The new announcement has been successfully added.
@@ -51,7 +46,8 @@
         </div>
     </div>
 </div>
-<?php endif; ?>
+
+
 
 <?php foreach ($announcementInfoArray as $a): ?>
 <!-- Edit Announcement Modal -->
