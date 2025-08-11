@@ -201,55 +201,108 @@ th {
   opacity: 0.6;
 }
 
+.announcement .heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.announcement .announcement-message {
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  word-break: break-all;
+}
+
+.announcement .announcement-date {
+  color: #ecececff;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .announcement .heading {
+    font-size: 1.75rem;
+  }
+  .announcement .announcement-message {
+    font-size: 0.95rem;
+  }
+  .announcement .announcement-date {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .announcement .heading {
+    font-size: 1.5rem;
+  }
+  .announcement .announcement-message {
+    font-size: 0.9rem;
+  }
+  .announcement .announcement-date {
+    font-size: 0.85rem;
+  }
   .schedule-header-sm {
     font-size: 0.85rem !important;
   }
-
   .calendar-instructions .btn {
     font-size: 0.85rem !important;
     padding: 0.25rem 0.5rem;
   }
-
   .calendar-instructions .dropdown-menu {
     font-size: 0.8rem;
     min-width: 240px;
     min-height: auto;
   }
-
   .calendar-instructions .dropdown-item-text {
     padding-left: 0.5rem;
   }
-
   .fc .fc-button {
     padding: 2px 6px !important;
     font-size: 13px !important;
   }
-
   .fc-toolbar-title {
     font-size: 0.8rem !important;
   }
-
   .fc .fc-list-event-title,
   .fc .fc-list-event-time,
   .fc .fc-list-day-text,
   .fc .fc-list-day-side-text {
     font-size: 13px !important;
   }
-
   .fc .fc-list-day-cushion {
     padding: 10px !important;
     font-size: 12px !important;
   }
-
   .fc-header-toolbar {
     flex-wrap: wrap;
     justify-content: center;
     gap: 4px;
   }
-
   .fc-toolbar-chunk {
     margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .announcement .heading {
+    font-size: 1.25rem;
+  }
+  .announcement .announcement-message {
+    font-size: 0.85rem;
+  }
+  .announcement .announcement-date {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navigation-wrapper {
+    flex-wrap: wrap;
+    flex-grow: 1;
+    max-width: 100% !important;
   }
 }
 
@@ -259,6 +312,18 @@ th {
     height: 240px !important;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .announcement .heading {
+    font-size: 1.1rem;
+  }
+  .announcement .announcement-message {
+    font-size: 0.8rem;
+  }
+  .announcement .announcement-date {
+    font-size: 0.75rem;
   }
 }
 
@@ -287,20 +352,6 @@ th {
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-@media (max-width: 575.98px) {
-  .navigation-wrapper {
-    flex-wrap: wrap;
-  }
-
-  .navigation-wrapper {
-    flex-grow: 1;
-    max-width: 100% !important;
-  }
-}
-
-@media (max-width: 300px) {
   .btn-responsive-sm {
     padding: 0.5rem 0.8rem;
     font-size: 0.75rem;

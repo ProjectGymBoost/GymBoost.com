@@ -13,10 +13,10 @@
               <div class="row justify-content-center mt-2">
                 <div class="col-12 col-md-8 mx-4 mt-2">
                   <div class="rounded-box card-bg-color d-flex align-items-start p-3" style="gap: 1rem;">
-                    <div class="pe-3 border-end text-nowrap" style="color: #ecececff;">
+                    <div class="pe-3 border-end announcement-date" style="color: #ecececff;">
                       <?= date("Y-m-d", strtotime($announcement['dateCreated'])); ?>
                     </div>
-                    <div class="ps-3">
+                    <div class="ps-3 announcement-message">
                       <?= $announcement['message']; ?>
                     </div>
                   </div>
@@ -26,7 +26,7 @@
           <?php else: ?>
             <div class="row justify-content-center mt-2">
               <div class="col-12 col-md-8 mx-4 mt-2">
-                <div class="rounded-box p-3"
+                <div class="rounded-box p-3 announcement-message"
                   style="background-color:#bebebe; color:#333; font-weight:500; border-radius:8px;">
                   Nothing new to announce just yet. Check back soon for gym updates!
                 </div>
