@@ -109,6 +109,40 @@ $eventsJSON = $calendar->getEvents();
         .invalid-feedback {
             position: absolute;
         }
+
+        /* CSS for Announcement*/
+        .announcement .heading {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .announcement .announcement-message {
+            font-size: 1rem;
+            line-height: 1.5;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .announcement .announcement-date {
+            color: #ecececff;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 576px) {
+            .announcement .heading {
+                font-size: 1.25rem;
+            }
+
+            .announcement .announcement-message {
+                font-size: 0.85rem;
+            }
+
+            .announcement .announcement-date {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
