@@ -34,7 +34,7 @@
 
                         <div class="mb-3 text-start">
                             <label class="form-label fw-bold" for="editRFID<?= $info['userMembershipID']; ?>">RFID Number</label>
-                            <input type="text" class="form-control" name="editRFID" id="editRFID<?= $info['userMembershipID']; ?>" value="<?= htmlspecialchars($info['rfidNumber']); ?>" maxlength="10" required>
+                            <input type="text" class="form-control" name="editRFID" id="editRFID<?= $info['userMembershipID']; ?>" value="<?= htmlspecialchars($info['rfidNumber']); ?>" required>
                         </div>
 
                         <div class="mb-3 text-start">
@@ -51,13 +51,16 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="mb-3 text-start">
+                                                <div class="mb-3 text-start position-relative">
                             <label class="form-label fw-bold">Start Date</label>
-                            <input type="date" class="form-control" name="editStartDate" value="<?= $info['startDate']; ?>" required>
+                            <input type="date" class="form-control" name="editStartDate" id="editStartDate<?= $info['userMembershipID']; ?>" value="<?= $info['startDate']; ?>" required>
+                            <div id="startDateError<?= $info['userMembershipID']; ?>" class="invalid-feedback text-start"></div>
                         </div>
-                        <div class="mb-3 text-start">
+
+                        <div class="mb-3 text-start position-relative">
                             <label class="form-label fw-bold">End Date</label>
-                            <input type="date" class="form-control" name="editEndDate" value="<?= $info['endDate']; ?>" required>
+                            <input type="date" class="form-control" name="editEndDate" id="editEndDate<?= $info['userMembershipID']; ?>" value="<?= $info['endDate']; ?>" required>
+                            <div id="endDateError<?= $info['userMembershipID']; ?>" class="invalid-feedback text-start"></div>
                         </div>
                     </div>
 
@@ -70,16 +73,36 @@
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
-                        const planSelect = document.getElementById('editPlan<?= $info['userMembershipID']; ?>');
-                        const startDateInput = document.querySelector('#editMembershipModal<?= $info['userMembershipID']; ?> input[name="editStartDate"]');
-                        const endDateInput = document.querySelector('#editMembershipModal<?= $info['userMembershipID']; ?> input[name="editEndDate"]');
+                        const modalId = '<?= $info['userMembershipID']; ?>';
+
+                        const planSelect = document.getElementById('editPlan' + modalId);
+                        const startDateInput = document.querySelector('#editMembershipModal' + modalId + ' input[name="editStartDate"]');
+                        const endDateInput = document.querySelector('#editMembershipModal' + modalId + ' input[name="editEndDate"]');
+
+                        // Create error message containers like the birthday example
+                        if (startDateInput && !document.getElementById('startDateError' + modalId)) {
+                            const div = document.createElement('div');
+                            div.id = 'startDateError' + modalId;
+                            div.className = 'invalid-feedback text-start';
+                            startDateInput.insertAdjacentElement('afterend', div);
+                        }
+                        if (endDateInput && !document.getElementById('endDateError' + modalId)) {
+                            const div = document.createElement('div');
+                            div.id = 'endDateError' + modalId;
+                            div.className = 'invalid-feedback text-start';
+                            endDateInput.insertAdjacentElement('afterend', div);
+                        }
+
+                        const startDateError = document.getElementById('startDateError' + modalId);
+                        const endDateError = document.getElementById('endDateError' + modalId);
 
                         if (!planSelect || !startDateInput || !endDateInput) return;
 
+                        // Auto-set end date when plan changes
                         function updateEndDate() {
                             const selectedOption = planSelect.options[planSelect.selectedIndex];
                             const requirement = selectedOption.getAttribute('data-requirement');
-                            const daysMatch = requirement.match(/(\d+)\s*days?/i);
+                            const daysMatch = requirement ? requirement.match(/(\d+)\s*days?/i) : null;
                             if (!daysMatch) return;
 
                             const duration = parseInt(daysMatch[1], 10);
@@ -96,8 +119,64 @@
                             endDateInput.value = `${yyyy}-${mm}-${dd}`;
                         }
 
-                        planSelect.addEventListener('change', updateEndDate);
-                        startDateInput.addEventListener('change', updateEndDate);
+                        // Validate both dates
+                        function validateDates() {
+                            let valid = true;
+                            startDateError.textContent = '';
+                            endDateError.textContent = '';
+
+                            const startVal = startDateInput.value;
+                            const endVal = endDateInput.value;
+
+                            if (!startVal || !endVal) return true;
+
+                            const start = new Date(startVal);
+                            const end = new Date(endVal);
+
+                            const minStart = new Date();
+                            minStart.setFullYear(minStart.getFullYear() - 5); // max 5 years ago
+
+                            if (start < minStart) {
+                                startDateError.textContent = 'Start date is too far in the past.';
+                                valid = false;
+                            }
+                            if (end <= start) {
+                                endDateError.textContent = 'End date must be after start date.';
+                                valid = false;
+                            }
+                            const maxEnd = new Date();
+                            maxEnd.setFullYear(maxEnd.getFullYear() + 5); // max 5 years ahead
+                            if (end > maxEnd) {
+                                endDateError.textContent = 'End date is too far in the future.';
+                                valid = false;
+                            }
+
+                            return valid;
+                        }
+
+                        // Events
+                        planSelect.addEventListener('change', () => {
+                            updateEndDate();
+                            validateDates();
+                        });
+                        startDateInput.addEventListener('change', () => {
+                            updateEndDate();
+                            validateDates();
+                        });
+                        endDateInput.addEventListener('change', validateDates);
+
+                        // Prevent form submission if invalid
+                        const form = startDateInput.closest('form');
+                        form.addEventListener('submit', function (e) {
+                            if (!validateDates()) {
+                                e.preventDefault();
+                                startDateInput.classList.add('is-invalid');
+                                endDateInput.classList.add('is-invalid');
+                            } else {
+                                startDateInput.classList.remove('is-invalid');
+                                endDateInput.classList.remove('is-invalid');
+                            }
+                        });
                     });
                 </script>
             </div>

@@ -10,10 +10,18 @@ function loadTopMembersAndStats() {
             const members = data.topMembers || [];
             tbody.innerHTML = "";
 
-            if (members.length === 0) {
+            if (
+                members.length === 0 || 
+                members.every(m => (!m.workoutsThisMonth || m.workoutsThisMonth == 0) && (!m.points || m.points == 0))
+            ) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="4" style="color:#D2042D; font-weight: bold; text-align: center;">No Data Available</td>
+                        <td colspan="4" class="text-center py-4 bg-light text-dark">
+                            <strong>No member has been active this month!</strong><br>
+                            <span class="text-muted small">
+                                Review attendance logs or follow up with members for updates.
+                            </span>
+                        </td>
                     </tr>
                 `;
             } else {

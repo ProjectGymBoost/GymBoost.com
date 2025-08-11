@@ -5,10 +5,13 @@ $searchSafe = mysqli_real_escape_string($conn, $search);
 
 $searchCondition = '';
 if (!empty($searchSafe)) {
-    $searchCondition = "WHERE (
+    $searchCondition = " AND (
         u.firstName LIKE '%$searchSafe%' 
         OR u.lastName LIKE '%$searchSafe%' 
+        OR CONCAT(u.firstName, ' ', u.lastName) LIKE '%$searchSafe%'
         OR u.rfidNumber LIKE '%$searchSafe%'
+        OR um.startDate LIKE '%$searchSafe%'
+        OR um.endDate LIKE '%$searchSafe%'
     )";
 }
 
@@ -47,6 +50,7 @@ $countQuery = "
     SELECT COUNT(*) AS total
     FROM users u
     INNER JOIN user_memberships um ON u.userID = um.userID
+    WHERE u.role = 'user'
     $searchCondition
 ";
 $countResult = executeQuery($countQuery);
@@ -73,6 +77,7 @@ $membershipQuery = "
         um.endDate
     FROM users u
     INNER JOIN user_memberships um ON u.userID = um.userID
+    WHERE u.role = 'user'
     $searchCondition
     $orderCondition
     LIMIT $offset, $entriesCount

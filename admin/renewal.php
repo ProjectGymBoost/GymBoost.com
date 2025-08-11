@@ -8,7 +8,7 @@ include("../assets/php/processes/admin/renewal.php"); // Form POST logic
 
 
 // Fetch user list for dropdown
-$usersQuery = "SELECT u.userID, u.firstName, u.lastName FROM users u ORDER BY u.firstName ASC";
+$usersQuery = "SELECT u.userID, u.firstName, u.lastName FROM users u WHERE u.role = 'user' ORDER BY u.firstName ASC";
 $usersResult = mysqli_query($conn, $usersQuery);
 
 $membershipQuery = "SELECT * FROM memberships";
@@ -94,11 +94,15 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                             <div class="w-100 mb-3">
                                 <label class="form-label fw-bold">Select User</label>
                                 <select class="form-select select2" name="userID" required>
-                                    <?php while ($user = mysqli_fetch_assoc($usersResult)): ?>
-                                        <option value="<?= $user['userID']; ?>">
-                                            <?= htmlspecialchars($user['firstName'] . ' ' . $user['lastName']); ?>
-                                        </option>
-                                    <?php endwhile; ?>
+                                    <?php if (mysqli_num_rows($usersResult) > 0): ?>
+                                        <?php while ($user = mysqli_fetch_assoc($usersResult)): ?>
+                                            <option value="<?= $user['userID']; ?>">
+                                                <?= htmlspecialchars($user['firstName'] . ' ' . $user['lastName']); ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <option disabled selected>No active users available</option>
+                                    <?php endif; ?>
                                 </select>
                             </div>
 
@@ -129,9 +133,10 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                                 </div>
                             </div>
 
-                            <!-- Submit Button -->
+                            <!-- Renew Button and Cancel Button -->
                             <div class="w-100 text-center mt-3">
-                                <button type="submit" name="btnRenew" class="btn btn-primary">RENEW MEMBERSHIP</button>
+                                <button type="submit" name="btnRenew" class="btn btn-primary mt-2">RENEW MEMBERSHIP</button>
+                                <a class="btn btn-secondary mt-2" href="membership.php">CANCEL</a>
                             </div>
                         </div>
                     </div>
