@@ -141,14 +141,22 @@
                     <div class="row">
                         <div class="col-md-6 mb-3 text-start">
                             <label for="Age" class="form-label fw-bold">Age</label>
-                            <span data-bs-toggle="tooltip" title="Age is auto-calculated based on birthday."
-                                style="cursor: pointer;">
+                            <span data-bs-toggle="tooltip" data-bs-trigger="click"
+                                title="Age is auto-calculated based on birthday." style="cursor: pointer;">
                                 <i class="bi bi-info-circle text-secondary"></i>
                             </span>
                             <input type="text" class="form-control" name="age" id="Age"
                                 value="<?php echo $userInfoArray['age']; ?>" disabled>
                         </div>
                     </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                                new bootstrap.Tooltip(tooltipTriggerEl);
+                            });
+                        });
+                    </script>
                 </div>
                 <div class="modal-footer d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>

@@ -4,7 +4,6 @@ require_once("../assets/shared/connect.php");
 include("../assets/shared/auth.php");
 include("../assets/php/processes/admin/settings.php");
 include("../assets/php/processes/forgotpassword/phpmailer.php");
-// include(__DIR__ . "/../assets/php/modals/admin/settings.php");
 ?>
 
 <!DOCTYPE html>

@@ -33,6 +33,8 @@ include("../assets/shared/auth.php");
         .invalid-feedback {
             position: absolute;
             color: var(--text-color-light) !important;
+            white-space: normal; 
+            word-wrap: break-word; 
         }
 
         select.is-valid {
@@ -81,19 +83,13 @@ include("../assets/shared/auth.php");
                     <div class="d-flex justify-content-center align">
                         <div class="d-flex flex-column align-items-center gap-3 p-3 p-lg-5 card-bg-color"
                             style="width: 100%; max-width: 800px; border-radius: 10px;">
-                            <div class="d-flex gap-3 w-100">
-                                <!-- First Name -->
-
-                                <?php if ($firstNameError === "duplicateName" && $lastNameError === "duplicateName"): ?>
-                                    <input type="hidden" id="duplicateFullNameError" value="true">
-                                <?php endif; ?>
-
+                            <div class="d-flex flex-column flex-md-row gap-3 w-100">
                                 <!-- First Name -->
                                 <div class="w-100 mb-3">
                                     <input type="text" placeholder="First Name" class="form-control" name="firstName"
                                         id="firstName" required style="border-radius: 5px;"
                                         value="<?php echo isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : ''; ?>">
-                                    <div id="firstNameError" class="invalid-feedback mb-5 text-start"></div>
+                                    <div id="firstNameError" class="invalid-feedback text-start"></div>
                                     <input type="hidden" id="firstNameExistsError"
                                         value="<?php echo $firstNameError; ?>">
                                 </div>
@@ -106,7 +102,6 @@ include("../assets/shared/auth.php");
                                     <div id="lastNameError" class="invalid-feedback text-start"></div>
                                     <input type="hidden" id="lastNameExistsError" value="<?php echo $lastNameError; ?>">
                                 </div>
-
                             </div>
 
                             <!-- Email -->
@@ -122,9 +117,9 @@ include("../assets/shared/auth.php");
 
                             <div class="d-flex flex-column flex-md-row gap-3 mb-3 w-100">
                                 <!-- RFID Number -->
-                                <div class="flex-grow-1 position-relative">
+                                <div class="flex-grow-1 position-relative mb-3">
                                     <input type="text" placeholder="RFID Number" class="form-control" name="rfid"
-                                        id="rfid" maxlength="10" style="border-radius: 5px;"
+                                        id="rfid" style="border-radius: 5px;"
                                         value="<?php echo isset($_POST['rfid']) ? htmlspecialchars($_POST['rfid']) : ''; ?>"
                                         required>
                                     <div id="rfidError" class="invalid-feedback text-start"></div>
@@ -133,7 +128,7 @@ include("../assets/shared/auth.php");
                                 </div>
 
                                 <!-- Birthday -->
-                                <div class="flex-grow position-relative">
+                                <div class="flex-grow position-relative mb-3">
                                     <input type="date" class="form-control w-100" id="birthday" name="birthday"
                                         style="border-radius: 5px;" required>
                                     <div id="birthdayError" class="invalid-feedback text-start"></div>

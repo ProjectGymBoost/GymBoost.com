@@ -1,8 +1,13 @@
 <?php
 session_start();
 if (!empty($_SESSION['userID'])) {
-  header("Location: user/index.php");
-  exit();
+  if ($_SESSION['role'] === 'admin') {
+    echo "<script>window.location.replace('admin/index.php');</script>";
+    exit();
+  } else {
+    echo "<script>window.location.replace('user/index.php?page=dashboard');</script>";
+    exit();
+  }
 }
 include("assets/shared/connect.php");
 include("assets/php/classes/classes.php");
@@ -162,6 +167,13 @@ include("assets/php/processes/login.php");
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
+
+  <script>
+    <?php if (!empty($_SESSION['userID'])): ?>
+      window.location.replace("<?php echo ($_SESSION['role'] === 'admin') ? '/admin/index.php' : '/user/index.php?page=dashboard'; ?>");
+    <?php endif; ?>
+  </script>
+
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("phpmailer.php");
 $email = $_SESSION['email'];
 if ($email == false) {
@@ -100,8 +101,8 @@ if ($email == false) {
                         SUBMIT
                     </button>
                  <!-- Go back to login -->
-                    <div class="forgot-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
-                        <a href="../../../../login.php" class="login-link">Go back to login</a>
+                    <div class="login-link p-1" style="max-width: 400px; width: 100%; text-align: left;">
+                        <a href="../../../../login.php" class="login-link" style="text-decoration: none; color: inherit">Go back to login</a>
                     </div>
                 </div>
             </div>

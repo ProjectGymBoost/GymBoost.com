@@ -12,7 +12,8 @@
                             DELETE USER ATTENDANCE
                         </h4>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                            style="position: absolute; top: 16px; right: 16px;"></button>
+                            style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                        </button>
                     </div>
                     <div class="modal-body text-center" style="padding: 1.5rem;">
                         <p style="margin: 0; font-size: 16px;">
@@ -81,7 +82,7 @@
                         <?= ($_GET['name'] ?? '') ?>'s
                     </span>
                 </strong>
-                Attendance record has been successfully deleted.
+                attendance record has been successfully deleted.
             </div>
             <div class="modal-footer d-flex justify-content-center pb-4 border-0">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>

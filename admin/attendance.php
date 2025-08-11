@@ -47,7 +47,8 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
-                        <option value="attendanceID" <?= ($_GET['sortBy'] ?? '') === 'attendanceID' ? 'selected' : '' ?>>Attendance ID
+                        <option value="attendanceID" <?= ($_GET['sortBy'] ?? '') === 'attendanceID' ? 'selected' : '' ?>>
+                            Attendance ID
                         </option>
                         <option value="firstName" <?= ($_GET['sortBy'] ?? '') === 'firstName' ? 'selected' : '' ?>>
                             First Name</option>
@@ -64,16 +65,17 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                         <option disabled>Order</option>
                         <option value="ASC" <?= strtoupper($_GET['orderBy'] ?? '') === 'ASC' ? 'selected' : '' ?>>
                             Ascending</option>
-                        <option value="DESC" <?= strtoupper($_GET['orderBy'] ?? '') === 'DESC' ? 'selected' : '' ?>>
+                        <option value="DESC" <?= strtoupper($_GET['orderBy'] ?? '') === 'DESC' || empty($_GET['orderBy']) ? 'selected' : '' ?>>
                             Descending</option>
                     </select>
                 </div>
+
 
                 <input type="hidden" name="entriesCount" value="<?php echo $entriesCount; ?>">
             </form>
             <!-- End Controls Form -->
 
-             <!-- Pagination and Add New Button -->
+            <!-- Pagination and Add New Button -->
             <form method="GET" action="" class="d-flex justify-content-between align-items-center mb-3">
                 <div class="small text-muted">
                     Show
@@ -104,7 +106,8 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                         <tbody>
                             <?php if (empty($userInfoArray)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center" style="color: #D2042D; font-weight: bold;">NO ATTENDANCE
+                                    <td colspan="5" class="text-center" style="color: #D2042D; font-weight: bold;">NO
+                                        ATTENDANCE
                                         DATA AVAILABLE</td>
                                 </tr>
                             <?php else: ?>
@@ -144,7 +147,7 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3">
                         <?php
-                        $range = 1; 
+                        $range = 1;
                         $start = max(1, $currentPage - $range);
                         $end = min($totalPages, $currentPage + $range);
                         if ($currentPage > 1): ?>

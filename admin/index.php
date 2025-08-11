@@ -1,9 +1,19 @@
 <?php
+session_start();
 include "../assets/shared/connect.php";
 include "../assets/php/classes/classes.php";
-
-session_start();
 include("../assets/shared/auth.php");
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+if ($_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
+    exit();
+}
+
+
 
 $chart = new ChartData();
 
@@ -198,10 +208,18 @@ $ageData = json_encode($chart->getAgeData());
                                 <th colspan="4" class="fw-bold text-center"><?= $monthName ?> TOP 10 ACTIVE MEMBERS</th>
                             </tr>
                             <tr>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">RANK</th>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">USER</th>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">TOTAL WORKOUTS</th>
-                                <th style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">TOTAL POINTS</th>
+                                <th
+                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
+                                    RANK</th>
+                                <th
+                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
+                                    USER</th>
+                                <th
+                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
+                                    TOTAL WORKOUTS</th>
+                                <th
+                                    style="background-color: var(--secondaryColor) !important; color: var(--text-color-dark) !important; ">
+                                    TOTAL POINTS</th>
                             </tr>
                         </thead>
                         <tbody id="top10Tbody">
@@ -335,6 +353,13 @@ $ageData = json_encode($chart->getAgeData());
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>
