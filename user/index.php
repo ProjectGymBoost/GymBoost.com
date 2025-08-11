@@ -1,5 +1,9 @@
 <?php
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 require_once("../assets/shared/connect.php");
 include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
 include(__DIR__ . '/../assets/php/processes/user/profile.php');
@@ -9,7 +13,7 @@ $userID = $_SESSION['userID'];
 $email = $_SESSION['email'] ?? "";
 
 // Redirects
-if (empty($_SESSION['userID'])) {
+if (empty($_SESSION['userID']) || $_SESSION['role'] !== 'user') {
     header("Location: ../login.php");
     exit();
 }
@@ -273,8 +277,6 @@ $eventsJSON = $calendar->getEvents();
         window.modalToShow = "<?php echo isset($modalToShow) ? $modalToShow : ''; ?>";
     </script>
     <script src="../assets/js/badges.js"></script>
-
-
 </body>
 
 </html>

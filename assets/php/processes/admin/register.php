@@ -16,8 +16,8 @@ $lastNameError = "";
 $firstNameError = "";
 
 if (isset($_POST['btnRegister'])) {
-    $firstName = sanitize($_POST['firstName']);
-    $lastName = sanitize($_POST['lastName']);
+    $firstName = ucwords(strtolower(sanitize($_POST['firstName'])));
+    $lastName = ucwords(strtolower(sanitize($_POST['lastName'])));
     $email = sanitize($_POST['email']);
     $password = sanitize($_POST['password']);
     $confirmPassword = sanitize($_POST['confirmPassword']);
@@ -44,17 +44,10 @@ if (isset($_POST['btnRegister'])) {
     $checkRfidQuery = "SELECT * FROM users WHERE rfidNumber = '$rfid'";
     $checkRfidResult = executeQuery($checkRfidQuery);
 
-    // Check if user with the same first name and last name already exists.
-    $checkNameQuery = "SELECT * FROM users WHERE firstName = '$firstName' AND lastName = '$lastName'";
-    $checkNameResult = executeQuery($checkNameQuery);
-
     if (mysqli_num_rows($checkEmailResult) > 0) {
         $emailExistsError = "emailExists";
     } elseif (mysqli_num_rows($checkRfidResult) > 0) {
         $rfidExistsError = "rfidExists";
-    } elseif (mysqli_num_rows($checkNameResult) > 0) {
-        $firstNameError = "duplicateName";
-        $lastNameError = "duplicateName";
     } else {
         $user = new User(null, $firstName, $lastName, $email, $password, $rfid, $birthday);
 

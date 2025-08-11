@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!pattern.test(email)) {
-            showError(field, "Invalid email format. Please include a valid domain.");
+            showError(field, "Invalid email format.");
             return false;
         }
         showValid(field);
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const field = "password";
         const password = document.getElementById(field)?.value || "";
         if (password.length < 8) {
-            showError(field, "Password must be at least 8 characters long.");
+            showError(field, "Password must be at least 8 characters.");
             return false;
         }
         showValid(field);

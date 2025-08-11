@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-     if (window.location.search.includes('added=1')) {
+    if (window.location.search.includes('added=1')) {
         const addModal = bootstrap.Modal.getInstance(addModalEl);
         if (addModal) {
             addModalEl.addEventListener('hidden.bs.modal', function () {
                 const confirmModal = new bootstrap.Modal(confirmModalEl);
                 confirmModal.show();
             });
-            addModal.hide(); 
+            addModal.hide();
         } else {
             const confirmModal = new bootstrap.Modal(confirmModalEl);
             confirmModal.show();
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const word = match[2].toLowerCase();
 
         if ((number === 1 && word !== 'day') || (number !== 1 && word !== 'days')) {
-            showError(fieldId, errorId, "Use 'day' for 1 and 'days' for numbers greater than 1.");
+            showError(fieldId, errorId, "Use 'day' for 1, 'days' for greater than 1.");
             return false;
         }
         if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
@@ -125,13 +125,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function validatePrice(fieldId, errorId) {
         const value = document.getElementById(fieldId)?.value.trim();
-        if (!/^\d+\.00$/.test(value)) {
-            showError(fieldId, errorId, "Price must end with .00 (e.g., 100.00).");
-            return false;
-        }
 
-        if (/[^0-9.]/.test(value)) {
-            showError(fieldId, errorId, "Price must not contain special characters.");
+        // Regular expression that accepts:
+        // - Integer or decimal with exactly 2 decimal places
+        // - Thousands separator with commas
+        if (!/^\d{1,3}(?:,\d{3})*(\.\d{2})?$/.test(value)) {
+            showError(fieldId, errorId, "Price must be in a valid format (e.g., 600.00 or 1,200.50).");
             return false;
         }
 

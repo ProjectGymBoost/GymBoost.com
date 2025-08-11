@@ -1,13 +1,20 @@
 <?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 date_default_timezone_set('Asia/Manila');
+
 if (!empty($_SESSION['userID'])) {
-        if ($_SESSION['role'] === 'admin') {
-            header("Location: /admin/index.php");
-        } else {
-            header("Location: /user/index.php?page=dashboard");
-        }
+    if ($_SESSION['role'] === 'admin') {
+        echo "<script>window.location.replace('admin/index.php');</script>";
+        exit();
+
+    } else {
+        echo "<script>window.location.replace('user/index.php?page=dashboard');</script>";
         exit();
     }
+}
 
 function sanitize($data)
 {
@@ -32,8 +39,8 @@ if (isset($_POST['btnLogin'])) {
 
                 // If the user is inactive, show error message
                 if ($user['state'] === 'Inactive') {
-                    $_SESSION['loginError'] = 'accountInactive'; 
-                    header("Location: login.php"); 
+                    $_SESSION['loginError'] = 'accountInactive';
+                    header("Location: login.php");
                     exit();
                 }
 
@@ -48,12 +55,13 @@ if (isset($_POST['btnLogin'])) {
 
                 // Redirect based on user role
                 if ($user['role'] === 'admin') {
-                    header("Location: admin/index.php");
-                      exit();
+                    echo "<script>window.location.replace('admin/index.php');</script>";
+                    exit();
                 } else {
-                    header("Location: user/index.php?page=dashboard");
-                      exit();
-                    }
+                    echo "<script>window.location.replace('user/index.php?page=dashboard');</script>";
+                    exit();
+
+                }
 
             } else {
                 // Incorrect password

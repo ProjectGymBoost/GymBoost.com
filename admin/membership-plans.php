@@ -129,7 +129,7 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                                         <td><?= htmlspecialchars($info['membershipID']) ?></td>
                                         <td><?= htmlspecialchars($info['planType']) ?></td>
                                         <td><?= htmlspecialchars($info['requirement']) ?></td>
-                                        <td><?= htmlspecialchars($info['price']) ?></td>
+                                        <td>₱<?= htmlspecialchars(number_format($info['price'], 2)) ?></td>
                                         <td style="display: flex; justify-content: center;">
                                             <li>
                                                 <a data-bs-toggle="modal"

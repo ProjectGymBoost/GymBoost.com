@@ -2,6 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+require_once(__DIR__ . '/../../../shared/connect.php');
 include(__DIR__ . '/../../../shared/phpmailer/src/Exception.php');
 include(__DIR__ . '/../../../shared/phpmailer/src/PHPMailer.php');
 include(__DIR__ . '/../../../shared/phpmailer/src/SMTP.php');
@@ -123,14 +124,8 @@ if (isset($_POST['btnChange'])) {
             } else {
                 $errors['db-error'] = "Something went wrong with the statement.";
             }
-        } else {
-            echo "Error: Email session variable is missing.";
-            exit();
         }
-    } else {
-        echo "Error: Passwords do not match.";
-        exit();
-    }
+    } 
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
         header("Location: " . $_SERVER['PHP_SELF']);

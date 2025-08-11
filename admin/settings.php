@@ -48,16 +48,17 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
                     <?php endif; ?>
 
                     <div class="card-body p-4">
-                        <h5 class="mb-4">Personal Information</h5>
+                        <h5 class="subheading">ACCOUNT INFORMATION</h5>
                         <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 1rem 0;">
 
+                        <!-- Name -->
                         <div class="row mb-3">
-                            <label class="col-4 col-md-2 col-form-label"><b>Name</b></label>
-                            <div class="col-8 col-md-10">
+                            <label class="col-12 col-md-2 col-form-label"><b>Name</b></label>
+                            <div class="col-12 col-md-10">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="editFullName" name="fullName"
                                         value="<?= htmlspecialchars($userInfoArray['firstName'] . ' ' . $userInfoArray['lastName']) ?? ''; ?>"
-                                        disabled>
+                                        disabled style="font-size: clamp(0.8rem, 2vw, 1.1rem)">
                                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#editNameModal">
                                         <i class="bi bi-pencil-square"></i>
@@ -67,18 +68,18 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
                             </div>
                         </div>
 
-
                         <!-- Email -->
                         <div class="row mb-3">
-                            <label class="col-4 col-md-2 col-form-label"><b>Email</b></label>
-                            <div class="col-8 col-md-10">
+                            <label class="col-12 col-md-2 col-form-label"><b>Email</b></label>
+                            <div class="col-12 col-md-10">
                                 <div class="input-group">
                                     <input type="email" class="form-control" name="email" placeholder="Enter email"
-                                        value="<?php echo $userInfoArray['email'] ?? 'N/A'; ?>" disabled>
+                                        value="<?php echo $userInfoArray['email'] ?? 'N/A'; ?>" disabled
+                                        style="font-size: clamp(0.8rem, 2vw, 1.1rem)">
                                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#editAccountEmailModal">
                                         <i class="bi bi-pencil-square"></i>
-                                         <span class="d-none d-sm-inline">CHANGE</span>
+                                        <span class="d-none d-sm-inline">CHANGE</span>
                                     </button>
                                 </div>
                             </div>
@@ -86,11 +87,11 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
 
                         <!-- Password -->
                         <div class="row mb-3">
-                            <label class="col-4 col-md-2 col-form-label"><b>Password</b></label>
-                            <div class="col-8 col-md-10">
+                            <label class="col-12 col-md-2 col-form-label"><b>Password</b></label>
+                            <div class="col-12 col-md-10">
                                 <div class="input-group">
                                     <input type="password" class="form-control" placeholder="********" name="password"
-                                        disabled>
+                                        disabled style="font-size: clamp(0.8rem, 2vw, 1.1rem)">
                                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#editAccountPassModal">
                                         <i class="bi bi-pencil-square"></i>
@@ -99,13 +100,12 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <!-- Account Deletion Section -->
-                    <div class="card-body p-4">
+                    <div class="card-body pt-2 p-4">
+                        <h5 class="subheading">ACCOUNT DELETION</h5>
                         <hr style="border-top: 3px solid #000; opacity: 1; margin: 0 0 1rem 0;">
-                        <h5 class="mb-2">Account Deletion</h5>
                         <div class="d-flex justify-content-between align-items-center gap-3">
                             <p class="mb-0">Once deleted, your account can no longer be retrieved.</p>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -118,6 +118,7 @@ include("../assets/php/processes/forgotpassword/phpmailer.php");
             </div>
         </div>
     </div>
+
 
     <script src="../assets/js/settings.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"

@@ -3,12 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const emailExistsError = document.getElementById("emailExistsError")?.value;
     const rfidExistsError = document.getElementById("rfidExistsError")?.value;
-    const duplicateFullNameError = document.getElementById("duplicateFullNameError")?.value;
-
-    if (duplicateFullNameError === "true") {
-        showError("firstName", "A user with this full name already exists.");
-        showError("lastName", "A user with this full name already exists.");
-    }
 
     if (emailExistsError === "emailExists") {
         showError("email", "Email already exists.");
@@ -81,14 +75,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const field = "email";
         const value = document.getElementById(field).value.trim();
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return validatePattern(field, pattern, "Invalid email format. Please include a valid domain.");
+        return validatePattern(field, pattern, "Invalid email format.");
     }
 
     function validateRFID() {
         const field = "rfid";
         const value = document.getElementById(field).value.trim();
-        const pattern = /^\d{10}$/;
-        return validatePattern(field, pattern, "RFID must be 10 digits.");
+        const pattern = /^[a-zA-Z0-9]*$/;
+
+        if (!pattern.test(value)) {
+            return validatePattern(field, pattern, "No special characters allowed.");
+        }
+        return true;
     }
 
     function validateBirthday() {
@@ -133,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const field = "password";
         const value = document.getElementById(field).value;
         if (value.length < 8) {
-            showError(field, "Password must be at least 8 characters long.");
+            showError(field, "Password must be at least 8 characters.");
             return false;
         }
         showValid(field);

@@ -40,7 +40,8 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         EDIT MEMBERSHIP PLAN
                     </h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                        style="position: absolute; top: 16px; right: 16px;"></button>
+                        style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                    </button>
                 </div>
 
                 <!-- Body -->
@@ -63,8 +64,8 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
 
                         <!-- Requirement -->
                         <div class="mb-4 text-start">
-                            <label for="editRequirement<?= $info['membershipID'] ?>"
-                                class="form-label fw-bold">Requirement</label>
+                            <label for="editRequirement<?= $info['membershipID'] ?>" class="form-label fw-bold">Requirement
+                                (in days)</label>
                             <input type="text" id="editRequirement<?= $info['membershipID'] ?>" name="requirement"
                                 data-original-value="<?= htmlspecialchars($info['requirement']) ?>"
                                 class="form-control <?= isset($editPlanErrors[$info['membershipID']]['requirement']) ? 'is-invalid' : '' ?>"
@@ -80,17 +81,16 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                             <input type="text" id="editPrice<?= $info['membershipID'] ?>" name="price"
                                 data-original-value="<?= htmlspecialchars($info['price']) ?>"
                                 class="form-control <?= isset($editPlanErrors[$info['membershipID']]['price']) ? 'is-invalid' : '' ?>"
-                                value="<?= htmlspecialchars($editPlanData[$info['membershipID']]['price'] ?? $info['price']) ?>">
+                                value="<?= htmlspecialchars(number_format($editPlanData[$info['membershipID']]['price'] ?? $info['price'], 2)) ?>">
                             <div id="editPriceError<?= $info['membershipID'] ?>" class="invalid-feedback small">
                                 <?= $editPlanErrors[$info['membershipID']]['price'] ?? '' ?>
                             </div>
                         </div>
 
                         <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                        <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0" style="border: none; padding: 1rem;">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                            <button type="submit" name="btnEditMembershipPlan" class="btn btn-primary"
-                                style="margin-left: 0.5rem;">
+                            <button type="submit" name="btnEditMembershipPlan" class="btn btn-primary m-0">
                                 SAVE CHANGES
                             </button>
                         </div>
@@ -166,7 +166,8 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         DELETE MEMBERSHIP PLAN
                     </h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                        style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;"></button>
+                        style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                    </button>
                 </div>
 
                 <!-- Body -->
@@ -259,7 +260,8 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                     ADD NEW MEMBERSHIP PLAN
                 </h4>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                    style="position: absolute; top: 16px; right: 16px;"></button>
+                    style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
+                </button>
             </div>
 
             <form id="addMembershipForm" method="POST" novalidate>
@@ -276,10 +278,11 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                     </div>
 
                     <div class="mb-4 text-start">
-                        <label for="requirement" class="form-label fw-bold">Requirement</label>
+                        <label for="requirement" class="form-label fw-bold">Requirement (in days)</label>
                         <input type="text" name="requirement" id="requirement"
                             class="form-control <?= isset($_SESSION['addPlanErrors']['requirement']) ? 'is-invalid' : (isset($_SESSION['requirement']) ? 'is-valid' : '') ?>"
-                            placeholder="e.g., 30 days" value="<?= htmlspecialchars($_SESSION['requirement'] ?? '') ?>">
+                            placeholder="e.g., 1 day or 30 days"
+                            value="<?= htmlspecialchars($_SESSION['requirement'] ?? '') ?>">
                         <div id="requirementError" class="invalid-feedback">
                             <?= $_SESSION['addPlanErrors']['requirement'] ?? '' ?>
                         </div>
@@ -289,16 +292,16 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         <label for="price" class="form-label fw-bold">Price (₱)</label>
                         <input type="text" name="price" id="price"
                             class="form-control <?= isset($_SESSION['addPlanErrors']['price']) ? 'is-invalid' : (isset($_SESSION['price']) ? 'is-valid' : '') ?>"
-                            placeholder="e.g., 100.00" value="<?= htmlspecialchars($_SESSION['price'] ?? '') ?>">
+                            placeholder="e.g., 1,100.00 or 100.00"
+                            value="<?= htmlspecialchars($_SESSION['price'] ?? '') ?>">
                         <div id="priceError" class="invalid-feedback">
                             <?= $_SESSION['addPlanErrors']['price'] ?? '' ?>
                         </div>
                     </div>
 
-                    <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                    <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0" style="border: none; padding: 1rem;">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="submit" name="btnAddMembershipPlan" class="btn btn-primary"
-                            style="margin-left: 0.5rem;">ADD</button>
+                        <button type="submit" name="btnAddMembershipPlan" class="btn btn-primary m-0">ADD</button>
                     </div>
                 </div>
             </form>
@@ -310,7 +313,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const existingBackdrop = document.querySelector('.modal-backdrop');
-            if (existingBackdrop) existingBackdrop.remove(); 
+            if (existingBackdrop) existingBackdrop.remove();
 
             const addModalEl = document.getElementById('addMembershipModal');
             if (addModalEl) {
@@ -333,7 +336,6 @@ unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['requirement'
         function removeBackdrops() {
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
         }
-
         <?php if (!empty($_SESSION['addPlanErrors'])): ?>
             removeBackdrops();
             const addModal = new bootstrap.Modal(document.getElementById('addMembershipModal'));
@@ -345,15 +347,16 @@ unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['requirement'
                 removeBackdrops();
                 const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddMembershipModal'));
                 confirmModal.show();
+
+                const url = new URL(window.location);
+                url.searchParams.delete('added');
+                window.history.replaceState({}, document.title, url);
             }, 300);
         <?php endif; ?>
     });
 </script>
 
-
-
 <?php
-// Clear errors after displaying once
 unset($_SESSION['addPlanErrors']);
 unset($_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price']);
 ?>
