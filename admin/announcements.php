@@ -41,6 +41,39 @@ include("../assets/php/processes/admin/announcement.php");
                 <div class="heading text-center text-sm-start">ANNOUNCEMENT</div>
             </div>
 
+            <!-- Controls Form -->
+            <form method="GET" action="" class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                <!-- Search -->
+                <div class="flex-grow-1 input-group" style="max-width: 400px;">
+                    <input type="search" name="search" id="searchInput" class="form-control" placeholder="Search announcements..." value="<?= htmlspecialchars($search) ?>">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                </div>
+
+                <!-- Sort By -->
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 210px;">
+                    <select name="sortBy" class="form-select" onchange="this.form.submit()">
+                        <option disabled>Sort By</option>
+                        <option value="announcementID" <?= ($sortBy === 'announcementID') ? 'selected' : '' ?>>Announcement ID</option>
+                        <option value="title" <?= ($sortBy === 'title') ? 'selected' : '' ?>>Title</option>
+                        <option value="message" <?= ($sortBy === 'message') ? 'selected' : '' ?>>Message</option>
+                        <option value="dateCreated" <?= ($sortBy === 'dateCreated') ? 'selected' : '' ?>>Date Created</option>
+                    </select>
+                </div>
+
+                <!-- Order By -->
+                <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
+                    <select name="orderBy" class="form-select" onchange="this.form.submit()">
+                        <option disabled>Order</option>
+                        <option value="ASC" <?= strtoupper($_GET['orderBy'] ?? '') === 'ASC' ? 'selected' : '' ?>>
+                            Ascending</option>
+                        <option value="DESC" <?= strtoupper($_GET['orderBy'] ?? '') === 'DESC' ? 'selected' : '' ?>>
+                            Descending</option>
+                    </select>
+                </div>
+
+                <input type="hidden" name="entriesCount" value="<?= htmlspecialchars($_GET['entriesCount'] ?? 5) ?>">
+            </form>
+
             <!-- Pagination and Add New Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <form method="GET" action="">
@@ -158,21 +191,29 @@ include("../assets/php/processes/admin/announcement.php");
 
     <!-- JavaScript for Modal Actions -->
     <script>
-        // ADD Announcement
-        document.getElementById('openConfirmAdd').addEventListener('click', function () {
-            const title = document.getElementById('newAnnouncementTitle').value.trim();
-            const message = document.getElementById('newAnnouncementDescription').value.trim();
+        // ADD Announcement — guarded so it won't throw when elements are missing
+        const openConfirmAdd = document.getElementById('openConfirmAdd');
+        if (openConfirmAdd) {
+            openConfirmAdd.addEventListener('click', function () {
+            const title = document.getElementById('newAnnouncementTitle')?.value.trim() || '';
+            const message = document.getElementById('newAnnouncementDescription')?.value.trim() || '';
 
             if (title && message) {
-                document.getElementById('confirmAddAnnouncementTitle').innerText = title;
-                const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddAnnouncementModal'));
-                confirmModal.show();
-            }
-        });
+                const confirmTitleEl = document.getElementById('confirmAddAnnouncementTitle');
+                if (confirmTitleEl) confirmTitleEl.innerText = title;
 
-        document.getElementById('confirmAddBtn').addEventListener('click', function () {
-            document.getElementById('addAnnouncementForm').submit();
-        });
+                const modalEl = document.getElementById('confirmAddAnnouncementModal');
+                if (modalEl) new bootstrap.Modal(modalEl).show();
+            }
+            });
+        }
+
+        const confirmAddBtn = document.getElementById('confirmAddBtn');
+        if (confirmAddBtn) {
+            confirmAddBtn.addEventListener('click', function () {
+            document.getElementById('addAnnouncementForm')?.submit();
+            });
+        }
 
         // EDIT Announcement
         document.querySelectorAll('[data-confirm-edit-btn]').forEach(button => {
@@ -192,24 +233,118 @@ include("../assets/php/processes/admin/announcement.php");
     </script>
 
     <script>
-        window.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             const url = new URL(window.location);
-            const paramsToRemove = ['added', 'updated', 'deleted', 'highlight'];
 
-            let shouldUpdate = false;
-
-            paramsToRemove.forEach(param => {
-            if (url.searchParams.has(param)) {
-                url.searchParams.delete(param);
-                shouldUpdate = true;
+            // Show Confirm Add modal if needed
+            if (url.searchParams.get('added') === '1') {
+                new bootstrap.Modal(document.getElementById('confirmAddAnnouncementModal')).show();
             }
+
+            // Remove unwanted params
+            const paramsToRemove = ['added', 'updated', 'deleted', 'highlight'];
+            let shouldUpdate = false;
+            paramsToRemove.forEach(param => {
+                if (url.searchParams.has(param)) {
+                    url.searchParams.delete(param);
+                    shouldUpdate = true;
+                }
             });
 
             if (shouldUpdate) {
-            window.history.replaceState({}, document.title, url.pathname + '?' + url.searchParams.toString());
+                const newUrl = url.pathname + (url.searchParams.toString() ? '?' + url.searchParams.toString() : '');
+                window.history.replaceState({}, document.title, newUrl);
             }
         });
     </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form[method="get"]');
+
+            let debounceTimer;
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function () {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    form.submit();
+                }, 500);
+            });
+        });
+
+        // FOCUS BACK TO SEARCH INPUT AFTER RELOAD
+        if (searchInput && searchInput.value) {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+            }, 100);
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sortOrderForm = document.querySelector("form[method='get']");
+            
+            if (sortOrderForm) {
+                sortOrderForm.querySelectorAll("select[name='sortBy'], select[name='orderBy']").forEach(select => {
+                    select.addEventListener('change', () => {
+                        sortOrderForm.submit();
+                    });
+                });
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Loop through all edit announcement modals
+            document.querySelectorAll('[id^="editAnnouncement"]').forEach(modalEl => {
+                modalEl.addEventListener('hidden.bs.modal', function () {
+                    const form = modalEl.querySelector('form');
+                    if (form) {
+                        // Reset form fields to their original default values
+                        form.reset();
+
+                        // Restore original textareas (optional but safer for announcements)
+                        form.querySelectorAll('textarea').forEach(textarea => {
+                            textarea.value = textarea.defaultValue;
+                        });
+                        
+                        // Restore original text inputs
+                        form.querySelectorAll('input[type="text"]').forEach(input => {
+                            input.value = input.defaultValue;
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Reset and refresh on Add Announcement modal close
+            const addModal = document.getElementById('addAnnouncementModal');
+            if (addModal) {
+                addModal.addEventListener('hidden.bs.modal', function () {
+                    const form = addModal.querySelector('form');
+                    if (form) {
+                        form.reset();
+                        // Reset inputs and textareas to their default values, just like edit modals
+                        form.querySelectorAll('textarea').forEach(textarea => {
+                            textarea.value = textarea.defaultValue;
+                        });
+                        form.querySelectorAll('input[type="text"]').forEach(input => {
+                            input.value = input.defaultValue;
+                        });
+                    }
+                    // Reload the page to discard any partial input or URL params if you want
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+
 </body>
 
 </html>

@@ -1,4 +1,37 @@
 <?php
+// SEARCH
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$searchSafe = mysqli_real_escape_string($conn, $search);
+
+$searchCondition = '';
+if (!empty($searchSafe)) {
+    $searchCondition = "WHERE (
+        title LIKE '%$searchSafe%' 
+        OR message LIKE '%$searchSafe%' 
+        OR dateCreated LIKE '%$searchSafe%'
+    )";
+}
+
+// SORT AND ORDER
+$sortBy = $_GET['sortBy'] ?? 'announcementID';
+$orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
+
+$allowedSortColumns = [
+    'announcementID' => 'announcementID',
+    'title'          => 'title',
+    'message'        => 'message',
+    'dateCreated'    => 'dateCreated'
+];
+
+$allowedOrder = ['ASC', 'DESC'];
+
+// Validate and build ORDER BY clause
+if (array_key_exists($sortBy, $allowedSortColumns) && in_array($orderBy, $allowedOrder)) {
+    $orderCondition = "ORDER BY {$allowedSortColumns[$sortBy]} $orderBy";
+} else {
+    $orderCondition = "ORDER BY announcementID ASC";
+}
+
 // PAGINATION CONFIG
 $entriesCount = isset($_GET['entriesCount']) ? (int) $_GET['entriesCount'] : 5;
 if (!in_array($entriesCount, [5, 10, 25, 50])) {
@@ -25,7 +58,8 @@ $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 
 $announcementInfoArray = [];
 $announcementQuery = "
     SELECT * FROM announcements
-    ORDER BY announcementID ASC
+    $searchCondition
+    $orderCondition
     LIMIT $entriesCount OFFSET $offset
 ";
 $result = executeQuery($announcementQuery);
