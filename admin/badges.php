@@ -31,7 +31,7 @@ include("../assets/php/processes/admin/badges.php");
         <div class="container-fluid py-4 px-4">
 
             <!-- Heading -->
-            <div class="col-12 mb-4 d-flex align-items-center justify-content-between">
+            <div class="col-12 mb-4">
                 <div class="heading text-center text-sm-start">BADGES</div>
             </div>
 
@@ -99,7 +99,7 @@ include("../assets/php/processes/admin/badges.php");
         <!-- (USER-BADGES) -->
         <div class="container-fluid py-4 px-4">
             <!-- Heading -->
-            <div id="userBadgeSection" class="col-12 mb-4 d-flex align-items-center justify-content-between">
+            <div id="userBadgeSection" class="col-12 mb-4">
                 <div class="heading text-center text-sm-start">USER BADGES</div>
             </div>
 
@@ -115,11 +115,11 @@ include("../assets/php/processes/admin/badges.php");
                 <div class="flex-grow-1 flex-sm-grow-0" style="max-width: 160px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
-                        <option value="none" <?= ($_GET['sortBy'] ?? '') === 'none' ? 'selected' : '' ?>>ID
+                        <option value="none" <?= ($_GET['sortBy'] ?? '') === 'none' ? 'selected' : '' ?>>User Badge ID
                         </option>
                         <option value="badgeID" <?= ($_GET['sortBy'] ?? '') === 'badgeID' ? 'selected' : '' ?>>Badge ID
                         </option>
-                        <option value="username" <?= ($_GET['sortBy'] ?? '') === 'username' ? 'selected' : '' ?>>Username
+                        <option value="username" <?= ($_GET['sortBy'] ?? '') === 'username' ? 'selected' : '' ?>>Name
                         </option>
                         <option value="dateEarned" <?= ($_GET['sortBy'] ?? '') === 'dateEarned' ? 'selected' : '' ?>>Date
                             Earned
@@ -172,7 +172,7 @@ include("../assets/php/processes/admin/badges.php");
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">BADGE ID</th>
-                                <th scope="col">USERNAME</th>
+                                <th scope="col">NAME</th>
                                 <th scope="col">DATE EARNED</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>

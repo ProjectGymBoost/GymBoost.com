@@ -165,117 +165,142 @@ function fetchBadgesAndEarned($conn, $userID)
 // FETCH LEADERBOARD DATA
 $filter = $_GET['filter'] ?? 'all';
 
-$leaderboardQuery = "";
+$leaderboardQuery = '';
+
 if ($filter === 'weekly') {
     $leaderboardQuery = "
-        SELECT attendances.userID, CONCAT(users.firstName, ' ', users.lastName) AS username, COUNT(*) * 5 AS points
-        FROM attendances
-        JOIN users ON users.userID = attendances.userID
-        WHERE YEARWEEK(attendances.checkinDate, 0) = YEARWEEK(CURDATE(), 0)
-        AND users.role = 'user'
-        AND users.state = 'active'
-        GROUP BY attendances.userID
-        HAVING points > 0
-        ORDER BY points DESC
-        LIMIT 5
+        WITH pointsPerUser AS (
+            SELECT attendances.userID, COUNT(*) * 5 AS points
+            FROM attendances
+            JOIN users ON users.userID = attendances.userID
+            WHERE YEARWEEK(attendances.checkinDate, 0) = YEARWEEK(CURDATE(), 0)
+              AND users.role = 'user'
+              AND users.state = 'active'
+            GROUP BY attendances.userID
+        ),
+        rankedUsers AS (
+            SELECT pointsPerUser.userID,
+                   CONCAT(users.firstName, ' ', users.lastName) AS username,
+                   pointsPerUser.points,
+                   RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
+            FROM pointsPerUser
+            JOIN users ON users.userID = pointsPerUser.userID
+        )
+        SELECT *
+        FROM rankedUsers
+        WHERE rank <= 5
+        ORDER BY points DESC, username ASC
     ";
 } elseif ($filter === 'monthly') {
     $leaderboardQuery = "
-        SELECT attendances.userID, CONCAT(users.firstName, ' ', users.lastName) AS username, COUNT(*) * 5 AS points
-        FROM attendances
-        JOIN users ON users.userID = attendances.userID
-        WHERE DATE_FORMAT(attendances.checkinDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
-        AND users.role = 'user'
-        AND users.state = 'active'
-        GROUP BY attendances.userID
-        HAVING points > 0
-        ORDER BY points DESC
-        LIMIT 5
+        WITH pointsPerUser AS (
+            SELECT attendances.userID, COUNT(*) * 5 AS points
+            FROM attendances
+            JOIN users ON users.userID = attendances.userID
+            WHERE DATE_FORMAT(attendances.checkinDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+              AND users.role = 'user'
+              AND users.state = 'active'
+            GROUP BY attendances.userID
+        ),
+        rankedUsers AS (
+            SELECT pointsPerUser.userID,
+                   CONCAT(users.firstName, ' ', users.lastName) AS username,
+                   pointsPerUser.points,
+                   RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
+            FROM pointsPerUser
+            JOIN users ON users.userID = pointsPerUser.userID
+        )
+        SELECT *
+        FROM rankedUsers
+        WHERE rank <= 5
+        ORDER BY points DESC, username ASC
     ";
 } else {
     $leaderboardQuery = "
-        SELECT users.userID, CONCAT(users.firstName, ' ', users.lastName) AS username, users.points AS points
-        FROM users
-        WHERE users.role = 'user'
-        AND users.state = 'active'
-        AND users.points > 0
-        ORDER BY users.points DESC
-        LIMIT 5
+        WITH pointsPerUser AS (
+            SELECT users.userID, users.points
+            FROM users
+            WHERE users.role = 'user'
+              AND users.state = 'active'
+              AND users.points > 0
+        ),
+        rankedUsers AS (
+            SELECT pointsPerUser.userID,
+                   CONCAT(users.firstName, ' ', users.lastName) AS username,
+                   pointsPerUser.points,
+                   RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
+            FROM pointsPerUser
+            JOIN users ON users.userID = pointsPerUser.userID
+        )
+        SELECT *
+        FROM rankedUsers
+        WHERE rank <= 5
+        ORDER BY points DESC, username ASC
     ";
 }
 
-// CALCULATE USER RANKS
+// EXECUTE LEADERBOARD QUERY
 $leaderboard = [];
 $yourRank = null;
 $yourPoints = 0;
 
 $result = executeQuery($leaderboardQuery);
-
-$rank = 1;
-$lastRecordedPoints = null;
 $hasLeaderboardData = (mysqli_num_rows($result) > 0);
 
 if ($hasLeaderboardData) {
-    while ($user = mysqli_fetch_assoc($result)) {
-        if ($lastRecordedPoints !== null && $user['points'] < $lastRecordedPoints) {
-            $rank++;
+    while ($userRow = mysqli_fetch_assoc($result)) {
+        if ((int) $userRow['userID'] === (int) $userID) {
+            $yourRank = $userRow['rank'];
+            $yourPoints = $userRow['points'];
         }
-
-        $user['rank'] = $rank;
-
-        if ((int) $user['userID'] === (int) $userID) {
-            $yourRank = $rank;
-            $yourPoints = $user['points'];
-        }
-
-        $leaderboard[] = $user;
-        $lastRecordedPoints = $user['points'];
+        $leaderboard[] = $userRow;
     }
 }
 
 // DISPLAY THE CURRENT RANK OF THE LOGGED-IN USER
-$userRankQuery = "";
+$userRankQuery = '';
 
 if ($filter === 'weekly') {
     $userRankQuery = "
         SELECT rank, points FROM (
-            SELECT attendances.userID,
-                   COUNT(*) * 5 AS points,
-                   RANK() OVER (ORDER BY COUNT(*) * 5 DESC) AS rank
-            FROM attendances
-            JOIN users ON users.userID = attendances.userID
-            WHERE YEARWEEK(attendances.checkinDate, 0) = YEARWEEK(CURDATE(), 0)
-            AND users.role = 'user'
-            AND users.state = 'active'
-            GROUP BY attendances.userID
-        ) AS ranked
+            SELECT userID, points, RANK() OVER (ORDER BY points DESC) AS rank
+            FROM (
+                SELECT attendances.userID, COUNT(*) * 5 AS points
+                FROM attendances
+                JOIN users ON users.userID = attendances.userID
+                WHERE YEARWEEK(attendances.checkinDate, 0) = YEARWEEK(CURDATE(), 0)
+                  AND users.role = 'user'
+                  AND users.state = 'active'
+                GROUP BY attendances.userID
+            ) AS rankedPoints
+        ) AS rankedUsers
         WHERE userID = $userID
     ";
 } elseif ($filter === 'monthly') {
     $userRankQuery = "
         SELECT rank, points FROM (
-            SELECT attendances.userID,
-                   COUNT(*) * 5 AS points,
-                   RANK() OVER (ORDER BY COUNT(*) * 5 DESC) AS rank
-            FROM attendances
-            JOIN users ON users.userID = attendances.userID
-            WHERE DATE_FORMAT(attendances.checkinDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
-            AND users.role = 'user'
-            AND users.state = 'active'
-            GROUP BY attendances.userID
-        ) AS ranked
+            SELECT userID, points, RANK() OVER (ORDER BY points DESC) AS rank
+            FROM (
+                SELECT attendances.userID, COUNT(*) * 5 AS points
+                FROM attendances
+                JOIN users ON users.userID = attendances.userID
+                WHERE DATE_FORMAT(attendances.checkinDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+                  AND users.role = 'user'
+                  AND users.state = 'active'
+                GROUP BY attendances.userID
+            ) AS rankedPoints
+        ) AS rankedUsers
         WHERE userID = $userID
     ";
 } else {
     $userRankQuery = "
         SELECT rank, points FROM (
-            SELECT userID,
-                   points,
-                   RANK() OVER (ORDER BY points DESC) AS rank
+            SELECT userID, points, RANK() OVER (ORDER BY points DESC) AS rank
             FROM users
             WHERE role = 'user'
-            AND state = 'active'
-        ) AS ranked
+              AND state = 'active'
+              AND points > 0
+        ) AS rankedUsers
         WHERE userID = $userID
     ";
 }
@@ -286,7 +311,7 @@ if ($hasLeaderboardData && mysqli_num_rows($userRankResult) > 0) {
     $userRankData = mysqli_fetch_assoc($userRankResult);
     $yourPoints = $userRankData['points'];
 
-    if ((int) $yourPoints > 0) {
+    if ((int) $yourPoints > 0 && (int) $userRankData['rank'] <= 50) {
         $yourRank = $userRankData['rank'];
     } else {
         $yourRank = 'N/A';
@@ -295,3 +320,4 @@ if ($hasLeaderboardData && mysqli_num_rows($userRankResult) > 0) {
     $yourRank = null;
     $yourPoints = 0;
 }
+

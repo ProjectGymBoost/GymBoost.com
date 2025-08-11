@@ -89,6 +89,24 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
             </div>
 
             <!-- Leaderboard Entries -->
+            <?php
+            // Function to determine badge class based on rank
+            function getBadgeClassFromRank($rankPosition)
+            {
+                $rankPosition = (int) $rankPosition;
+                $defaultClass = 'border border-dark text-dark';
+
+                if ($rankPosition === 1) {
+                    return 'bg-warning text-dark';
+                } elseif ($rankPosition === 2) {
+                    return 'bg-secondary text-white';
+                } elseif ($rankPosition === 3) {
+                    return 'bg-orange text-white';
+                }
+                return $defaultClass;
+            }
+            ?>
+
             <?php if (empty($leaderboard)): ?>
                 <div class="bg-light text-dark text-center px-3 py-4 rounded-3 mb-3">
                     <strong>
@@ -107,27 +125,21 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
                     </span>
                 </div>
             <?php else: ?>
-                <?php foreach ($leaderboard as $entry): ?>
+                <?php foreach ($leaderboard as $leaderboardEntry): ?>
                     <?php
-                    $badgeClass = 'border border-dark text-dark';
-                    if ($entry['rank'] === 1)
-                        $badgeClass = 'bg-warning text-dark';
-                    elseif ($entry['rank'] === 2)
-                        $badgeClass = 'bg-secondary text-white';
-                    elseif ($entry['rank'] === 3)
-                        $badgeClass = 'bg-orange text-white';
+                    $badgeStyleClass = getBadgeClassFromRank($leaderboardEntry['rank']);
                     ?>
                     <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                         <div class="col-3 col-sm-2">
-                            <span class="badge <?= $badgeClass ?> py-2 py-lg-3 px-3 fw-bold">
-                                <?= $entry['rank'] ?>
+                            <span class="badge <?= $badgeStyleClass ?> py-2 py-lg-3 px-3 fw-bold">
+                                <?= (int) $leaderboardEntry['rank'] ?>
                             </span>
                         </div>
                         <div class="col ps-2 fw-semibold text-truncate">
-                            <?= htmlspecialchars($entry['username']) ?>
+                            <?= htmlspecialchars($leaderboardEntry['username']) ?>
                         </div>
                         <div class="col-3 col-sm-2 fw-bold text-end pe-1">
-                            <?= $entry['points'] ?>
+                            <?= (int) $leaderboardEntry['points'] ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -140,27 +152,18 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
                 </div>
 
                 <?php
-                $rankBadgeClass = 'border border-dark text-dark';
-                $rankInt = (int) $yourRank;
-
-                if ($rankInt === 1) {
-                    $rankBadgeClass = 'bg-warning text-dark';
-                } elseif ($rankInt === 2) {
-                    $rankBadgeClass = 'bg-secondary text-white';
-                } elseif ($rankInt === 3) {
-                    $rankBadgeClass = 'bg-orange text-white';
-                }
+                $userBadgeClass = getBadgeClassFromRank($yourRank);
                 ?>
 
                 <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-3 mx-0">
                     <div class="col-3 col-sm-2">
-                        <span class="badge <?= $rankBadgeClass ?> py-2 py-lg-3 px-3 fw-bold">
-                            <?= $yourRank ?>
+                        <span class="badge <?= $userBadgeClass ?> py-2 py-lg-3 px-3 fw-bold">
+                            <?= (int) $yourRank ?>
                         </span>
                     </div>
                     <div class="col ps-2 fw-semibold text-truncate">You</div>
                     <div class="col-3 col-sm-2 text-end pe-1 fw-bold">
-                        <?= $yourPoints ?>
+                        <?= (int) $yourPoints ?>
                     </div>
                 </div>
             <?php endif; ?>

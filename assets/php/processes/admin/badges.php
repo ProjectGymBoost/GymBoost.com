@@ -54,6 +54,8 @@ if (isset($_POST['btnAdd'])) {
         $normalizedDescription = strtolower(trim($description));
         $normalizedRequirement = trim($requirementValue);
 
+        $normalizedIconUrl = strtolower(trim(basename($_FILES['iconUrl']['name'])));
+
         $checkQuery = "SELECT * FROM badges";
         $result = mysqli_query($conn, $checkQuery);
 
@@ -68,6 +70,10 @@ if (isset($_POST['btnAdd'])) {
             }
             if (trim($row['requirementValue']) == $normalizedRequirement) {
                 $requirementValueError = "Requirement value already exists.";
+                $hasError = true;
+            }
+            if (strtolower(trim($row['iconUrl'])) === $normalizedIconUrl) {
+                $iconUrlError = "Icon is already used.";
                 $hasError = true;
             }
         }

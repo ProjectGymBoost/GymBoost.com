@@ -72,7 +72,7 @@
             <div class="modal-body text-center">
                 <strong>
                     <span style="color: #D2042D; font-weight: bold;">
-                        <?php echo strtoupper($_GET['name']) . "'s"; ?>
+                        <?php echo $_GET['name'] . "'s"; ?>
                     </span>
                 </strong>
                 account has been successfully deleted.

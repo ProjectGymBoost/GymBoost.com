@@ -16,12 +16,20 @@ if (!empty($userSearch)) {
     )";
 }
 
+// FILTER BY
+$filterBy = $_GET['filterBy'] ?? 'none';
+$filterCondition = '';
+if ($filterBy === 'activeOnly') {
+    $filterCondition = "AND users.state = 'active'";
+} elseif ($filterBy === 'inactiveOnly') {
+    $filterCondition = "AND users.state = 'inactive'";
+}
 
 // SORT AND ORDER BY
 $sortBy = $_GET['sortBy'] ?? 'none';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
-$allowedSortColumns = ['firstName', 'lastName', 'state', 'points'];
+$allowedSortColumns = ['firstName', 'lastName', 'points'];
 $allowedOrder = ['ASC', 'DESC'];
 
 if (in_array($sortBy, $allowedSortColumns) && in_array($orderBy, $allowedOrder)) {
@@ -46,6 +54,7 @@ $totalQuery = "
     SELECT COUNT(*) AS total
     FROM users
     WHERE role = 'user'
+    $filterCondition
     $searchCondition
 ";
 $totalResult = executeQuery($totalQuery);
@@ -64,6 +73,7 @@ $userInfoQuery = "
     SELECT *
     FROM users
     WHERE role = 'user'
+    $filterCondition
     $searchCondition
     $orderCondition
     LIMIT $entriesCount OFFSET $offset
@@ -94,6 +104,7 @@ if (isset($_POST['btnDelete'])) {
         "&page=" . $currentPage .
         "&entriesCount=" . $entriesCount .
         "&search=" . urlencode($search) .
+        "&filterBy=" . urlencode($filterBy) .
         "&sortBy=" . $sortBy .
         "&orderBy=" . $orderBy
     );

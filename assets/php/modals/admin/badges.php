@@ -10,7 +10,7 @@
                     style="margin: 0; font-size: 20px; letter-spacing: 2px;">
                     ADD NEW BADGE
                 </h4>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                <button type="button" class="btn-close btn-close-white close-add-btn" aria-label="Close"
                     style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
                 </button>
             </div>
@@ -50,7 +50,7 @@
 
                 <!-- Footer -->
                 <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                    <button type="button" class="btn btn-secondary cancel-add-btn">CANCEL</button>
                     <button type="submit" class="btn btn-primary" name="btnAdd">ADD</button>
                 </div>
             </form>
@@ -71,7 +71,6 @@ if (
 ) {
     $showAddModal = true;
 }
-
 ?>
 
 <?php if ($showAddModal): ?>
@@ -87,6 +86,33 @@ if (
         });
     </script>
 <?php endif; ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addBadgeForm = document.getElementById('addBadgeForm');
+        const modal = document.getElementById('addBadgeModal');
+
+        // Reset form and clear errors on modal hide
+        modal.addEventListener('hidden.bs.modal', function () {
+            addBadgeForm.reset();
+            modal.querySelectorAll('.text-danger').forEach(el => el.textContent = '');
+        });
+
+        // Cancel button behavior: hide modal & reload page to clear errors and POST data
+        document.querySelector('.cancel-add-btn').addEventListener('click', function () {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) modalInstance.hide();
+            window.location.href = window.location.pathname + window.location.search;
+        });
+
+        // Close button behavior: hide modal & reload page
+        document.querySelector('.close-add-btn').addEventListener('click', function () {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) modalInstance.hide();
+            window.location.href = window.location.pathname + window.location.search;
+        });
+    });
+</script>
 
 
 <!--(BADGES) EDIT -->
@@ -122,7 +148,7 @@ if (
                             style="margin: 0; font-size: 20px; letter-spacing: 2px;">
                             EDIT BADGES
                         </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                        <button type="button" class="btn-close btn-close-white close-edit-btn" aria-label="Close"
                             style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
                         </button>
                     </div>
@@ -176,9 +202,7 @@ if (
                             <?php endif; ?>
                             <?php if (!empty($iconUrl)): ?>
                                 <div class="mt-2 text-muted small">
-                                    Current icon URL:
-                                    <a href="<?= htmlspecialchars($iconUrl) ?>"
-                                        target="_blank"><?= htmlspecialchars($iconUrl) ?></a>
+                                    Current icon URL: <?= htmlspecialchars($iconUrl) ?>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -186,7 +210,7 @@ if (
 
                     <!-- Footer -->
                     <div class="modal-footer border-0 justify-content-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                        <button type="button" class="btn btn-secondary cancel-edit-btn">CANCEL</button>
                         <button type="submit" name="btnEdit" class="btn btn-primary ms-2">SAVE CHANGES</button>
                     </div>
 
@@ -209,6 +233,43 @@ if (
         });
     </script>
 <?php endif; ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all edit modals
+        document.querySelectorAll('[id^="editBadgeModal"]').forEach(function (modalEl) {
+            // Clear errors on modal close
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                modalEl.querySelectorAll('.text-danger').forEach(el => el.textContent = '');
+            });
+        });
+
+        // Handle Cancel and Close button clicks to close modal and reload page to clear errors and POST
+        document.querySelectorAll('.cancel-edit-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const modalEl = this.closest('.modal');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+                // Reload page with GET to clear POST and errors and show fresh DB data
+                window.location.href = window.location.pathname + window.location.search;
+            });
+        });
+
+        document.querySelectorAll('.close-edit-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const modalEl = this.closest('.modal');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+                window.location.href = window.location.pathname + window.location.search;
+            });
+        });
+    });
+</script>
+
 
 <!--(BADGES) DELETE -->
 <?php foreach ($badgeInfoArray as $info): ?>
