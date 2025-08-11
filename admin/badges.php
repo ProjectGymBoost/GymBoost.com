@@ -172,7 +172,7 @@ include("../assets/php/processes/admin/badges.php");
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">BADGE ID</th>
-                                <th scope="col">USERNAME</th>
+                                <th scope="col">NAME</th>
                                 <th scope="col">DATE EARNED</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
