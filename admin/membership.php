@@ -72,10 +72,10 @@ $showDeleteModal = isset($membershipDeleted);
                     <input type="search" name="search" id="searchInput" class="form-control" placeholder="Search members..." value="<?= htmlspecialchars($search) ?>">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
-                <div class="flex-grow-1" style="max-width: 160px;">
+                <div class="flex-grow-1" style="max-width: 180px;">
                     <select name="sortBy" class="form-select">
                         <option disabled>Sort By</option>
-                        <option value="userMembershipID" <?= $sortBy === 'userMembershipID' ? 'selected' : '' ?>>ID</option>
+                        <option value="userMembershipID" <?= $sortBy === 'userMembershipID' ? 'selected' : '' ?>>Membership ID</option>
                         <option value="rfidNumber" <?= $sortBy === 'rfidNumber' ? 'selected' : '' ?>>RFID Number</option>
                         <option value="firstName" <?= $sortBy === 'firstName' ? 'selected' : '' ?>>First Name</option>
                         <option value="lastName" <?= $sortBy === 'lastName' ? 'selected' : '' ?>>Last Name</option>
@@ -83,7 +83,7 @@ $showDeleteModal = isset($membershipDeleted);
                         <option value="endDate" <?= $sortBy === 'endDate' ? 'selected' : '' ?>>Expiry Date</option>
                     </select>
                 </div>
-                <div class="flex-grow-1" style="max-width: 160px;">
+                <div class="flex-grow-1" style="max-width: 180px;">
                     <select name="orderBy" class="form-select">
                         <option disabled>Order</option>
                         <option value="ASC" <?= $orderBy === 'ASC' ? 'selected' : '' ?>>Ascending</option>
@@ -253,6 +253,29 @@ $showDeleteModal = isset($membershipDeleted);
                     });
                 });
             }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Loop through all edit membership modals
+            document.querySelectorAll('[id^="editMembershipModal"]').forEach(modalEl => {
+                modalEl.addEventListener('hidden.bs.modal', function () {
+                    const form = modalEl.querySelector('form');
+                    if (form) {
+                        // Reset form fields to their original default values
+                        form.reset();
+
+                        // Also reselect original plan option
+                        form.querySelectorAll('select').forEach(select => {
+                            const originalValue = select.querySelector('option[selected]')?.value;
+                            if (originalValue) {
+                                select.value = originalValue;
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>
