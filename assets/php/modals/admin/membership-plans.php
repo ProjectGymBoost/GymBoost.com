@@ -88,10 +88,9 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         </div>
 
                         <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                        <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0" style="border: none; padding: 1rem;">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                            <button type="submit" name="btnEditMembershipPlan" class="btn btn-primary"
-                                style="margin-left: 0.5rem;">
+                            <button type="submit" name="btnEditMembershipPlan" class="btn btn-primary m-0">
                                 SAVE CHANGES
                             </button>
                         </div>
@@ -260,7 +259,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                     style="margin: 0; font-size: 20px; letter-spacing: 2px;">
                     ADD NEW MEMBERSHIP PLAN
                 </h4>
-                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
                     style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none;">
                 </button>
             </div>
@@ -300,9 +299,9 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         </div>
                     </div>
 
-                    <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
+                    <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0" style="border: none; padding: 1rem;">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="submit" name="btnAddMembershipPlan" class="btn btn-primary">ADD</button>
+                        <button type="submit" name="btnAddMembershipPlan" class="btn btn-primary m-0">ADD</button>
                     </div>
                 </div>
             </form>
