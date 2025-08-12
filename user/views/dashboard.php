@@ -2,7 +2,7 @@
 
 <div id="dashboard" class="container">
   <!-- ANNOUNCEMENTS -->
-  <div id="announcement" class="container px-0 py-4 mb-3 mt-2">
+  <div id="announcement" class="announcement container px-0 py-4 mb-3 mt-2">
     <div class="row">
       <div class="col-12">
         <div class="heading">ANNOUNCEMENT</div>
@@ -12,11 +12,11 @@
             <?php foreach ($announcementsArray as $announcement): ?>
               <div class="row justify-content-center mt-2">
                 <div class="col-12 col-md-8 mx-4 mt-2">
-                  <div class="rounded-box card-bg-color d-flex align-items-start p-3" style="gap: 1rem;">
-                    <div class="pe-3 border-end text-nowrap" style="color: #ecececff;">
-                      <?= date("Y-m-d", strtotime($announcement['dateCreated'])); ?>
+                  <div class="rounded-box card-bg-color p-3">
+                    <div class="announcement-date text-end mb-2" style="white-space: nowrap;">
+                      <?= date("F j, Y", strtotime($announcement['dateCreated'])); ?>
                     </div>
-                    <div class="ps-3">
+                    <div class="announcement-message" style="text-align: justify;">
                       <?= $announcement['message']; ?>
                     </div>
                   </div>
@@ -26,8 +26,8 @@
           <?php else: ?>
             <div class="row justify-content-center mt-2">
               <div class="col-12 col-md-8 mx-4 mt-2">
-                <div class="rounded-box p-3"
-                  style="background-color:#bebebe; color:#333; font-weight:500; border-radius:8px;">
+                <div class="rounded-box p-3 announcement-message"
+                  style="background-color:#bebebe; color:#333; font-weight:500; border-radius:8px; text-align: justify;">
                   Nothing new to announce just yet. Check back soon for gym updates!
                 </div>
               </div>
@@ -37,6 +37,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- ENGAGEMENT -->
   <div id="engagement" class="container px-0 py-4 mb-3 mt-3">
