@@ -46,7 +46,7 @@ try {
             SELECT 
                 aggregated.*,
                 DENSE_RANK() OVER (
-                    ORDER BY workoutsThisMonth DESC, points DESC
+                    ORDER BY points DESC, workoutsThisMonth DESC
                 ) AS rankPosition
             FROM aggregated
         )
