@@ -39,7 +39,7 @@ try {
         WHERE u.state = 'Active'
         AND u.role = 'user'
         GROUP BY u.userID
-        HAVING workoutsThisMonth > 0
+        HAVING workoutsThisMonth > 0 OR points > 0
         ORDER BY workoutsThisMonth DESC, points DESC
         LIMIT 10
     ");
