@@ -1,5 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
+    const accountSelect = document.getElementById("accountSelect");
+    const rfidContainer = document.getElementById("rfidContainer");
+    const birthdayContainer = document.getElementById("birthdayContainer");
+    const membershipContainer = document.getElementById("membershipContainer");
+
+    function toggleFieldsBasedOnAccount() {
+        const isAdmin = accountSelect.value === "admin";
+
+        if (isAdmin) {
+            rfidContainer.style.display = "none";
+            membershipContainer.style.display = "none";
+
+            document.getElementById("rfid").value = "";
+            const membershipSelect = document.getElementById("membership");
+            membershipSelect.selectedIndex = [...membershipSelect.options].findIndex(option => option.disabled);
+            document.getElementById("rfid").removeAttribute("required");
+            document.getElementById("membership").removeAttribute("required");
+
+            birthdayContainer.classList.add("w-100");
+        } else {
+            rfidContainer.style.display = "";
+            membershipContainer.style.display = "";
+            document.getElementById("rfid").setAttribute("required", "required");
+            document.getElementById("membership").setAttribute("required", "required");
+
+            birthdayContainer.classList.remove("w-100");
+        }
+    }
+    toggleFieldsBasedOnAccount();
+    accountSelect.addEventListener("change", toggleFieldsBasedOnAccount);
 
     const emailExistsError = document.getElementById("emailExistsError")?.value;
     const rfidExistsError = document.getElementById("rfidExistsError")?.value;
@@ -15,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mapping field IDs 
     const fieldsToValidate = {
+        accountSelect: validateAccountSelect,
         firstName: validateFirstName,
         lastName: validateLastName,
         email: validateEmail,
@@ -57,6 +88,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validation Functions
 
+    function validateAccountSelect() {
+        const field = "accountSelect";
+        const value = document.getElementById(field).value;
+        if (!value) {
+            showError(field, "Please choose an account type.");
+            return false;
+        } showValid(field);
+        return true;
+    }
+
     function validateFirstName() {
         const field = "firstName";
         const value = document.getElementById(field).value.trim();
@@ -80,14 +121,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function validateRFID() {
         const field = "rfid";
+        const accountType = document.getElementById("accountSelect").value;
+
+        if (accountType === "admin") {
+            clearFieldState(field);
+            return true;
+        }
+
         const value = document.getElementById(field).value.trim();
         const pattern = /^[a-zA-Z0-9]*$/;
 
         if (!pattern.test(value)) {
             return validatePattern(field, pattern, "No special characters allowed.");
         }
+
+        showValid(field);
         return true;
     }
+
 
     function validateBirthday() {
         const field = "birthday";
@@ -118,14 +169,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function validateMembership() {
         const field = "membership";
+        const accountType = document.getElementById("accountSelect").value;
+
+        if (accountType === "admin") {
+            clearFieldState(field);
+            return true;
+        }
+
         const value = document.getElementById(field).value;
         if (!value || value === "Membership Plan") {
             showError(field, "Please select a membership plan.");
             return false;
         }
+
         showValid(field);
         return true;
     }
+
 
     function validatePassword() {
         const field = "password";
@@ -191,4 +251,17 @@ document.addEventListener("DOMContentLoaded", function () {
             field.classList.remove("is-invalid", "is-valid");
         });
     }
+
+    accountSelect.addEventListener("change", function () {
+        const isAdmin = accountSelect.value === "admin";
+
+        if (isAdmin) {
+            ["rfid", "membership"].forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                field.value = "";
+                clearFieldState(fieldId);
+            });
+        }
+    });
+
 });

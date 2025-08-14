@@ -92,7 +92,7 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                             <!-- User Dropdown -->
                             <div class="w-100 mb-3">
-                                <label class="form-label fw-bold">Select User</label>
+                                <label class="form-label fw-bold" style="color: var(--text-color-light)">Select User</label>
                                 <select class="form-select select2" name="userID" required>
                                     <?php if (mysqli_num_rows($usersResult) > 0): ?>
                                         <?php while ($user = mysqli_fetch_assoc($usersResult)): ?>
@@ -108,7 +108,7 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                             <!-- Membership Plan -->
                             <div class="w-100 mb-3">
-                                <label class="form-label fw-bold">Membership Plan</label>
+                                <label class="form-label fw-bold" style="color: var(--text-color-light)">Membership Plan</label>
                                 <select class="form-select" name="membershipID" id="membershipPlan" required>
                                     <?php while ($plan = mysqli_fetch_assoc($membershipResult)): ?>
                                         <option value="<?= $plan['membershipID']; ?>"
@@ -123,11 +123,11 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                             <div class="w-100 mb-3">
                                 <div class="row gx-3">
                                     <div class="col-md-6">
-                                        <label class="form-label fw-bold">Start Date</label>
+                                        <label class="form-label fw-bold" style="color: var(--text-color-light)">Start Date</label>
                                         <input type="date" class="form-control" name="startDate" id="startDate" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label fw-bold">End Date</label>
+                                        <label class="form-label fw-bold" style="color: var(--text-color-light)">End Date</label>
                                         <input type="date" class="form-control" name="endDate" id="endDate" required>
                                     </div>
                                 </div>

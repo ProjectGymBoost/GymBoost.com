@@ -20,23 +20,45 @@ class User
         $this->birthday = $birthday;
     }
 
-    public function RegisterUser($membershipID, $startDate, $endDate)
+    public function RegisterUser($role, $membershipID = null, $startDate = null, $endDate = null)
     {
         global $conn;
         $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
 
-        $insertUserQuery = "INSERT INTO users (firstName, lastName, birthday, email, password, rfidNumber) 
-                            VALUES ('$this->firstName', '$this->lastName', '$this->birthday', '$this->email', '$passwordHash', '$this->rfid')";
+        if ($role === "admin") {
+            $insertUserQuery = "INSERT INTO users (firstName, lastName, birthday, email, password, role) 
+                        VALUES ('$this->firstName', '$this->lastName', '$this->birthday', '$this->email', '$passwordHash', '$role')";
+        } else {
+            $insertUserQuery = "INSERT INTO users (firstName, lastName, birthday, email, password, rfidNumber, role) 
+                        VALUES ('$this->firstName', '$this->lastName', '$this->birthday', '$this->email', '$passwordHash', '$this->rfid', '$role')";
+        }
+
         $userResult = executeQuery($insertUserQuery);
 
         if ($userResult) {
             $userID = mysqli_insert_id($conn);
-            $insertMemberQuery = "INSERT INTO user_memberships (userID, membershipID, startDate, endDate) 
-                                  VALUES ('$userID', '$membershipID', '$startDate', '$endDate')";
-            return executeQuery($insertMemberQuery);
+
+            // Insert membership only for regular users
+            if ($role === "user" && $membershipID && $startDate && $endDate) {
+                $insertMemberQuery = "INSERT INTO user_memberships (userID, membershipID, startDate, endDate) 
+                              VALUES ('$userID', '$membershipID', '$startDate', '$endDate')";
+                $membershipResult = executeQuery($insertMemberQuery);
+
+                if (!$membershipResult) {
+                    return false;
+                }
+            }
+
+            // ✅ Set session flags correctly
+            $_SESSION['userCreated'] = true;
+            $_SESSION['createdUserRole'] = $role;
+
+            return true;
         }
+
         return false;
     }
+
 }
 
 class ChartData

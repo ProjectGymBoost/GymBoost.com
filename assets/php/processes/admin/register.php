@@ -16,47 +16,53 @@ $lastNameError = "";
 $firstNameError = "";
 
 if (isset($_POST['btnRegister'])) {
+    $role = sanitize($_POST['accountSelect']);
+
     $firstName = ucwords(strtolower(sanitize($_POST['firstName'])));
     $lastName = ucwords(strtolower(sanitize($_POST['lastName'])));
     $email = sanitize($_POST['email']);
     $password = sanitize($_POST['password']);
     $confirmPassword = sanitize($_POST['confirmPassword']);
-    $membershipID = sanitize($_POST['membershipID']);
-    $rfid = sanitize($_POST['rfid']);
     $birthday = sanitize($_POST['birthday']);
 
-    // Check membership requirement.
-    $membershipQuery = "SELECT requirement FROM memberships WHERE membershipID = '$membershipID'";
-    $membershipResult = executeQuery($membershipQuery);
-    $membershipRequirement = mysqli_fetch_assoc($membershipResult);
-    $duration = (int) filter_var($membershipRequirement['requirement'], FILTER_SANITIZE_NUMBER_INT);
+    if ($role === "admin") {
+        $rfid = null;
+        $membershipID = $startDate = $endDate = null;
+        $checkRfidResult = null;
+    } else {
+        $rfid = sanitize($_POST['rfid']);
+        $membershipID = sanitize($_POST['membershipID']);
 
-    // Calculate start and end dates based on membership requirement.
-    $startDate = date('Y-m-d');
-    $endDate = date('Y-m-d', strtotime("+$duration days"));
+        $membershipResult = executeQuery("
+            SELECT requirement 
+            FROM memberships 
+            WHERE membershipID = '$membershipID'");
+        $requirement = mysqli_fetch_assoc($membershipResult)['requirement'];
+        $duration = (int) filter_var($requirement, FILTER_SANITIZE_NUMBER_INT);
+        $startDate = date('Y-m-d');
+        $endDate = date('Y-m-d', strtotime("+$duration days"));
 
+        $checkRfidResult = executeQuery("SELECT * FROM users WHERE rfidNumber = '$rfid'");
+    }
 
-    // Check if email already exists.
-    $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
-    $checkEmailResult = executeQuery($checkEmailQuery);
-
-    // Check if RFID already exists.
-    $checkRfidQuery = "SELECT * FROM users WHERE rfidNumber = '$rfid'";
-    $checkRfidResult = executeQuery($checkRfidQuery);
+    $checkEmailResult = executeQuery("SELECT * FROM users WHERE email = '$email'");
 
     if (mysqli_num_rows($checkEmailResult) > 0) {
         $emailExistsError = "emailExists";
-    } elseif (mysqli_num_rows($checkRfidResult) > 0) {
+    }
+
+    if ($role === "user" && $rfid && mysqli_num_rows($checkRfidResult) > 0) {
         $rfidExistsError = "rfidExists";
-    } else {
+    }
+
+    if (!$emailExistsError && !$rfidExistsError && $password === $confirmPassword) {
         $user = new User(null, $firstName, $lastName, $email, $password, $rfid, $birthday);
 
-        // Register the new user.
-        if ($user->RegisterUser($membershipID, $startDate, $endDate)) {
-            $lastInsertedID = mysqli_insert_id($conn);
+        if ($user->RegisterUser($role, $membershipID, $startDate, $endDate)) {
             $_SESSION['userCreated'] = true;
+            $_SESSION['createdUserRole'] = $role;
             header("Location: users.php?register=success");
-            exit();
+            exit;
         }
     }
 }
