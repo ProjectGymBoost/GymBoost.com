@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-
+<div id="plans"></div>
 <div class="text-center my-5">
     <div class="heading" style="color: var(--primaryColor);">MEMBERSHIP PLANS</div>
 </div>
