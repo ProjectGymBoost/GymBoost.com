@@ -6,6 +6,7 @@
       <div style="font-size: clamp(.8rem, 1vw, 3rem);">Purok 3, Maharlika Highway, Brgy. San Rafael, <br> Sto. Tomas City, Batangas</div>
    </div>
 </div>
+<div id="about"></div>
 <div class="container mt-5">
    <div class="row">
       <div class="col-12 col-lg-6 p-4">
@@ -44,47 +45,48 @@
    </div>
 
    <div class="row g-4 pt-4 mt-5">
-   <div class="col-lg-4 col-12">
-      <div class="card feature-card card-services rounded-4">
-         <div class="subheading mb-2">GYM SERVICES</div>
-         <ul>
-            <li><b>Personal Training</b> – One-on-one coaching tailored to specific goals</li>
-            <li><b>General Gym Access</b> – Open floor time with machines & free weights</li>
-            <li><b>Specialized Programs</b> – Weight loss, transformation, gain, toning</li>
-         </ul>
+      <div class="col-lg-4 col-12">
+         <div class="card feature-card card-services rounded-4">
+            <div class="subheading mb-2">GYM SERVICES</div>
+            <ul>
+               <li><b>Personal Training</b> – One-on-one coaching tailored to specific goals</li>
+               <li><b>General Gym Access</b> – Open floor time with machines & free weights</li>
+               <li><b>Specialized Programs</b> – Weight loss, transformation, gain, toning</li>
+            </ul>
+         </div>
       </div>
-   </div>
 
-   <div class="col-lg-4 col-12">
-      <div class="card feature-card card-facilities rounded-4">
-         <div class="subheading mb-2">GYM FACILITIES</div>
-         <ul>
-            <li><b>Free Weights Zone</b> – Dumbbells, barbells, benches</li>
-            <li><b>Resistance Machines</b> – Pin/plate-loaded strength machines</li>
-            <li><b>Cardio Equipment</b> – Stationary bikes, HIIT gear</li>
-            <li><b>Stretching & Mobility Area</b> – Mats, rollers, bands</li>
-            <li><b>Sound System & Mirrors</b> – For classes & form checks</li>
-         </ul>
+      <div class="col-lg-4 col-12">
+         <div class="card feature-card card-facilities rounded-4">
+            <div class="subheading mb-2">GYM FACILITIES</div>
+            <ul>
+               <li><b>Free Weights Zone</b> – Dumbbells, barbells, benches</li>
+               <li><b>Resistance Machines</b> – Pin/plate-loaded strength machines</li>
+               <li><b>Cardio Equipment</b> – Stationary bikes, HIIT gear</li>
+               <li><b>Stretching & Mobility Area</b> – Mats, rollers, bands</li>
+               <li><b>Sound System & Mirrors</b> – For classes & form checks</li>
+            </ul>
+         </div>
       </div>
-   </div>
 
-   <div class="col-lg-4 col-12">
-      <div class="card feature-card card-programs rounded-4">
-         <div class="subheading mb-2">WORKOUT PROGRAMS</div>
-         <ul>
-            <li><b>Strength Training</b> – Barbell/dumbbell muscle building</li>
-            <li><b>HIIT</b> – Short bursts with rest intervals</li>
-            <li><b>Circuit Training</b> – Rotating between stations</li>
-            <li><b>Bodybuilding</b> – Hypertrophy split programs</li>
-            <li><b>Cardio & Endurance</b> – Cycling, circuit cardio</li>
-            <li><b>Functional Fitness</b> – Real-life movement training</li>
-            <li><b>Core & Stability</b> – Planks, balance, rotations</li>
-         </ul>
+      <div class="col-lg-4 col-12">
+         <div class="card feature-card card-programs rounded-4">
+            <div class="subheading mb-2">WORKOUT PROGRAMS</div>
+            <ul>
+               <li><b>Strength Training</b> – Barbell/dumbbell muscle building</li>
+               <li><b>HIIT</b> – Short bursts with rest intervals</li>
+               <li><b>Circuit Training</b> – Rotating between stations</li>
+               <li><b>Bodybuilding</b> – Hypertrophy split programs</li>
+               <li><b>Cardio & Endurance</b> – Cycling, circuit cardio</li>
+               <li><b>Functional Fitness</b> – Real-life movement training</li>
+               <li><b>Core & Stability</b> – Planks, balance, rotations</li>
+            </ul>
+         </div>
       </div>
    </div>
 </div>
-</div>
 
+<div id="coaches"></div>
 <div class="container my-5 py-5">
    <div class="row">
 

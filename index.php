@@ -120,53 +120,58 @@ if (isset($_GET['page'])) {
       <div class="row mb-3 text-center text-md-start">
         <div class="col-12 col-md-4 mb-1">
           <ul class="list-unstyled mb-1">
-            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">Membership</a></li>
+            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">GYMBOOST</a></li>
           </ul>
           <ul class="list-unstyled">
-            <!-- <li><a href="" class="text-white text-decoration-none">Terms & Conditions</a></li> -->
-            <li><a href="?page=membership-plans" class="text-white text-decoration-none">Membership Plans</a></li>
-            <li><a href="" class="text-white text-decoration-none">Contact Us</a></li>
+            <li><a href="?page=home#about" class="text-white text-decoration-none">About Us</a></li>
+            <li><a href="?page=home#coaches" class="text-white text-decoration-none">Coaches</a></li>
+            <li><a href="?page=membership-plans" class="text-white text-decoration-none">Membership</a></li>
+            <li><a href="?page=membership-plans#plans" class="text-white text-decoration-none">Plans</a></li>
+            <li><a href="?page=faqs" class="text-white text-decoration-none">FAQs</a></li>
           </ul>
         </div>
 
         <div class="col-12 col-md-4 mb-1">
           <ul class="list-unstyled mb-1">
-            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">About GymBoost</a></li>
+            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">CONTACT US</a></li>
           </ul>
+
           <ul class="list-unstyled">
-            <li><a href="" class="text-white text-decoration-none">About Us</a></li>
-            <li><a href="?page=faqs" class="text-white text-decoration-none">FAQs</a></li>
+            <li class="me-3 mb-1">
+              <a href="https://www.facebook.com/hardmusclebodyfitnessgym" class="text-white" target="_blank">
+                <i class="bi bi-facebook me-2" ></i>Hard Body Fitness Gym
+              </a>
+            </li>
+            <li class="me-3 mb-1">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hardbodyfitnessgym13@gmail.com" class="text-white" target="_blank">
+                <i class="bi bi-envelope-fill me-2"></i>hardbodyfitnessgym13@gmail.com
+              </a>
+            </li>
+            
+          <ul class="list-unstyled">
+            <li><i class="bi bi-telephone-fill mb-1 me-2"></i>+63 927 990 4177</li>
           </ul>
+          </ul>
+
         </div>
 
         <div class="col-12 col-md-4 text-center text-md-start">
           <ul class="list-unstyled mb-1">
-            <li class="subheading "><a href="" class="text-white text-decoration-none text-uppercase">Connect With Us</a></li>
+            <li class="subheading "><a href="" class="text-white text-decoration-none text-uppercase">ADDRESS</a></li>
           </ul>
-          <ul class="list-unstyled d-flex justify-content-center justify-content-md-start">
-            <li class="me-3">
-              <a href="https://www.facebook.com/hardmusclebodyfitnessgym" class="text-white">
-                <i class="bi bi-facebook"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hardbodyfitnessgym13@gmail.com" class="text-white" target="_blank">
-                <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" style="width:20px; height:20px;">
-              </a>
-            </li>
-            <!-- <li class="me-3">
-              <a href="https://instagram.com" class="text-white">
-                <i class="bi bi-instagram"></i>
-              </a>
-            </li> -->
+
+          <ul class="list-unstyled">
+            <li><i class="bi bi-building-fill me-2"></i>Purok 1,
+              Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas.</li>
           </ul>
+
         </div>
+
       </div>
       <hr class="text-white my-4">
       <div class="row align-items-center">
         <div class="col-12 text-center text-md-start mb-3 mb-md-0">
           <p class="mb-0">&copy; 2026 GymBoost. All rights reserved.</p>
-          <p class="mb-0">Purok 1, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas.</p>
         </div>
       </div>
     </div>
