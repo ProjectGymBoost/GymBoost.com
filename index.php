@@ -2,18 +2,18 @@
 session_start();
 
 if (!empty($_SESSION['userID'])) {
-    if (!empty($_SESSION['lastVisited'])) {
-        header("Location: " . $_SESSION['lastVisited']);
-        exit();
-    }
-
-    // Fallback 
-    if ($_SESSION['role'] === 'admin') {
-        header("Location: /GymBoost.com/admin/index.php");
-    } else {
-        header("Location: /GymBoost.com/user/index.php?page=dashboard");
-    }
+  if (!empty($_SESSION['lastVisited'])) {
+    header("Location: " . $_SESSION['lastVisited']);
     exit();
+  }
+
+  // Fallback 
+  if ($_SESSION['role'] === 'admin') {
+    header("Location: /GymBoost.com/admin/index.php");
+  } else {
+    header("Location: /GymBoost.com/user/index.php?page=dashboard");
+  }
+  exit();
 }
 
 
@@ -51,6 +51,7 @@ if (isset($_GET['page'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="icon" type="image/png" href="assets/img/logo/officialLogo.png">
   <link href="assets/css/styles.css" rel="stylesheet" />
   <link href="assets/css/web.css" rel="stylesheet" />
@@ -78,15 +79,15 @@ if (isset($_GET['page'])) {
         <ul class="navbar-nav text-start" style="font-weight:bold;">
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'home')
-              echo 'active'; ?>" href="?page=home">HOME</a>
+                                            echo 'active'; ?>" href="?page=home">HOME</a>
           </li>
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'membership-plans')
-              echo 'active'; ?>" href="?page=membership-plans">MEMBERSHIP PLANS</a>
+                                            echo 'active'; ?>" href="?page=membership-plans">MEMBERSHIP PLANS</a>
           </li>
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'faqs')
-              echo 'active'; ?>" href="?page=faqs">FAQs</a>
+                                            echo 'active'; ?>" href="?page=faqs">FAQs</a>
           </li>
           <li class="nav-item d-lg-none py-1 mx-2">
             <a class="btn btn-login mt-2" href="login.php">LOGIN</a>
@@ -119,59 +120,69 @@ if (isset($_GET['page'])) {
       <div class="row mb-3 text-center text-md-start">
         <div class="col-12 col-md-4 mb-1">
           <ul class="list-unstyled mb-1">
-            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">Membership</a></li>
+            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">GYMBOOST</a></li>
           </ul>
           <ul class="list-unstyled">
-            <li><a href="" class="text-white text-decoration-none">Terms & Conditions</a></li>
-            <li><a href="?page=membership-plans" class="text-white text-decoration-none">Membership Plans</a></li>
-            <li><a href="" class="text-white text-decoration-none">Contact Us</a></li>
+            <li><a href="?page=home#about" class="text-white text-decoration-none">About Us</a></li>
+            <li><a href="?page=home#coaches" class="text-white text-decoration-none">Coaches</a></li>
+            <li><a href="?page=membership-plans" class="text-white text-decoration-none">Membership</a></li>
+            <li><a href="?page=membership-plans#plans" class="text-white text-decoration-none">Plans</a></li>
+            <li><a href="?page=faqs" class="text-white text-decoration-none">FAQs</a></li>
           </ul>
         </div>
 
         <div class="col-12 col-md-4 mb-1">
           <ul class="list-unstyled mb-1">
-            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">About GymBoost</a></li>
+            <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">CONTACT US</a></li>
           </ul>
+
           <ul class="list-unstyled">
-            <li><a href="" class="text-white text-decoration-none">About Us</a></li>
-            <li><a href="?page=faqs" class="text-white text-decoration-none">FAQs</a></li>
+            <li class="me-3 mb-1">
+              <a href="https://www.facebook.com/hardmusclebodyfitnessgym" class="text-white" target="_blank">
+                <i class="bi bi-facebook me-2"></i>Hard Body Fitness Gym
+              </a>
+            </li>
+            <li class="me-3 mb-1">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hardbodyfitnessgym13@gmail.com" class="text-white" target="_blank">
+                <i class="bi bi-envelope-fill me-2"></i>hardbodyfitnessgym13@gmail.com
+              </a>
+            </li>
+
+            <ul class="list-unstyled">
+              <li>
+                <i class="bi bi-telephone-fill mb-1 me-2"></i>
+                <a href="tel:+639279904177" class="text-white">
+                  +63 927 990 4177
+                </a>
+              </li>
+            </ul>
           </ul>
+
         </div>
 
         <div class="col-12 col-md-4 text-center text-md-start">
           <ul class="list-unstyled mb-1">
-            <li class="subheading "><a href="" class="text-white text-decoration-none text-uppercase">Connect With Us</a></li>
+            <li class="subheading "><a href="" class="text-white text-uppercase">ADDRESS</a></li>
           </ul>
-          <ul class="list-unstyled d-flex justify-content-center justify-content-md-start">
 
-            <li class="me-3">
-              <a href="https://github.com" class="text-white">
-                <i class="bi bi-github"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a href="https://twitter.com" class="text-white">
-                <i class="bi bi-twitter"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a href="https://facebook.com" class="text-white">
-                <i class="bi bi-facebook"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a href="https://instagram.com" class="text-white">
-                <i class="bi bi-instagram"></i>
+          <ul class="list-unstyled">
+            <li>
+              <i class="bi bi-building-fill me-2"></i>
+              <a href="https://www.google.com/maps?q=Purok+1,+Maharlika+Highway,+Brgy.+San+Rafael,+Sto.+Tomas+City,+Batangas"
+                target="_blank"
+                class="text-white">
+                Purok 1, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas
               </a>
             </li>
           </ul>
+
         </div>
+
       </div>
       <hr class="text-white my-4">
       <div class="row align-items-center">
         <div class="col-12 text-center text-md-start mb-3 mb-md-0">
           <p class="mb-0">&copy; 2026 GymBoost. All rights reserved.</p>
-          <p class="mb-0">Purok 1, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas.</p>
         </div>
       </div>
     </div>
@@ -185,7 +196,7 @@ if (isset($_GET['page'])) {
       });
     });
   </script>
-  
+
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

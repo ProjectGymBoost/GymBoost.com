@@ -390,3 +390,83 @@ ul li a i {
     font-size: 0.9rem;
   }
 }
+
+.feature-card {
+  border: none;
+  padding: 2rem;
+  min-height: 100%;
+  color: var(--text-color-light);
+  background: var(--primaryColor);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  font-size: 13rem;
+  color: rgba(255, 255, 255, 0.06); /* Very subtle white */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card-services::before {
+  content: "\f44b"; 
+}
+
+.card-facilities::before {
+  content: "\f554"; 
+}
+
+.card-programs::before {
+  content: "\f2f2";
+}
+
+.feature-card * {
+  position: relative;
+  z-index: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.feature-card h4 {
+  font-family: var(--headingFont);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.feature-card ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.feature-card ul li::before {
+  content: "\f00c";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 0;
+  top: 0.15rem; 
+  color: var(--text-color-light);
+  font-size: 0.85rem;
+}
+
+
