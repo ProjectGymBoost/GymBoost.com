@@ -2,18 +2,18 @@
 session_start();
 
 if (!empty($_SESSION['userID'])) {
-    if (!empty($_SESSION['lastVisited'])) {
-        header("Location: " . $_SESSION['lastVisited']);
-        exit();
-    }
-
-    // Fallback 
-    if ($_SESSION['role'] === 'admin') {
-        header("Location: /GymBoost.com/admin/index.php");
-    } else {
-        header("Location: /GymBoost.com/user/index.php?page=dashboard");
-    }
+  if (!empty($_SESSION['lastVisited'])) {
+    header("Location: " . $_SESSION['lastVisited']);
     exit();
+  }
+
+  // Fallback 
+  if ($_SESSION['role'] === 'admin') {
+    header("Location: /GymBoost.com/admin/index.php");
+  } else {
+    header("Location: /GymBoost.com/user/index.php?page=dashboard");
+  }
+  exit();
 }
 
 
@@ -51,6 +51,7 @@ if (isset($_GET['page'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="icon" type="image/png" href="assets/img/logo/officialLogo.png">
   <link href="assets/css/styles.css" rel="stylesheet" />
   <link href="assets/css/web.css" rel="stylesheet" />
@@ -78,15 +79,15 @@ if (isset($_GET['page'])) {
         <ul class="navbar-nav text-start" style="font-weight:bold;">
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'home')
-              echo 'active'; ?>" href="?page=home">HOME</a>
+                                            echo 'active'; ?>" href="?page=home">HOME</a>
           </li>
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'membership-plans')
-              echo 'active'; ?>" href="?page=membership-plans">MEMBERSHIP PLANS</a>
+                                            echo 'active'; ?>" href="?page=membership-plans">MEMBERSHIP PLANS</a>
           </li>
           <li class="nav-item py-1 mx-2">
             <a class="nav-link px-4 py-1 <?php if ($page == 'faqs')
-              echo 'active'; ?>" href="?page=faqs">FAQs</a>
+                                            echo 'active'; ?>" href="?page=faqs">FAQs</a>
           </li>
           <li class="nav-item d-lg-none py-1 mx-2">
             <a class="btn btn-login mt-2" href="login.php">LOGIN</a>
@@ -122,7 +123,7 @@ if (isset($_GET['page'])) {
             <li class="subheading"><a href="" class="text-white text-decoration-none text-uppercase">Membership</a></li>
           </ul>
           <ul class="list-unstyled">
-            <li><a href="" class="text-white text-decoration-none">Terms & Conditions</a></li>
+            <!-- <li><a href="" class="text-white text-decoration-none">Terms & Conditions</a></li> -->
             <li><a href="?page=membership-plans" class="text-white text-decoration-none">Membership Plans</a></li>
             <li><a href="" class="text-white text-decoration-none">Contact Us</a></li>
           </ul>
@@ -143,27 +144,21 @@ if (isset($_GET['page'])) {
             <li class="subheading "><a href="" class="text-white text-decoration-none text-uppercase">Connect With Us</a></li>
           </ul>
           <ul class="list-unstyled d-flex justify-content-center justify-content-md-start">
-
             <li class="me-3">
-              <a href="https://github.com" class="text-white">
-                <i class="bi bi-github"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a href="https://twitter.com" class="text-white">
-                <i class="bi bi-twitter"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a href="https://facebook.com" class="text-white">
+              <a href="https://www.facebook.com/hardmusclebodyfitnessgym" class="text-white">
                 <i class="bi bi-facebook"></i>
               </a>
             </li>
             <li class="me-3">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hardbodyfitnessgym13@gmail.com" class="text-white" target="_blank">
+                <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" style="width:20px; height:20px;">
+              </a>
+            </li>
+            <!-- <li class="me-3">
               <a href="https://instagram.com" class="text-white">
                 <i class="bi bi-instagram"></i>
               </a>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -185,7 +180,7 @@ if (isset($_GET['page'])) {
       });
     });
   </script>
-  
+
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
