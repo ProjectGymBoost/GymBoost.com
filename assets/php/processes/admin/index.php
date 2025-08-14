@@ -24,23 +24,36 @@ try {
     $endOfMonth = date('Y-m-t');
 
     $stmt = $conn->prepare("
-        SELECT 
-            u.userID,
-            CONCAT(u.firstName, ' ', u.lastName) AS fullName,
-            COUNT(DISTINCT w.workoutID) AS workoutsThisMonth,
-            COUNT(DISTINCT a.attendanceID) * 5 AS points
-        FROM users u
-        LEFT JOIN workout_logs w 
-            ON u.userID = w.userID 
-            AND DATE(w.startDate) BETWEEN ? AND ?
-        LEFT JOIN attendances a
-            ON u.userID = a.userID 
-            AND DATE(a.checkinDate) BETWEEN ? AND ?
-        WHERE u.state = 'Active'
-        AND u.role = 'user'
-        GROUP BY u.userID
-        ORDER BY workoutsThisMonth DESC, points DESC
-        LIMIT 10
+        WITH aggregated AS (
+            SELECT 
+                u.userID,
+                CONCAT(u.firstName, ' ', u.lastName) AS fullName,
+                COUNT(DISTINCT w.workoutID) AS workoutsThisMonth,
+                COUNT(DISTINCT a.attendanceID) * 5 AS points
+            FROM users u
+            LEFT JOIN workout_logs w 
+                ON u.userID = w.userID 
+                AND DATE(w.startDate) BETWEEN ? AND ?
+            LEFT JOIN attendances a
+                ON u.userID = a.userID 
+                AND DATE(a.checkinDate) BETWEEN ? AND ?
+            WHERE u.state = 'Active'
+            AND u.role = 'user'
+            GROUP BY u.userID
+            HAVING workoutsThisMonth > 0 OR points > 0
+        ),
+        ranked AS (
+            SELECT 
+                aggregated.*,
+                DENSE_RANK() OVER (
+                    ORDER BY points DESC, workoutsThisMonth DESC
+                ) AS rankPosition
+            FROM aggregated
+        )
+        SELECT *
+        FROM ranked
+        WHERE rankPosition <= 10
+        ORDER BY rankPosition ASC, fullName ASC
     ");
     $stmt->bind_param("ssss", $startOfMonth, $endOfMonth, $startOfMonth, $endOfMonth);
     $stmt->execute();
