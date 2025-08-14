@@ -25,19 +25,19 @@ function loadTopMembersAndStats() {
                     </tr>
                 `;
             } else {
-                members.forEach((member, index) => {
+                members.forEach(member => {
                     let awardIcon = "";
-                    if (index === 0) awardIcon = '<i class="bi bi-award-fill text-warning me-2"></i>';
-                    else if (index === 1) awardIcon = '<i class="bi bi-award-fill text-primary me-2"></i>';
-                    else if (index === 2) awardIcon = '<i class="bi bi-award-fill text-secondary me-2"></i>';
+                    if (member.rankPosition === 1) awardIcon = '<i class="bi bi-award-fill text-warning me-2"></i>';
+                    else if (member.rankPosition === 2) awardIcon = '<i class="bi bi-award-fill text-primary me-2"></i>';
+                    else if (member.rankPosition === 3) awardIcon = '<i class="bi bi-award-fill text-secondary me-2"></i>';
 
-                    const name = index <= 2 ? `<strong>${member.fullName}</strong>` : member.fullName;
-                    const workouts = index <= 2 ? `<strong>${member.workoutsThisMonth}</strong>` : member.workoutsThisMonth;
-                    const points = index <= 2 ? `<strong>${member.points}</strong>` : member.points;
+                    const name = member.rankPosition <= 3 ? `<strong>${member.fullName}</strong>` : member.fullName;
+                    const workouts = member.rankPosition <= 3 ? `<strong>${member.workoutsThisMonth}</strong>` : member.workoutsThisMonth;
+                    const points = member.rankPosition <= 3 ? `<strong>${member.points}</strong>` : member.points;
 
                     tbody.innerHTML += `
                         <tr>
-                            <td class="d-flex align-items-center fw-bold">${awardIcon} ${index + 1}</td>
+                            <td class="d-flex align-items-center fw-bold">${awardIcon} ${member.rankPosition}</td>
                             <td>${name}</td>
                             <td>${workouts}</td>
                             <td>${points}</td>
@@ -45,6 +45,7 @@ function loadTopMembersAndStats() {
                     `;
                 });
             }
+
 
             // Dashboard Stats
             const stats = data.stats || {};
