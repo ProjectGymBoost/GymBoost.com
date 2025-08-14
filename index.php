@@ -139,7 +139,7 @@ if (isset($_GET['page'])) {
           <ul class="list-unstyled">
             <li class="me-3 mb-1">
               <a href="https://www.facebook.com/hardmusclebodyfitnessgym" class="text-white" target="_blank">
-                <i class="bi bi-facebook me-2" ></i>Hard Body Fitness Gym
+                <i class="bi bi-facebook me-2"></i>Hard Body Fitness Gym
               </a>
             </li>
             <li class="me-3 mb-1">
@@ -147,10 +147,15 @@ if (isset($_GET['page'])) {
                 <i class="bi bi-envelope-fill me-2"></i>hardbodyfitnessgym13@gmail.com
               </a>
             </li>
-            
-          <ul class="list-unstyled">
-            <li><i class="bi bi-telephone-fill mb-1 me-2"></i>+63 927 990 4177</li>
-          </ul>
+
+            <ul class="list-unstyled">
+              <li>
+                <i class="bi bi-telephone-fill mb-1 me-2"></i>
+                <a href="tel:+639279904177" class="text-white text-decoration-none">
+                  +63 927 990 4177
+                </a>
+              </li>
+            </ul>
           </ul>
 
         </div>
@@ -161,8 +166,14 @@ if (isset($_GET['page'])) {
           </ul>
 
           <ul class="list-unstyled">
-            <li><i class="bi bi-building-fill me-2"></i>Purok 1,
-              Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas.</li>
+            <li>
+              <i class="bi bi-building-fill me-2"></i>
+              <a href="https://www.google.com/maps?q=Purok+1,+Maharlika+Highway,+Brgy.+San+Rafael,+Sto.+Tomas+City,+Batangas"
+                target="_blank"
+                class="text-white text-decoration-none">
+                Purok 1, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas
+              </a>
+            </li>
           </ul>
 
         </div>
