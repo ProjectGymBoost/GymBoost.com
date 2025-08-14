@@ -151,7 +151,7 @@ if (isset($_GET['page'])) {
             <ul class="list-unstyled">
               <li>
                 <i class="bi bi-telephone-fill mb-1 me-2"></i>
-                <a href="tel:+639279904177" class="text-white text-decoration-none">
+                <a href="tel:+639279904177" class="text-white">
                   +63 927 990 4177
                 </a>
               </li>
@@ -162,7 +162,7 @@ if (isset($_GET['page'])) {
 
         <div class="col-12 col-md-4 text-center text-md-start">
           <ul class="list-unstyled mb-1">
-            <li class="subheading "><a href="" class="text-white text-decoration-none text-uppercase">ADDRESS</a></li>
+            <li class="subheading "><a href="" class="text-white text-uppercase">ADDRESS</a></li>
           </ul>
 
           <ul class="list-unstyled">
@@ -170,7 +170,7 @@ if (isset($_GET['page'])) {
               <i class="bi bi-building-fill me-2"></i>
               <a href="https://www.google.com/maps?q=Purok+1,+Maharlika+Highway,+Brgy.+San+Rafael,+Sto.+Tomas+City,+Batangas"
                 target="_blank"
-                class="text-white text-decoration-none">
+                class="text-white">
                 Purok 1, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas
               </a>
             </li>
