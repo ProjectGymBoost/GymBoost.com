@@ -48,9 +48,8 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
     <!-- COMMUNITY LEADERBOARD -->
     <div id="leaderboard" class="heading mt-5">COMMUNITY LEADERBOARD</div>
     <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
-    <div class="container my-5 px-0 overflow-scroll rounded-4"
-         style="max-height: 700px;">
-        <div class="bg-container text-white p-3 p-md-5 rounded-4">
+    <div class="container my-5 px-0 rounded-4 overflow-y-scroll" style="max-height: 700px; scrollbar-color: #f8f9fa #f8f9fa; scrollbar-width: thin;">
+        <div class="bg-container text-white p-3 p-md-5 rounded-5">
 
             <!-- Filter Buttons -->
             <div class="row row-cols-1 row-cols-md-3 g-2 g-md-5 mb-4 mb-md-5 mx-0">
