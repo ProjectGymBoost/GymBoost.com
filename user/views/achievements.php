@@ -48,7 +48,8 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
     <!-- COMMUNITY LEADERBOARD -->
     <div id="leaderboard" class="heading mt-5">COMMUNITY LEADERBOARD</div>
     <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
-    <div class="container my-5 px-0">
+    <div class="container my-5 px-0 overflow-scroll rounded-4"
+         style="max-height: 700px;">
         <div class="bg-container text-white p-3 p-md-5 rounded-4">
 
             <!-- Filter Buttons -->
