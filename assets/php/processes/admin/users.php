@@ -11,6 +11,7 @@ if (!empty($userSearch)) {
         OR users.userID LIKE '%$userSearch%' 
         OR users.firstName LIKE '%$userSearch%' 
         OR users.lastName LIKE '%$userSearch%' 
+        OR users.role LIKE '%$userSearch%'
         OR users.state LIKE '%$userSearch%'
         OR users.points LIKE '%$userSearch%'
     )";
@@ -19,10 +20,15 @@ if (!empty($userSearch)) {
 // FILTER BY
 $filterBy = $_GET['filterBy'] ?? 'none';
 $filterCondition = '';
+
 if ($filterBy === 'activeOnly') {
-    $filterCondition = "AND users.state = 'active'";
+    $filterCondition = "WHERE users.state = 'active'";
 } elseif ($filterBy === 'inactiveOnly') {
-    $filterCondition = "AND users.state = 'inactive'";
+    $filterCondition = "WHERE users.state = 'inactive'";
+} elseif ($filterBy === 'usersOnly') {
+    $filterCondition = "WHERE users.role = 'user'";
+} elseif ($filterBy === 'adminsOnly') {
+    $filterCondition = "WHERE users.role = 'admin'";
 }
 
 // SORT AND ORDER BY
@@ -53,7 +59,6 @@ $offset = ($currentPage - 1) * $entriesCount;
 $totalQuery = "
     SELECT COUNT(*) AS total
     FROM users
-    WHERE role = 'user'
     $filterCondition
     $searchCondition
 ";
@@ -72,7 +77,6 @@ $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 
 $userInfoQuery = "
     SELECT *
     FROM users
-    WHERE role = 'user'
     $filterCondition
     $searchCondition
     $orderCondition

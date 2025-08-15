@@ -284,7 +284,7 @@ if (!empty($userSearch)) {
 $sortBy = $_GET['sortBy'] ?? 'none';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
-$allowedSortColumns = ['badgeID', 'username', 'dateEarned'];
+$allowedSortColumns = ['badgeID', 'name', 'dateEarned'];
 $allowedOrder = ['ASC', 'DESC'];
 
 if (in_array($sortBy, $allowedSortColumns) && in_array($orderBy, $allowedOrder)) {
@@ -327,7 +327,7 @@ $endEntry = ($totalEntries > 0) ? min($offset + $entriesCount, $totalEntries) : 
 $userBadgeInfoQuery = "
     SELECT 
     user_badges.*, 
-    CONCAT(users.firstName, ' ', users.lastName) AS username
+    CONCAT(users.firstName, ' ', users.lastName) AS name
     FROM 
         user_badges
     JOIN 
@@ -350,7 +350,7 @@ if (mysqli_num_rows($userBadgeInfoResult) > 0) {
 // (USER-BADGES) - DELETE QUERY
 if (isset($_POST['btnDeleteAlt'])) {
     $deleteUserBadgeId = $_POST['deleteUserBadgeId'];
-    $deleteUsername = $_POST['deleteUsername'];
+    $deleteName = $_POST['deleteName'];
 
     $deleteQuery = "DELETE FROM user_badges WHERE userBadgeID = $deleteUserBadgeId";
     executeQuery($deleteQuery);

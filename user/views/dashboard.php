@@ -27,7 +27,7 @@
             <div class="row justify-content-center mt-2">
               <div class="col-12 col-md-8 mx-4 mt-2">
                 <div class="rounded-box p-3 announcement-message"
-                  style="background-color:#bebebe; color:#333; font-weight:500; border-radius:8px; text-align: justify;">
+                  style="background-color:#bebebe; color:#333; font-weight:500; border-radius:8px; text-align: center;">
                   Nothing new to announce just yet. Check back soon for gym updates!
                 </div>
               </div>
