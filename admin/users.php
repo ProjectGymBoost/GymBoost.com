@@ -91,6 +91,12 @@ include("../assets/php/processes/admin/users.php");
                         <option value="inactiveOnly" <?= ($_GET['filterBy'] ?? '') === 'inactiveOnly' ? 'selected' : '' ?>>
                             Inactive
                         </option>
+                        <option value="usersOnly" <?= ($_GET['filterBy'] ?? '') === 'usersOnly' ? 'selected' : '' ?>>
+                            User
+                        </option>
+                        <option value="adminsOnly" <?= ($_GET['filterBy'] ?? '') === 'adminsOnly' ? 'selected' : '' ?>>
+                            Admin
+                        </option>
                     </select>
                 </div>
 
@@ -154,6 +160,7 @@ include("../assets/php/processes/admin/users.php");
                                 <th scope="col">ID</th>
                                 <th scope="col">FIRST NAME</th>
                                 <th scope="col">LAST NAME</th>
+                                <th scope="col">ROLE</th>
                                 <th scope="col">STATE</th>
                                 <th scope="col">POINTS</th>
                                 <th class="text-center" scope="col">ACTION</th>
@@ -163,7 +170,7 @@ include("../assets/php/processes/admin/users.php");
                         <!-- User Data -->
                         <?php if (empty($userInfoArray)): ?>
                             <tr>
-                                <td colspan="6" style="color:#D2042D; font-weight: bold; text-align: center;">NO USER DATA
+                                <td colspan="7" style="color:#D2042D; font-weight: bold; text-align: center;">NO USER DATA
                                     AVAILABLE</td>
                             </tr>
                         <?php endif; ?>
@@ -175,6 +182,7 @@ include("../assets/php/processes/admin/users.php");
                                     </td>
                                     <td><?= htmlspecialchars(substr($info['lastName'], 0, length: 30)) ?><?= strlen($info['lastName']) > 30 ? '...' : '' ?>
                                     </td>
+                                    <td><?= ucfirst(htmlspecialchars($info['role'])) ?></td>
                                     <td><?= htmlspecialchars($info['state']) ?></td>
                                     <td><?= htmlspecialchars($info['points']) ?></td>
                                     <td>

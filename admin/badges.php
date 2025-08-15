@@ -119,7 +119,7 @@ include("../assets/php/processes/admin/badges.php");
                         </option>
                         <option value="badgeID" <?= ($_GET['sortBy'] ?? '') === 'badgeID' ? 'selected' : '' ?>>Badge ID
                         </option>
-                        <option value="username" <?= ($_GET['sortBy'] ?? '') === 'username' ? 'selected' : '' ?>>Name
+                        <option value="name" <?= ($_GET['sortBy'] ?? '') === 'name' ? 'selected' : '' ?>>Name
                         </option>
                         <option value="dateEarned" <?= ($_GET['sortBy'] ?? '') === 'dateEarned' ? 'selected' : '' ?>>Date
                             Earned
@@ -190,7 +190,7 @@ include("../assets/php/processes/admin/badges.php");
                                 <tr>
                                     <td><?= htmlspecialchars($infoAlt['userBadgeID']) ?></td>
                                     <td><?= htmlspecialchars($infoAlt['badgeID']) ?></td>
-                                    <td><?= htmlspecialchars(substr($infoAlt['username'], 0, length: 50)) ?><?= strlen($infoAlt['username']) > 50 ? '...' : '' ?>
+                                    <td><?= htmlspecialchars(substr($infoAlt['name'], 0, length: 50)) ?><?= strlen($infoAlt['name']) > 50 ? '...' : '' ?>
                                     </td>
                                     <td><?= htmlspecialchars($infoAlt['dateEarned']) ?></td>
                                     <td>
