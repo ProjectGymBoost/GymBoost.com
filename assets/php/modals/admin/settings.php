@@ -345,7 +345,7 @@ endif; ?>
             <!-- Body -->
             <div class="modal-body text-center text-black" style="padding: 1.5rem;">
                 <p>
-                    <span style="color: #D2042D;">Are you sure you want to delete this account?</span><br><br>
+                    <span style="color: #D2042D;">Are you sure you want to delete this admin account?</span><br><br>
                     If you proceed, all associated data will be permanently removed.
                 </p>
             </div>
