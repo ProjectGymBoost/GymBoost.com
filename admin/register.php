@@ -33,8 +33,8 @@ include("../assets/shared/auth.php");
         .invalid-feedback {
             position: absolute;
             color: var(--text-color-light) !important;
-            white-space: normal; 
-            word-wrap: break-word; 
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         select.is-valid {
@@ -83,7 +83,25 @@ include("../assets/shared/auth.php");
                     <div class="d-flex justify-content-center align">
                         <div class="d-flex flex-column align-items-center gap-3 p-3 p-lg-5 card-bg-color"
                             style="width: 100%; max-width: 800px; border-radius: 10px;">
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-2">
+                                    <label for="accountSelect" class="mb-0 fw-bold"
+                                        style="white-space: nowrap; color: var(--text-color-light); font-size: clamp(0.8rem, 2vw, 1.1rem)">Create
+                                        an account
+                                        for:</label>
+                                    <select name="accountSelect" id="accountSelect" class="form-select" required>
+                                        <option value="user" <?= ($_POST['accountSelect'] ?? '') === 'user' ? 'selected' : '' ?>>
+                                            User</option>
+                                        <option value="admin" <?= ($_POST['accountSelect'] ?? '') === 'admin' ? 'selected' : '' ?>>
+                                            Admin</option>
+                                    </select>
+                                </div>
+                                <div id="accountSelectError" class="invalid-feedback text-start"></div>
+                            </div>
+
                             <div class="d-flex flex-column flex-md-row gap-3 w-100">
+
                                 <!-- First Name -->
                                 <div class="w-100 mb-3">
                                     <input type="text" placeholder="First Name" class="form-control" name="firstName"
@@ -111,33 +129,37 @@ include("../assets/shared/auth.php");
                                     value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
                                     required>
                                 <div id="emailError" class="invalid-feedback text-start"></div>
-                                <input type="hidden" id="emailExistsError" class="text-start"
-                                    value="<?php echo $emailExistsError; ?>">
+                                <input type="hidden" id="emailExistsError"
+                                    value="<?php echo htmlspecialchars($emailExistsError); ?>">
                             </div>
 
                             <div class="d-flex flex-column flex-md-row gap-3 mb-3 w-100">
                                 <!-- RFID Number -->
-                                <div class="flex-grow-1 position-relative mb-3">
+                                <div class="flex-grow-1 position-relative mb-3" id="rfidContainer">
                                     <input type="text" placeholder="RFID Number" class="form-control" name="rfid"
                                         id="rfid" style="border-radius: 5px;"
                                         value="<?php echo isset($_POST['rfid']) ? htmlspecialchars($_POST['rfid']) : ''; ?>"
                                         required>
                                     <div id="rfidError" class="invalid-feedback text-start"></div>
-                                    <input type="hidden" id="rfidExistsError" class="text-start"
-                                        value="<?php echo $rfidExistsError ?>">
+                                    <input type="hidden" id="rfidExistsError"
+                                        value="<?php echo htmlspecialchars($rfidExistsError); ?>">
                                 </div>
 
                                 <!-- Birthday -->
-                                <div class="flex-grow position-relative mb-3">
-                                    <input type="date" class="form-control w-100" id="birthday" name="birthday"
-                                        style="border-radius: 5px;" required>
+                                <div class="flex-grow position-relative mb-3" id="birthdayContainer">
+                                    <i class="bi bi-cake2 position-absolute"
+                                        style="top: 50%; left: 8px; transform: translateY(-50%); color: #888888; font-size: 1rem;"></i>
+                                    <input type="date" class="form-control" id="birthday" name="birthday"
+                                        style="border-radius: 5px; padding-left: 2.0rem;" required
+                                        placeholder="Birthday">
                                     <div id="birthdayError" class="invalid-feedback text-start"></div>
                                 </div>
 
+
                                 <!-- Membership -->
-                                <div class="flex-grow-1">
+                                <div class="flex-grow-1" id="membershipContainer">
                                     <select class="form-select w-100" name="membershipID" id="membership" required>
-                                        <option selected disabled>Membership Plan</option>
+                                        <option value="" selected hidden>Membership Plan</option>
                                         <?php
                                         $membershipQuery = "
                                                         SELECT membershipID, planType 
