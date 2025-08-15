@@ -38,7 +38,7 @@ class User
         if ($userResult) {
             $userID = mysqli_insert_id($conn);
 
-            // Insert membership only for regular users
+            // Insert membership for users
             if ($role === "user" && $membershipID && $startDate && $endDate) {
                 $insertMemberQuery = "INSERT INTO user_memberships (userID, membershipID, startDate, endDate) 
                               VALUES ('$userID', '$membershipID', '$startDate', '$endDate')";
@@ -48,8 +48,6 @@ class User
                     return false;
                 }
             }
-
-            // ✅ Set session flags correctly
             $_SESSION['userCreated'] = true;
             $_SESSION['createdUserRole'] = $role;
 

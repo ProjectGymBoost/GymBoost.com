@@ -86,12 +86,14 @@ include("../assets/shared/auth.php");
 
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center gap-2">
-                                    <label for="accountSelect" class="mb-0 fw-bold" style="white-space: nowrap; color: var(--text-color-light)">Create an account for:</label>
+                                    <label for="accountSelect" class="mb-0 fw-bold"
+                                        style="white-space: nowrap; color: var(--text-color-light); font-size: clamp(0.8rem, 2vw, 1.1rem)">Create
+                                        an account
+                                        for:</label>
                                     <select name="accountSelect" id="accountSelect" class="form-select" required>
-                                        <option value="user" <?= ($_GET['accountSelect'] ?? '') === 'user' ? 'selected' : '' ?>>
-                                            User
-                                        </option>
-                                        <option value="admin" <?= ($_GET['accountSelect'] ?? '') === 'admin' ? 'selected' : '' ?>>
+                                        <option value="user" <?= ($_POST['accountSelect'] ?? '') === 'user' ? 'selected' : '' ?>>
+                                            User</option>
+                                        <option value="admin" <?= ($_POST['accountSelect'] ?? '') === 'admin' ? 'selected' : '' ?>>
                                             Admin</option>
                                     </select>
                                 </div>
@@ -127,8 +129,8 @@ include("../assets/shared/auth.php");
                                     value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
                                     required>
                                 <div id="emailError" class="invalid-feedback text-start"></div>
-                                <input type="hidden" id="emailExistsError" class="text-start"
-                                    value="<?php echo $emailExistsError; ?>">
+                                <input type="hidden" id="emailExistsError"
+                                    value="<?php echo htmlspecialchars($emailExistsError); ?>">
                             </div>
 
                             <div class="d-flex flex-column flex-md-row gap-3 mb-3 w-100">
@@ -139,16 +141,20 @@ include("../assets/shared/auth.php");
                                         value="<?php echo isset($_POST['rfid']) ? htmlspecialchars($_POST['rfid']) : ''; ?>"
                                         required>
                                     <div id="rfidError" class="invalid-feedback text-start"></div>
-                                    <input type="hidden" id="rfidExistsError" class="text-start"
-                                        value="<?php echo $rfidExistsError ?>">
+                                    <input type="hidden" id="rfidExistsError"
+                                        value="<?php echo htmlspecialchars($rfidExistsError); ?>">
                                 </div>
 
                                 <!-- Birthday -->
                                 <div class="flex-grow position-relative mb-3" id="birthdayContainer">
-                                    <input type="date" class="form-control w-100" id="birthday" name="birthday"
-                                        style="border-radius: 5px;" required>
+                                    <i class="bi bi-cake2 position-absolute"
+                                        style="top: 50%; left: 8px; transform: translateY(-50%); color: #888888; font-size: 1rem;"></i>
+                                    <input type="date" class="form-control" id="birthday" name="birthday"
+                                        style="border-radius: 5px; padding-left: 2.0rem;" required
+                                        placeholder="Birthday">
                                     <div id="birthdayError" class="invalid-feedback text-start"></div>
                                 </div>
+
 
                                 <!-- Membership -->
                                 <div class="flex-grow-1" id="membershipContainer">

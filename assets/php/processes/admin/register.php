@@ -17,7 +17,6 @@ $firstNameError = "";
 
 if (isset($_POST['btnRegister'])) {
     $role = sanitize($_POST['accountSelect']);
-
     $firstName = ucwords(strtolower(sanitize($_POST['firstName'])));
     $lastName = ucwords(strtolower(sanitize($_POST['lastName'])));
     $email = sanitize($_POST['email']);
@@ -48,11 +47,11 @@ if (isset($_POST['btnRegister'])) {
     $checkEmailResult = executeQuery("SELECT * FROM users WHERE email = '$email'");
 
     if (mysqli_num_rows($checkEmailResult) > 0) {
-        $emailExistsError = "emailExists";
+        $emailExistsError = ($role === 'admin') ? 'adminEmailExists' : 'userEmailExists';
     }
 
     if ($role === "user" && $rfid && mysqli_num_rows($checkRfidResult) > 0) {
-        $rfidExistsError = "rfidExists";
+        $rfidExistsError = "userRfidExists";
     }
 
     if (!$emailExistsError && !$rfidExistsError && $password === $confirmPassword) {
