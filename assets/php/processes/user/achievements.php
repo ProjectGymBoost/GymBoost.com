@@ -311,10 +311,10 @@ if ($hasLeaderboardData && mysqli_num_rows($userRankResult) > 0) {
     $userRankData = mysqli_fetch_assoc($userRankResult);
     $yourPoints = $userRankData['points'];
 
-    if ((int) $yourPoints > 0 && (int) $userRankData['rank'] <= 50) {
+    if ((int) $yourPoints > 0 && (int) $userRankData['rank'] < 100) {
         $yourRank = $userRankData['rank'];
     } else {
-        $yourRank = 'N/A';
+        $yourRank = '—';
     }
 } else {
     $yourRank = null;
