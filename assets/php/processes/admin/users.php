@@ -1,22 +1,4 @@
 <?php
-// SEARCH
-$search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
-
-$searchCondition = '';
-
-if (!empty($userSearch)) {
-    $searchCondition = "AND (
-        CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
-        OR users.userID LIKE '%$userSearch%' 
-        OR users.firstName LIKE '%$userSearch%' 
-        OR users.lastName LIKE '%$userSearch%' 
-        OR users.role LIKE '%$userSearch%'
-        OR users.state LIKE '%$userSearch%'
-        OR users.points LIKE '%$userSearch%'
-    )";
-}
-
 // FILTER BY
 $filterBy = $_GET['filterBy'] ?? 'none';
 $filterCondition = '';
@@ -29,6 +11,24 @@ if ($filterBy === 'activeOnly') {
     $filterCondition = "WHERE users.role = 'user'";
 } elseif ($filterBy === 'adminsOnly') {
     $filterCondition = "WHERE users.role = 'admin'";
+}
+
+// SEARCH
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
+
+$searchCondition = '';
+if (!empty($userSearch)) {
+    $prefix = empty($filterCondition) ? "WHERE" : "AND";
+    $searchCondition = " $prefix (
+        CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
+        OR users.userID LIKE '%$userSearch%' 
+        OR users.firstName LIKE '%$userSearch%' 
+        OR users.lastName LIKE '%$userSearch%' 
+        OR users.role LIKE '%$userSearch%'
+        OR users.state LIKE '%$userSearch%'
+        OR users.points LIKE '%$userSearch%'
+    )";
 }
 
 // SORT AND ORDER BY
