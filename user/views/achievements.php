@@ -48,7 +48,8 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
     <!-- COMMUNITY LEADERBOARD -->
     <div id="leaderboard" class="heading mt-5">COMMUNITY LEADERBOARD</div>
     <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
-    <div class="container my-5 px-0 rounded-4 overflow-y-scroll" style="max-height: 700px; scrollbar-color: #f8f9fa #f8f9fa; scrollbar-width: thin;">
+    <div class="container my-5 px-0 rounded-4 overflow-y-scroll"
+        style="max-height: 700px; scrollbar-color: #f8f9fa #f8f9fa; scrollbar-width: thin;">
         <div class="bg-container text-white p-3 p-md-5 rounded-5">
 
             <!-- Filter Buttons -->
@@ -93,9 +94,11 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
             // Function to determine badge class based on rank
             function getBadgeClassFromRank($rankPosition)
             {
-                $rankPosition = (int) $rankPosition;
-                $defaultClass = 'border border-dark text-dark';
+                if (!is_numeric($rankPosition)) {
+                    return 'border border-dark text-dark';
+                }
 
+                $rankPosition = (int) $rankPosition;
                 if ($rankPosition === 1) {
                     return 'bg-warning text-dark';
                 } elseif ($rankPosition === 2) {
@@ -103,7 +106,7 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
                 } elseif ($rankPosition === 3) {
                     return 'bg-orange text-white';
                 }
-                return $defaultClass;
+                return 'border border-dark text-dark';
             }
             ?>
 
@@ -132,7 +135,7 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
                     <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-2 mx-0">
                         <div class="col-3 col-sm-2">
                             <span class="badge <?= $badgeStyleClass ?> py-2 py-lg-3 px-3 fw-bold">
-                                <?= (int) $leaderboardEntry['rank'] ?>
+                                <?= is_numeric($leaderboardEntry['rank']) ? (int) $leaderboardEntry['rank'] : '—' ?>
                             </span>
                         </div>
                         <div class="col ps-2 fw-semibold text-truncate">
@@ -158,7 +161,7 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
                 <div class="bg-light text-dark d-flex align-items-center px-2 py-2 py-lg-3 rounded-3 mb-3 mx-0">
                     <div class="col-3 col-sm-2">
                         <span class="badge <?= $userBadgeClass ?> py-2 py-lg-3 px-3 fw-bold">
-                            <?= (int) $yourRank ?>
+                            <?= is_numeric($yourRank) ? (int) $yourRank : '—' ?>
                         </span>
                     </div>
                     <div class="col ps-2 fw-semibold text-truncate">You</div>

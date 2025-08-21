@@ -182,7 +182,7 @@ if ($filter === 'weekly') {
             SELECT pointsPerUser.userID,
                    CONCAT(users.firstName, ' ', users.lastName) AS username,
                    pointsPerUser.points,
-                   RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
+                   DENSE_RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
             FROM pointsPerUser
             JOIN users ON users.userID = pointsPerUser.userID
         )
@@ -206,7 +206,7 @@ if ($filter === 'weekly') {
             SELECT pointsPerUser.userID,
                    CONCAT(users.firstName, ' ', users.lastName) AS username,
                    pointsPerUser.points,
-                   RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
+                   DENSE_RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
             FROM pointsPerUser
             JOIN users ON users.userID = pointsPerUser.userID
         )
@@ -228,7 +228,7 @@ if ($filter === 'weekly') {
             SELECT pointsPerUser.userID,
                    CONCAT(users.firstName, ' ', users.lastName) AS username,
                    pointsPerUser.points,
-                   RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
+                   DENSE_RANK() OVER (ORDER BY pointsPerUser.points DESC) AS rank
             FROM pointsPerUser
             JOIN users ON users.userID = pointsPerUser.userID
         )
@@ -263,7 +263,7 @@ $userRankQuery = '';
 if ($filter === 'weekly') {
     $userRankQuery = "
         SELECT rank, points FROM (
-            SELECT userID, points, RANK() OVER (ORDER BY points DESC) AS rank
+            SELECT userID, points, DENSE_RANK() OVER (ORDER BY points DESC) AS rank
             FROM (
                 SELECT attendances.userID, COUNT(*) * 5 AS points
                 FROM attendances
@@ -279,7 +279,7 @@ if ($filter === 'weekly') {
 } elseif ($filter === 'monthly') {
     $userRankQuery = "
         SELECT rank, points FROM (
-            SELECT userID, points, RANK() OVER (ORDER BY points DESC) AS rank
+            SELECT userID, points, DENSE_RANK() OVER (ORDER BY points DESC) AS rank
             FROM (
                 SELECT attendances.userID, COUNT(*) * 5 AS points
                 FROM attendances
@@ -295,7 +295,7 @@ if ($filter === 'weekly') {
 } else {
     $userRankQuery = "
         SELECT rank, points FROM (
-            SELECT userID, points, RANK() OVER (ORDER BY points DESC) AS rank
+            SELECT userID, points, DENSE_RANK() OVER (ORDER BY points DESC) AS rank
             FROM users
             WHERE role = 'user'
               AND state = 'active'
@@ -311,10 +311,10 @@ if ($hasLeaderboardData && mysqli_num_rows($userRankResult) > 0) {
     $userRankData = mysqli_fetch_assoc($userRankResult);
     $yourPoints = $userRankData['points'];
 
-    if ((int) $yourPoints > 0 && (int) $userRankData['rank'] <= 50) {
+    if ((int) $yourPoints > 0 && (int) $userRankData['rank'] < 100) {
         $yourRank = $userRankData['rank'];
     } else {
-        $yourRank = 'N/A';
+        $yourRank = '—';
     }
 } else {
     $yourRank = null;
