@@ -31,7 +31,8 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
             <!-- Heading and Check-in Button -->
             <div class="col-12 mb-4 d-flex align-items-center justify-content-between">
                 <div class="heading text-center text-sm-start">ATTENDANCE</div>
-                <a href="../checkin.php" target="_blank" rel="noopener noreferrer"><button class="btn btn-primary">Check-in</button></a>
+                <a href="../checkin.php" target="_blank" rel="noopener noreferrer"><button
+                        class="btn btn-primary">Check-in</button></a>
             </div>
 
             <!-- Controls Form -->
@@ -126,14 +127,11 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                                             </li>
                                         </td>
                                     </tr>
-
-                                    <!-- Modals -->
-                                    <?php include('../assets/php/modals/admin/attendance.php'); ?>
-
-
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
+                        <!-- Modals -->
+                        <?php include('../assets/php/modals/admin/attendance.php'); ?>
                     </table>
                 </div>
             </div>

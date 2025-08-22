@@ -36,14 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (addForm && addModalEl) {
         const addFieldIDs = {
             planType: "planType",
-            requirement: "requirement",
+            validity: "validity",
             price: "price",
             planTypeError: "planTypeError",
-            requirementError: "requirementError",
+            validityError: "validityError",
             priceError: "priceError",
         };
 
-        [addFieldIDs.planType, addFieldIDs.requirement, addFieldIDs.price].forEach(fieldId => {
+        [addFieldIDs.planType, addFieldIDs.validity, addFieldIDs.price].forEach(fieldId => {
             const input = document.getElementById(fieldId);
             if (input) {
                 input.addEventListener("input", () => clearFieldState(fieldId, fieldId + "Error"));
@@ -53,10 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
         addForm.addEventListener("submit", function (e) {
             clearErrors(addForm);
             const isPlanTypeValid = validatePlanType(addFieldIDs.planType, addFieldIDs.planTypeError);
-            const isRequirementValid = validateRequirement(addFieldIDs.requirement, addFieldIDs.requirementError);
+            const isvalidityValid = validatevalidity(addFieldIDs.validity, addFieldIDs.validityError);
             const isPriceValid = validatePrice(addFieldIDs.price, addFieldIDs.priceError);
 
-            if (!isPlanTypeValid || !isRequirementValid || !isPriceValid) {
+            if (!isPlanTypeValid || !isvalidityValid || !isPriceValid) {
                 e.preventDefault();
 
                 const existingModal = bootstrap.Modal.getOrCreateInstance(addModalEl);
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 addForm.reset();
                 clearErrors(addForm);
-                ["planType", "requirement", "price"].forEach(id => {
+                ["planType", "validity", "price"].forEach(id => {
                     clearFieldState(id, id + "Error");
                     const input = document.getElementById(id);
                     if (input) {
@@ -98,12 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function validateRequirement(fieldId, errorId) {
+    function validatevalidity(fieldId, errorId) {
         const value = document.getElementById(fieldId)?.value.trim();
 
         const match = value.match(/^(\d+)\s+(day|days)$/i);
         if (!match) {
-            showError(fieldId, errorId, "Requirement must include a valid number followed by 'day' or 'days'.");
+            showError(fieldId, errorId, "validity must include a valid number followed by 'day' or 'days'.");
             return false;
         }
 
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
-            showError(fieldId, errorId, "Requirement must not contain special characters.");
+            showError(fieldId, errorId, "validity must not contain special characters.");
             return false;
         }
 

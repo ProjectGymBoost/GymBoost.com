@@ -60,8 +60,8 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                         </option>
                         <option value="planType" <?= ($_GET['sortBy'] ?? '') === 'planType' ? 'selected' : '' ?>>
                             Plan Type</option>
-                        <option value="requirement" <?= ($_GET['sortBy'] ?? '') === 'requirement' ? 'selected' : '' ?>>
-                            Requirement</option>
+                        <option value="validity" <?= ($_GET['sortBy'] ?? '') === 'validity' ? 'selected' : '' ?>>
+                            Validity</option>
                         <option value="price" <?= ($_GET['sortBy'] ?? '') === 'price' ? 'selected' : '' ?>>
                             Price</option>
                     </select>
@@ -110,7 +110,7 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">PLAN TYPE</th>
-                                <th scope="col">REQUIREMENT</th>
+                                <th scope="col">VALIDITY</th>
                                 <th scope="col">PRICE</th>
                                 <th class="text-center" scope="col">ACTION</th>
                             </tr>
@@ -128,7 +128,7 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                                     <tr>
                                         <td><?= htmlspecialchars($info['membershipID']) ?></td>
                                         <td><?= htmlspecialchars($info['planType']) ?></td>
-                                        <td><?= htmlspecialchars($info['requirement']) ?></td>
+                                        <td><?= htmlspecialchars($info['validity']) ?></td>
                                         <td>₱<?= htmlspecialchars(number_format($info['price'], 2)) ?></td>
                                         <td style="display: flex; justify-content: center;">
                                             <li>

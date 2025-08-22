@@ -164,7 +164,7 @@ include("../assets/shared/auth.php");
                                         $membershipQuery = "
                                                         SELECT membershipID, planType 
                                                         FROM memberships
-                                                        ORDER BY CAST(SUBSTRING_INDEX(requirement, ' ', 1) AS UNSIGNED) ASC
+                                                        ORDER BY CAST(SUBSTRING_INDEX(validity, ' ', 1) AS UNSIGNED) ASC
                                                     ";
                                         $membershipResult = executeQuery($membershipQuery);
                                         while ($membership = mysqli_fetch_assoc($membershipResult)) {

@@ -35,8 +35,8 @@ if (mysqli_num_rows($userInfoResult) > 0) {
 }
 
 if (isset($_POST['btnSaveInfo'])) {
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
+    $firstName = ucwords(strtolower($_POST['firstName']));
+    $lastName = ucwords(strtolower($_POST['lastName']));
     $userID = $_SESSION['userID'];
 
     $updateInfoQuery = "UPDATE users SET firstName = '$firstName',

@@ -62,16 +62,16 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                             </div>
                         </div>
 
-                        <!-- Requirement -->
+                        <!-- validity -->
                         <div class="mb-4 text-start">
-                            <label for="editRequirement<?= $info['membershipID'] ?>" class="form-label fw-bold">Requirement
+                            <label for="editvalidity<?= $info['membershipID'] ?>" class="form-label fw-bold">Validity
                                 (in days)</label>
-                            <input type="text" id="editRequirement<?= $info['membershipID'] ?>" name="requirement"
-                                data-original-value="<?= htmlspecialchars($info['requirement']) ?>"
-                                class="form-control <?= isset($editPlanErrors[$info['membershipID']]['requirement']) ? 'is-invalid' : '' ?>"
-                                value="<?= htmlspecialchars($editPlanData[$info['membershipID']]['requirement'] ?? $info['requirement']) ?>">
-                            <div id="editRequirementError<?= $info['membershipID'] ?>" class="invalid-feedback small">
-                                <?= $editPlanErrors[$info['membershipID']]['requirement'] ?? '' ?>
+                            <input type="text" id="editvalidity<?= $info['membershipID'] ?>" name="validity"
+                                data-original-value="<?= htmlspecialchars($info['validity']) ?>"
+                                class="form-control <?= isset($editPlanErrors[$info['membershipID']]['validity']) ? 'is-invalid' : '' ?>"
+                                value="<?= htmlspecialchars($editPlanData[$info['membershipID']]['validity'] ?? $info['validity']) ?>">
+                            <div id="editvalidityError<?= $info['membershipID'] ?>" class="invalid-feedback small">
+                                <?= $editPlanErrors[$info['membershipID']]['validity'] ?? '' ?>
                             </div>
                         </div>
 
@@ -278,13 +278,13 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                     </div>
 
                     <div class="mb-4 text-start">
-                        <label for="requirement" class="form-label fw-bold">Requirement (in days)</label>
-                        <input type="text" name="requirement" id="requirement"
-                            class="form-control <?= isset($_SESSION['addPlanErrors']['requirement']) ? 'is-invalid' : (isset($_SESSION['requirement']) ? 'is-valid' : '') ?>"
+                        <label for="validity" class="form-label fw-bold">Validity (in days)</label>
+                        <input type="text" name="validity" id="validity"
+                            class="form-control <?= isset($_SESSION['addPlanErrors']['validity']) ? 'is-invalid' : (isset($_SESSION['validity']) ? 'is-valid' : '') ?>"
                             placeholder="e.g., 1 day or 30 days"
-                            value="<?= htmlspecialchars($_SESSION['requirement'] ?? '') ?>">
-                        <div id="requirementError" class="invalid-feedback">
-                            <?= $_SESSION['addPlanErrors']['requirement'] ?? '' ?>
+                            value="<?= htmlspecialchars($_SESSION['validity'] ?? '') ?>">
+                        <div id="validityError" class="invalid-feedback">
+                            <?= $_SESSION['addPlanErrors']['validity'] ?? '' ?>
                         </div>
                     </div>
 
@@ -327,7 +327,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
 
 
 <?php
-unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price']);
+unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['validity'], $_SESSION['price']);
 ?>
 
 <!-- Confirmation modal after success -->
@@ -358,7 +358,7 @@ unset($_SESSION['addPlanErrors'], $_SESSION['planType'], $_SESSION['requirement'
 
 <?php
 unset($_SESSION['addPlanErrors']);
-unset($_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price']);
+unset($_SESSION['planType'], $_SESSION['validity'], $_SESSION['price']);
 ?>
 <div class="modal fade" id="confirmAddMembershipModal" tabindex="-1" aria-labelledby="confirmAddMembershipModalLabel"
     aria-hidden="true">
