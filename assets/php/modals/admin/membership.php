@@ -44,7 +44,7 @@
                                 <?php foreach ($membershipPlans as $plan): ?>
                                 <option 
                                     value="<?= $plan['membershipID']; ?>" 
-                                    data-requirement="<?= $plan['requirement']; ?>"
+                                    data-validity="<?= $plan['validity']; ?>"
                                     <?= ($plan['membershipID'] == $info['membershipID']) ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($plan['planType']); ?>
                                 </option>
@@ -101,8 +101,8 @@
                         // Auto-set end date when plan changes
                         function updateEndDate() {
                             const selectedOption = planSelect.options[planSelect.selectedIndex];
-                            const requirement = selectedOption.getAttribute('data-requirement');
-                            const daysMatch = requirement ? requirement.match(/(\d+)\s*days?/i) : null;
+                            const validity = selectedOption.getAttribute('data-validity');
+                            const daysMatch = validity ? validity.match(/(\d+)\s*days?/i) : null;
                             if (!daysMatch) return;
 
                             const duration = parseInt(daysMatch[1], 10);

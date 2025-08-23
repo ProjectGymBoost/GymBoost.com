@@ -2,15 +2,15 @@
 $sortBy = $_GET['sortBy'] ?? 'membershipID';
 $orderBy = isset($_GET['orderBy']) ? strtoupper($_GET['orderBy']) : 'ASC';
 
-$allowedSortColumns = ['membershipID', 'planType', 'requirement', 'price'];
+$allowedSortColumns = ['membershipID', 'planType', 'validity', 'price'];
 $allowedOrder = ['ASC', 'DESC'];
 
 if (!in_array($sortBy, $allowedSortColumns) || !in_array($orderBy, $allowedOrder)) {
     $sortBy = 'membershipID';
     $orderBy = 'ASC';
 }
-if ($sortBy === 'requirement' || $sortBy === 'planType') {
-    $orderCondition = "ORDER BY CAST(SUBSTRING_INDEX(requirement, ' ', 1) AS UNSIGNED) $orderBy";
+if ($sortBy === 'validity' || $sortBy === 'planType') {
+    $orderCondition = "ORDER BY CAST(SUBSTRING_INDEX(validity, ' ', 1) AS UNSIGNED) $orderBy";
 } else {
     $orderCondition = "ORDER BY $sortBy $orderBy";
 }
@@ -52,11 +52,11 @@ if (mysqli_num_rows($result) > 0) {
 // ADD MEMBERSHIP PLAN
 if (isset($_POST['btnAddMembershipPlan'])) {
     $_SESSION['planType'] = $_POST['planType'] ?? '';
-    $_SESSION['requirement'] = $_POST['requirement'] ?? '';
+    $_SESSION['validity'] = $_POST['validity'] ?? '';
     $_SESSION['price'] = $_POST['price'] ?? '';
 
     $planType = trim($_SESSION['planType']);
-    $requirement = trim($_SESSION['requirement']);
+    $validity = trim($_SESSION['validity']);
     $price = trim($_SESSION['price']);
 
     $errors = [];
@@ -67,19 +67,19 @@ if (isset($_POST['btnAddMembershipPlan'])) {
         $errors['planType'] = "Plan type must not contain special characters.";
     }
 
-    if (!preg_match('/^(\d+)\s+(day|days)$/i', $requirement, $matches)) {
-        $errors['requirement'] = "Requirement must include a valid number followed by 'day' or 'days'.";
+    if (!preg_match('/^(\d+)\s+(day|days)$/i', $validity, $matches)) {
+        $errors['validity'] = "validity must include a valid number followed by 'day' or 'days'.";
     } else {
         $number = (int) $matches[1];
         $unit = strtolower($matches[2]);
 
         if (($number === 1 && $unit !== 'day') || ($number !== 1 && $unit !== 'days')) {
-            $errors['requirement'] = "Use 'day' for 1 and 'days' for numbers greater than 1.";
+            $errors['validity'] = "Use 'day' for 1 and 'days' for numbers greater than 1.";
         }
     }
 
-    if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
-        $errors['requirement'] = "Requirement must not contain special characters.";
+    if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $validity)) {
+        $errors['validity'] = "validity must not contain special characters.";
     }
     if (!preg_match('/^\d{1,3}(?:,\d{3})*(\.\d{2})?$/', $price)) {
         $errors['price'] = "Price must be in a valid format (e.g., 600.00 or 1,200.50).";
@@ -92,19 +92,19 @@ if (isset($_POST['btnAddMembershipPlan'])) {
     }
 
 
-    if (isDuplicateMembership($conn, $planType, $requirement, $price, $membershipID ?? null)) {
+    if (isDuplicateMembership($conn, $planType, $validity, $price, $membershipID ?? null)) {
         $errors['planType'] = "";
-        $errors['requirement'] = "";
+        $errors['validity'] = "";
         $errors['price'] = "This exact membership plan already exists.";
     } else {
-        if (isDuplicatePlanReq($conn, $planType, $requirement, $membershipID ?? null)) {
+        if (isDuplicatePlanReq($conn, $planType, $validity, $membershipID ?? null)) {
             $errors['planType'] = "";
-            $errors['requirement'] = "This plan type and requirement already exists.";
+            $errors['validity'] = "This plan type and validity already exists.";
         }
 
-        if (isDuplicateRequirementPrice($conn, $requirement, $price, $membershipID ?? null)) {
-            $errors['requirement'] = "";
-            $errors['price'] = "This requirement and price already exists.";
+        if (isDuplicatevalidityPrice($conn, $validity, $price, $membershipID ?? null)) {
+            $errors['validity'] = "";
+            $errors['price'] = "This validity and price already exists.";
         }
         if (isDuplicatePlanTypeAndPrice($conn, $planType, $price, $membershipID ?? null)) {
             $errors['planType'] = "";
@@ -122,12 +122,12 @@ if (isset($_POST['btnAddMembershipPlan'])) {
         exit;
     } else {
         $insertQuery = "
-            INSERT INTO memberships (planType, requirement, price)
-            VALUES ('$planType', '$requirement', '$price')
+            INSERT INTO memberships (planType, validity, price)
+            VALUES ('$planType', '$validity', '$price')
         ";
         executeQuery($insertQuery);
 
-        unset($_SESSION['planType'], $_SESSION['requirement'], $_SESSION['price'], $_SESSION['addPlanErrors']);
+        unset($_SESSION['planType'], $_SESSION['validity'], $_SESSION['price'], $_SESSION['addPlanErrors']);
         header("Location: " . $_SERVER['PHP_SELF'] . "?added=1&planTypeAdded=$planType&page=$currentPage&entriesCount=$entriesCount");
         exit;
     }
@@ -137,7 +137,7 @@ if (isset($_POST['btnAddMembershipPlan'])) {
 if (isset($_POST['btnEditMembershipPlan'])) {
     $membershipID = (int) $_POST['membershipID'];
     $planType = trim($_POST['planType']);
-    $requirement = trim($_POST['requirement']);
+    $validity = trim($_POST['validity']);
     $price = str_replace(',', '', $_POST['price']);
     $price = (float) $price;
 
@@ -148,10 +148,10 @@ if (isset($_POST['btnEditMembershipPlan'])) {
     $existingPlan = mysqli_fetch_assoc($existingResult);
 
     $existingPlanType = $existingPlan['planType'];
-    $existingRequirement = $existingPlan['requirement'];
+    $existingvalidity = $existingPlan['validity'];
     $existingPrice = $existingPlan['price'];
 
-    $isPlanModified = ($planType !== $existingPlanType || $requirement !== $existingRequirement);
+    $isPlanModified = ($planType !== $existingPlanType || $validity !== $existingvalidity);
     $isPriceModified = ($price !== $existingPrice);
 
     if ($planType === '') {
@@ -160,18 +160,18 @@ if (isset($_POST['btnEditMembershipPlan'])) {
         $errors['planType'] = "Plan type must not contain special characters.";
     }
 
-    if (!preg_match('/^(\d+)\s+(day|days)$/i', $requirement, $matches)) {
-        $errors['requirement'] = "Requires a valid number with 'day(s).'";
+    if (!preg_match('/^(\d+)\s+(day|days)$/i', $validity, $matches)) {
+        $errors['validity'] = "Requires a valid number with 'day(s).'";
     } else {
         $number = (int) $matches[1];
         $unit = strtolower($matches[2]);
         if (($number === 1 && $unit !== 'day') || ($number !== 1 && $unit !== 'days')) {
-            $errors['requirement'] = "Use 'day' for 1, 'days' for greater than 1.";
+            $errors['validity'] = "Use 'day' for 1, 'days' for greater than 1.";
         }
     }
 
-    if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $requirement)) {
-        $errors['requirement'] = "Requirement must not contain special characters.";
+    if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $validity)) {
+        $errors['validity'] = "validity must not contain special characters.";
     }
 
     if (!preg_match('/^\d{1,3}(?:,\d{3})*(?:\.\d{2})?$/', $_POST['price']) && !preg_match('/^\d+(\.\d{2})?$/', $_POST['price'])) {
@@ -183,17 +183,17 @@ if (isset($_POST['btnEditMembershipPlan'])) {
     }
 
     if ($isPriceModified) {
-        if (isDuplicateMembership($conn, $planType, $requirement, $price, $membershipID)) {
+        if (isDuplicateMembership($conn, $planType, $validity, $price, $membershipID)) {
             $errors['planType'] = "";
-            $errors['requirement'] = "";
+            $errors['validity'] = "";
             $errors['price'] = "This exact membership plan already exists.";
         }
     }
 
     if ($isPlanModified && !$isPriceModified) {
-        if (isDuplicatePlanReq($conn, $planType, $requirement, $membershipID)) {
+        if (isDuplicatePlanReq($conn, $planType, $validity, $membershipID)) {
             $errors['planType'] = "";
-            $errors['requirement'] = "This plan type and requirement already exists.";
+            $errors['validity'] = "This plan type and validity already exists.";
         }
     }
 
@@ -202,9 +202,9 @@ if (isset($_POST['btnEditMembershipPlan'])) {
         $errors['price'] = "This plan type and price already exists.";
     }
 
-    if (isDuplicatePlanTypeAndRequirement($conn, $planType, $requirement, $price, $membershipID ?? null)) {
+    if (isDuplicatePlanTypeAndvalidity($conn, $planType, $validity, $price, $membershipID ?? null)) {
         $errors['planType'] = "";
-        $errors['requirement'] = "This plan type and requirement already exists.";
+        $errors['validity'] = "This plan type and validity already exists.";
     }
     if ($planType !== $existingPlanType && isDuplicatePlanType($conn, $planType, $membershipID)) {
         $errors['planType'] = "This plan type name already exists.";
@@ -213,12 +213,12 @@ if (isset($_POST['btnEditMembershipPlan'])) {
 
     if (empty($errors)) {
         $planType = mysqli_real_escape_string($conn, $planType);
-        $requirement = mysqli_real_escape_string($conn, $requirement);
+        $validity = mysqli_real_escape_string($conn, $validity);
         $price = mysqli_real_escape_string($conn, $price);
 
         $updateQuery = "
             UPDATE memberships 
-            SET planType = '$planType', requirement = '$requirement', price = '$price' 
+            SET planType = '$planType', validity = '$validity', price = '$price' 
             WHERE membershipID = $membershipID
         ";
         executeQuery($updateQuery);
@@ -227,7 +227,7 @@ if (isset($_POST['btnEditMembershipPlan'])) {
         exit;
     } else {
         $_SESSION['editPlanErrors'][$membershipID] = $errors;
-        $_SESSION['editPlanData'][$membershipID] = compact('planType', 'requirement', 'price');
+        $_SESSION['editPlanData'][$membershipID] = compact('planType', 'validity', 'price');
         header("Location: " . $_SERVER['PHP_SELF'] . "?editError=1&editID=$membershipID&page=$currentPage&entriesCount=$entriesCount");
         exit;
     }
@@ -244,10 +244,10 @@ if (isset($_POST['btnDeleteMembershipPlan'])) {
     header("Location: " . $_SERVER['PHP_SELF'] . "?deleted=1&deletedID=$membershipID&planType=$planType&page=$currentPage&entriesCount=$entriesCount");
     exit;
 }
-function isDuplicateMembership($conn, $planType, $requirement, $price, $excludeID = null)
+function isDuplicateMembership($conn, $planType, $validity, $price, $excludeID = null)
 {
     $planTypeEsc = strtolower(mysqli_real_escape_string($conn, $planType));
-    $requirementEsc = strtolower(mysqli_real_escape_string($conn, $requirement));
+    $validityEsc = strtolower(mysqli_real_escape_string($conn, $validity));
     $priceEsc = mysqli_real_escape_string($conn, $price);
 
     $excludeSQL = $excludeID ? "AND membershipID != $excludeID" : "";
@@ -255,7 +255,7 @@ function isDuplicateMembership($conn, $planType, $requirement, $price, $excludeI
     $sql = "
         SELECT membershipID FROM memberships 
         WHERE LOWER(planType) = '$planTypeEsc' 
-          AND LOWER(requirement) = '$requirementEsc' 
+          AND LOWER(validity) = '$validityEsc' 
           AND price = '$priceEsc'
           $excludeSQL
     ";
@@ -264,16 +264,16 @@ function isDuplicateMembership($conn, $planType, $requirement, $price, $excludeI
     return mysqli_num_rows($result) > 0;
 }
 
-function isDuplicatePlanReq($conn, $planType, $requirement, $excludeID = null)
+function isDuplicatePlanReq($conn, $planType, $validity, $excludeID = null)
 {
     $planTypeEsc = strtolower(mysqli_real_escape_string($conn, $planType));
-    $requirementEsc = strtolower(mysqli_real_escape_string($conn, $requirement));
+    $validityEsc = strtolower(mysqli_real_escape_string($conn, $validity));
     $excludeSQL = $excludeID ? "AND membershipID != $excludeID" : "";
 
     $sql = "
         SELECT membershipID FROM memberships
         WHERE LOWER(planType) = '$planTypeEsc'
-          AND LOWER(requirement) = '$requirementEsc'
+          AND LOWER(validity) = '$validityEsc'
           $excludeSQL
     ";
 
@@ -281,15 +281,15 @@ function isDuplicatePlanReq($conn, $planType, $requirement, $excludeID = null)
     return mysqli_num_rows($result) > 0;
 }
 
-function isDuplicateRequirementPrice($conn, $requirement, $price, $excludeID = null)
+function isDuplicatevalidityPrice($conn, $validity, $price, $excludeID = null)
 {
-    $requirementEsc = strtolower(mysqli_real_escape_string($conn, $requirement));
+    $validityEsc = strtolower(mysqli_real_escape_string($conn, $validity));
     $priceEsc = mysqli_real_escape_string($conn, $price);
     $excludeSQL = $excludeID ? "AND membershipID != $excludeID" : "";
 
     $sql = "
         SELECT membershipID FROM memberships
-        WHERE LOWER(requirement) = '$requirementEsc'
+        WHERE LOWER(validity) = '$validityEsc'
           AND price = '$priceEsc'
           $excludeSQL
     ";
@@ -314,10 +314,10 @@ function isDuplicatePlanTypeAndPrice($conn, $planType, $price, $excludeID = null
     $result = executeQuery($sql);
     return mysqli_num_rows($result) > 0;
 }
-function isDuplicatePlanTypeAndRequirement($conn, $planType, $requirement, $price, $excludeID = null)
+function isDuplicatePlanTypeAndvalidity($conn, $planType, $validity, $price, $excludeID = null)
 {
     $planTypeEsc = strtolower(mysqli_real_escape_string($conn, $planType));
-    $requirementEsc = strtolower(mysqli_real_escape_string($conn, $requirement));
+    $validityEsc = strtolower(mysqli_real_escape_string($conn, $validity));
     $priceEsc = mysqli_real_escape_string($conn, $price);
 
     $excludeSQL = $excludeID ? "AND membershipID != $excludeID" : "";
@@ -325,7 +325,7 @@ function isDuplicatePlanTypeAndRequirement($conn, $planType, $requirement, $pric
     $sql = "
         SELECT membershipID FROM memberships
         WHERE LOWER(planType) = '$planTypeEsc'
-          AND LOWER(requirement) = '$requirementEsc'
+          AND LOWER(validity) = '$validityEsc'
           AND price != '$priceEsc'  -- Different price
           $excludeSQL
     ";

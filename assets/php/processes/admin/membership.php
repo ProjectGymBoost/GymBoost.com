@@ -130,7 +130,7 @@ if (isset($_POST['btnEditMembership'])) {
 
 // MEMBERSHIP PLANS QUERY
 $membershipPlans = [];
-$plansQuery = "SELECT membershipID, planType, requirement FROM memberships ORDER BY membershipID ASC";
+$plansQuery = "SELECT membershipID, planType, validity FROM memberships ORDER BY membershipID ASC";
 $plansResult = executeQuery($plansQuery);
 
 if (mysqli_num_rows($plansResult) > 0) {

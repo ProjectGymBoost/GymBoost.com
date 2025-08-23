@@ -498,7 +498,7 @@ endif; ?>
                     </h4>
                 </div>
                 <div class="modal-body text-center text-black">
-                    This account has been successfully deleted.<br>
+                    Your account has been successfully deleted.<br>
                     You will be logged out and will be redirected to the login page.
                 </div>
                 <div class="modal-footer d-flex justify-content-center pb-4" style="border: none;">

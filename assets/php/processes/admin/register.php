@@ -33,11 +33,11 @@ if (isset($_POST['btnRegister'])) {
         $membershipID = sanitize($_POST['membershipID']);
 
         $membershipResult = executeQuery("
-            SELECT requirement 
+            SELECT validity 
             FROM memberships 
             WHERE membershipID = '$membershipID'");
-        $requirement = mysqli_fetch_assoc($membershipResult)['requirement'];
-        $duration = (int) filter_var($requirement, FILTER_SANITIZE_NUMBER_INT);
+        $validity = mysqli_fetch_assoc($membershipResult)['validity'];
+        $duration = (int) filter_var($validity, FILTER_SANITIZE_NUMBER_INT);
         $startDate = date('Y-m-d');
         $endDate = date('Y-m-d', strtotime("+$duration days"));
 
