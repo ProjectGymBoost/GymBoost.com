@@ -11,7 +11,7 @@ include("../assets/php/processes/admin/renewal.php"); // Form POST logic
 $usersQuery = "SELECT u.userID, u.firstName, u.lastName FROM users u WHERE u.role = 'user' ORDER BY u.firstName ASC";
 $usersResult = mysqli_query($conn, $usersQuery);
 
-$membershipQuery = "SELECT * FROM memberships";
+$membershipQuery = "SELECT membershipID, planType, validity, price FROM memberships ORDER BY membershipID ASC";
 $membershipResult = mysqli_query($conn, $membershipQuery);
 ?>
 
@@ -111,8 +111,10 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                                 <label class="form-label fw-bold" style="color: var(--text-color-light)">Membership Plan</label>
                                 <select class="form-select" name="membershipID" id="membershipPlan" required>
                                     <?php while ($plan = mysqli_fetch_assoc($membershipResult)): ?>
-                                        <option value="<?= $plan['membershipID']; ?>"
-                                            data-requirement="<?= $plan['requirement']; ?>">
+                                        <option 
+                                            value="<?= $plan['membershipID']; ?>"
+                                            data-validity="<?= htmlspecialchars($plan['validity']); ?>"
+                                            data-price="<?= htmlspecialchars($plan['price']); ?>">
                                             <?= htmlspecialchars($plan['planType']); ?>
                                         </option>
                                     <?php endwhile; ?>
@@ -151,10 +153,10 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
         <!-- JS to auto-calculate endDate -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Enable Select2 on any .select2 elements
+                // Enable Select2
                 $('.select2').select2({
                     placeholder: 'Select User',
-                    width: '100%' // Make it full-width like Bootstrap
+                    width: '100%'
                 });
 
                 const planSelect = document.getElementById('membershipPlan');
@@ -163,21 +165,33 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
 
                 function updateEndDate() {
                     const selectedOption = planSelect.options[planSelect.selectedIndex];
-                    const requirement = selectedOption.getAttribute('data-requirement');
-                    const match = requirement.match(/(\d+)\s*days?/i);
+                    const validity = selectedOption.getAttribute('data-validity'); 
+                    if (!validity) return;
+
+                    // Extract number + unit (days, months, years)
+                    const match = validity.match(/(\d+)\s*(day|days|month|months|year|years)/i);
                     if (!match) return;
 
-                    const days = parseInt(match[1]);
+                    const value = parseInt(match[1]);
+                    const unit = match[2].toLowerCase();
                     const startDate = new Date(startInput.value);
                     if (isNaN(startDate)) return;
 
-                    startDate.setDate(startDate.getDate() + days);
+                    if (unit.includes('day')) {
+                        startDate.setDate(startDate.getDate() + value);
+                    } else if (unit.includes('month')) {
+                        startDate.setMonth(startDate.getMonth() + value);
+                    } else if (unit.includes('year')) {
+                        startDate.setFullYear(startDate.getFullYear() + value);
+                    }
+
                     const yyyy = startDate.getFullYear();
                     const mm = String(startDate.getMonth() + 1).padStart(2, '0');
                     const dd = String(startDate.getDate()).padStart(2, '0');
                     endInput.value = `${yyyy}-${mm}-${dd}`;
                 }
 
+                // Attach listeners
                 planSelect.addEventListener('change', updateEndDate);
                 startInput.addEventListener('change', updateEndDate);
             });
