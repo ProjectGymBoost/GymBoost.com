@@ -48,7 +48,7 @@ include("../assets/php/processes/admin/badges.php");
                         <thead class="align-middle">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">BADGE</th>
+                                <th scope="col">BADGE NAME</th>
                                 <th scope="col">DESCRIPTION</th>
                                 <th scope="col">REQUIREMENT VALUE</th>
                                 <th scope="col">ICON</th>
