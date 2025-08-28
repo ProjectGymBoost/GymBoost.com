@@ -2,18 +2,26 @@
 
 // SEARCH
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
+$searchSafe = mysqli_real_escape_string($conn, $search);
 
 $searchCondition = '';
+if (!empty($searchSafe)) {
+    // Split the search into words
+    $searchWords = explode(' ', $searchSafe);
 
-if (!empty($userSearch)) {
-    $searchCondition = "AND (
-        CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
-        OR attendances.attendanceID LIKE '%$userSearch%' 
-        OR users.firstName LIKE '%$userSearch%' 
-        OR users.lastName LIKE '%$userSearch%' 
-        OR attendances.checkinDate LIKE '%$userSearch%'
-    )";
+    $conditions = [];
+    foreach ($searchWords as $word) {
+        $wordSafe = mysqli_real_escape_string($conn, $word);
+
+        // Each word can match firstName, lastName, attendanceID, or checkinDate
+        $conditions[] = "(users.firstName LIKE '%$wordSafe%' 
+                          OR users.lastName LIKE '%$wordSafe%' 
+                          OR attendances.attendanceID LIKE '%$wordSafe%' 
+                          OR attendances.checkinDate LIKE '%$wordSafe%')";
+    }
+
+    // Require all words to match somewhere
+    $searchCondition = " AND (" . implode(" AND ", $conditions) . ")";
 }
 
 // SORT AND ORDER BY
