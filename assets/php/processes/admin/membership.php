@@ -5,14 +5,19 @@ $searchSafe = mysqli_real_escape_string($conn, $search);
 
 $searchCondition = '';
 if (!empty($searchSafe)) {
-    $searchCondition = " AND (
-        u.firstName LIKE '%$searchSafe%' 
-        OR u.lastName LIKE '%$searchSafe%' 
-        OR CONCAT(u.firstName, ' ', u.lastName) LIKE '%$searchSafe%'
-        OR u.rfidNumber LIKE '%$searchSafe%'
-        OR um.startDate LIKE '%$searchSafe%'
-        OR um.endDate LIKE '%$searchSafe%'
-    )";
+    // Split the search into words
+    $searchWords = explode(' ', $searchSafe);
+
+    $conditions = [];
+    foreach ($searchWords as $word) {
+        $wordSafe = mysqli_real_escape_string($conn, $word);
+
+        // Each word can match either firstName or lastName
+        $conditions[] = "(u.firstName LIKE '%$wordSafe%' OR u.lastName LIKE '%$wordSafe%')";
+    }
+
+    // Require all words to match somewhere
+    $searchCondition = " AND (" . implode(" AND ", $conditions) . ")";
 }
 
 // SORT AND ORDER BY
