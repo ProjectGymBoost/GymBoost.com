@@ -15,21 +15,30 @@ if ($filterBy === 'activeOnly') {
 
 // SEARCH
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
+$searchSafe = mysqli_real_escape_string($conn, $search);
 
 $searchCondition = '';
-if (!empty($userSearch)) {
+if (!empty($searchSafe)) {
+    // Split the search into words
+    $searchWords = explode(' ', $searchSafe);
+
+    $conditions = [];
+    foreach ($searchWords as $word) {
+        $wordSafe = mysqli_real_escape_string($conn, $word);
+
+        // Each word can match firstName, lastName, role, state, or points
+        $conditions[] = "(users.firstName LIKE '%$wordSafe%' 
+                          OR users.lastName LIKE '%$wordSafe%' 
+                          OR users.role LIKE '%$wordSafe%'
+                          OR users.state LIKE '%$wordSafe%'
+                          OR users.points LIKE '%$wordSafe%')";
+    }
+
+    // Decide prefix depending on whether filterCondition already exists
     $prefix = empty($filterCondition) ? "WHERE" : "AND";
-    $searchCondition = " $prefix (
-        CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
-        OR users.userID LIKE '%$userSearch%' 
-        OR users.firstName LIKE '%$userSearch%' 
-        OR users.lastName LIKE '%$userSearch%' 
-        OR users.role LIKE '%$userSearch%'
-        OR users.state LIKE '%$userSearch%'
-        OR users.points LIKE '%$userSearch%'
-    )";
+    $searchCondition = " $prefix (" . implode(" AND ", $conditions) . ")";
 }
+
 
 // SORT AND ORDER BY
 $sortBy = $_GET['sortBy'] ?? 'none';

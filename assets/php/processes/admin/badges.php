@@ -266,17 +266,26 @@ if (isset($_POST['btnDelete'])) {
 
 // (USER-BADGES) - SEARCH
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$userSearch = !empty($search) ? mysqli_real_escape_string($conn, $search) : '';
+$searchSafe = mysqli_real_escape_string($conn, $search);
 
 $searchCondition = '';
+if (!empty($searchSafe)) {
+    // Split the search into words
+    $searchWords = explode(' ', $searchSafe);
 
-if (!empty($userSearch)) {
-    $searchCondition = "AND (
-        user_badges.userBadgeID LIKE '%$userSearch%' 
-        OR CONCAT(users.firstName, ' ', users.lastName) LIKE '%$userSearch%' 
-        OR user_badges.badgeID LIKE '%$userSearch%' 
-        OR user_badges.dateEarned LIKE '%$userSearch%'
-    )";
+    $conditions = [];
+    foreach ($searchWords as $word) {
+        $wordSafe = mysqli_real_escape_string($conn, $word);
+
+        // Each word can match firstName, lastName, userID, role, state, or points
+        $conditions[] = "(users.firstName LIKE '%$wordSafe%' 
+                          OR users.lastName LIKE '%$wordSafe%' 
+                          OR user_badges.badgeID LIKE '%$wordSafe%'
+                          OR user_badges.dateEarned LIKE '%$wordSafe%')";
+    }
+
+    // Require all words to match somewhere
+    $searchCondition = " AND (" . implode(" AND ", $conditions) . ")";
 }
 
 
