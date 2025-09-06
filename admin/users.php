@@ -264,7 +264,7 @@ include("../assets/php/processes/admin/users.php");
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                     form.submit();
-                }, 500);
+                }, 1000);
             });
 
             // FOCUS BACK TO SEARCH INPUT AFTER RELOAD
