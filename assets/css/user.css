@@ -306,3 +306,15 @@ th {
     font-size: 0.75rem;
   }
 }
+
+#announcement .heading {
+  font-size: 2.6rem !important;
+  font-weight: bolder;
+  font-family: var(--headingFont);
+}
+
+@media (max-width: 575.98px) {
+  #announcement .heading {
+    font-size: 1.7rem !important;
+  }
+}
