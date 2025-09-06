@@ -12,7 +12,6 @@ include(__DIR__ . '/../assets/php/classes/classes.php');
 $userID = $_SESSION['userID'];
 $email = $_SESSION['email'] ?? "";
 
-// Redirects
 if (empty($_SESSION['userID']) || $_SESSION['role'] !== 'user') {
     header("Location: ../login.php");
     exit();
@@ -33,7 +32,20 @@ $userID = $_SESSION['userID'];
 $_SESSION['lastVisited'] = $_SERVER['REQUEST_URI'];
 $email = $_SESSION['email'] ?? "";
 
+// Direct to login page if user acc is deleted
+if (isset($_SESSION['userID'])) {
+    $userID = $_SESSION['userID'];
 
+    $checkUserQuery = "SELECT userID FROM users WHERE userID = $userID";
+    $result = executeQuery($checkUserQuery);
+
+    if (mysqli_num_rows($result) === 0) {
+        session_unset();
+        session_destroy();
+        header("Location: ../login.php");
+        exit;
+    }
+}
 
 include(__DIR__ . '/../assets/php/processes/user/achievements.php');
 

@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const match = value.match(/^(\d+)\s+(day|days)$/i);
         if (!match) {
-            showError(fieldId, errorId, "validity must include a valid number followed by 'day' or 'days'.");
+            showError(fieldId, errorId, "Requires a valid number with 'day(s).'");
             return false;
         }
 
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
-            showError(fieldId, errorId, "validity must not contain special characters.");
+            showError(fieldId, errorId, "Validity must not contain special characters.");
             return false;
         }
 
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // - Integer or decimal with exactly 2 decimal places
         // - Thousands separator with commas
         if (!/^\d{1,3}(?:,\d{3})*(\.\d{2})?$/.test(value)) {
-            showError(fieldId, errorId, "Price must be in a valid format (e.g., 600.00 or 1,200.50).");
+            showError(fieldId, errorId, "Use valid price format (600.00 or 1,200.50).");
             return false;
         }
 
