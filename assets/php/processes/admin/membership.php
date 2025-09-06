@@ -156,7 +156,7 @@ if (isset($_POST['btnDeleteMembership'])) {
         $deletedName = $_POST['deleteName'];
         header(
             "Location: " . $_SERVER['PHP_SELF'] .
-            "?deleted=1" .
+            "?deleted=1" .                                    
             "&deletedID=" . $deleteMembershipId .
             "&name=" . urlencode($deletedName) .
             "&page=" . $currentPage .

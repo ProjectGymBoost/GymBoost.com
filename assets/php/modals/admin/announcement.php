@@ -23,7 +23,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-end" style="padding: 1rem;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                    <button type="submit" id="openConfirmAdd" class="btn btn-primary">ADD</button>
+                    <button type="submit" class="btn btn-primary">ADD</button>
                 </div>
             </form>
         </div>

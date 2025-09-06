@@ -51,7 +51,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                                                <div class="mb-3 text-start position-relative">
+                            <div class="mb-3 text-start position-relative">
                             <label class="form-label fw-bold">Start Date</label>
                             <input type="date" class="form-control" name="editStartDate" id="editStartDate<?= $info['userMembershipID']; ?>" value="<?= $info['startDate']; ?>" required>
                             <div id="startDateError<?= $info['userMembershipID']; ?>" class="invalid-feedback text-start"></div>
@@ -213,6 +213,53 @@
         </div>
     </div>
 <?php endforeach; ?>
+
+<!-- Confirm Delete Modal (Only Once) -->
+<?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1' && isset($_GET['name'])): ?>
+    <div class="modal fade" id="confirmDeleteMembershipModalGeneric" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px; border: none;">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title heading text-center w-100 text-black m-0">MEMBERSHIP DELETED</h4>
+                </div>
+                <div class="modal-body text-center text-black">
+                    <strong><span style="color: #D2042D;"><?= htmlspecialchars($_GET['name']); ?>'s</span></strong>
+                    membership has been successfully deleted.
+                </div>
+                <div class="modal-footer d-flex justify-content-center pb-4 border-0">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Match backdrop opacity to edit modal -->
+    <style>
+        .modal-backdrop.show {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteMembershipModalGeneric'));
+            modal.show();
+
+            // clean URL (remove query params after showing modal)
+            const url = new URL(window.location);
+            url.searchParams.delete('deleted');
+            url.searchParams.delete('name');
+            history.replaceState(null, '', url.toString());
+        });
+
+        document.addEventListener('hidden.bs.modal', function () {
+            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+        });
+    </script>
+<?php endif; ?>
+
 
 <!-- Confirm Edit Modal (Only Once) -->
 <?php if (isset($_GET['updated']) && $_GET['updated'] == '1' && isset($_GET['name'])): ?>
