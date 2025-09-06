@@ -191,30 +191,6 @@ include("../assets/php/processes/admin/announcement.php");
 
     <!-- JavaScript for Modal Actions -->
     <script>
-        // ADD Announcement — guarded so it won't throw when elements are missing
-        const openConfirmAdd = document.getElementById('openConfirmAdd');
-        if (openConfirmAdd) {
-            openConfirmAdd.addEventListener('click', function () {
-            const title = document.getElementById('newAnnouncementTitle')?.value.trim() || '';
-            const message = document.getElementById('newAnnouncementDescription')?.value.trim() || '';
-
-            if (title && message) {
-                const confirmTitleEl = document.getElementById('confirmAddAnnouncementTitle');
-                if (confirmTitleEl) confirmTitleEl.innerText = title;
-
-                const modalEl = document.getElementById('confirmAddAnnouncementModal');
-                if (modalEl) new bootstrap.Modal(modalEl).show();
-            }
-            });
-        }
-
-        const confirmAddBtn = document.getElementById('confirmAddBtn');
-        if (confirmAddBtn) {
-            confirmAddBtn.addEventListener('click', function () {
-            document.getElementById('addAnnouncementForm')?.submit();
-            });
-        }
-
         // EDIT Announcement
         document.querySelectorAll('[data-confirm-edit-btn]').forEach(button => {
             button.addEventListener('click', function () {
@@ -269,7 +245,7 @@ include("../assets/php/processes/admin/announcement.php");
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                     form.submit();
-                }, 500);
+                }, 2000); // wait 2 seconds before submitting
             });
         });
 
