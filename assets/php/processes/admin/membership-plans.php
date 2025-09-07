@@ -81,7 +81,7 @@ if (isset($_POST['btnAddMembershipPlan'])) {
     if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $validity)) {
         $errors['validity'] = "Validity must not contain special characters.";
     }
-    if (!preg_match('/^\d{1,3}(?:,\d{3})*(\.\d{2})?$/', $price)) {
+    if (!preg_match('/^\d{1,3}(?:\d{3})*(\.\d{2})?$/', $price)) {
         $errors['price'] = "Use valid price format (600.00 or 1,200.50).";
     } else {
         $price = str_replace(',', '', $price);
@@ -174,8 +174,8 @@ if (isset($_POST['btnEditMembershipPlan'])) {
         $errors['validity'] = "Validity must not contain special characters.";
     }
 
-    if (!preg_match('/^\d{1,3}(?:,\d{3})*(?:\.\d{2})?$/', $_POST['price']) && !preg_match('/^\d+(\.\d{2})?$/', $_POST['price'])) {
-        $errors['price'] = "Use valid price format (600.00 or 1,200.50).";
+    if (!preg_match('/^\d{1,3}(?:\d{3})*(?:\.\d{2})?$/', $_POST['price']) && !preg_match('/^\d+(\.\d{2})?$/', $_POST['price'])) {
+        $errors['price'] = "Use valid price format (600.00 or 1200.50).";
     } elseif (preg_match('/[^0-9,\.]/', $_POST['price'])) {
         $errors['price'] = "Price must not contain special characters.";
     } elseif (strpos($_POST['price'], '-') !== false && strpos($_POST['price'], '-') !== 0) {

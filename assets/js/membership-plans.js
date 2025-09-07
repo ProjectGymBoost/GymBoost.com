@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Regular expression that accepts:
         // - Integer or decimal with exactly 2 decimal places
         // - Thousands separator with commas
-        if (!/^\d{1,3}(?:,\d{3})*(\.\d{2})?$/.test(value)) {
+        if (!/^\d{1,3}(?:\d{3})*(\.\d{2})?$/.test(value)) {
             showError(fieldId, errorId, "Use valid price format (600.00 or 1,200.50).");
             return false;
         }

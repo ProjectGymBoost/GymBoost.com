@@ -171,7 +171,7 @@ if (isset($_GET['page'])) {
               <a href="https://www.google.com/maps?q=Purok+1,+Maharlika+Highway,+Brgy.+San+Rafael,+Sto.+Tomas+City,+Batangas"
                 target="_blank"
                 class="text-white">
-                Purok 1, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas
+                Purok 3, Maharlika Highway, Brgy. San Rafael, Sto. Tomas City, Batangas
               </a>
             </li>
           </ul>
