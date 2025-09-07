@@ -49,7 +49,7 @@ if (isset($_POST['btnContinue']) && !empty($_POST['email'])) {
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'hardbodyfitnessgym13@gmail.com';
-                $mail->Password = 'vfko hohl crbg lgid';
+                $mail->Password = 'fivv fwln gysh qtup';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
@@ -190,7 +190,7 @@ if (isset($_POST['btnEmail'])) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'hardbodyfitnessgym13@gmail.com';
-        $mail->Password = 'vfko hohl crbg lgid';
+        $mail->Password = 'fivv fwln gysh qtup';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
@@ -301,7 +301,7 @@ if (isset($_POST['btnAdminEmail'])) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'hardbodyfitnessgym13@gmail.com';
-        $mail->Password = 'vfko hohl crbg lgid';
+        $mail->Password = 'fivv fwln gysh qtup';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 

@@ -44,7 +44,6 @@ if (isset($_POST['btnLogin'])) {
                     exit();
                 }
 
-
                 // Set session variables for active users
                 $_SESSION['userID'] = $user['userID'];
                 $_SESSION['firstName'] = $user['firstName'];

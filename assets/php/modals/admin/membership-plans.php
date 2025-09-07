@@ -78,17 +78,18 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         <!-- Price -->
                         <div class="mb-4 text-start">
                             <label for="editPrice<?= $info['membershipID'] ?>" class="form-label fw-bold">Price (₱)</label>
-                            <input type="text" id="editPrice<?= $info['membershipID'] ?>" name="price"
+                            <input type="number" id="editPrice<?= $info['membershipID'] ?>" step="0.01" name="price"
                                 data-original-value="<?= htmlspecialchars($info['price']) ?>"
                                 class="form-control <?= isset($editPlanErrors[$info['membershipID']]['price']) ? 'is-invalid' : '' ?>"
-                                value="<?= htmlspecialchars(number_format($editPlanData[$info['membershipID']]['price'] ?? $info['price'], 2)) ?>">
+                                value="<?= htmlspecialchars($editPlanData[$info['membershipID']]['price'] ?? $info['price']) ?>">
                             <div id="editPriceError<?= $info['membershipID'] ?>" class="invalid-feedback small">
                                 <?= $editPlanErrors[$info['membershipID']]['price'] ?? '' ?>
                             </div>
                         </div>
 
                         <!-- Footer -->
-                        <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0" style="border: none; padding: 1rem;">
+                        <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0"
+                            style="border: none; padding: 1rem;">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
                             <button type="submit" name="btnEditMembershipPlan" class="btn btn-primary m-0">
                                 SAVE CHANGES
@@ -290,7 +291,7 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
 
                     <div class="mb-4 text-start">
                         <label for="price" class="form-label fw-bold">Price (₱)</label>
-                        <input type="text" name="price" id="price"
+                        <input type="number" name="price" id="price" step="0.01"
                             class="form-control <?= isset($_SESSION['addPlanErrors']['price']) ? 'is-invalid' : (isset($_SESSION['price']) ? 'is-valid' : '') ?>"
                             placeholder="e.g., 1,100.00 or 100.00"
                             value="<?= htmlspecialchars($_SESSION['price'] ?? '') ?>">
@@ -299,7 +300,8 @@ $editPlanData = $_SESSION['editPlanData'] ?? [];
                         </div>
                     </div>
 
-                    <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0" style="border: none; padding: 1rem;">
+                    <div class="modal-footer d-flex justify-content-end gap-1 p-0 m-0"
+                        style="border: none; padding: 1rem;">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
                         <button type="submit" name="btnAddMembershipPlan" class="btn btn-primary m-0">ADD</button>
                     </div>

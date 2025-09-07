@@ -93,15 +93,20 @@ if (mysqli_num_rows($userInfoResult) > 0) {
     }
 }
 
-// DELETE QUERY 
+// DELETE ATTENDANCE
 if (isset($_POST['btnDelete'])) {
     $deleteAttendanceId = (int) $_POST['deleteAttendanceId'];
     $deleteFirstName = $_POST['deleteFirstName'];
     $deleteLastName = $_POST['deleteLastName'];
     $deleteDate = $_POST['deleteDate'];
 
+    // Delete attendance
     $deleteQuery = "DELETE FROM attendances WHERE attendanceID = $deleteAttendanceId";
     executeQuery($deleteQuery);
+
+    // Subtract 5 points from user
+    $updatePointsQuery = "UPDATE users SET points = points - 5 WHERE firstName = '$deleteFirstName' AND lastName = '$deleteLastName'";
+    executeQuery($updatePointsQuery);
 
     header(
         "Location: " . $_SERVER['PHP_SELF'] .
@@ -114,3 +119,4 @@ if (isset($_POST['btnDelete'])) {
     );
     exit;
 }
+

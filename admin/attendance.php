@@ -196,7 +196,7 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                     form.submit();
-                }, 500);
+                }, 2000); // wait 2 seconds before submitting
             });
         });
         if (searchInput && searchInput.value) {
