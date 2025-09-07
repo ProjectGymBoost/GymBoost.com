@@ -146,19 +146,30 @@ if (mysqli_num_rows($plansResult) > 0) {
 
 // DELETE MEMBERSHIP
 if (isset($_POST['btnDeleteMembership'])) {
-    $deleteMembershipId = $_POST['deleteMembershipId'];
+    $deleteMembershipId = (int) $_POST['deleteMembershipId']; // cast to int for safety
     $deleteName = $_POST['deleteName'];
 
+    // Get the userID linked to this membership
+    $userQuery = "SELECT userID FROM user_memberships WHERE userMembershipID = $deleteMembershipId";
+    $userResult = executeQuery($userQuery);
+    $userRow = mysqli_fetch_assoc($userResult);
+    $userID = $userRow ? (int) $userRow['userID'] : null;
+
+    // Delete the membership
     $deleteQuery = "DELETE FROM user_memberships WHERE userMembershipID = $deleteMembershipId";
     $result = executeQuery($deleteQuery);
 
-    if ($result) {
-        $deletedName = $_POST['deleteName'];
+    if ($result && $userID) {
+        // Mark the user as Inactive
+        $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
+        executeQuery($updateStateQuery);
+
+        // Redirect with success message
         header(
             "Location: " . $_SERVER['PHP_SELF'] .
             "?deleted=1" .                                    
             "&deletedID=" . $deleteMembershipId .
-            "&name=" . urlencode($deletedName) .
+            "&name=" . urlencode($deleteName) .
             "&page=" . $currentPage .
             "&entriesCount=" . $entriesCount .
             "&search=" . urlencode($search) .

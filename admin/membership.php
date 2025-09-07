@@ -229,7 +229,7 @@ $showDeleteModal = isset($membershipDeleted);
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                     form.submit();
-                }, 2500); // wait 2 seconds before submitting
+                }, 2000); // wait 2 seconds before submitting
             });
         });
 
