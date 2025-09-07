@@ -101,7 +101,7 @@ $membershipResult = mysqli_query($conn, $membershipQuery);
                                             </option>
                                         <?php endwhile; ?>
                                     <?php else: ?>
-                                        <option disabled selected>No active users available</option>
+                                        <option disabled selected>No users available</option>
                                     <?php endif; ?>
                                 </select>
                             </div>
