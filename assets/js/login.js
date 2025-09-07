@@ -53,12 +53,15 @@ function validatePassword() {
     const value = document.getElementById(field).value.trim();
 
     if (value.length < 8) {
-        showError(field, "Invalid password.");
+        showError(field, "Invalid email and password.");
+        showError("email", ""); 
         return false;
     }
     showValid(field);
+    showValid("email"); 
     return true;
 }
+
 
 function showError(field, message) {
     const inputField = document.getElementById(field);

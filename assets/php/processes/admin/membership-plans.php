@@ -68,7 +68,7 @@ if (isset($_POST['btnAddMembershipPlan'])) {
     }
 
     if (!preg_match('/^(\d+)\s+(day|days)$/i', $validity, $matches)) {
-        $errors['validity'] = "validity must include a valid number followed by 'day' or 'days'.";
+        $errors['validity'] = "Requires a valid number with 'day(s).'";
     } else {
         $number = (int) $matches[1];
         $unit = strtolower($matches[2]);
@@ -79,10 +79,10 @@ if (isset($_POST['btnAddMembershipPlan'])) {
     }
 
     if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $validity)) {
-        $errors['validity'] = "validity must not contain special characters.";
+        $errors['validity'] = "Validity must not contain special characters.";
     }
-    if (!preg_match('/^\d{1,3}(?:,\d{3})*(\.\d{2})?$/', $price)) {
-        $errors['price'] = "Price must be in a valid format (e.g., 600.00 or 1,200.50).";
+    if (!preg_match('/^\d{1,3}(?:\d{3})*(\.\d{2})?$/', $price)) {
+        $errors['price'] = "Use valid price format (600.00 or 1,200.50).";
     } else {
         $price = str_replace(',', '', $price);
 
@@ -171,11 +171,11 @@ if (isset($_POST['btnEditMembershipPlan'])) {
     }
 
     if (empty($errors) && !preg_match('/^[a-zA-Z0-9\- ]+$/', $validity)) {
-        $errors['validity'] = "validity must not contain special characters.";
+        $errors['validity'] = "Validity must not contain special characters.";
     }
 
-    if (!preg_match('/^\d{1,3}(?:,\d{3})*(?:\.\d{2})?$/', $_POST['price']) && !preg_match('/^\d+(\.\d{2})?$/', $_POST['price'])) {
-        $errors['price'] = "Price must be in a valid format (e.g., 1,200.00, 100.00).";
+    if (!preg_match('/^\d{1,3}(?:\d{3})*(?:\.\d{2})?$/', $_POST['price']) && !preg_match('/^\d+(\.\d{2})?$/', $_POST['price'])) {
+        $errors['price'] = "Use valid price format (600.00 or 1200.50).";
     } elseif (preg_match('/[^0-9,\.]/', $_POST['price'])) {
         $errors['price'] = "Price must not contain special characters.";
     } elseif (strpos($_POST['price'], '-') !== false && strpos($_POST['price'], '-') !== 0) {
