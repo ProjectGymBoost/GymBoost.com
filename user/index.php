@@ -111,11 +111,6 @@ $eventsJSON = $calendar->getEvents();
         }
 
         /* CSS for Announcement*/
-        .announcement .heading {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
         .announcement .announcement-message {
             font-size: 1rem;
             line-height: 1.5;
@@ -131,10 +126,6 @@ $eventsJSON = $calendar->getEvents();
         }
 
         @media (max-width: 576px) {
-            .announcement .heading {
-                font-size: 1.25rem;
-            }
-
             .announcement .announcement-message {
                 font-size: 0.85rem;
             }

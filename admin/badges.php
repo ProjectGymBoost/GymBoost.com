@@ -272,7 +272,7 @@ include("../assets/php/processes/admin/badges.php");
                 debounceTimer = setTimeout(() => {
                     form.action = "#userBadgeSection";
                     form.submit();
-                }, 500);
+                }, 2000);
             });
 
             // FOCUS BACK TO SEARCH INPUT AFTER RELOAD

@@ -201,7 +201,8 @@ if (
                                 <div class="text-danger small mt-1"><?= $iconUrlError ?></div>
                             <?php endif; ?>
                             <?php if (!empty($iconUrl)): ?>
-                                <div class="mt-2 text-muted small">
+                                <div class="mt-2 text-muted small"
+                                    style="word-wrap: break-word; overflow-wrap: break-word; word-break: break-all; max-width: 100%;">
                                     Current icon URL: <?= htmlspecialchars($iconUrl) ?>
                                 </div>
                             <?php endif; ?>
@@ -434,7 +435,7 @@ if (
                     <p style="margin: 0; font-size: 16px;">
                         <span style="color: #D2042D;">
                             Are you sure you want to delete
-                            <strong><?= htmlspecialchars($infoAlt['username']) ?>'s</strong>
+                            <strong><?= htmlspecialchars($infoAlt['name']) ?>'s</strong>
                             badge?
                         </span>
                         <br><br>
@@ -450,7 +451,7 @@ if (
                     <!-- Delete-BE Functionality-->
                     <form method="post">
                         <input type="hidden" name="deleteUserBadgeId" value="<?php echo $infoAlt['userBadgeID']; ?>">
-                        <input type="hidden" name="deleteUsername" value="<?php echo $infoAlt['username']; ?>">
+                        <input type="hidden" name="deleteName" value="<?php echo $infoAlt['name']; ?>">
                         <button type="submit" class="btn btn-primary" name="btnDeleteAlt" style="margin-left: 0.5rem;">
                             DELETE
                         </button>
