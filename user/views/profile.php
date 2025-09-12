@@ -90,16 +90,16 @@ $isDefaultPic = ($pfpFileName === 'defaultProfile.png');
 
             <div class="container px-5 mb-md-4">
               <div class="row px-0 px-lg-1">
-                <div class="col-md-6 col-12 mb-3 px-0 px-md-5 px-lg-4">
+                <div class="col-md-6 col-12 mb-3 px-0 px-md-5 px-lg-4 text-center text-md-start">
                   <div><b>First Name:</b> <?php echo $userInfoArray['firstName'] ?? 'N/A'; ?></div>
                 </div>
-                <div class="col-md-6 col-12 mb-3 px-0 px-md-3 text-md-start">
+                <div class="col-md-6 col-12 mb-3 px-0 px-md-3 text-center text-md-start">
                   <div><b>Last Name:</b> <?php echo $userInfoArray['lastName'] ?? 'N/A'; ?></div>
                 </div>
-                <div class="col-md-6 col-6 mb-3 px-0 px-md-5 px-lg-4">
+                <div class="col-md-6 col-12 mb-3 px-0 px-md-5 px-lg-4 text-center text-md-start">
                   <div><b>Age:</b> <?php echo $userInfoArray['age']; ?></div>
                 </div>
-                <div class="col-md-6 col-6 mb-3 px-0 px-md-3 text-md-start">
+                <div class="col-md-6 col-12 mb-3 px-0 px-md-3 text-center text-md-start">
                   <div><b>User ID:</b> <?php echo $userInfoArray['userID'] ?? 'N/A'; ?></div>
                 </div>
               </div>

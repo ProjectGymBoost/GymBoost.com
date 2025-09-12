@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let valid = true;
     clearErrors(profileForm);
 
-  // Validation
+    // Validation
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
 
@@ -95,8 +95,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (emailModal) {
     emailModal.addEventListener('shown.bs.modal', function () {
-      var emailInput = document.getElementById('email');
-      if (emailInput) emailInput.focus();
+      if (newEmailInput) {
+        newEmailInput.focus();
+      }
+    });
+
+
+    const newEmailInput = document.getElementById('newEmail');
+    const emailFeedback = document.getElementById('emailError');
+
+    emailModal.addEventListener('hidden.bs.modal', function () {
+      newEmailInput.value = '';
+      newEmailInput.classList.remove('is-invalid');
+      emailFeedback.textContent = '';
+
     });
   }
 
@@ -107,12 +119,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-if (currentPasswordErrorValue) {
-  editPassModal.show();
-  showError("currentPassword", currentPasswordErrorValue);
-} else if (accountUpdatedFlag === "true") {
-  setTimeout(() => confirmPassModal.show(), 300);
-}
+  if (currentPasswordErrorValue) {
+    editPassModal.show();
+    showError("currentPassword", currentPasswordErrorValue);
+  } else if (accountUpdatedFlag === "true") {
+    setTimeout(() => confirmPassModal.show(), 300);
+  }
 
   savePassChangesBtn.addEventListener("click", function (e) {
     e.preventDefault();
@@ -197,7 +209,7 @@ if (currentPasswordErrorValue) {
   function clearFormFields(form) {
     if (!form) return;
     form.querySelectorAll("input").forEach(input => {
-      input.value = ''; 
+      input.value = '';
     });
   }
 });

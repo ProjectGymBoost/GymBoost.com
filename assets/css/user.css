@@ -308,13 +308,13 @@ th {
 }
 
 #announcement .heading {
-  font-size: 2.6rem !important;
+  font-size: 2.8rem !important;
   font-weight: bolder;
   font-family: var(--headingFont);
 }
 
 @media (max-width: 575.98px) {
   #announcement .heading {
-    font-size: 1.7rem !important;
+    font-size: 1.8rem !important;
   }
 }

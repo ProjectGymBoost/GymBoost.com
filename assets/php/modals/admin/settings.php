@@ -93,14 +93,25 @@
 endif; ?>
 
 
+<?php if (isset($_SESSION['show_modal'])): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalId = "<?= $_SESSION['show_modal']; ?>";
+            const targetModal = new bootstrap.Modal(document.getElementById(modalId));
+            targetModal.show();
+        });
+    </script>
+    <?php
+    unset($_SESSION['show_modal']);
+endif; ?>
+
 <div class="modal fade" id="editAccountEmailModal" tabindex="-1" aria-labelledby="editAccountEmailModalLabel"
     aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <input type="hidden" name="btnSaveAccInfo" value="1">
         <div class="modal-content" style="border-radius: 15px;">
-            <form id="" method="POST">
+            <form id="editAccountEmailForm" method="POST">
 
-                <!-- Header -->
                 <div
                     style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
                     <h4 class="modal-title text-center subheading" id="editAccountInfoModalLabel"
@@ -112,7 +123,6 @@ endif; ?>
                     </button>
                 </div>
 
-                <!-- Body -->
                 <div class="modal-body" style="padding: 1.5rem;">
 
                     <div class="mb-3 text-start">
@@ -122,29 +132,26 @@ endif; ?>
                     </div>
 
                     <div class="mb-3 text-start">
-                        <label for="email" class="form-label fw-bold">New Email</label>
-                        <?php
-                        $emailInputValue = isset($_SESSION['oldEmailInput'])
-                            ? $_SESSION['oldEmailInput']
-                            : ($userInfoArray['email'] ?? '');
+                        <label for="newEmail" class="form-label fw-bold">New Email</label>
+                        <?php 
+                        $emailError = $_SESSION['emailInputError'] ?? '';
+                        $oldEmailInput = $_SESSION['oldEmailInput'] ?? '';
+                        $isInvalid = !empty($emailError) ? 'is-invalid' : '';
                         ?>
-                        <input type="text" class="form-control" name="verifyEmail" placeholder="Enter new email..."
-                            id="email">
-                        <span id="emailError" class="text-danger small d-block mt-1">
-                            <?= $_SESSION['emailInputError'] ?? '' ?>
-                        </span>
-                        <?php unset($_SESSION['emailInputError']); ?>
-
+                        <input type="text" class="form-control <?= $isInvalid ?>" name="verifyEmail" placeholder="Enter new email..."
+                            id="newEmail" value="<?= htmlspecialchars($oldEmailInput); ?>">
+                        <div class="invalid-feedback" id="emailError">
+                            <?= $emailError; ?>
+                        </div>
                     </div>
 
                 </div>
 
-                <!-- Footer -->
                 <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         CANCEL
                     </button>
-                    <button type="submit" name="btnAdminEmail" id="" class="btn btn-primary" style="margin-left: 0.5rem;">
+                    <button type="submit" name="btnAdminEmail" class="btn btn-primary" style="margin-left: 0.5rem;">
                         SAVE CHANGES
                     </button>
                 </div>
@@ -152,6 +159,12 @@ endif; ?>
         </div>
     </div>
 </div>
+
+<?php
+// Unset the session variables after they have been used to populate the form
+unset($_SESSION['emailInputError']);
+unset($_SESSION['oldEmailInput']);
+?>
 
 <!-- OTP Modal -->
 <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true"
@@ -175,8 +188,10 @@ endif; ?>
                 <div class="modal-body" style="padding: 1.5rem;">
                     <div class="mb-3 text-start">
                         <label for="otp" class="form-label fw-bold">Enter OTP sent to your new email.</label>
-                        <input type="number" class="form-control" placeholder="Enter OTP..." name="enteredOTP" id="otp">
-                        <span id="otpError" class="invalid-feedback small d-block mt-1">
+                        <input type="number"
+                            class="form-control <?= isset($_SESSION['otpError']) ? 'is-invalid' : '' ?>"
+                            placeholder="Enter OTP..." name="enteredOTP" id="otp">
+                        <span id="otpError" class="text-danger small d-block mt-1">
                             <?= $_SESSION['otpError'] ?? '' ?>
                         </span>
                         <?php unset($_SESSION['otpError']); ?>
