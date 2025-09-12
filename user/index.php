@@ -120,6 +120,7 @@ $eventsJSON = $calendar->getEvents();
 
         .invalid-feedback {
             position: absolute;
+            color: #D2042D !important;
         }
 
         /* CSS for Announcement*/

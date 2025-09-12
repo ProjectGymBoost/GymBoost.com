@@ -67,6 +67,29 @@ document.addEventListener("DOMContentLoaded", function () {
     return valid;
   }
 
+  // ========== EDIT ACCOUNT EMAIL MODAL ==========
+  const editEmailModalEl = document.getElementById('editAccountEmailModal');
+
+  if (editEmailModalEl) {
+
+     editEmailModalEl.addEventListener('shown.bs.modal', function () {
+            if (newEmailInput) {
+                newEmailInput.focus();
+            }
+        });
+        
+    const newEmailInput = document.getElementById('newEmail');
+    const emailFeedback = document.getElementById('emailError');
+
+    editEmailModalEl.addEventListener('hidden.bs.modal', function () {
+      newEmailInput.value = '';
+      newEmailInput.classList.remove('is-invalid');
+      emailFeedback.textContent = '';
+
+    });
+  }
+
+
   // ========== EDIT PASSWORD MODAL ==========
 
   const editPassModalEl = document.getElementById("editAccountPassModal");

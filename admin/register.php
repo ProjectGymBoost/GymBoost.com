@@ -147,11 +147,12 @@ include("../assets/shared/auth.php");
 
                                 <!-- Birthday -->
                                 <div class="flex-grow position-relative mb-3" id="birthdayContainer">
-                                    <i class="bi bi-cake2 position-absolute"
+                                    <i class="bi bi-calendar-date position-absolute"
                                         style="top: 50%; left: 8px; transform: translateY(-50%); color: #888888; font-size: 1rem;"></i>
-                                    <input type="date" class="form-control" id="birthday" name="birthday"
-                                        style="border-radius: 5px; padding-left: 2.0rem;" required
-                                        placeholder="Birthday">
+                                    <input type="text" class="form-control" id="birthday" name="birthday"
+                                        placeholder="Birthday" onfocus="(this.type='date')"
+                                        onblur="if(!this.value)this.type='text'"
+                                        style="border-radius: 5px; padding-left: 2.0rem;" required>
                                     <div id="birthdayError" class="invalid-feedback text-start"></div>
                                 </div>
 

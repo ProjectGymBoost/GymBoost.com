@@ -104,8 +104,17 @@ if (isset($_POST['btnDelete'])) {
     $deleteQuery = "DELETE FROM attendances WHERE attendanceID = $deleteAttendanceId";
     executeQuery($deleteQuery);
 
-    // Subtract 5 points from user
-    $updatePointsQuery = "UPDATE users SET points = points - 5 WHERE firstName = '$deleteFirstName' AND lastName = '$deleteLastName'";
+    // Get the current user's points
+    $selectPointsQuery = "SELECT points FROM users WHERE firstName = '$deleteFirstName' AND lastName = '$deleteLastName'";
+    $result = executeQuery($selectPointsQuery);
+    $row = mysqli_fetch_assoc($result);
+    $currentPoints = (int) $row['points'];
+
+    // Calculate new points, ensuring they don't go below zero
+    $newPoints = max(0, $currentPoints - 5);
+
+    // Update the user's points
+    $updatePointsQuery = "UPDATE users SET points = $newPoints WHERE firstName = '$deleteFirstName' AND lastName = '$deleteLastName'";
     executeQuery($updatePointsQuery);
 
     header(
@@ -119,4 +128,5 @@ if (isset($_POST['btnDelete'])) {
     );
     exit;
 }
+?>
 
