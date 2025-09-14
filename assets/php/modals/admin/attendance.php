@@ -34,6 +34,7 @@
               <input type="hidden" name="deleteFirstName" value="<?= $info['firstName']; ?>">
               <input type="hidden" name="deleteLastName" value="<?= $info['lastName']; ?>">
               <input type="hidden" name="deleteDate" value="<?= $info['checkinDate']; ?>">
+               <input type="hidden" name="currentPage" value="<?php echo htmlspecialchars($currentPage); ?>">
               <button type="submit" class="btn btn-primary" name="btnDelete">DELETE</button>
             </form>
           </div>

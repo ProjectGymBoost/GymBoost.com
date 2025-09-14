@@ -34,7 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rfid'])) {
                 $insertResult = executeQuery($insertAttendanceQuery);
 
                 if ($insertResult) {
-                    checkAndAssignBadges($conn, $userID);
+                    // Check and assign badges
+                    $newlyEarnedBadges = checkAndAssignBadges($conn, $userID);
+
+                    if (!empty($newlyEarnedBadges)) {
+                        $_SESSION['newlyEarnedBadges'] = $newlyEarnedBadges;
+                        $_SESSION['showNewBadge'] = true;
+                    }
                 }
 
                 $updatePointsQuery = "UPDATE users SET points = points + 5 WHERE userID = $userID";

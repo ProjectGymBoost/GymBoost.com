@@ -1,4 +1,5 @@
 <?php
+include(__DIR__ . '/../user/achievements.php');
 
 // SEARCH
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -99,15 +100,36 @@ if (isset($_POST['btnDelete'])) {
     $deleteFirstName = $_POST['deleteFirstName'];
     $deleteLastName = $_POST['deleteLastName'];
     $deleteDate = $_POST['deleteDate'];
+    $currentPage = isset($_POST['currentPage']) ? (int)$_POST['currentPage'] : 1;
 
-    // Delete attendance
-    $deleteQuery = "DELETE FROM attendances WHERE attendanceID = $deleteAttendanceId";
-    executeQuery($deleteQuery);
+    // Get the userID before deleting the attendance record
+    $getUserIDQuery = "SELECT userID FROM attendances WHERE attendanceID = $deleteAttendanceId";
+    $resultUserID = executeQuery($getUserIDQuery);
 
-    // Subtract 5 points from user
-    $updatePointsQuery = "UPDATE users SET points = points - 5 WHERE firstName = '$deleteFirstName' AND lastName = '$deleteLastName'";
-    executeQuery($updatePointsQuery);
+    if (mysqli_num_rows($resultUserID) > 0) {
+        $rowUserID = mysqli_fetch_assoc($resultUserID);
+        $userID = $rowUserID['userID'];
 
+        //Delete the attendance record
+        $deleteQuery = "DELETE FROM attendances WHERE attendanceID = $deleteAttendanceId";
+        executeQuery($deleteQuery);
+
+        checkAndAssignBadges($conn, $userID);
+
+        // Get the current user's points (more efficient to use userID)
+        $selectPointsQuery = "SELECT points FROM users WHERE userID = $userID";
+        $result = executeQuery($selectPointsQuery);
+        $row = mysqli_fetch_assoc($result);
+        $currentPoints = (int) $row['points'];
+
+        // Calculate new points
+        $newPoints = max(0, $currentPoints - 5);
+
+        // Update the user's points
+        $updatePointsQuery = "UPDATE users SET points = $newPoints WHERE userID = $userID";
+        executeQuery($updatePointsQuery);
+    }
+    
     header(
         "Location: " . $_SERVER['PHP_SELF'] .
         "?deleted=1" .
@@ -119,4 +141,5 @@ if (isset($_POST['btnDelete'])) {
     );
     exit;
 }
+?>
 

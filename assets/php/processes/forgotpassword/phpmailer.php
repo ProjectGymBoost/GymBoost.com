@@ -118,7 +118,7 @@ if (isset($_POST['btnChange'])) {
                         exit();
                     }
                 } else {
-                    $errors['db-error'] = "Failed to change your password!";
+                    $errors['db-error'] = "Failed to change your password.";
                 }
                 $stmt->close();
             } else {
@@ -239,9 +239,10 @@ if (isset($_POST['btnConfirmPass'])) {
         exit();
     } elseif ($enteredOtp !== $sessionOtp) {
         // OTP is incorrect
-        $_SESSION['otpError'] = "The OTP you entered is incorrect. Please try again.";
+        $_SESSION['otpError'] = "The OTP you entered is incorrect.";
         $_SESSION['show_modal'] = 'otpModal';
         header("Location: index.php?page=profile");
+        exit();
     }
 }
 
@@ -347,12 +348,13 @@ if (isset($_POST['btnAdminConfirmPass'])) {
         unset($_SESSION['otp_code'], $_SESSION['pending_email']);
         $_SESSION['show_modal'] = 'confirmEditEmailInfoModal';
         header("Location: {$_SERVER['PHP_SELF']}");
-        exit();
+        exit(); 
     } elseif ($enteredOtp !== $sessionOtp) {
         // OTP is incorrect
-        $_SESSION['otpError'] = "The OTP you entered is incorrect. Please try again.";
+        $_SESSION['otpError'] = "The OTP you entered is incorrect.";
         $_SESSION['show_modal'] = 'otpModal';
         header("Location: {$_SERVER['PHP_SELF']}");
+        exit(); 
     }
 }
 ?>
