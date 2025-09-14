@@ -218,7 +218,6 @@ $eventsJSON = $calendar->getEvents();
 
             <?php include("views/" . $page . ".php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/profile.php"); ?>
-            <?php include(__DIR__ . "/../assets/php/modals/user/achievements.php"); ?>
             <?php include(__DIR__ . "/../assets/php/modals/user/workout.php"); ?>
 
         </div>
@@ -299,22 +298,7 @@ $eventsJSON = $calendar->getEvents();
                 });
             });
         });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var modalToShow = "<?php echo isset($modalToShow) ? $modalToShow : ''; ?>";
-
-            if (modalToShow) {
-                var modal = new bootstrap.Modal(document.getElementById(modalToShow));
-                modal.show();
-            }
-        });
-
-        window.currentPage = "<?php echo $page; ?>";
-        window.showBadge = <?php echo isset($showNewBadge) && $showNewBadge ? 'true' : 'false'; ?>;
-        window.newlyEarnedBadges = <?php echo json_encode($newlyEarnedBadges ?? []); ?>;
-        window.modalToShow = "<?php echo isset($modalToShow) ? $modalToShow : ''; ?>";
     </script>
-    <script src="../assets/js/badges.js"></script>
 </body>
 
 </html>

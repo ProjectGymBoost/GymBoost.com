@@ -1,26 +1,52 @@
 <!-- ACHIEVEMENTS -->
 <?php
-$showNewBadge = false;
+// Check if the user has seen the modal.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dismiss_badge_modal'])) {
+    $userID = $_SESSION['userID'];
+    $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND dismissed = 0";
+    mysqli_query($conn, $updateQuery);
 
-if (isset($_SESSION['newlyEarnedBadges'])) {
-    $newlyEarnedBadges = $_SESSION['newlyEarnedBadges'];
-    $showNewBadge = true;
-    unset($_SESSION['newlyEarnedBadges']);
+    header("Location: ?page=achievements");
+    exit();
 }
+checkAndAssignBadges($conn, $userID);
+
+$showNewBadge = false;
+$newlyEarnedBadges = [];
+
+// Query the database directly for any newly earned, un-dismissed badges.
+$query = "SELECT b.badgeName, b.description, b.iconUrl
+          FROM user_badges ub
+          JOIN badges b ON ub.badgeID = b.badgeID
+          WHERE ub.userID = $userID AND ub.dismissed = 0";
+$result = mysqli_query($conn, $query);
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $badgeData = array();
+    $badgeData['badgeName'] = $row['badgeName'];
+    $badgeData['description'] = $row['description'];
+    $badgeData['iconUrl'] = $row['iconUrl'];
+    $newlyEarnedBadges[] = $badgeData;
+}
+
+if (!empty($newlyEarnedBadges)) {
+    $showNewBadge = true;
+}
+
+// Fetch the badges and earned badge IDs from the database to display
+$resultArr = fetchBadgesAndEarned($conn, $userID);
+$badgesResult = $resultArr[0];
+$earnedBadgeIDs = $resultArr[1];
 ?>
 
-
 <div class="container">
-
     <div class="container px-0 py-4 mb-3 mt-2">
         <div class="row">
             <div class="col-12">
                 <div class="heading">BADGES</div>
                 <hr class="border-3 border-dark opacity-100 m-0">
-
                 <div class="overflow-auto px-2 mt-5">
                     <div class="d-flex flex-nowrap justify-content-center gap-5 py-3 min-scroll-width">
-
                         <?php while ($badge = mysqli_fetch_assoc($badgesResult)): ?>
                             <?php
                             $isUnlocked = in_array($badge['badgeID'], $earnedBadgeIDs);
@@ -28,7 +54,6 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
                             $badgeName = htmlspecialchars($badge['badgeName']);
                             $badgeDesc = htmlspecialchars($badge['description']);
                             ?>
-
                             <div
                                 class="card text-center px-3 py-3 text-white rounded-4 bg-container badge-card <?= $isUnlocked ? '' : 'locked' ?>">
                                 <img src="<?= $badgeIcon ?>" class="img-fluid mx-auto mb-2 badge-image"
@@ -44,8 +69,75 @@ if (isset($_SESSION['newlyEarnedBadges'])) {
             </div>
         </div>
     </div>
+</div>
 
-    <!-- COMMUNITY LEADERBOARD -->
+<!-- Badge Earned Modal -->
+<div class="modal fade" id="badgeEarnedModal" tabindex="-1" aria-labelledby="badgeEarnedLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-header text-white" style="background-color: var(--primaryColor)">
+                <h5 class="modal-title" id="badgeEarnedLabel">🎉 New Badge Earned!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="badgeIcon" src="" alt="Badge Icon" class="img-fluid mb-3" style="max-width: 100px;" />
+                <h5 id="badgeName" class="fw-bold"></h5>
+                <p id="badgeDesc"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS for modal -->
+<script>
+    const showBadge = <?php echo json_encode($showNewBadge); ?>;
+    const newlyEarnedBadges = <?php echo json_encode($newlyEarnedBadges); ?>;
+    const currentPage = "achievements";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (currentPage === "achievements" && showBadge && newlyEarnedBadges.length > 0) {
+            const badge = newlyEarnedBadges[0];
+            document.getElementById('badgeIcon').src = `../assets/img/badges/${badge.iconUrl}`;
+            document.getElementById('badgeName').textContent = badge.badgeName;
+            document.getElementById('badgeDesc').textContent = badge.description;
+
+            const modal = new bootstrap.Modal(document.getElementById('badgeEarnedModal'));
+            modal.show();
+
+            // For audio
+            const audio = new Audio('../assets/img/badges/badge_audio.mp3');
+            audio.play();
+
+            setTimeout(() => {
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+            }, 300);
+        }
+
+        // Dismiss modal logic
+        const badgeModal = document.getElementById('badgeEarnedModal');
+        if (badgeModal) {
+            badgeModal.addEventListener('hide.bs.modal', () => {
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.style.display = "none";
+                const input = document.createElement("input");
+                input.name = "dismiss_badge_modal";
+                input.value = "1";
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            });
+        }
+    });
+</script>
+
+<!-- COMMUNITY LEADERBOARD -->
+<div class="container">
     <div id="leaderboard" class="heading mt-5">COMMUNITY LEADERBOARD</div>
     <hr style="border-top: 3px solid #000; opacity: 1; margin:0;">
     <div class="container my-5 px-0 rounded-4 overflow-y-scroll"

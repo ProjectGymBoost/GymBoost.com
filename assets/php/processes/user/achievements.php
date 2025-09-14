@@ -51,25 +51,18 @@ $resultArr = fetchBadgesAndEarned($conn, $userID);
 $badgesResult = $resultArr[0];
 $earnedBadgeIDs = $resultArr[1];
 
-$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-$validPages = array('dashboard', 'workout', 'achievements', 'profile');
-if (!in_array($page, $validPages)) {
-    header("Location: ?page=dashboard");
-    exit();
-}
-
 // Check if user attendance meet badge reqs
 function checkAndAssignBadges($conn, $userID)
 {
-    $newlyEarnedBadges = array();
-    $userID = $_SESSION['userID'];
-
+    // Fetch the total number of check-ins for the user.
     $checkinResult = mysqli_query($conn, "SELECT COUNT(*) AS totalCheckins FROM attendances WHERE userID = $userID");
     $checkinRow = mysqli_fetch_assoc($checkinResult);
     $totalCheckins = (int) $checkinRow['totalCheckins'];
 
-    $badgesResult = mysqli_query($conn, "SELECT badgeID, badgeName, description, iconUrl, requirementValue FROM badges ORDER BY requirementValue ASC");
+    // Fetch all available badges from the `badges` table.
+    $badgesResult = mysqli_query($conn, "SELECT badgeID, requirementValue FROM badges ORDER BY requirementValue ASC");
 
+    // Fetch the IDs of all badges the user has already earned, regardless of their dismissed status.
     $earnedBadgeIDs = array();
     $earnedBadgesResult = mysqli_query($conn, "SELECT badgeID FROM user_badges WHERE userID = $userID");
     while ($row = mysqli_fetch_assoc($earnedBadgesResult)) {
@@ -77,41 +70,35 @@ function checkAndAssignBadges($conn, $userID)
     }
 
     $dateNow = date("Y-m-d");
+    $newlyEarnedBadges = []; // Array to hold newly earned badges 
 
+    // Loop through each badge to check if the user has met the requirements.
     while ($badge = mysqli_fetch_assoc($badgesResult)) {
         $badgeID = $badge['badgeID'];
         $requirement = $badge['requirementValue'];
+        $hasBadge = in_array($badgeID, $earnedBadgeIDs);
 
-        $isEarned = false;
-
+        // Special logic for the consecutive check-in badge (badgeID = 2).
         if ($badgeID == 2) {
             $hasStreak = hasConsecutiveCheckins($conn, $userID, 5);
 
-            if ($hasStreak && !in_array($badgeID, $earnedBadgeIDs)) {
-                mysqli_query($conn, "INSERT INTO user_badges (userID, badgeID, dateEarned) VALUES ($userID, $badgeID, '$dateNow')");
-                $badgeData = array();
-                $badgeData['name'] = $badge['badgeName'];
-                $badgeData['desc'] = $badge['description'];
-                $badgeData['icon'] = $badge['iconUrl'];
-                $newlyEarnedBadges[] = $badgeData;
-            } elseif (!$hasStreak && in_array($badgeID, $earnedBadgeIDs)) {
-                mysqli_query($conn, "DELETE FROM user_badges WHERE userID = $userID AND badgeID = $badgeID");
+            if ($hasStreak && !$hasBadge) {
+                mysqli_query($conn, "INSERT INTO user_badges (userID, badgeID, dateEarned, dismissed) VALUES ('$userID', '$badgeID', '$dateNow', 0)");
+                $newlyEarnedBadges[] = $badgeID;
+            } elseif (!$hasStreak && $hasBadge) {
+                mysqli_query($conn, "DELETE FROM user_badges WHERE userID = '$userID' AND badgeID = '$badgeID'");
             }
-
-        } else {
-            if ($totalCheckins >= $requirement && !in_array($badgeID, $earnedBadgeIDs)) {
-                mysqli_query($conn, "INSERT INTO user_badges (userID, badgeID, dateEarned) VALUES ($userID, $badgeID, '$dateNow')");
-                $badgeData = array();
-                $badgeData['name'] = $badge['badgeName'];
-                $badgeData['desc'] = $badge['description'];
-                $badgeData['icon'] = $badge['iconUrl'];
-                $newlyEarnedBadges[] = $badgeData;
-            } elseif ($totalCheckins < $requirement && in_array($badgeID, $earnedBadgeIDs)) {
-                mysqli_query($conn, "DELETE FROM user_badges WHERE userID = $userID AND badgeID = $badgeID");
+        }
+        // Logic for all other badges (based on total check-ins).
+        else {
+            if ($totalCheckins >= $requirement && !$hasBadge) {
+                mysqli_query($conn, "INSERT INTO user_badges (userID, badgeID, dateEarned, dismissed) VALUES ('$userID', '$badgeID', '$dateNow', 0)");
+                $newlyEarnedBadges[] = $badgeID;
+            } elseif ($totalCheckins < $requirement && $hasBadge) {
+                mysqli_query($conn, "DELETE FROM user_badges WHERE userID = '$userID' AND badgeID = '$badgeID'");
             }
         }
     }
-
     return $newlyEarnedBadges;
 }
 
