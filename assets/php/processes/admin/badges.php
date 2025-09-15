@@ -355,21 +355,3 @@ if (mysqli_num_rows($userBadgeInfoResult) > 0) {
         $userBadgeInfoArray[] = $row;
     }
 }
-
-// (USER-BADGES) - DELETE QUERY
-if (isset($_POST['btnDeleteAlt'])) {
-    $deleteUserBadgeId = $_POST['deleteUserBadgeId'];
-    $deleteName = $_POST['deleteName'];
-
-    $deleteQuery = "DELETE FROM user_badges WHERE userBadgeID = $deleteUserBadgeId";
-    executeQuery($deleteQuery);
-
-    header(
-        "Location: " . $_SERVER['PHP_SELF'] .
-        "?deleted=1" .
-        "&deleteUserBadgeId=" . $deleteUserBadgeId .
-        "&page=" . $currentPage .
-        "&entriesCount=" . $entriesCount
-    );
-    exit;
-}

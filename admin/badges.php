@@ -173,15 +173,14 @@ include("../assets/php/processes/admin/badges.php");
                                 <th scope="col">ID</th>
                                 <th scope="col">BADGE ID</th>
                                 <th scope="col">NAME</th>
-                                <th scope="col">DATE EARNED</th>
-                                <th class="text-center" scope="col">ACTION</th>
+                                <th class="text-center" scope="col">DATE EARNED</th>
                             </tr>
                         </thead>
 
                         <!-- User Badge Data -->
                         <?php if (empty($userBadgeInfoArray)): ?>
                             <tr>
-                                <td colspan="5" style="color:#D2042D; font-weight: bold; text-align: center;">NO USER BADGE
+                                <td colspan="4" style="color:#D2042D; font-weight: bold; text-align: center;">NO USER BADGE
                                     DATA AVAILABLE</td>
                             </tr>
                         <?php endif; ?>
@@ -192,14 +191,10 @@ include("../assets/php/processes/admin/badges.php");
                                     <td><?= htmlspecialchars($infoAlt['badgeID']) ?></td>
                                     <td><?= htmlspecialchars(substr($infoAlt['name'], 0, length: 50)) ?><?= strlen($infoAlt['name']) > 50 ? '...' : '' ?>
                                     </td>
-                                    <td><?= htmlspecialchars($infoAlt['dateEarned']) ?></td>
                                     <td>
-                                        <li style="display: flex; justify-content: center;">
-                                            <a style="color: red" data-bs-toggle="modal"
-                                                data-bs-target="#deleteUserBadgeModal<?php echo $infoAlt['userBadgeID']; ?>">
-                                                <i class="bi bi-trash3 px-1"></i>
-                                            </a>
-                                        </li>
+                                        <div style="display: flex; justify-content: center;">
+                                            <?= htmlspecialchars($infoAlt['dateEarned']) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
