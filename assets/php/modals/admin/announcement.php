@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
             tinymce.init({
                 selector: `#${selector}`,
                 plugins: 'lists link code',
+                statusbar: false,
                 toolbar: 'undo redo | bold italic underline | bullist numlist',
                 menubar: false,
                 branding: false,
