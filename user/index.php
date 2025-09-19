@@ -124,7 +124,7 @@ $eventsJSON = $calendar->getEvents();
         }
 
         /* CSS for Announcement*/
-        .announcement .announcement-message {
+        /* .announcement .announcement-message {
             font-size: 1rem;
             line-height: 1.5;
             overflow-wrap: break-word;
@@ -146,7 +146,7 @@ $eventsJSON = $calendar->getEvents();
             .announcement .announcement-date {
                 font-size: 0.8rem;
             }
-        }
+        } */
     </style>
 </head>
 
