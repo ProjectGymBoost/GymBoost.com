@@ -12,8 +12,14 @@ if (!empty($searchSafe)) {
     foreach ($searchWords as $word) {
         $wordSafe = mysqli_real_escape_string($conn, $word);
 
-        // Each word can match either firstName or lastName
-        $conditions[] = "(u.firstName LIKE '%$wordSafe%' OR u.lastName LIKE '%$wordSafe%')";
+        // Each word can match firstName, lastName, RFID, or dates
+        $conditions[] = "(
+            u.firstName LIKE '%$wordSafe%' 
+            OR u.lastName LIKE '%$wordSafe%' 
+            OR u.rfidNumber LIKE '%$wordSafe%' 
+            OR um.startDate LIKE '%$wordSafe%' 
+            OR um.endDate LIKE '%$wordSafe%'
+        )";
     }
 
     // Require all words to match somewhere

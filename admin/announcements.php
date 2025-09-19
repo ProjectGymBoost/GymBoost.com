@@ -24,6 +24,10 @@ include("../assets/php/processes/admin/announcement.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- TinyMCE editor -->
+    <script src="https://cdn.tiny.cloud/1/4odx9345paodwcigvf36mwf145f25gy8u5o2716stx6wvp4i/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
     <link href="../assets/css/styles.css" rel="stylesheet" />
     <link href="../assets/css/admin.css" rel="stylesheet" />
 </head>
@@ -120,7 +124,7 @@ include("../assets/php/processes/admin/announcement.php");
                                     <tr>
                                         <td><?= htmlspecialchars($a['announcementID']) ?></td>
                                         <td><?= htmlspecialchars($a['title']) ?></td>
-                                        <td><?= htmlspecialchars(substr($a['message'], 0, 100)) ?><?= strlen($a['message']) > 100 ? '...' : '' ?></td>
+                                        <td><?= substr(strip_tags($a['message']), 0, 100) ?><?= strlen($a['message']) > 100 ? '...' : '' ?></td>
                                         <td><?= htmlspecialchars($a['dateCreated']) ?></td>
                                         <td class="text-center">
                                             <a data-bs-toggle="modal" data-bs-target="#editAnnouncement<?= $a['announcementID'] ?>Modal"><i class="bi bi-pencil-square px-2"></i></a>

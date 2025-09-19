@@ -66,7 +66,7 @@ $ageData = json_encode($chart->getAgeData());
                         <div class="row">
                             <div class="col-8">
                                 <div class="subheading" id="usersCount">0</div>
-                                <div>Users</div>
+                                <div>Members</div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
                                 <i class="bi bi-people-fill icon-dashboard" style="font-size: 2rem;"></i>

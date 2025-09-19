@@ -201,6 +201,56 @@ th {
   opacity: 0.6;
 }
 
+/* CSS for Announcement */
+.announcement .announcement-message {
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    text-align: justify;
+}
+
+/* Date */
+.announcement .announcement-date {
+    color: #ecececff;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* Ensure bullets & numbers show */
+.announcement .announcement-message ul,
+.announcement .announcement-message ol {
+    list-style-position: outside !important;
+    margin: 0.5em 0 0.5em 1.5em !important;
+    padding-left: 1.5em !important;
+}
+
+/* Restore bullets for UL */
+.announcement .announcement-message ul li {
+    list-style-type: disc !important;
+    display: list-item !important;
+    margin-bottom: 0.25em;
+}
+
+/* Restore numbers for OL */
+.announcement .announcement-message ol li {
+    list-style-type: decimal !important;
+    display: list-item !important;
+    margin-bottom: 0.25em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .announcement .announcement-message {
+        font-size: 0.85rem;
+    }
+
+    .announcement .announcement-date {
+        font-size: 0.8rem;
+    }
+}
+
 @media (max-width: 768px) {
   .schedule-header-sm {
     font-size: 0.85rem !important;

@@ -16,8 +16,8 @@
                     <div class="announcement-date text-end mb-2" style="white-space: nowrap;">
                       <?= date("F j, Y", strtotime($announcement['dateCreated'])); ?>
                     </div>
-                    <div class="announcement-message" style="text-align: justify;">
-                      <?= $announcement['message']; ?>
+                    <div class="announcement-message">
+                      <?= html_entity_decode($announcement['message']); ?>
                     </div>
                   </div>
                 </div>

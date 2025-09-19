@@ -3,8 +3,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px;">
             <form id="addAnnouncementForm" method="POST">
-                <input type="hidden" name="btnAddAnnouncement" value="1">
-                
                 <div style="background-color: var(--primaryColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative;">
                     <h4 class="modal-title text-center subheading" style="margin: 0; font-size: 20px; letter-spacing: 2px;">ADD ANNOUNCEMENT</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
@@ -12,18 +10,20 @@
                     </button>
                 </div>
                 <div class="modal-body" style="padding: 1.5rem;">
-                    <div class="mb-3 text-start">
+                    <div class="text-start mb-3">
                         <label for="newAnnouncementTitle" class="form-label fw-bold">Title</label>
-                        <input id="newAnnouncementTitle" type="text" class="form-control" placeholder="Enter title" name="newAnnouncementTitle" required>
+                        <input type="text" id="newAnnouncementTitle" class="form-control"
+                            placeholder="Enter title" name="newAnnouncementTitle" required>
                     </div>
                     <div class="text-start">
                         <label for="newAnnouncementMessage" class="form-label fw-bold">Message</label>
-                        <textarea id="newAnnouncementDescription" class="form-control" placeholder="Enter message" name="newAnnouncementMessage" rows="3" required></textarea>
+                        <textarea id="newAnnouncementMessage" class="form-control" 
+                                placeholder="Enter message" name="newAnnouncementMessage" rows="5" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-end" style="padding: 1rem;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                    <button type="submit" class="btn btn-primary">ADD</button>
+                    <button type="submit" name="btnAddAnnouncement" class="btn btn-primary">ADD</button>
                 </div>
             </form>
         </div>
@@ -63,13 +63,18 @@
                     </button>
                 </div>
                 <div class="modal-body" style="padding: 1.5rem;">
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold">Title</label>
-                        <input type="text" class="form-control" name="editAnnouncementTitle" value="<?= htmlspecialchars($a['title']) ?>" required>
+                    <div class="text-start mb-3">
+                        <label for="editAnnouncementTitle<?= $a['announcementID'] ?>" class="form-label fw-bold">Title</label>
+                        <input type="text" id="editAnnouncementTitle<?= $a['announcementID'] ?>"
+                            class="form-control" name="editAnnouncementTitle"
+                            value="<?= htmlspecialchars($a['title']) ?>" required>
                     </div>
                     <div class="text-start">
                         <label class="form-label fw-bold">Message</label>
-                        <textarea class="form-control" name="editAnnouncementMessage" rows="3" required><?= htmlspecialchars($a['message']) ?></textarea>
+                        <textarea id="editAnnouncementMessage<?= $a['announcementID'] ?>" 
+                                class="form-control" name="editAnnouncementMessage" rows="5" required>
+                            <?= htmlspecialchars($a['message']) ?>
+                        </textarea>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-end" style="padding: 1rem;">
@@ -197,3 +202,51 @@ if (isset($_GET['deleted']) && $_GET['deleted'] == '1' && isset($_GET['highlight
     </div>
 </div>
 <?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function initTiny(selector) {
+        if (!tinymce.get(selector)) {
+            tinymce.init({
+                selector: `#${selector}`,
+                plugins: 'lists link code',
+                toolbar: 'undo redo | bold italic underline | bullist numlist',
+                menubar: false,
+                branding: false,
+                height: 250,
+                license_key: 'gpl',
+                setup: function (editor) {
+                    // Keep textarea synced with TinyMCE
+                    editor.on('change keyup', function () {
+                        editor.save();
+                    });
+                }
+            });
+        }
+    }
+
+    // Initialize on Add
+    initTiny('newAnnouncementMessage');
+
+    // Initialize dynamically for each Edit modal when opened
+    document.querySelectorAll('[id^="editAnnouncement"][id$="Modal"]').forEach(modal => {
+        modal.addEventListener('shown.bs.modal', function () {
+            let textarea = modal.querySelector('textarea');
+            if (textarea) {
+                initTiny(textarea.id);
+            }
+        });
+    });
+
+    // Clean up on modal close
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('hidden.bs.modal', function () {
+            modal.querySelectorAll('textarea').forEach(textarea => {
+                if (tinymce.get(textarea.id)) {
+                    tinymce.get(textarea.id).remove();
+                }
+            });
+        });
+    });
+});
+</script>
