@@ -7,12 +7,11 @@ include("../assets/php/processes/admin/membership.php");
 
 $membershipRenewed = isset($_GET['renewed']) && $_GET['renewed'] == 1;
 
-// Flash message handling
-if (isset($_SESSION['membershipDeleted'])) {
-    $membershipDeleted = $_SESSION['membershipDeleted'];
-    unset($_SESSION['membershipDeleted']);
-}
-$showDeleteModal = isset($membershipDeleted);
+// Flash message handling for delete
+$membershipDeleted = isset($_GET['deleted']) && $_GET['deleted'] == 1;
+$deletedName = $_GET['name'] ?? null;
+$deletedID = $_GET['deletedID'] ?? null;
+
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +59,27 @@ $showDeleteModal = isset($membershipDeleted);
                 </script>
             <?php endif; ?>
 
+            <?php if (isset($_GET['rfidError']) && $_GET['rfidError'] == 1): ?>
+                <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+                    <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                That RFID is already taken. Please try again.
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Remove URL param after showing toast -->
+                <script>
+                    const url = new URL(window.location);
+                    url.searchParams.delete('rfidError');
+                    history.replaceState(null, '', url.toString());
+                </script>
+            <?php endif; ?>
 
             <!-- Heading -->
             <div class="col-12 mb-4">

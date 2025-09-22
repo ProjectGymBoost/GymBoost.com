@@ -112,6 +112,23 @@ if (isset($_POST['btnEditMembership'])) {
     $editUserID = $_POST['editUserID'];
     $editRFID = mysqli_real_escape_string($conn, $_POST['editRFID']);
 
+    // Check if RFID already exists for another user
+    $checkRFIDQuery = "SELECT userID FROM users WHERE rfidNumber = '$editRFID' AND userID != $editUserID";
+    $checkRFIDResult = executeQuery($checkRFIDQuery);
+
+    if (mysqli_num_rows($checkRFIDResult) > 0) {
+        // RFID already taken → redirect with error
+        header("Location: " . $_SERVER['PHP_SELF'] .
+            "?rfidError=1" .
+            "&page=" . $currentPage .
+            "&entriesCount=" . $entriesCount .
+            "&search=" . urlencode($search) .
+            "&sortBy=" . $sortBy .
+            "&orderBy=" . $orderBy
+        );
+        exit;
+    }
+
     // Update membership
     $updateQuery = "
         UPDATE user_memberships
@@ -137,7 +154,6 @@ if (isset($_POST['btnEditMembership'])) {
     );
     exit;
 }
-
 
 // MEMBERSHIP PLANS QUERY
 $membershipPlans = [];
@@ -170,11 +186,15 @@ if (isset($_POST['btnDeleteMembership'])) {
         $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
         executeQuery($updateStateQuery);
 
+        // Reset points to 0
+        $resetPointsQuery = "UPDATE users SET points = 0 WHERE userID = $userID";
+        executeQuery($resetPointsQuery);
+
         // Redirect with success message
         header(
             "Location: " . $_SERVER['PHP_SELF'] .
-            "?deleted=1" .                                    
-            "&deletedID=" . $deleteMembershipId .
+            "?deleted=1" .
+            "&highlight=" . $deleteMembershipId . 
             "&name=" . urlencode($deleteName) .
             "&page=" . $currentPage .
             "&entriesCount=" . $entriesCount .
