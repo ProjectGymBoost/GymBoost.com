@@ -25,16 +25,21 @@ if (isset($_SESSION['userID'])) {
     $userID = $_SESSION['userID'];
     $userInfoQuery = "
     SELECT 
-      u.*, 
-      m.planType, 
-      um.startDate, 
-      um.endDate
-  FROM users u
-  LEFT JOIN user_memberships um ON u.userID = um.userID
-  LEFT JOIN memberships m ON um.membershipID = m.membershipID
-  WHERE u.state = 'Active' 
-    AND u.userID = $userID;
-    ";
+        u.*, 
+        m.planType, 
+        um.startDate, 
+        um.endDate
+    FROM users u
+    LEFT JOIN user_memberships um ON u.userID = um.userID
+    LEFT JOIN memberships m ON um.membershipID = m.membershipID
+    WHERE u.state = 'Active' 
+      AND u.userID = $userID
+      AND um.startDate = (
+          SELECT MAX(startDate) 
+          FROM user_memberships 
+          WHERE userID = u.userID
+      );
+";
 }
 
 
