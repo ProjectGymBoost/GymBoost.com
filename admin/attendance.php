@@ -130,11 +130,11 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
-                        <!-- Modals -->
-                        <?php include('../assets/php/modals/admin/attendance.php'); ?>
                     </table>
                 </div>
             </div>
+            <!-- Modals -->
+            <?php include('../assets/php/modals/admin/attendance.php'); ?>
             <!-- End Attendance Table -->
 
             <!-- Bottom Pagination -->
@@ -215,17 +215,6 @@ include(__DIR__ . '/../assets/php/processes/admin/attendance.php');
         });
     </script>
 
-    <script>
-        document.addEventListener('hidden.bs.modal', function () {
-            const backdrops = document.querySelectorAll('.modal-backdrop');
-            backdrops.forEach(backdrop => backdrop.remove());
-
-            if (document.querySelectorAll('.modal.show').length === 0) {
-                document.body.classList.remove('modal-open');
-                document.body.style.paddingRight = '';
-            }
-        });
-    </script>
 
 </body>
 

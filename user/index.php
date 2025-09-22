@@ -36,7 +36,7 @@ $email = $_SESSION['email'] ?? "";
 if (isset($_SESSION['userID'])) {
     $userID = $_SESSION['userID'];
 
-    $checkUserQuery = "SELECT userID FROM users WHERE userID = $userID";
+    $checkUserQuery = "SELECT userID, state FROM users WHERE userID = $userID";
     $result = executeQuery($checkUserQuery);
 
     if (mysqli_num_rows($result) === 0) {
@@ -44,6 +44,14 @@ if (isset($_SESSION['userID'])) {
         session_destroy();
         header("Location: ../login.php");
         exit;
+    } else {
+        $userData = mysqli_fetch_assoc($result);
+        if ($userData['state'] === 'Inactive') {
+            session_unset();
+            session_destroy();
+            header("Location: ../login.php");
+            exit;
+        }
     }
 }
 

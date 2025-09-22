@@ -149,11 +149,12 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
-                        <!-- Membership Plan Modals -->
-                        <?php include('../assets/php/modals/admin/membership-plans.php'); ?>
                     </table>
                 </div>
             </div>
+
+             <!-- Membership Plan Modals -->
+                        <?php include('../assets/php/modals/admin/membership-plans.php'); ?>
 
 
             <!-- Bottom Pagination Info -->
@@ -202,25 +203,6 @@ include(__DIR__ . '/../assets/php/processes/admin/membership-plans.php');
         crossorigin="anonymous"></script>
 
     <script src="../assets/js/membership-plans.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modals = document.querySelectorAll('.modal');
-
-            modals.forEach(modal => {
-                modal.addEventListener('hidden.bs.modal', function () {
-                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-
-                    if (document.querySelectorAll('.modal.show').length === 0) {
-                        document.body.classList.remove('modal-open');
-                        document.body.style.paddingRight = '';
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
 </body>
 
 </html>
