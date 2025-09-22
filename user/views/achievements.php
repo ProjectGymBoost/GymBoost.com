@@ -1,21 +1,24 @@
 <!-- ACHIEVEMENTS -->
 <?php
-// Check if the user has seen the modal.
+// Check if the user has dismissed the modal.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dismiss_badge_modal'])) {
-    $userID = $_SESSION['userID'];
-    $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND dismissed = 0";
-    mysqli_query($conn, $updateQuery);
+    if (isset($_POST['badgeID'])) {
+        $userID = $_SESSION['userID'];
+        $badgeID = intval($_POST['badgeID']);
 
-    header("Location: ?page=achievements");
-    exit();
+        $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND badgeID = $badgeID";
+        mysqli_query($conn, $updateQuery);
+    }
 }
+
+// Check for and assign any new badges
 checkAndAssignBadges($conn, $userID);
 
 $showNewBadge = false;
 $newlyEarnedBadges = [];
 
 // Query the database directly for any newly earned, un-dismissed badges.
-$query = "SELECT b.badgeName, b.description, b.iconUrl
+$query = "SELECT b.badgeName, b.description, b.iconUrl, ub.badgeID
           FROM user_badges ub
           JOIN badges b ON ub.badgeID = b.badgeID
           WHERE ub.userID = $userID AND ub.dismissed = 0";
@@ -26,6 +29,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $badgeData['badgeName'] = $row['badgeName'];
     $badgeData['description'] = $row['description'];
     $badgeData['iconUrl'] = $row['iconUrl'];
+    $badgeData['badgeID'] = $row['badgeID']; 
     $newlyEarnedBadges[] = $badgeData;
 }
 
@@ -33,7 +37,7 @@ if (!empty($newlyEarnedBadges)) {
     $showNewBadge = true;
 }
 
-// Fetch the badges and earned badge IDs from the database to display
+// Fetch the badges and earned badge IDs.
 $resultArr = fetchBadgesAndEarned($conn, $userID);
 $badgesResult = $resultArr[0];
 $earnedBadgeIDs = $resultArr[1];
@@ -71,7 +75,6 @@ $earnedBadgeIDs = $resultArr[1];
     </div>
 </div>
 
-<!-- Badge Earned Modal -->
 <div class="modal fade" id="badgeEarnedModal" tabindex="-1" aria-labelledby="badgeEarnedLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center">
@@ -89,7 +92,6 @@ $earnedBadgeIDs = $resultArr[1];
     </div>
 </div>
 
-<!-- JS for modal -->
 <script>
     const showBadge = <?php echo json_encode($showNewBadge); ?>;
     const newlyEarnedBadges = <?php echo json_encode($newlyEarnedBadges); ?>;
@@ -120,15 +122,24 @@ $earnedBadgeIDs = $resultArr[1];
 
         // Dismiss modal logic
         const badgeModal = document.getElementById('badgeEarnedModal');
-        if (badgeModal) {
+        if (badgeModal && newlyEarnedBadges.length > 0) {
+            const badgeIDToDismiss = newlyEarnedBadges[0].badgeID;
+
             badgeModal.addEventListener('hide.bs.modal', () => {
                 const form = document.createElement("form");
                 form.method = "POST";
                 form.style.display = "none";
-                const input = document.createElement("input");
-                input.name = "dismiss_badge_modal";
-                input.value = "1";
-                form.appendChild(input);
+
+                const dismissInput = document.createElement("input");
+                dismissInput.name = "dismiss_badge_modal";
+                dismissInput.value = "1";
+                form.appendChild(dismissInput);
+
+                const badgeIDInput = document.createElement("input");
+                badgeIDInput.name = "badgeID";
+                badgeIDInput.value = badgeIDToDismiss;
+                form.appendChild(badgeIDInput);
+
                 document.body.appendChild(form);
                 form.submit();
             });

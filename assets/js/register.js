@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (selectedAccountType === "user" && rfidExistsError === "userRfidExists") {
-            showError("rfid", "This RFID is already linked to another account.");
+            showError("rfid", "This RFID is already in use.");
         }
     }
 

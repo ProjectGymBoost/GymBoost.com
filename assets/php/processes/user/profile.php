@@ -30,8 +30,8 @@ if (isset($_SESSION['userID'])) {
         um.startDate, 
         um.endDate
     FROM users u
-    JOIN user_memberships um ON u.userID = um.userID
-    JOIN memberships m ON um.membershipID = m.membershipID
+    LEFT JOIN user_memberships um ON u.userID = um.userID
+    LEFT JOIN memberships m ON um.membershipID = m.membershipID
     WHERE u.state = 'Active' 
       AND u.userID = $userID
       AND um.startDate = (
@@ -39,7 +39,7 @@ if (isset($_SESSION['userID'])) {
           FROM user_memberships 
           WHERE userID = u.userID
       );
-    ";
+";
 }
 
 
