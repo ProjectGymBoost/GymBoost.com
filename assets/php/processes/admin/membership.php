@@ -181,7 +181,7 @@ if (mysqli_num_rows($plansResult) > 0) {
 
 // DELETE MEMBERSHIP
 if (isset($_POST['btnDeleteMembership'])) {
-    $deleteMembershipId = (int) $_POST['deleteMembershipId']; // cast to int for safety
+    $deleteMembershipId = (int) $_POST['deleteMembershipId'];
     $deleteName = $_POST['deleteName'];
 
     // Get the userID linked to this membership
@@ -195,34 +195,22 @@ if (isset($_POST['btnDeleteMembership'])) {
     $result = executeQuery($deleteQuery);
 
     if ($result && $userID) {
-        // Mark the user as Inactive by default
-        $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
-        executeQuery($updateStateQuery);
-
-        // Check if user still has another active membership after deletion
+        // Check if user still has another active membership
         $checkActive = "
             SELECT COUNT(*) AS activeCount 
             FROM user_memberships 
             WHERE userID = $userID 
-            AND userMembershipID != $deleteMembershipId 
             AND endDate >= CURDATE()
         ";
         $activeResult = executeQuery($checkActive);
         $activeCount = mysqli_fetch_assoc($activeResult)['activeCount'];
 
         if ($activeCount > 0) {
-            // User still has an active membership → keep them active
             $reactivateQuery = "UPDATE users SET state = 'Active' WHERE userID = $userID";
             executeQuery($reactivateQuery);
-
-            // Don't reset points, since another membership is active
         } else {
-            // No active memberships left → mark inactive and reset points
             $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
             executeQuery($updateStateQuery);
-
-            $resetPointsQuery = "UPDATE users SET points = 0 WHERE userID = $userID";
-            executeQuery($resetPointsQuery);
         }
 
         // Redirect with success message
@@ -240,6 +228,7 @@ if (isset($_POST['btnDeleteMembership'])) {
         exit;
     }
 }
+
 
 $today = date('Y-m-d');
 
