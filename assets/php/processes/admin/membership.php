@@ -129,20 +129,33 @@ if (isset($_POST['btnEditMembership'])) {
         exit;
     }
 
-    // Update membership
-    $updateQuery = "
-        UPDATE user_memberships
-        SET startDate = '$editStartDate', endDate = '$editEndDate',
-        membershipID = $editMembershipPlan
-        WHERE userMembershipID = $editId
-    ";
+    // Update membership details
+    $updateQuery = "UPDATE user_memberships SET startDate = '$editStartDate', endDate = '$editEndDate', membershipID = $editMembershipPlan WHERE userMembershipID = $editId";
     executeQuery($updateQuery);
+
+    // Recalculate user state immediately after editing
+    $today = date('Y-m-d');
+
+    $checkLatest = "SELECT MAX(endDate) AS latestEndDate FROM user_memberships WHERE userID = $editUserID";
+    $latestResult = executeQuery($checkLatest);
+    $latestEndDate = mysqli_fetch_assoc($latestResult)['latestEndDate'];
+
+    if ($latestEndDate < $today) {
+        // All memberships expired → set inactive
+        $updateState = "UPDATE users SET state = 'Inactive' WHERE userID = $editUserID";
+        executeQuery($updateState);
+    } else {
+        // Has at least one valid membership → set active
+        $updateState = "UPDATE users SET state = 'Active' WHERE userID = $editUserID";
+        executeQuery($updateState);
+    }
 
     // Update RFID in users table
     $updateUserQuery = "UPDATE users SET rfidNumber = '$editRFID' WHERE userID = $editUserID";
     executeQuery($updateUserQuery);
 
     $editedName = $_POST['editFirstName'] . ' ' . $_POST['editLastName'];
+
     header("Location: " . $_SERVER['PHP_SELF'] .
         "?updated=1" .
         "&name=" . urlencode($editedName) .
@@ -182,19 +195,41 @@ if (isset($_POST['btnDeleteMembership'])) {
     $result = executeQuery($deleteQuery);
 
     if ($result && $userID) {
-        // Mark the user as Inactive
+        // Mark the user as Inactive by default
         $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
         executeQuery($updateStateQuery);
 
-        // Reset points to 0
-        $resetPointsQuery = "UPDATE users SET points = 0 WHERE userID = $userID";
-        executeQuery($resetPointsQuery);
+        // Check if user still has another active membership after deletion
+        $checkActive = "
+            SELECT COUNT(*) AS activeCount 
+            FROM user_memberships 
+            WHERE userID = $userID 
+            AND userMembershipID != $deleteMembershipId 
+            AND endDate >= CURDATE()
+        ";
+        $activeResult = executeQuery($checkActive);
+        $activeCount = mysqli_fetch_assoc($activeResult)['activeCount'];
+
+        if ($activeCount > 0) {
+            // User still has an active membership → keep them active
+            $reactivateQuery = "UPDATE users SET state = 'Active' WHERE userID = $userID";
+            executeQuery($reactivateQuery);
+
+            // Don't reset points, since another membership is active
+        } else {
+            // No active memberships left → mark inactive and reset points
+            $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
+            executeQuery($updateStateQuery);
+
+            $resetPointsQuery = "UPDATE users SET points = 0 WHERE userID = $userID";
+            executeQuery($resetPointsQuery);
+        }
 
         // Redirect with success message
         header(
-            "Location: " . $_SERVER['PHP_SELF'] .
-            "?deleted=1" .
-            "&highlight=" . $deleteMembershipId . 
+            "Location: membership.php" .
+            "?deleted=1" .                                 
+            "&deletedID=" . $deleteMembershipId .
             "&name=" . urlencode($deleteName) .
             "&page=" . $currentPage .
             "&entriesCount=" . $entriesCount .
