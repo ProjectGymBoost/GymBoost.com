@@ -112,20 +112,50 @@ if (isset($_POST['btnEditMembership'])) {
     $editUserID = $_POST['editUserID'];
     $editRFID = mysqli_real_escape_string($conn, $_POST['editRFID']);
 
-    // Update membership
-    $updateQuery = "
-        UPDATE user_memberships
-        SET startDate = '$editStartDate', endDate = '$editEndDate',
-        membershipID = $editMembershipPlan
-        WHERE userMembershipID = $editId
-    ";
+    // Check if RFID already exists for another user
+    $checkRFIDQuery = "SELECT userID FROM users WHERE rfidNumber = '$editRFID' AND userID != $editUserID";
+    $checkRFIDResult = executeQuery($checkRFIDQuery);
+
+    if (mysqli_num_rows($checkRFIDResult) > 0) {
+        // RFID already taken → redirect with error
+        header("Location: " . $_SERVER['PHP_SELF'] .
+            "?rfidError=1" .
+            "&page=" . $currentPage .
+            "&entriesCount=" . $entriesCount .
+            "&search=" . urlencode($search) .
+            "&sortBy=" . $sortBy .
+            "&orderBy=" . $orderBy
+        );
+        exit;
+    }
+
+    // Update membership details
+    $updateQuery = "UPDATE user_memberships SET startDate = '$editStartDate', endDate = '$editEndDate', membershipID = $editMembershipPlan WHERE userMembershipID = $editId";
     executeQuery($updateQuery);
+
+    // Recalculate user state immediately after editing
+    $today = date('Y-m-d');
+
+    $checkLatest = "SELECT MAX(endDate) AS latestEndDate FROM user_memberships WHERE userID = $editUserID";
+    $latestResult = executeQuery($checkLatest);
+    $latestEndDate = mysqli_fetch_assoc($latestResult)['latestEndDate'];
+
+    if ($latestEndDate < $today) {
+        // All memberships expired → set inactive
+        $updateState = "UPDATE users SET state = 'Inactive' WHERE userID = $editUserID";
+        executeQuery($updateState);
+    } else {
+        // Has at least one valid membership → set active
+        $updateState = "UPDATE users SET state = 'Active' WHERE userID = $editUserID";
+        executeQuery($updateState);
+    }
 
     // Update RFID in users table
     $updateUserQuery = "UPDATE users SET rfidNumber = '$editRFID' WHERE userID = $editUserID";
     executeQuery($updateUserQuery);
 
     $editedName = $_POST['editFirstName'] . ' ' . $_POST['editLastName'];
+
     header("Location: " . $_SERVER['PHP_SELF'] .
         "?updated=1" .
         "&name=" . urlencode($editedName) .
@@ -137,7 +167,6 @@ if (isset($_POST['btnEditMembership'])) {
     );
     exit;
 }
-
 
 // MEMBERSHIP PLANS QUERY
 $membershipPlans = [];
@@ -152,7 +181,7 @@ if (mysqli_num_rows($plansResult) > 0) {
 
 // DELETE MEMBERSHIP
 if (isset($_POST['btnDeleteMembership'])) {
-    $deleteMembershipId = (int) $_POST['deleteMembershipId']; // cast to int for safety
+    $deleteMembershipId = (int) $_POST['deleteMembershipId'];
     $deleteName = $_POST['deleteName'];
 
     // Get the userID linked to this membership
@@ -166,14 +195,28 @@ if (isset($_POST['btnDeleteMembership'])) {
     $result = executeQuery($deleteQuery);
 
     if ($result && $userID) {
-        // Mark the user as Inactive
-        $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
-        executeQuery($updateStateQuery);
+        // Check if user still has another active membership
+        $checkActive = "
+            SELECT COUNT(*) AS activeCount 
+            FROM user_memberships 
+            WHERE userID = $userID 
+            AND endDate >= CURDATE()
+        ";
+        $activeResult = executeQuery($checkActive);
+        $activeCount = mysqli_fetch_assoc($activeResult)['activeCount'];
+
+        if ($activeCount > 0) {
+            $reactivateQuery = "UPDATE users SET state = 'Active' WHERE userID = $userID";
+            executeQuery($reactivateQuery);
+        } else {
+            $updateStateQuery = "UPDATE users SET state = 'Inactive' WHERE userID = $userID";
+            executeQuery($updateStateQuery);
+        }
 
         // Redirect with success message
         header(
-            "Location: " . $_SERVER['PHP_SELF'] .
-            "?deleted=1" .                                    
+            "Location: membership.php" .
+            "?deleted=1" .                                 
             "&deletedID=" . $deleteMembershipId .
             "&name=" . urlencode($deleteName) .
             "&page=" . $currentPage .
@@ -185,6 +228,7 @@ if (isset($_POST['btnDeleteMembership'])) {
         exit;
     }
 }
+
 
 $today = date('Y-m-d');
 
