@@ -3,17 +3,16 @@ $userID = $_SESSION['userID'];
 $baseURL = $_SERVER['PHP_SELF'] . "?page=achievements";
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'weekly';
 
-// Check if the user already seen the badge earned
+// Check if the user has dismissed the modal.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dismiss_badge_modal'])) {
-    $userID = $_SESSION['userID'];
-    $today = date('Y-m-d');
-    $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND DATE(dateEarned) = '$today'";
-    mysqli_query($conn, $updateQuery);
+    if (isset($_POST['badgeID'])) {
+        $userID = $_SESSION['userID'];
+        $badgeID = intval($_POST['badgeID']);
 
-    $_SESSION['showNewBadgeDismissed'] = true;
-    $_SESSION['showNewBadge'] = false;
-
-    header("Location: ?page=achievements");
+        $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND badgeID = $badgeID";
+        mysqli_query($conn, $updateQuery);
+    }
+      header('Location: ' . $_SERVER['REQUEST_URI']);
     exit();
 }
 

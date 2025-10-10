@@ -1,16 +1,4 @@
-<!-- ACHIEVEMENTS -->
 <?php
-// Check if the user has dismissed the modal.
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dismiss_badge_modal'])) {
-    if (isset($_POST['badgeID'])) {
-        $userID = $_SESSION['userID'];
-        $badgeID = intval($_POST['badgeID']);
-
-        $updateQuery = "UPDATE user_badges SET dismissed = 1 WHERE userID = $userID AND badgeID = $badgeID";
-        mysqli_query($conn, $updateQuery);
-    }
-}
-
 // Check for and assign any new badges
 checkAndAssignBadges($conn, $userID);
 
