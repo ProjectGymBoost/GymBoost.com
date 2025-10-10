@@ -8,6 +8,7 @@ require_once("../assets/shared/connect.php");
 include(__DIR__ . '/../assets/php/processes/forgotpassword/phpmailer.php');
 include(__DIR__ . '/../assets/php/processes/user/profile.php');
 include(__DIR__ . '/../assets/php/classes/classes.php');
+include(__DIR__ . '/../assets/php/processes/user/achievements.php');
 
 $userID = $_SESSION['userID'];
 $email = $_SESSION['email'] ?? "";
@@ -54,8 +55,6 @@ if (isset($_SESSION['userID'])) {
         }
     }
 }
-
-include(__DIR__ . '/../assets/php/processes/user/achievements.php');
 
 $page = "dashboard";
 
