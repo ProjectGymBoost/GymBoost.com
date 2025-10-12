@@ -48,12 +48,12 @@ if (isset($_POST['btnContinue']) && !empty($_POST['email'])) {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'hardbodyfitnessgym13@gmail.com';
-                $mail->Password = 'fivv fwln gysh qtup';
+                $mail->Username = 'hardbodygymph@gmail.com';
+                $mail->Password = 'xusj ojtv njks nrax';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('hardbodyfitnessgym13@gmail.com', 'Hard Body Fitness Gym');
+                $mail->setFrom('hardbodygymph@gmail.com', 'Hard Body Fitness Gym');
                 $mail->addAddress($email);
                 $mail->isHTML(true);
                 $mail->Subject = $subject;
@@ -189,12 +189,12 @@ if (isset($_POST['btnEmail'])) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'hardbodyfitnessgym13@gmail.com';
-        $mail->Password = 'fivv fwln gysh qtup';
+        $mail->Username = 'hardbodygymph@gmail.com';
+        $mail->Password = 'xusj ojtv njks nrax';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('hardbodyfitnessgym13@gmail.com', 'Hard Body Fitness Gym');
+        $mail->setFrom('hardbodygymph@gmail.com', 'Hard Body Fitness Gym');
         $mail->addAddress($newEmail);
         $mail->isHTML(true);
         $mail->Subject = "Email Verification OTP";
@@ -215,7 +215,7 @@ if (isset($_POST['btnEmail'])) {
         header("Location: index.php?page=profile");
         exit();
     } catch (Exception $e) {
-        $_SESSION['emailInputError'] = "Failed to send OTP. Try again.";
+        $_SESSION['emailInputError'] = "Failed to send OTP. Try again";
         $_SESSION['show_modal'] = 'editAccountEmailModal';
         header("Location: index.php?page=profile");
         exit();
@@ -301,12 +301,12 @@ if (isset($_POST['btnAdminEmail'])) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'hardbodyfitnessgym13@gmail.com';
-        $mail->Password = 'fivv fwln gysh qtup';
+        $mail->Username = 'hardbodygymph@gmail.com';
+        $mail->Password = 'xusj ojtv njks nrax';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('hardbodyfitnessgym13@gmail.com', 'Hard Body Fitness Gym');
+        $mail->setFrom('hardbodygymph@gmail.com', 'Hard Body Fitness Gym');
         $mail->addAddress($newEmail);
         $mail->isHTML(true);
         $mail->Subject = "Email Verification OTP";
