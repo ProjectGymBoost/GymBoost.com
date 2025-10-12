@@ -26,7 +26,7 @@ include("../assets/php/processes/admin/announcement.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- TinyMCE editor -->
-    <script src="https://cdn.tiny.cloud/1/4odx9345paodwcigvf36mwf145f25gy8u5o2716stx6wvp4i/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/obk9u9fektjq2drjz1vyk5uu1dws51vxigwnl1kf68z7ul4s/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
     <link href="../assets/css/styles.css" rel="stylesheet" />
     <link href="../assets/css/admin.css" rel="stylesheet" />
